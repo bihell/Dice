@@ -7,7 +7,7 @@
 * 功能精简但齐全，界面简洁却美观，满足个人日常使用要求
 * 项目会持续更新，如果有不完善的地方，欢迎指出
 
-> 演示站点: [http://bihell.com](http://bihell.com)
+> 演示站点: [http://bihell.com](http://bihell.com)  QQ 群：48384453
 
 ### 项目结构
 
@@ -128,8 +128,8 @@
 
 ### 部分界面
 
-
-
-
-
-
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice2.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice3.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice4.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice5.png)

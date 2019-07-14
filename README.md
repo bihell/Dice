@@ -79,12 +79,12 @@
       `vi src/main/resources/application-dev.properties`
 
       ```
-  spring:
-        datasource:
-          driverClassName: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/dice?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-          username: root
-          password: root
+      spring:
+            datasource:
+              driverClassName: com.mysql.cj.jdbc.Driver
+              url: jdbc:mysql://localhost:3306/dice?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+              username: root
+              password: root
       ```
       将数据库的用户名和密码修改成对应你数据库的用户名密码
     

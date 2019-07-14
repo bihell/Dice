@@ -128,8 +128,9 @@
 
 ### 部分界面
 
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice4.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice5.png)
 ![](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
 ![](https://raw.githubusercontent.com/bihell/blog-img/master/dice2.png)
 ![](https://raw.githubusercontent.com/bihell/blog-img/master/dice3.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice4.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice5.png)
+

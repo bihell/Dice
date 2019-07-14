@@ -1,0 +1,17 @@
+#datasource
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://dice-mysql:3306/dice?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  jpa:
+    show-sql: false
+#log
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: INFO
+  file: log/dice.log

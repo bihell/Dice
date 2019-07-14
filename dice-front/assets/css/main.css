@@ -1,0 +1,151 @@
+flow#__nuxt {
+  font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: .5rem;
+  height: .5rem;
+  background: hsla(0, 0%, 100%, .6);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(95, 95, 95, .4);
+  transition: all .2s;
+  border-radius: .5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* transition start */
+.move-enter-active, .move-leave-active {
+  transition: opacity .3s;
+}
+
+.move-enter, .move-leave {
+  opacity: 0;
+}
+
+/* flow */
+.flow-enter-active, .flow-leave-active {
+  transition: all .5s;
+}
+
+.flow-enter, .flow-leave {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+/* list */
+.list-enter-active {
+  transition: all .5s ease-in-out;
+}
+
+.list-leave-active {
+  transition: all .5s ease;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.list-enter {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.list-move {
+  transition: all .5s;
+}
+
+/* slide-down */
+.slide-down-enter-active {
+  transition: all .4s ease;
+}
+
+.slide-down-leave-active {
+  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-down-enter, .slide-down-leave-active {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.slide-down-move {
+  transition: all .4s;
+}
+
+.slide-down-leave-active {
+  position: absolute !important;
+  width: 100%;
+}
+
+@keyframes flow {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1
+  }
+}
+
+@-webkit-keyframes flow {
+  0% {
+    -webkit-transform: translateY(-20px);
+    opacity: 0
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    opacity: 1
+  }
+}
+
+/* transition end */
+
+a:hover {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+
+.chip {
+  box-shadow: 0 0 1px rgba(14, 14, 14, 0.3);
+  align-items: center;
+  color: #727e96;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-align: center;
+  height: 1.2rem;
+  margin: .2rem;
+  max-width: 100%;
+  padding: .1rem .5rem;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.divider {
+  border-top: .05rem solid #e7e9ed;
+  height: .05rem;
+  margin: .4rem 0;
+  display: block;
+  position: relative;
+}
+
+.text-primary {
+  color: #234e77;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-bold {
+  font-weight: bold;
+}

@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'dice-front-icon';
+  src:  url('../fonts/dice-front-icon.eot?9px6yi');
+  src:  url('../fonts/dice-front-icon.eot?9px6yi#iefix') format('embedded-opentype'),
+    url('../fonts/dice-front-icon.ttf?9px6yi') format('truetype'),
+    url('../fonts/dice-front-icon.woff?9px6yi') format('woff'),
+    url('../fonts/dice-front-icon.svg?9px6yi#dice-front-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'dice-front-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-th-list:before {
+  content: "\f00b";
+}
+.icon-close:before {
+  content: "\f00d";
+}
+.icon-arrow-up:before {
+  content: "\f062";
+}
+.icon-eye:before {
+  content: "\f06e";
+}
+.icon-calendar:before {
+  content: "\f073";
+}
+.icon-folder:before {
+  content: "\f07b";
+}
+.icon-thumbs-o-up:before {
+  content: "\f087";
+}
+.icon-thumbs-o-down:before {
+  content: "\f088";
+}
+.icon-reply:before {
+  content: "\f112";
+}
+.icon-bubble2:before {
+  content: "\e96e";
+}
+.icon-rocket:before {
+  content: "\e9a5";
+}

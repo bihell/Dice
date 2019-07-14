@@ -1,0 +1,72 @@
+version: '3'
+services:
+  dice-nginx:
+    container_name: dice-nginx
+    build:
+      context: ./
+      dockerfile: ./dice-docker/dice-nginx/nginx-Dockerfile
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+    - "80:80"
+    volumes:
+    - ~/.dice/logs/nginx:/var/log/nginx
+    depends_on:
+    - dice-server
+    - dice-admin
+    - dice-front
+
+  dice-mysql:
+    container_name: dice-mysql
+    build:
+      context: ./
+      dockerfile: ./dice-docker/dice-mysql/dice-mysql-Dockerfile
+    environment:
+      MYSQL_DATABASE: dice
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+      TZ: Asia/Shanghai
+    expose:
+    - "3306"
+    volumes:
+    - ~/.dice/mysql/mysql_data:/var/lib/mysql
+    restart: always
+
+  dice-server:
+    container_name: dice-server
+    build:
+      context: ./
+      dockerfile: ./dice-docker/dice-server-Dockerfile
+    working_dir: /app
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+    - ./dice-server:/app
+    - ~/.m2:/root/.m2
+    - ~/.dice/logs/server:/app/log
+    expose:
+    - "9090"
+    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker -Dmaven.test.skip=true
+    depends_on:
+    - dice-mysql
+    restart: always
+
+  dice-admin:
+    container_name: dice-admin
+    build:
+      context: ./
+      dockerfile: ./dice-docker/dice-admin/dice-admin-Dockerfile
+    environment:
+      TZ: Asia/Shanghai
+    expose:
+    - "3001"
+
+  dice-front:
+    container_name: dice-front
+    build:
+      context: ./
+      dockerfile: ./dice-docker/dice-front-Dockerfile
+    environment:
+      TZ: Asia/Shanghai
+    expose:
+    - "3000"

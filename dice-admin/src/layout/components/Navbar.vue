@@ -7,6 +7,8 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
 
+        <search id="header-search" class="right-menu-item" />
+
         <error-log class="errLog-container right-menu-item hover-effect" />
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
@@ -30,7 +32,7 @@
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">Log Out</span>
+            <span style="display:block;" @click="logout">登出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -45,6 +47,7 @@ import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
+import Search from '@/components/HeaderSearch'
 
 export default {
   components: {
@@ -52,7 +55,8 @@ export default {
     Hamburger,
     ErrorLog,
     Screenfull,
-    SizeSelect
+    SizeSelect,
+    Search
   },
   computed: {
     ...mapGetters([

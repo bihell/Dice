@@ -21,7 +21,7 @@ public interface DiceConsts {
     /**
      * 默认分页大小
      */
-    String PAGE_SIZE = "10";
+    String PAGE_SIZE = "12";
 
     /**
      * 文章标题最大字数

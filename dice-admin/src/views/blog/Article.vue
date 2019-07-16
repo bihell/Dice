@@ -18,7 +18,6 @@
             <markdown-editor
               v-model="article.content"
               :on-save="onSave"
-              @keydown.native.meta.83="onSave"
             />
             <!-- 键修饰符，键别名 -->
           </el-form-item>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <el-table :data="commentDatas" border style="width: 100%">
       <el-table-column prop="id" label="id" width="60" />
       <el-table-column
@@ -37,7 +37,6 @@
           </el-button>
           <el-button
             size="small"
-            type="danger"
             @click="handleDelete(scope.row.id)"
           >删除
           </el-button>

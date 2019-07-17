@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <div class="tool-container" style="justify-content: flex-end">
       <el-button
         type="primary"

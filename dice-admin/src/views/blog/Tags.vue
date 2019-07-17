@@ -1,78 +1,68 @@
 <template>
-  <div style="margin-top: -30px">
+  <div class="app-container">
     <el-row :gutter="30">
-      <el-col :xs="24" :sm="12" :md="12" :lg="12" style="margin-top: 30px">
-        <div class="panel">
-          <div class="panel-content">
-            <div class="header">
-              <div class="title">标签列表</div>
-            </div>
-            <ul class="meta-list">
-              <li v-for="tag in tags" :key="tag.id">
-                <span class="meta" @click="clickTag(tag.id, tag.name)">{{
-                  tag.name
-                }}</span>
-                <span style="float: right;clear: both">
-                  <span class="meta-count">{{ tag.count }}</span>
-                  <el-button
-                    type="danger"
-                    size="small"
-                    @click="deleteTagHandle(tag.name)"
-                  >删除</el-button>
-                </span>
-              </li>
-            </ul>
-            <el-input
-              v-model.trim="tagName"
-              placeholder="请输入标签名称"
-              class="meta-input"
-            />
-            <el-button
-              type="success"
-              size="small"
-              style="float: right;clear: both"
-              @click="saveOrUpdateTag"
-            >保存标签
-            </el-button>
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>标签列表</span>
           </div>
-        </div>
+          <ul class="meta-list">
+            <li v-for="tag in tags" :key="tag.id">
+              <span class="meta" @click="clickTag(tag.id, tag.name)">{{
+                tag.name
+              }}</span>
+              <span style="float: right;clear: both">
+                <span class="meta-count">{{ tag.count }}</span>
+                <el-button
+                  size="small"
+                  @click="deleteTagHandle(tag.name)"
+                >删除</el-button>
+              </span>
+            </li>
+          </ul>
+          <el-input
+            v-model.trim="tagName"
+            placeholder="请输入标签名称"
+            class="meta-input"
+          />
+          <el-button
+            style="float: right;clear: both"
+            @click="saveOrUpdateTag"
+          >保存标签
+          </el-button>
+        </el-card>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="12" style="margin-top: 30px">
-        <div class="panel">
-          <div class="panel-content">
-            <div class="header">
-              <div class="title">分类列表</div>
-            </div>
-            <ul class="meta-list">
-              <li v-for="category in categories" :key="category.id">
-                <span
-                  class="meta"
-                  @click="clickCategory(category.id, category.name)"
-                >{{ category.name }}</span>
-                <span style="float: right;clear: both">
-                  <span class="meta-count">{{ category.count }}</span>
-                  <el-button
-                    type="danger"
-                    size="small"
-                    @click="deleteCategoryHandle(category.name)"
-                  >删除</el-button>
-                </span>
-              </li>
-            </ul>
-            <el-input
-              v-model.trim="categoryName"
-              placeholder="请输入分类名称"
-              class="meta-input"
-            />
-            <el-button
-              type="success"
-              size="small"
-              style="float: right;clear: both"
-              @click="saveOrUpdateCategory"
-            >保存分类
-            </el-button>
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
+        <el-card>
+          <div slot="header" class="clearfix">
+            <span>分类列表</span>
           </div>
-        </div>
+          <ul class="meta-list">
+            <li v-for="category in categories" :key="category.id">
+              <span
+                class="meta"
+                @click="clickCategory(category.id, category.name)"
+              >{{ category.name }}</span>
+              <span style="float: right;clear: both">
+                <span class="meta-count">{{ category.count }}</span>
+                <el-button
+                  size="small"
+                  @click="deleteCategoryHandle(category.name)"
+                >删除</el-button>
+              </span>
+            </li>
+          </ul>
+          <el-input
+            v-model.trim="categoryName"
+            placeholder="请输入分类名称"
+            class="meta-input"
+          />
+          <el-button
+            style="float: right;clear: both"
+            @click="saveOrUpdateCategory"
+          >保存分类
+          </el-button>
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -267,5 +257,21 @@ export default {
   width: 200px;
   margin-left: 5px;
   display: inline-block;
+}
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <div class="tool-container">
       <div>
         <span>
@@ -37,7 +37,7 @@
     </div>
 
     <el-table :data="articleDatas" border stripe style="width: 100%">
-      <el-table-column prop="id" label="id" width="60" />
+      <el-table-column prop="id" label="ID" width="60" />
       <el-table-column prop="title" label="标题" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-link
@@ -48,21 +48,22 @@
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="category" label="分类" show-overflow-tooltip>
+      <el-table-column prop="category" label="分类" width="200" show-overflow-tooltip>
         <template slot-scope="scope">
-          <span class="meta">{{ scope.row.category }}</span>
+          <el-tag effect="plain">{{ scope.row.category }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
         prop="status"
         label="状态"
-        width="100"
+        width="68"
         show-overflow-tooltip
       >
         <template slot-scope="scope">
           <el-tag
             :type="scope.row.status === '公开' ? 'success' : 'warning'"
             disable-transitions
+            effect="plain"
           >{{ scope.row.status }}
           </el-tag>
         </template>
@@ -82,13 +83,12 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <router-link :to="'/blog/article/edit/'+scope.row.id" class="link-type">
-            <el-button type="primary" size="small">
+            <el-button size="small">
               编辑
             </el-button>
           </router-link>
           <el-button
             size="small"
-            type="danger"
             @click="handleDelete(scope.row.id)"
           >删除
           </el-button>
@@ -215,16 +215,5 @@ export default {
 .admin-page {
   margin-top: 30px;
   text-align: center;
-}
-
-.meta {
-  margin: 0.4rem;
-  max-width: 350px;
-  padding: 0.4rem 0.5rem;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  border: 1px solid #ffd740;
-  background-color: #ffd740;
 }
 </style>

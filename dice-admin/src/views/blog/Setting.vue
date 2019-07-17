@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <el-tabs type="border-card">
       <el-tab-pane label="博客设置">
         <el-form ref="websiteForm" :model="options" :rules="websiteRules">

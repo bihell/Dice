@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <el-form ref="pageForm" :rules="rules" :model="page">
       <el-row :gutter="30">
         <el-col :xs="24" :sm="16" :md="16" :lg="16">

@@ -37,7 +37,7 @@
     </div>
 
     <el-table :data="articleDatas" border stripe style="width: 100%">
-      <el-table-column prop="id" label="ID" width="60" />
+      <el-table-column prop="id" label="ID" width="60" align="center"/>
       <el-table-column prop="title" label="标题" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-link
@@ -48,7 +48,7 @@
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="category" label="分类" width="200" show-overflow-tooltip>
+      <el-table-column prop="category" label="分类" width="150" align="center" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-tag effect="plain">{{ scope.row.category }}</el-tag>
         </template>
@@ -68,19 +68,17 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="发布日期" width="160" show-overflow-tooltip>
+      <el-table-column label="发布日期" width="150" show-overflow-tooltip align="center">
         <template slot-scope="scope">
-          <i class="el-icon-time" />
           <span style="margin-left: 10px">{{ scope.row.publish }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="修改日期" width="160" show-overflow-tooltip>
+      <el-table-column label="修改日期" width="150" show-overflow-tooltip align="center">
         <template slot-scope="scope">
-          <i class="el-icon-time" />
           <span style="margin-left: 10px">{{ scope.row.modified }}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column fixed="right" label="操作" width="140" align="center">
         <template slot-scope="scope">
           <router-link :to="'/blog/article/edit/'+scope.row.id" class="link-type">
             <el-button size="small">

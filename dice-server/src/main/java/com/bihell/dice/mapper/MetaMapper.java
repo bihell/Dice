@@ -1,10 +1,9 @@
 package com.bihell.dice.mapper;
 
 import com.bihell.dice.model.dto.MetaDto;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.model.domain.Meta;
 import org.apache.ibatis.annotations.*;
-import tk.mybatis.mapper.common.Mapper;
-
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
  * @author bihell
  * @since 2017/8/28 23:40
  */
-public interface MetaMapper extends Mapper<Meta> {
+public interface MetaMapper extends BaseMapper<Meta> {
 
     /**
      * 根据文章id获取该文章下的属性

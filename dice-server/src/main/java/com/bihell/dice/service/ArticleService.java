@@ -1,6 +1,6 @@
 package com.bihell.dice.service;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.dto.Archive;
 import com.bihell.dice.model.query.ArticleQuery;
@@ -18,11 +18,11 @@ public interface ArticleService {
     /**
      * 分页查询前端文章
      *
-     * @param page  当前页面
+     * @param current  当前页面
      * @param limit 每页数量
      * @return Page<Article>
      */
-    Page<Article> getFrontArticles(Integer page, Integer limit);
+    IPage<Article> getFrontArticles(Integer current, Integer limit);
 
     /**
      * 根据id获取前端文章
@@ -40,7 +40,7 @@ public interface ArticleService {
      * @param query 查询条件
      * @return Page<Article>
      */
-    Page<Article> getAdminArticles(Integer page, Integer limit, ArticleQuery query);
+    IPage<Article> getAdminArticles(Integer page, Integer limit, ArticleQuery query);
 
     /**
      * 根据id获取后端文章
@@ -104,7 +104,7 @@ public interface ArticleService {
      * @param limit 每页数量
      * @return Page<Article>
      */
-    Page<Article> getAdminPages(Integer page, Integer limit);
+    IPage<Article> getAdminPages(Integer page, Integer limit);
 
     /**
      * 根据id获取后端页面

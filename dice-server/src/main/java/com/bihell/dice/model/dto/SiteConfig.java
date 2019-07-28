@@ -2,6 +2,7 @@ package com.bihell.dice.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 网站设置 Dto
@@ -11,6 +12,7 @@ import lombok.Data;
  */
 @Data
 @Builder
+@Accessors(chain = true)
 public class SiteConfig {
 
     /**

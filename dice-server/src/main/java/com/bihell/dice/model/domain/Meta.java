@@ -1,9 +1,10 @@
 package com.bihell.dice.model.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
+import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 
 /**
  * 属性(分类和标签) Model
@@ -11,23 +12,21 @@ import javax.persistence.Entity;
  * @author bihell
  * @since 2017/8/28 23:04
  */
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Meta extends BaseEntity {
+@Accessors(chain = true)
+public class Meta extends Model<Meta> {
+    @TableId
+    private Integer id;
 
     /**
      * 属性名
      */
-    @Column(name = "name", columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
     /**
      * 属性类型
      */
-    @Column(name = "type", columnDefinition = "VARCHAR(45) NOT NULL")
     private String type;
 }

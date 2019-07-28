@@ -1,6 +1,6 @@
 package com.bihell.dice.service;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.model.domain.Comment;
 import com.bihell.dice.model.dto.CommentDto;
 import com.bihell.dice.util.Types;
@@ -27,7 +27,7 @@ public interface CommentService {
      * @param articleId 文章id
      * @return Page<Comment>
      */
-    Page<Comment> getCommentsByArticleId(Integer page, Integer limit, Integer articleId);
+    IPage<Comment> getCommentsByArticleId(Integer current, Integer limit, Integer articleId);
 
     /**
      * 获取文章下的评论
@@ -36,7 +36,7 @@ public interface CommentService {
      * @param limit 每页数量
      * @return Page<Comment>
      */
-    Page<Comment> getAdminComments(Integer page, Integer limit);
+    IPage<Comment> getAdminComments(Integer current, Integer limit);
 
     /**
      * 获取评论详情

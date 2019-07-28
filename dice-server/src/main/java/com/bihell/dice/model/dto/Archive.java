@@ -2,6 +2,7 @@ package com.bihell.dice.model.dto;
 
 import com.bihell.dice.model.domain.Article;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @since 2017/9/21 11:24
  */
 @Data
+@Accessors(chain = true)
 public class Archive {
 
     private String dateStr;

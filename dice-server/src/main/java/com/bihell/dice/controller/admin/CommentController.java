@@ -1,6 +1,6 @@
 package com.bihell.dice.controller.admin;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.domain.Comment;
 import com.bihell.dice.model.dto.CommentDto;
@@ -35,7 +35,7 @@ public class CommentController extends BaseController {
     @GetMapping
     public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer page,
                               @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit) {
-        Page<Comment> comments = commentService.getAdminComments(page, limit);
+        IPage<Comment> comments = commentService.getAdminComments(page, limit);
         return RestResponse.ok(new Pagination<Comment>(comments));
     }
 

@@ -2,10 +2,6 @@
 server:
   port: 9090
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   #mail
   mail:
     properties:
@@ -21,3 +17,7 @@ spring:
   jackson:
     date-format: yyyy/MM/dd HH:mm:ss
     time-zone: GMT+8
+mybatis-plus:
+                 global-config:
+                   db-config:
+                     id-type: auto

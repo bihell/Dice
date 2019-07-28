@@ -1,12 +1,13 @@
 package com.bihell.dice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.bihell.dice.mapper.MetaMapper;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.domain.Meta;
 import com.bihell.dice.model.domain.Middle;
 import com.bihell.dice.model.dto.MetaDto;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.ArticleMapper;
-import com.bihell.dice.mapper.MetaMapper;
 import com.bihell.dice.mapper.MiddleMapper;
 import com.bihell.dice.service.MetaService;
 import com.bihell.dice.util.Types;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -31,36 +31,55 @@ import java.util.Set;
 public class MetaServiceImpl implements MetaService {
 
     @Autowired
-    private MiddleMapper middleMapper;
-
-    @Autowired
     private MetaMapper metaMapper;
 
     @Autowired
     private ArticleMapper articleMapper;
 
+    @Autowired
+    private MiddleMapper middleMapper;
+
+    /**
+     * 根据属性以及属性下的已发布文章
+     *
+     * @param type 属性类型
+     * @return List<MetaDto>
+     */
     @Override
     public List<MetaDto> getPublishMetaDtos(String type) {
         type = verifyType(type);
         return metaMapper.selectPublishMetaDtos(type);
     }
 
+    /**
+     * 根据属性以及属性下的文章
+     *
+     * @param type 属性类型
+     * @return List<MetaDto>
+     */
     @Override
     public List<MetaDto> getMetaDtos(String type) {
         type = verifyType(type);
         return metaMapper.selectMetaDtos(type);
     }
 
+    /**
+     * 删除属性(同时删除关联文章的属性)
+     *
+     * @param name 属性名
+     * @param type 属性类型
+     * @return boolean
+     */
     @Override
     public boolean deleteMeta(String name, String type) {
         type = verifyType(type);
-        Meta meta = metaMapper.selectOne(new Meta(name, type));
+        Meta meta = new Meta().selectOne(new QueryWrapper<Meta>().lambda().eq(Meta::getName, name).eq(Meta::getType, type));
         if (null == meta) {
             throw new TipException("没有该名称的属性");
         }
-        List<Middle> middles = middleMapper.select(new Middle(null, meta.getId()));
+        List<Middle> middles = new Middle().selectList(new QueryWrapper<Middle>().lambda().eq(Middle::getMId, meta.getId()));
         for (Middle middle : middles) {
-            Article article = articleMapper.selectByPrimaryKey(middle.getAId());
+            Article article = new Article().selectById(middle.getAId());
             if (null != article) {
                 if (type.equals(Types.CATEGORY)) {
                     article.setCategory("");
@@ -68,15 +87,22 @@ public class MetaServiceImpl implements MetaService {
                 if (type.equals(Types.TAG)) {
                     article.setTags(this.resetMeta(name, article.getTags()));
                 }
-                articleMapper.updateByPrimaryKey(article);
+                article.insertOrUpdate();
             }
         }
 
-        middleMapper.delete(new Middle(null, meta.getId()));
-        metaMapper.delete(meta);
+        new Middle().delete(new QueryWrapper<Middle>().lambda().eq(Middle::getMId, meta.getId()));
+        meta.deleteById();
         return true;
     }
 
+    /**
+     * 保存属性
+     *
+     * @param name 属性名
+     * @param type 属性类型
+     * @return boolean
+     */
     @Override
     public boolean saveMeta(String name, String type) {
         if (StringUtils.isEmpty(name)) {
@@ -86,20 +112,28 @@ public class MetaServiceImpl implements MetaService {
         Meta metas = new Meta();
         metas.setType(type);
         metas.setName(name);
-        if (metaMapper.select(metas).size() > 0) {
+        if (new Meta().selectList(new QueryWrapper<Meta>().lambda().eq(Meta::getType, type).eq(Meta::getName, name)).size() > 0) {
             throw new TipException("该属性已经存在");
         }
 
         return metaMapper.insert(metas) > 0;
     }
 
+    /**
+     * 更新属性(同时更新关联文章的属性)
+     *
+     * @param id   属性id
+     * @param name 属性名
+     * @param type 属性类型
+     * @return boolean
+     */
     @Override
     public boolean updateMeta(Integer id, String name, String type) {
         if (StringUtils.isEmpty(name)) {
             throw new TipException("属性名不能为空");
         }
         type = verifyType(type);
-        Meta meta = metaMapper.selectByPrimaryKey(id);
+        Meta meta = new Meta().selectById(id);
         if (null == meta) {
             throw new TipException("没有该属性");
         }
@@ -112,7 +146,7 @@ public class MetaServiceImpl implements MetaService {
                 String newMetas = metas.replace(meta.getName(), name);
                 if (!newMetas.equals(metas)) {
                     article.setCategory(newMetas);
-                    articleMapper.updateByPrimaryKeySelective(article);
+                    article.insertOrUpdate();
                 }
             }
             if (type.equals(Types.TAG)) {
@@ -120,14 +154,22 @@ public class MetaServiceImpl implements MetaService {
                 String newMetas = metas.replace(meta.getName(), name);
                 if (!newMetas.equals(metas)) {
                     article.setTags(newMetas);
-                    articleMapper.updateByPrimaryKeySelective(article);
+                    article.insertOrUpdate();
                 }
             }
         }
         meta.setName(name);
-        return metaMapper.updateByPrimaryKeySelective(meta) > 0;
+        return meta.insertOrUpdate();
     }
 
+    /**
+     * 添加或者删除属性(同时添加或者删除关联文章的属性)
+     *
+     * @param names     属性名
+     * @param type      属性类型
+     * @param articleId 关联文章id
+     * @return boolean
+     */
     @Override
     public boolean saveOrRemoveMetas(String names, String type, Integer articleId) {
         type = verifyType(type);
@@ -139,7 +181,6 @@ public class MetaServiceImpl implements MetaService {
         saveMetas(names, type, articleId);
         return true;
     }
-
 
     /**
      * 添加names新加的属性到数据库
@@ -160,14 +201,16 @@ public class MetaServiceImpl implements MetaService {
                 continue;
             }
             if (!metaSet.contains(name)) {
-                Meta newMeta = new Meta(name, type);
-                Meta meta = metaMapper.selectOne(newMeta);
+                Meta newMeta = new Meta();
+                newMeta.setName(name);
+                newMeta.setType(type);
+                Meta meta = new Meta().selectOne(new QueryWrapper<Meta>().lambda().eq(Meta::getName, name).eq(Meta::getType, type));
                 if (null == meta) {
-                    metaMapper.insert(newMeta);
+                    newMeta.insert();
                 } else {
                     newMeta = meta;
                 }
-                middleMapper.insert(new Middle(articleId, newMeta.getId()));
+                middleMapper.insert(new Middle().setAId(articleId).setMId(newMeta.getId()));
             }
         }
     }
@@ -185,12 +228,10 @@ public class MetaServiceImpl implements MetaService {
         List<Meta> metas = metaMapper.selectByArticle(articleId, type);
         for (Meta meta : metas) {
             if (!nameSet.contains(meta.getName())) {
-                middleMapper.delete(new Middle(articleId, meta.getId()));
+                middleMapper.delete(new QueryWrapper<Middle>().lambda().eq(Middle::getAId, articleId).eq(Middle::getMId, meta.getId()));
             }
         }
-
     }
-
 
     /**
      * 验证Type是否为定义的

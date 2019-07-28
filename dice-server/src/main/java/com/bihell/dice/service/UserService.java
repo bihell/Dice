@@ -1,5 +1,6 @@
 package com.bihell.dice.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.model.domain.User;
 
 /**
@@ -8,7 +9,7 @@ import com.bihell.dice.model.domain.User;
  * @author bihell
  * @since 2017/7/12 21:25
  */
-public interface UserService {
+public interface UserService extends IService<User> {
 
     /**
      * 用户登陆

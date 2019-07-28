@@ -1,6 +1,6 @@
 package com.bihell.dice.service;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.model.domain.Log;
 
 /**
@@ -47,9 +47,9 @@ public interface LogService {
     /**
      * 获取日志
      *
-     * @param page  当前分页
+     * @param current  当前分页
      * @param limit 分页大小
      * @return Page<Log>
      */
-    Page<Log> getLogs(Integer page, Integer limit);
+    IPage<Log> getLogs(Integer current, Integer limit);
 }

@@ -17,14 +17,20 @@
           </el-radio-button>
         </el-radio-group>
       </div>
-      <div style="display: flex;justify-content: space-between;">
+      <div style="display: flex;">
         <el-input
           v-model="tool.title"
           placeholder="搜索文章标题"
-          prefix-icon="el-icon-search"
           clearable
           style="max-width: 300px;"
-          @change="init"
+          @keyup.enter.native="init"
+        />
+        <el-input
+          v-model="tool.content"
+          placeholder="搜索文章内容"
+          clearable
+          style="max-width: 300px;margin-left: 5px"
+          @keyup.enter.native="init"
         />
         <el-button
           type="primary"
@@ -37,7 +43,7 @@
     </div>
 
     <el-table :data="articleDatas" border stripe style="width: 100%">
-      <el-table-column prop="id" label="ID" width="60" align="center"/>
+      <el-table-column prop="id" label="ID" width="60" align="center" />
       <el-table-column prop="title" label="标题" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-link
@@ -111,7 +117,8 @@ export default {
     return {
       tool: {
         status: '',
-        title: ''
+        title: '',
+        content: ''
       },
       articleDatas: [],
       total: 0,
@@ -160,7 +167,7 @@ export default {
       })
     },
     init() {
-      this.$api.blog.getArticles(this.currentPage, this.tool.title, this.tool.status).then(data => {
+      this.$api.blog.getArticles(this.currentPage, this.tool.title, this.tool.status, this.tool.content).then(data => {
         this.initArticleDatas(data.list)
         this.total = data.total
         this.pageSize = data.pageSize
@@ -200,7 +207,7 @@ export default {
 
 <style scoped>
 .tool-container {
-  padding: 16px;
+  padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
   background: #fff;

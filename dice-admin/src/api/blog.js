@@ -20,13 +20,14 @@ const blog = {
     }
     return get('/admin/site/logs', params)
   },
-  getArticles(page, title, status, category, tag) {
+  getArticles(page, title, status, content, category, tag) {
     const params = {
       page: page,
       title: title,
       status: status,
       category: category,
-      tag: tag
+      tag: tag,
+      content: content
     }
     return get('/admin/article', params)
   },

@@ -21,4 +21,6 @@ public class ArticleQuery {
 
     private String category;
 
+    private String content;
+
 }

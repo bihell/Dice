@@ -109,8 +109,8 @@ public class ArticleServiceImpl implements ArticleService {
         Page<Article> page = new Page<>(current, limit);
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
-                .eq(Article::getType,Types.POST)
-                .ne(Article::getStatus,Types.DELETE)
+                .eq(Article::getType, Types.POST)
+                .ne(Article::getStatus, Types.DELETE)
                 .eq(!StringUtils.isEmpty(query.getStatus()), Article::getStatus, query.getStatus())
                 .like(!StringUtils.isEmpty(query.getTitle()), Article::getTitle, query.getTitle())
                 .like(!StringUtils.isEmpty(query.getTag()), Article::getTags, query.getTag())
@@ -259,7 +259,8 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Archive> getArchives() {
         List<Article> articles = new Article().selectList(new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, Types.PUBLISH)
-                .eq(Article::getType, Types.POST));
+                .eq(Article::getType, Types.POST)
+                .orderByDesc(Article::getCreated));
         List<Archive> archives = new ArrayList<>();
         String current = "";
         for (Article article : articles) {

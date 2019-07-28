@@ -1,11 +1,11 @@
 package com.bihell.dice.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.dto.ArticleInfoDto;
 import com.bihell.dice.util.Types;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @author bihell
  * @since 2017/7/8 10:39
  */
-public interface ArticleMapper extends Mapper<Article> {
+public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 根据metaId获取关联的文章

@@ -1,8 +1,10 @@
 package com.bihell.dice.model.dto;
 
-import com.bihell.dice.model.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * 文章信息Dto,用于一些列表页
@@ -12,18 +14,18 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class ArticleInfoDto extends BaseEntity {
+@Accessors(chain = true)
+public class ArticleInfoDto extends Model<ArticleInfoDto> {
+    @TableId
+    private Integer id;
     /**
      * 内容标题
      */
     private String title;
-
-
     /**
      * 标签列表
      */
     private String tags;
-
     /**
      * 文章分类
      */

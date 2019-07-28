@@ -1,9 +1,9 @@
 package com.bihell.dice.model.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import lombok.experimental.Accessors;
 
 /**
  * 关联标签和文章的中间 Model
@@ -11,17 +11,16 @@ import javax.persistence.Entity;
  * @author bihell
  * @since 2017/9/17 23:37
  */
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Middle extends BaseEntity {
+@Accessors(chain = true)
+public class Middle extends Model<Middle> {
 
-    @Column(name = "a_id", columnDefinition = "INT NOT NULL")
+    @TableId
+    private Integer id;
+
     private Integer aId;
 
-    @Column(name = "m_id", columnDefinition = "INT NOT NULL")
     private Integer mId;
 }

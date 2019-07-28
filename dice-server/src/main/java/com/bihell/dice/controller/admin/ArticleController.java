@@ -1,6 +1,6 @@
 package com.bihell.dice.controller.admin;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.dto.Pagination;
@@ -43,7 +43,7 @@ public class ArticleController extends BaseController {
     @GetMapping
     public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer page,
                               @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit, ArticleQuery query) {
-        Page<Article> articles = articleService.getAdminArticles(page, limit, query);
+        IPage<Article> articles = articleService.getAdminArticles(page, limit, query);
         return RestResponse.ok(new Pagination<Article>(articles));
     }
 

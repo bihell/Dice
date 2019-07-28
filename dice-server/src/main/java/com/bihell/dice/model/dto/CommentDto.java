@@ -4,6 +4,7 @@ import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.domain.Comment;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * 评论 Dto
@@ -13,6 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
+@Accessors(chain = true)
 public class CommentDto extends Comment {
 
     /**

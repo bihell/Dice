@@ -1,7 +1,7 @@
 package com.bihell.dice.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.mapper.LogMapper;
 import com.bihell.dice.model.domain.Log;
 import com.bihell.dice.service.LogService;
@@ -41,12 +41,20 @@ public class LogServiceImpl implements LogService {
         log.setType(type);
         log.setIp(ip);
         log.setUserId(userId);
-        logMapper.insertSelective(log);
+        log.insert();
     }
 
+    /**
+     * 获取日志
+     *
+     * @param current  当前分页
+     * @param limit 分页大小
+     * @return Page<Log>
+     */
     @Override
-    public Page<Log> getLogs(Integer page, Integer limit) {
-        return PageHelper.startPage(page, limit).doSelectPage(() -> logMapper.selectAll());
+    public IPage<Log> getLogs(Integer current, Integer limit) {
+        Page<Log> page = new Page<>(current,limit);
+        return logMapper.selectPage(page,null);
     }
 
 }

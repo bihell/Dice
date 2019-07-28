@@ -1,9 +1,10 @@
 package com.bihell.dice.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.exception.TipException;
-import com.bihell.dice.mapper.ArticleMapper;
 import com.bihell.dice.mapper.CommentMapper;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.domain.Comment;
@@ -37,10 +38,11 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
-    @Autowired
-    private ArticleMapper articleMapper;
-
-
+    /**
+     * 保存评论
+     *
+     * @param comment 评论entity
+     */
     @Override
     @CacheEvict(value = {COMMENT_CACHE_NAME, ArticleServiceImpl.ARTICLE_CACHE_NAME}, allEntries = true, beforeInvocation = true)
     public void save(Comment comment) {
@@ -66,26 +68,38 @@ public class CommentServiceImpl implements CommentService {
             throw new TipException("网址长度不能超过" + DiceConsts.MAX_COMMENT_WEBSITE_COUNT);
         }
 
-        Article article = articleMapper.selectByPrimaryKey(comment.getArticleId());
+        Article article = new Article().selectOne(new QueryWrapper<Article>().lambda().eq(Article::getAuthorId, comment.getArticleId()));
         if (null == article) {
             throw new TipException("无法查询到对应评论文章");
         }
 
-        commentMapper.insertSelective(comment);
+        comment.insert();
 
         // 增加文章的评论数
         article.setCommentCount(article.getCommentCount() + 1);
-        articleMapper.updateByPrimaryKeySelective(article);
+        article.updateById();
     }
 
+    /**
+     * 获取文章下的评论
+     *
+     * @param current   第几页
+     * @param limit     每页数量
+     * @param articleId 文章id
+     * @return Page<Comment>
+     */
     @Override
-    @Cacheable(value = COMMENT_CACHE_NAME, key = "'article_comments['+#page+':'+#limit+':'+#articleId+']'")
-    public Page<Comment> getCommentsByArticleId(Integer page, Integer limit, Integer articleId) {
-        Comment record = new Comment();
-        record.setArticleId(articleId);
-        record.setStatus(Types.COMMENT_STATUS_NORMAL);
-        Page<Comment> result = PageHelper.startPage(page, limit).doSelectPage(() -> commentMapper.select(record));
-        result.forEach(comments -> {
+    @Cacheable(value = COMMENT_CACHE_NAME, key = "'article_comments['+#current+':'+#limit+':'+#articleId+']'")
+    public IPage<Comment> getCommentsByArticleId(Integer current, Integer limit, Integer articleId) {
+
+        Page<Comment> page = new Page<>(current, limit);
+
+        LambdaQueryWrapper<Comment> wrapper = new QueryWrapper<Comment>().lambda()
+                .eq(Comment::getArticleId, articleId)
+                .eq(Comment::getStatus, Types.COMMENT_STATUS_NORMAL);
+        IPage<Comment> result = commentMapper.selectPage(page, wrapper);
+
+        result.getRecords().forEach(comments -> {
             String content = DiceUtil.contentTransform(comments.getContent(), false, true);
             comments.setContent(content);
         });
@@ -93,72 +107,98 @@ public class CommentServiceImpl implements CommentService {
         return result;
     }
 
+    /**
+     * 获取文章下的评论
+     *
+     * @param current 第几页
+     * @param limit   每页数量
+     * @return Page<Comment>
+     */
     @Override
-    public Page<Comment> getAdminComments(Integer page, Integer limit) {
-        Comment record = new Comment();
-        record.setStatus(Types.COMMENT_STATUS_NORMAL);
-        Page<Comment> result = PageHelper.startPage(page, limit).doSelectPage(() -> commentMapper.select(record));
-        result.forEach(comments -> {
-            String content = DiceUtil.contentTransform(comments.getContent(), false, false);
+    public IPage<Comment> getAdminComments(Integer current, Integer limit) {
+
+        Page<Comment> page = new Page<>(current, limit);
+
+        LambdaQueryWrapper<Comment> wrapper = new QueryWrapper<Comment>().lambda()
+                .eq(Comment::getStatus, Types.COMMENT_STATUS_NORMAL);
+        IPage<Comment> result = commentMapper.selectPage(page, wrapper);
+
+        result.getRecords().forEach(comments -> {
+            String content = DiceUtil.contentTransform(comments.getContent(), false, true);
             comments.setContent(content);
         });
 
         return result;
     }
 
+    /**
+     * 获取评论详情
+     *
+     * @param id 评论id
+     * @return CommentDto
+     */
     @Override
     @Cacheable(value = COMMENT_CACHE_NAME, key = "'comment_detail['+#id+']'")
     public CommentDto getCommentDetail(Integer id) {
-        Comment entity = commentMapper.selectByPrimaryKey(id);
+        Comment entity = new Comment().selectById(id);
         if (null == entity) {
             return null;
         }
         CommentDto comment = new CommentDto();
         BeanUtils.copyProperties(entity, comment);
         if (null != comment.getPId() && -1 != comment.getPId()) {
-            Comment pComment = commentMapper.selectByPrimaryKey(comment.getPId());
+            Comment pComment = new Comment().selectOne(new QueryWrapper<Comment>().lambda().eq(Comment::getPId, comment.getPId()));
             comment.setPComment(pComment);
         }
 
-        Article article = articleMapper.selectByPrimaryKey(comment.getArticleId());
+        Article article = new Article().selectById(comment.getArticleId());
         comment.setArticle(article);
         return comment;
     }
 
-
+    /**
+     * 删除评论
+     *
+     * @param id 评论id
+     * @return 删除是否成功
+     */
     @Override
     @CacheEvict(value = COMMENT_CACHE_NAME, allEntries = true, beforeInvocation = true)
     public boolean deleteComment(Integer id) {
-        Comment comment = commentMapper.selectByPrimaryKey(id);
+        Comment comment = new Comment().selectById(id);
         if (null == comment) {
             throw new TipException("不存在该评论");
         }
 
         // 减去文章中评论数
-        Article article = articleMapper.selectByPrimaryKey(comment.getArticleId());
+        Article article = new Article().selectById(comment.getArticleId());
         article.setCommentCount(article.getCommentCount() - 1);
-        articleMapper.updateByPrimaryKeySelective(article);
+        article.updateById();
 
         // 去除子评论中关联
-        Comment record = new Comment();
-        record.setPId(id);
-        Comment childComment = commentMapper.selectOne(record);
+        Comment childComment = new Comment().selectById(id);
         if (null != childComment) {
             childComment.setPId(null);
-            commentMapper.updateByPrimaryKey(childComment);
+            childComment.updateById();
         }
         comment.setStatus(Types.COMMENT_STATUS_DELETE);
-        if (commentMapper.updateByPrimaryKeySelective(comment) > 0) {
+        if (comment.updateById()) {
             log.info("删除评论: {}", comment);
             return true;
         }
         return false;
     }
 
+    /**
+     * 顶或踩评论
+     *
+     * @param commentId 评论给id
+     * @param assess    {@link Types#AGREE},{@link Types#DISAGREE}
+     */
     @Override
     @CacheEvict(value = COMMENT_CACHE_NAME, allEntries = true, beforeInvocation = true)
     public void assessComment(Integer commentId, String assess) {
-        Comment comment = commentMapper.selectByPrimaryKey(commentId);
+        Comment comment = new Comment().selectById(commentId);
         if (null == comment) {
             throw new TipException("没有该评论");
         }
@@ -170,15 +210,18 @@ public class CommentServiceImpl implements CommentService {
         } else {
             throw new TipException("assess参数错误");
         }
-        commentMapper.updateByPrimaryKey(comment);
+        comment.updateById();
     }
 
+    /**
+     * 评论数量
+     *
+     * @return 数量
+     */
     @Override
     @Cacheable(value = COMMENT_CACHE_NAME, key = "'comment_count'")
     public Integer count() {
-        Comment record = new Comment();
-        record.setStatus(Types.COMMENT_STATUS_NORMAL);
-        return commentMapper.selectCount(record);
+        return commentMapper.selectCount(new QueryWrapper<Comment>().lambda().eq(Comment::getStatus, Types.COMMENT_STATUS_NORMAL));
     }
 
 }

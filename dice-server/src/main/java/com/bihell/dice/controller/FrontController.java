@@ -1,6 +1,6 @@
 package com.bihell.dice.controller;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.domain.Comment;
 import com.bihell.dice.model.dto.Archive;
@@ -54,7 +54,7 @@ public class FrontController extends BaseController {
     @GetMapping("article")
     public RestResponse home(@RequestParam(required = false, defaultValue = "1") Integer page,
                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit) {
-        Page<Article> articles = articleService.getFrontArticles(page, limit);
+        IPage<Article> articles = articleService.getFrontArticles(page, limit);
         return RestResponse.ok(new Pagination<Article>(articles));
     }
 
@@ -154,7 +154,7 @@ public class FrontController extends BaseController {
     @GetMapping("comment")
     public RestResponse getArticleComment(@RequestParam Integer articleId, @RequestParam(required = false, defaultValue = "1") Integer page,
                                           @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit) {
-        Page<Comment> comments = commentService.getCommentsByArticleId(page, limit, articleId);
+        IPage<Comment> comments = commentService.getCommentsByArticleId(page, limit, articleId);
         return RestResponse.ok(new Pagination<Comment>(comments));
     }
 

@@ -1,6 +1,6 @@
 package com.bihell.dice.model.dto;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.Data;
 
 import java.util.List;
@@ -13,25 +13,21 @@ import java.util.List;
  */
 @Data
 public class Pagination<T> {
-    private int pageNum;
-    private int pageSize;
+    private long pageNum;
+    private long pageSize;
     private long total;
-    private int pages;
-    private boolean count;
-    private String orderBy;
+    private long pages;
     private List<T> list;
 
     public Pagination() {
     }
 
     @SuppressWarnings("unchecked")
-    public Pagination(Page page) {
-        pageNum = page.getPageNum();
-        pageSize = page.getPageSize();
+    public Pagination(IPage page) {
+        pageNum = page.getCurrent();
+        pageSize = page.getSize();
         total = page.getTotal();
         pages =page.getPages();
-        count = page.isCount();
-        orderBy = page.getOrderBy();
-        list = page.getResult();
+        list = page.getRecords();
     }
 }

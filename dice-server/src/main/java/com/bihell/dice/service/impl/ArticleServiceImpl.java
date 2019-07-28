@@ -111,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .eq(Article::getType,Types.POST)
                 .ne(Article::getStatus,Types.DELETE)
                 .eq(!StringUtils.isEmpty(query.getStatus()), Article::getStatus, query.getStatus())
-                .like(!StringUtils.isEmpty(query.getTitle()), Article::getType, query.getTitle())
+                .like(!StringUtils.isEmpty(query.getTitle()), Article::getTitle, query.getTitle())
                 .like(!StringUtils.isEmpty(query.getTag()), Article::getTags, query.getTag())
                 .like(!StringUtils.isEmpty(query.getCategory()), Article::getCategory, query.getCategory());
 

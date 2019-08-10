@@ -1,12 +1,14 @@
 #datasource
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://dice-mysql:3306/dice?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
-  jpa:
-    show-sql: false
+    dynamic:
+      primary: diceMaster
+      datasource:
+        diceMaster:
+          username: root
+          password: root
+          url: jdbc:mysql://localhost:3306/dice?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+          driver-class-name: com.mysql.cj.jdbc.Driver
 #log
 logging:
   level:

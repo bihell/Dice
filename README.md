@@ -16,7 +16,7 @@
 ```
 ├── dice
 │   ├── dice-admin          // 管理后台，使用vue-element-admin，它基于 vue 和 element-ui实现
-│   ├── dice-docker         // docker部署文件
+│   ├── dice-docker         // docker部署文件
 │   ├── dice-front          // 博客前端，使用 Fame，基于 vue 和 nuxt
 │   ├── dice-server         // 管理服务端，基于 spring-boot全家桶
 │   └── docker-compose.yml  // docker-compose文件

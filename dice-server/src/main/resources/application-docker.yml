@@ -1,6 +1,10 @@
 #datasource
 spring:
   datasource:
+    druid:
+      stat-view-servlet:
+        loginUsername: admin
+        loginPassword: 123456
     dynamic:
       primary: diceMaster
       datasource:

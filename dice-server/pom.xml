@@ -17,18 +17,35 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <mybatis-spring-boot.version>1.3.2</mybatis-spring-boot.version>
-        <mapper-spring-boot.version>2.1.5</mapper-spring-boot.version>
-        <pagehelper-spring-boot.version>1.2.10</pagehelper-spring-boot.version>
+        <mybatis-plus-boot.version>3.1.2</mybatis-plus-boot.version>
+        <dynamic-datasource-spring-boot.version>2.5.6</dynamic-datasource-spring-boot.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <flexmark.version>0.34.58</flexmark.version>
     </properties>
 
     <dependencies>
 
         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.1.2</version>
+            <version>${mybatis-plus-boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <groupId>com.baomidou</groupId>
+            <version>${dynamic-datasource-spring-boot.version}</version>
         </dependency>
 
         <!-- spring-mvc -->

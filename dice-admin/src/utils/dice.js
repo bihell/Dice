@@ -8,7 +8,8 @@ const STATIC = {
   STATUS_PUBLISH: 'publish',
   STATUS_DRAFT: 'draft',
   META_CATEGORY: 'category',
-  META_TAG: 'tag'
+  META_TAG: 'tag',
+  META_SNIPPET_TAG: 'snippet_tag'
 }
 
 /** **********************************************************/

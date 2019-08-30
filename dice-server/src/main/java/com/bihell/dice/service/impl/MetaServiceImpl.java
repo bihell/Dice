@@ -228,7 +228,9 @@ public class MetaServiceImpl implements MetaService {
         List<Meta> metas = metaMapper.selectByArticle(articleId, type);
         for (Meta meta : metas) {
             if (!nameSet.contains(meta.getName())) {
-                middleMapper.delete(new QueryWrapper<Middle>().lambda().eq(Middle::getAId, articleId).eq(Middle::getMId, meta.getId()));
+                middleMapper.delete(new QueryWrapper<Middle>().lambda()
+                        .eq(Middle::getAId, articleId)
+                        .eq(Middle::getMId, meta.getId()));
             }
         }
     }
@@ -243,6 +245,8 @@ public class MetaServiceImpl implements MetaService {
             case Types.CATEGORY:
                 return type;
             case Types.TAG:
+                return type;
+            case Types.SNIPPET_TAG:
                 return type;
             default:
                 throw new TipException("传输的属性类型不合法");

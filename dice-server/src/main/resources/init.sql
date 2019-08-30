@@ -89,6 +89,38 @@ CREATE TABLE log
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+create table snippet
+(
+    id                  int auto_increment
+        primary key,
+    title               varchar(255)                        null,
+    tags                varchar(255)                        null,
+    created_at          timestamp default CURRENT_TIMESTAMP not null,
+    updated_at          timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    description         text                                null,
+    snippet_files_count int       default 0                 not null
+);
+
+create index index_snippets_on_label_id
+    on snippet (tags);
+
+
+create table snippet_files
+(
+    id         int auto_increment
+        primary key,
+    title      varchar(255)                        not null,
+    content    text                                null,
+    language   varchar(20)                         null,
+    tabs       int                                 null,
+    snippet_id int                                 null,
+    created_at timestamp default CURRENT_TIMESTAMP not null,
+    updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+);
+
+create index index_snippet_files_on_snippet_id
+    on snippet_files (snippet_id);
+
 
 INSERT INTO user (username, password_md5, email, screen_name)
 VALUES ('dice', '3e6693e83d186225b85b09e71c974d2d', '', 'admin');

@@ -1,6 +1,6 @@
 #端口号
 server:
-  port: 9090
+  port: 9091
 spring:
   #mail
   mail:

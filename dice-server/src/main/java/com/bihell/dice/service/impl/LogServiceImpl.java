@@ -5,9 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.mapper.LogMapper;
 import com.bihell.dice.model.domain.Log;
 import com.bihell.dice.service.LogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * 日志 Service 实现类
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Throwable.class)
 public class LogServiceImpl implements LogService {
 
-    @Autowired
+    @Resource
     private LogMapper logMapper;
 
     @Override

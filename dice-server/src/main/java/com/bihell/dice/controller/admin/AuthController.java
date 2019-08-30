@@ -5,10 +5,10 @@ import com.bihell.dice.model.domain.User;
 import com.bihell.dice.service.UserService;
 import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.RestResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/v1/api/admin/user")
 public class AuthController extends BaseController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     /**

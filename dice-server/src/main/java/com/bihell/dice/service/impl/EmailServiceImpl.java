@@ -8,7 +8,6 @@ import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.OptionKeys;
 import com.bihell.dice.util.Types;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -20,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
@@ -35,13 +35,13 @@ import java.util.Date;
 @Transactional(rollbackFor = Throwable.class)
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired
+    @Resource
     private OptionService optionService;
 
-    @Autowired
+    @Resource
     private LogService logService;
 
-    @Autowired
+    @Resource
     private TemplateEngine templateEngine;
 
     @Override

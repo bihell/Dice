@@ -4,9 +4,9 @@ import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.service.OptionService;
 import com.bihell.dice.util.RestResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -18,7 +18,7 @@ import java.util.Map;
 @RequestMapping("/v1/api/admin/option")
 public class OptionController extends BaseController {
 
-    @Autowired
+    @Resource
     private OptionService optionService;
 
     /**

@@ -1,17 +1,16 @@
 package com.bihell.dice.controller.admin;
 
 import com.bihell.dice.model.domain.Article;
-import com.bihell.dice.model.domain.Snippet;
-import com.bihell.dice.model.domain.User;
 import com.bihell.dice.service.ArticleService;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 代码片段 Controller
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/api/admin/snippet")
 public class SnippetController {
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
     /**

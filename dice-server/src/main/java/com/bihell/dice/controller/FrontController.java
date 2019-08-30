@@ -12,10 +12,10 @@ import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -29,19 +29,19 @@ import java.util.Map;
 @RequestMapping("/v1/api")
 public class FrontController extends BaseController {
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private MetaService metaService;
 
-    @Autowired
+    @Resource
     private CommentService commentService;
 
-    @Autowired
+    @Resource
     private EmailService emailService;
 
-    @Autowired
+    @Resource
     private OptionService optionService;
 
     /**

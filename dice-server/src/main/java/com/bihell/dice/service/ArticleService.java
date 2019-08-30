@@ -122,6 +122,15 @@ public interface ArticleService {
      */
     Integer savePage(Article page);
 
+
+    /**
+     * 保存或更新代码段
+     *
+     * @param snippet 代码段entity
+     * @return Integer
+     */
+    Integer saveSnippet(Article snippet);
+
     /**
      * 根据id删除自定义页面
      *

@@ -28,7 +28,10 @@ public interface Types {
      * 属性分类:标签
      */
     String TAG = "tag";
-
+    /**
+     * 属性分类:代码段标签
+     */
+    String SNIPPET_TAG = "snippet_tag";
     /**
      * 文章类型:博客
      */
@@ -37,7 +40,10 @@ public interface Types {
      * 文章类型:自定义页面
      */
     String PAGE = "page";
-
+    /**
+     * 文章类型:代码段
+     */
+    String SNIPPET = "snippet";
     /**
      * 评论状态:正常
      */

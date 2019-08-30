@@ -18,13 +18,13 @@ import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.Types;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,15 +40,15 @@ import java.util.List;
 @Transactional(rollbackFor = Throwable.class)
 public class ArticleServiceImpl implements ArticleService {
 
-    public static final String ARTICLE_CACHE_NAME = "articles";
+    static final String ARTICLE_CACHE_NAME = "articles";
 
-    @Autowired
+    @Resource
     private ArticleMapper articleMapper;
 
-    @Autowired
+    @Resource
     private MetaService metasService;
 
-    @Autowired
+    @Resource
     private CommentMapper commentsMapper;
 
     /**
@@ -379,6 +379,46 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return page.getId();
+    }
+
+    /**
+     * 保存或更新代码段
+     *
+     * @param snippet 代码段entity
+     * @return Integer
+     */
+    @Override
+    public Integer saveSnippet(Article snippet) {
+        if (null == snippet) {
+            throw new TipException("自定义代码段对象为空");
+        }
+        if (StringUtils.isEmpty(snippet.getTitle())) {
+            throw new TipException("自定义代码段标题不能为空");
+        }
+        if (snippet.getTitle().length() > DiceConsts.MAX_TITLE_COUNT) {
+            throw new TipException("自定义代码段标题字数不能超过" + DiceConsts.MAX_TITLE_COUNT);
+        }
+
+        if (StringUtils.isEmpty(snippet.getContent())) {
+            throw new TipException("自定义代码段内容不能为空");
+        }
+        if (snippet.getContent().length() > DiceConsts.MAX_CONTENT_COUNT) {
+            throw new TipException("自定义代码段容字数不能超过" + DiceConsts.MAX_CONTENT_COUNT);
+        }
+
+        if (null != snippet.getId()) {
+            snippet.updateById();
+        } else {
+            snippet.setType(Types.SNIPPET);
+            snippet.insert();
+        }
+
+        Integer id = snippet.getId();
+
+        // 存储分类和标签
+        metasService.saveOrRemoveMetas(snippet.getTags(), Types.SNIPPET_TAG, id);
+
+        return snippet.getId();
     }
 
     /**

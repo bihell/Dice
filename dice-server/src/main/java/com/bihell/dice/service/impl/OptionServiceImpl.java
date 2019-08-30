@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Transactional(rollbackFor = Throwable.class)
 public class OptionServiceImpl implements OptionService {
 
-    public static final String OPTION_CACHE_NAME = "options";
+    private static final String OPTION_CACHE_NAME = "options";
 
     /**
      * 获取所有设置的key-value

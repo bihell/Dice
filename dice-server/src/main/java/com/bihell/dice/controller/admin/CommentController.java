@@ -9,8 +9,9 @@ import com.bihell.dice.service.CommentService;
 import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * 后台评论管理 Controller
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/api/admin/comment")
 public class CommentController extends BaseController {
 
-    @Autowired
+    @Resource
     private CommentService commentService;
 
     /**

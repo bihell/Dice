@@ -30,14 +30,7 @@ public interface MetaMapper extends BaseMapper<Meta> {
      * @param type 属性类型
      * @return List<MetaDto>
      */
-    @Select("select * from dice.meta meta where meta.type = #{type}")
-    @Results({
-            @Result(id = true, column = "id", property = "id"),
-            @Result(column = "name", property = "name"),
-            @Result(column = "type", property = "type"),
-            @Result(column = "id", property = "count",
-                    one = @One(select = "com.bihell.dice.mapper.ArticleMapper.selectCountByMeta"))
-    })
+    @SelectProvider(type = MetaSql.class, method = "selectMetaDtos")
     List<MetaDto> selectMetaDtos(@Param("type") String type);
 
     /**

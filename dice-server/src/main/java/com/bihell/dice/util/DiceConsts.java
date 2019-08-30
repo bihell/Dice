@@ -80,4 +80,9 @@ public interface DiceConsts {
      */
     String EMAIL_TEMPLATE_DEFAULT_SUBJECT = "来自BIHell博客网站发送的邮件";
 
+    /**
+     * 代码段描述最大字数
+     */
+    Integer MAX_SNIPPET_DESCRIPTION_COUNT = 200000;
+
 }

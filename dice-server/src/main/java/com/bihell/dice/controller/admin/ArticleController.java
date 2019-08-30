@@ -12,9 +12,10 @@ import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * 后台文章管理 Controller
@@ -26,10 +27,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/api/admin/article")
 public class ArticleController extends BaseController {
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private LogService logService;
 
 

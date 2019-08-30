@@ -63,6 +63,12 @@ const blogRouter = {
       name: 'CreatePage',
       meta: { title: '创建页面', activeMenu: '/blog/page' },
       hidden: true
+    },
+    {
+      path: 'index',
+      component: () => import('@/views/blog/Setting'),
+      name: 'Setting',
+      meta: { title: '网站设置', icon: 'setting' }
     }
   ]
 }

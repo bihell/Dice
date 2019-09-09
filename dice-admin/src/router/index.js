@@ -80,18 +80,18 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   blogRouter,
-  // {
-  //   path: '/snippet',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/snippet/index'),
-  //       name: 'snippet',
-  //       meta: { title: '代码片段', icon: 'setting' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/snippet',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/snippet/Repository.vue'),
+        name: 'snippet',
+        meta: { title: '代码片段', icon: 'setting' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

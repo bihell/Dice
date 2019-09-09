@@ -8,7 +8,6 @@ import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
-
 import App from './App'
 import store from './store'
 import router from './router'
@@ -23,6 +22,11 @@ import User from './api/user'
 import DiceUtil from './utils/dice'
 import serverConfig from '../server-config'
 import dayjs from 'dayjs'
+
+import VueHighlightJS from 'vue-highlightjs'
+
+// Tell Vue.js to use vue-highlightjs
+Vue.use(VueHighlightJS)
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size

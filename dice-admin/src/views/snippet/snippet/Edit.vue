@@ -1,0 +1,26 @@
+<template>
+  <snippet-form :title="title" :action="action"></snippet-form>
+</template>
+
+<script>
+import SnippetForm from './Form.vue'
+
+export default {
+  name: 'SnippetEdit',
+
+  components: { SnippetForm },
+
+  data() {
+    return {
+      action: 'update'
+    }
+  },
+
+  computed: {
+    title() {
+      return 'Edit snippet&nbsp;<span class="is-italic">' + 'test title' + '</span>'
+      // return 'Edit snippet&nbsp;<span class="is-italic">' + this.$store.state.labelSnippets.active.title + '</span>'
+    }
+  }
+}
+</script>

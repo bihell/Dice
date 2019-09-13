@@ -19,13 +19,16 @@ public interface MetaService {
      */
     List<MetaDto> getPublishMetaDtos(String type);
 
+
     /**
      * 根据属性以及属性下的文章
      *
-     * @param type 属性类型
-     * @return List<MetaDto>
+     * @param type
+     * @param title
+     * @param snippetFileContent
+     * @return
      */
-    List<MetaDto> getMetaDtos(String type);
+    List<MetaDto> getMetaDtos(String type,String title,String snippetFileContent);
 
     /**
      * 删除属性(同时删除关联文章的属性)

@@ -1,4 +1,19 @@
-const getters = {
+import _ from 'lodash'
+
+export default {
+  labels: state => {
+    return state.labels.items
+  },
+
+  labelSnippets: state => {
+    return state.labelSnippets.items
+  },
+
+  untagged: state => {
+    return _.filter(state.snippets, v => {
+      return _.isEmpty(v.label.name)
+    })
+  },
   sidebar: state => state.app.sidebar,
   size: state => state.app.size,
   device: state => state.app.device,
@@ -12,4 +27,3 @@ const getters = {
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs
 }
-export default getters

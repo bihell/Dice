@@ -50,6 +50,16 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<ArticleInfoDto> selectPublishByMeta(@Param("metaId") Integer metaId);
 
     /**
+     * 根据metaId获取关联的已发布代码段
+     *
+     * @param metaId 属性id
+     * @return List<Article>
+     */
+    @Select("SELECT * FROM dice.article WHERE id " +
+            "IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) order by created desc")
+    List<ArticleInfoDto> selectSnippetByMeta(@Param("metaId") Integer metaId);
+
+    /**
      * 根据metaId获取关联已发布文章的数量
      *
      * @param metaId 属性id

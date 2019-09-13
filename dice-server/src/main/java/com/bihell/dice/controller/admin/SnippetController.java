@@ -1,14 +1,10 @@
 package com.bihell.dice.controller.admin;
 
-import com.bihell.dice.model.domain.Article;
-import com.bihell.dice.service.ArticleService;
+import com.bihell.dice.controller.BaseController;
+import com.bihell.dice.model.dto.Snippet;
+import com.bihell.dice.service.SnippetService;
 import com.bihell.dice.util.RestResponse;
-import com.bihell.dice.util.Types;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,44 +16,57 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/v1/api/admin/snippet")
-public class SnippetController {
+public class SnippetController extends BaseController {
 
     @Resource
-    private ArticleService articleService;
+    private SnippetService snippetService;
 
     /**
-     * 新建或修改文章
+     * 创建或更新代码段
      *
-     * @param id           代码段说明id
-     * @param title        代码段说明标题
-     * @param content      代码段说明内容
-     * @param tags         代码段说明标签
-     * @param status       {@link Types#DRAFT},{@link Types#PUBLISH}
-     * @param allowComment 是否允许评论
-     * @return {@see RestResponse.ok()}
+     * @param snippet 代码段实体
+     * @return articleId
      */
-    @PostMapping
-    public RestResponse saveSnippet(@RequestParam(value = "id", required = false) Integer id,
-                                    @RequestParam(value = "title") String title,
-                                    @RequestParam(value = "content") String content,
-                                    @RequestParam(value = "tags") String tags,
-                                    @RequestParam(value = "status", defaultValue = Types.PUBLISH) String status,
-                                    @RequestParam(value = "allowComment", defaultValue = "false") Boolean allowComment,
-                                    @RequestParam(value = "created") Long created,
-                                    @RequestParam(value = "modified") Long modified) {
-        Article snippet = new Article();
-        if (!StringUtils.isEmpty(id)) {
-            snippet.setId(id);
-        }
-        snippet.setTitle(title);
-        snippet.setContent(content);
-        snippet.setTags(tags);
-        snippet.setStatus(status);
-        snippet.setAllowComment(allowComment);
-        snippet.setCreated(new java.util.Date(created));
-        snippet.setModified(new java.util.Date(modified));
-        snippet.setAuthorId(1);
-        Integer articleId = articleService.saveSnippet(snippet);
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public RestResponse saveSnippet(@RequestBody Snippet snippet) {
+        Integer articleId = snippetService.saveSnippet(snippet);
         return RestResponse.ok(articleId);
     }
+
+    /**
+     * 删除代码段
+     *
+     * @param snippetId 代码段id
+     * @return {@see RestResponse.ok()}
+     */
+    @DeleteMapping
+    public RestResponse deleteSnippet(@RequestParam(value = "snippetId") Integer snippetId) {
+        if (snippetService.deleteSnippet(snippetId)) {
+            return RestResponse.ok("删除代码段成功");
+        } else {
+            return RestResponse.fail();
+        }
+    }
+
+    /**
+     * 根据 id 获取代码段
+     *
+     * @param snippetId 代码段 id
+     * @return Snippet
+     */
+    @GetMapping
+    public RestResponse getSnippetById(@RequestParam(value = "snippetId") Integer snippetId) {
+        return RestResponse.ok(snippetService.getSnippetById(snippetId));
+    }
+
+    /**
+     * 标签页
+     *
+     * @return {@see List<MetaDto>}
+     */
+    @GetMapping("snippet_title")
+    public RestResponse getSnippetTitle(@RequestParam(value = "metaId") Integer metaId) {
+        return RestResponse.ok(snippetService.getSnippetByMeta(metaId));
+    }
+
 }

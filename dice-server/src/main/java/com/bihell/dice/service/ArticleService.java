@@ -88,7 +88,6 @@ public interface ArticleService {
      */
     List<Archive> getArchives();
 
-
     /**
      * 根据title获取前端自定义页面
      *
@@ -121,7 +120,6 @@ public interface ArticleService {
      * @return Integer
      */
     Integer savePage(Article page);
-
 
     /**
      * 保存或更新代码段

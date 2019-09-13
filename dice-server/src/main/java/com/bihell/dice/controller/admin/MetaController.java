@@ -26,8 +26,10 @@ public class MetaController extends BaseController {
      * @return {@see List<MetaDto>}
      */
     @GetMapping
-    public RestResponse getAll(@RequestParam String type) {
-        return RestResponse.ok(metaService.getMetaDtos(type));
+    public RestResponse getAll(@RequestParam String type,
+                               @RequestParam(required = false) String title,
+                               @RequestParam(required = false) String snippetFileContent) {
+        return RestResponse.ok(metaService.getMetaDtos(type, title, snippetFileContent));
     }
 
     /**

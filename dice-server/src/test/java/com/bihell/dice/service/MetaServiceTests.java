@@ -14,32 +14,32 @@ public class MetaServiceTests {
     MetaService metaService;
 
     @Test
-    public void getPublishMetaDtos(){
+    public void getPublishMetaDtos() {
         metaService.getPublishMetaDtos("category").forEach(System.out::println);
     }
 
     @Test
-    public void selectMetaDtos(){
-        metaService.getMetaDtos("category").forEach(System.out::println);
+    public void selectMetaDtos() {
+        metaService.getMetaDtos("category", null, null).forEach(System.out::println);
     }
 
     @Test
-    public void deleteMeta(){
-        metaService.deleteMeta("asdf","tag");
+    public void deleteMeta() {
+        metaService.deleteMeta("asdf", "tag");
     }
 
     @Test
-    public void saveMeta(){
-        metaService.saveMeta("test1","category");
+    public void saveMeta() {
+        metaService.saveMeta("test1", "category");
     }
 
     @Test
-    public void updateMeta(){
-        metaService.updateMeta(4,"fgg1","category");
+    public void updateMeta() {
+        metaService.updateMeta(4, "fgg1", "category");
     }
 
     @Test
-    public void saveOrRemoveMetas(){
-        metaService.saveOrRemoveMetas("test1","category",2);
+    public void saveOrRemoveMetas() {
+        metaService.saveOrRemoveMetas("test1", "category", 2);
     }
 }

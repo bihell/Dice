@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       title: 'New snippet',
-      action: 'create'
+      action: '创建'
     }
   }
 }

@@ -43,7 +43,6 @@ import Card from '../Card.vue'
 import ClipboardJS from 'clipboard'
 import CollapsibleControls from '../CollapsibleControls.vue'
 import * as HighlighterHelper from '../../../utils/highlighter_helper'
-// import Notifications from '../../utils/notifications'
 import VueMarkdown from 'vue-markdown'
 
 export default {
@@ -51,7 +50,10 @@ export default {
 
   components: { Card, CollapsibleControls, VueMarkdown },
 
-  props: ['index', 'collapse'],
+  props: {
+    index: { type: Number, default: undefined },
+    collapse: { type: Boolean, default: undefined }
+  },
 
   data() {
     return {
@@ -61,10 +63,6 @@ export default {
   },
 
   computed: {
-    linkRaw() {
-      return '/api/v1/snippets/' + this.snippet.id + '/raw/' + this.snippetFile.id
-    },
-
     snippet() {
       return this.$store.state.labelSnippets.active
     },
@@ -88,9 +86,19 @@ export default {
     this.clipboard = new ClipboardJS(`#snippet-copy-${this.index}`)
 
     this.clipboard.on('success', e => {
-      // Notifications.toast.success('Copied!')
+      this.$notify({
+        title: 'Success',
+        message: '代码段已拷贝',
+        type: 'success',
+        duration: 2000
+      })
     }).on('error', e => {
-      // Notifications.toast.error('Unable to copy snippet.')
+      this.$notify({
+        title: 'error',
+        message: '代码段拷贝失败！',
+        type: 'error',
+        duration: 2000
+      })
     })
   },
 

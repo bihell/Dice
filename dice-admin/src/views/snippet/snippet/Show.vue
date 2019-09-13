@@ -1,7 +1,7 @@
 <template>
 
   <div id="show-snippet">
-    <header slot="card-header" class="card-header">
+    <header slot="card-header" class="card-header" style="height: 54px">
       <div class="card-header-title with-text-overflow">
         {{ snippet.id ? snippet.title : '请选择「代码段」' }}
       </div>
@@ -40,21 +40,13 @@
 
 <script>
 import SnippetFileShow from '../snippet_file/Show.vue'
-import { deleteSnippet } from '@/api/snippet'
+import { deleteSnippet, getSnippetByMeta, getAllTags } from '@/api/snippet'
 import Factory from '../mixins/factory'
 
 export default {
   name: 'SnippetShow',
-  // props: ['index'],
 
   components: { SnippetFileShow },
-  // data() {
-  //   return {
-  //     // tags: [{ name: 'bihell', count: 12, active: 1 }, { name: 'dice', count: 10086, active: 0 }],
-  //     // showSnippet: 'show'
-  //     // snippet: { title: 'test title', id: 1, description: 'test description', snippetFiles: [{ id: 2 }, { id: 3 }] }
-  //   }
-  // },
 
   computed: {
     showSnippetFile() {
@@ -62,7 +54,6 @@ export default {
     },
 
     snippet() {
-      console.log(this.$store.state.labelSnippets.active)
       return this.$store.state.labelSnippets.active
     }
   },
@@ -73,22 +64,30 @@ export default {
       this.$store.commit('setSnippetMode', 'edit')
     },
     destroySnippet() {
-      deleteSnippet(this.$store.state.labelSnippets.active.id).then(response => {
-        this.$store.commit('setActiveLabelSnippet', Factory.methods.factory().snippet)
-        this.$store.dispatch('setDefaultActiveEntities')
-      })
+      // TODO: 这里 getAllTags 和 getSnippetByMeta 代码重复，需要优化
+      async function destroyData(store) {
+        await deleteSnippet(store.state.labelSnippets.active.id)
+        // 更新标签列表
+        getAllTags(store.state.querySnippet).then(response => {
+          store.commit('setLabels', response.data)
+        })
+        // 更新代码段列表
+        getSnippetByMeta(store.state.labels.active).then(response => {
+          store.commit('setLabelSnippets', response.data)
+        })
+      }
 
-      // Notifications.confirm(
-      //   'Are you really sure you want to delete snippet ' +
-      //       "<span class='has-text-weight-bold is-italic'>" +
-      //       this.snippet.title +
-      //       '</span>?',
-      //   result => {
-      //     if (result.value) {
-      //       Backend.snippet.destroy(this)
-      //     }
-      //   })
-    } }
+      // 删除代码段确认
+      this.$msgbox.confirm('确定要删除代码段「' + this.$store.state.labelSnippets.active.title + '」吗？', '删除代码段', {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        destroyData(this.$store)
+        this.$store.commit('setActiveLabelSnippet', Factory.methods.factory().snippet)
+      }).catch(() => {})
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

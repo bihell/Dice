@@ -12,13 +12,12 @@ export default {
 
   data() {
     return {
-      action: 'update'
+      action: '更新'
     }
   },
 
   computed: {
     title() {
-      // return 'Edit snippet&nbsp;<span class="is-italic">' + 'test title' + '</span>'
       return '编辑代码段 &nbsp;<span class="is-italic">' + this.$store.state.labelSnippets.active.title + '</span>'
     }
   }

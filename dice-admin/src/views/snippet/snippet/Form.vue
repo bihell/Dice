@@ -1,6 +1,6 @@
 <template>
   <card id="snippet-form" class="animated">
-    <header slot="card-header" class="card-header">
+    <header slot="card-header" class="card-header" style="height: 54px">
       <p class="card-header-title no-wrap" v-html="title"></p>
     </header>
 
@@ -46,7 +46,7 @@
         </div>
 
         <div class="field">
-          <div v-for="(snippetFile, index) in snippetFiles" class="field">
+          <div v-for="(snippetFile, index) in snippetFiles" :key="index" class="field">
             <snippet-file-form :index="index" :title="snippetFile.title || 'New snippet file'" />
           </div>
         </div>
@@ -83,14 +83,19 @@ import SnippetFileForm from '../snippet_file/Form.vue'
 import 'codemirror/addon/display/placeholder'
 import '../../../utils/codemirror_modes'
 import Filters from '../mixins/filters'
-import { saveSnippet } from '@/api/snippet'
+import { saveSnippet, getSnippetByMeta } from '@/api/snippet'
+import { getAllTags } from '@/api/snippet'
 
 export default {
 
   components: { Card, SnippetFileForm },
 
   mixins: [Filters],
-  props: ['title', 'action'],
+
+  props: {
+    title: { type: String, default: undefined },
+    action: { type: String, default: undefined }
+  },
 
   computed: {
     editSnippetTitle: {
@@ -142,14 +147,13 @@ export default {
   methods: {
     addFile(snippetIndex, e) {
       e.preventDefault()
-
-      // TODO: move to action
       this.$store.commit('addSnippetFile', snippetIndex)
       this.$store.commit('setScrollToLatestFileFlag', true)
     },
 
     submitAction(e) {
       e.preventDefault()
+      // TODO: 这里代码有重复有时间要整合
       const snippetFilesAttributes = []
       this.$store.state.labelSnippets.edit.snippetFiles.forEach((snippetFile, index) => {
         snippetFilesAttributes.push({
@@ -163,7 +167,6 @@ export default {
           snippetFilesAttributes[snippetFilesAttributes.length - 1]['destroy'] = true
         }
       })
-
       const data = {
         id: this.snippet.id || null,
         title: this.$store.state.labelSnippets.edit.title,
@@ -172,13 +175,35 @@ export default {
         label: this.$store.state.labelSnippets.edit.label
       }
 
-      // console.log(this.$store.state.labelSnippets.edit.snippetFiles)
-
-      saveSnippet(data)
-
-      // Backend.snippet[this.action](this)
+      async function saveData(store, notify) {
+        await saveSnippet(data).then(response => {
+          if (response.success) {
+            notify({
+              title: 'Success',
+              message: '代码段已' + this.action,
+              type: 'success',
+              duration: 2000
+            })
+          } else {
+            notify({
+              title: 'error',
+              message: '代码段' + this.action + '失败！',
+              type: 'error',
+              duration: 2000
+            })
+          }
+        })
+        // 更新标签列表
+        getAllTags(store.state.querySnippet).then(response => {
+          store.commit('setLabels', response.data)
+        })
+        // 更新代码段列表
+        getSnippetByMeta(store.state.labels.active).then(response => {
+          store.commit('setLabelSnippets', response.data)
+        })
+      }
+      saveData(this.$store, this.$notify)
     },
-
     cancelAction(e) {
       e.preventDefault()
       if (this.$store.state.snippets.mode === 'create') {

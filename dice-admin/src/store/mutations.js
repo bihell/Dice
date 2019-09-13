@@ -65,14 +65,14 @@ export default {
 
   setActiveLabel(state, item) {
     state.labels.active = item
-    localStorage.setItem('labels_active', JSON.stringify(item))
-    StoreHelpers.active.setLabel(state, item)
+  },
+
+  setQuerySnippet(state, item) {
+    state.querySnippet = item
   },
 
   setActiveLabelSnippet(state, item) {
     state.labelSnippets.active = item
-    localStorage.setItem('label_snippets_active', JSON.stringify(item))
-    StoreHelpers.active.setLabelSnippet(state)
   },
 
   setSnippetMode(state, mode) {

@@ -10,14 +10,14 @@
 </template>
 
 <script>
-// import Icon from './Icon.vue'
 
 export default {
   name: 'CollapsibleControls',
 
-  // components: { Icon },
-
-  props: ['index', 'id'],
+  props: {
+    index: { type: Number, default: undefined },
+    id: { type: String, default: undefined }
+  },
 
   data() {
     return {

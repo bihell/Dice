@@ -2,10 +2,10 @@ export default {
   snippets: [],
   labels: {
     items: [],
-    active: {},
+    active: '',
     edit: {
       name: ''
-    },
+    }
   },
   labelSnippets: {
     items: [],
@@ -23,5 +23,6 @@ export default {
     ready: false,
     renderAllSnippets: false,
     scrollToLatestFile: false
-  }
+  },
+  querySnippet: {}
 }

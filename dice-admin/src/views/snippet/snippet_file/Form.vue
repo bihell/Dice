@@ -1,6 +1,6 @@
 <template>
 
-  <form v-if="!snippetFile._destroy" action="/" @submit="submitAction">
+  <form v-if="!snippetFile._destroy" action="/">
     <card :id="`snippet-file-form-${index}`">
       <header slot="card-header" class="card-header" style="justify-content: space-between">
         <div style="display: flex; align-items: center;">
@@ -22,7 +22,7 @@
               <a
                 :id="`snippet-delete-${index}`"
                 class="button is-danger is-outlined"
-                :disabled="this.snippet.snippetFiles.length === 1"
+                :disabled="snippet.snippetFiles.length === 1"
                 @click="destroyFile(index, $event)"
               >
                 <i class="el-icon-delete"></i>
@@ -36,14 +36,14 @@
             <div class="control">
               <div class="select">
                 <select v-model="editFileLanguage">
-                  <option v-for="(v, k) in languageOptions" :value="k">{{ v }}</option>
+                  <option v-for="(v, k) in languageOptions" :key="k" :value="k">{{ v }}</option>
                 </select>
               </div>
             </div>
             <div class="control">
               <div class="select">
                 <select v-model="editFileTabs">
-                  <option v-for="(v, k) in tabOptions" :value="k">{{ v }}</option>
+                  <option v-for="(v, k) in tabOptions" :key="k" :value="k">{{ v }}</option>
                 </select>
               </div>
             </div>
@@ -54,7 +54,7 @@
       <div :id="`card-content-${index}`" slot="card-content" class="card-content is-paddingless shadow-light">
         <div class="field">
           <div class="editor" :style="{maxHeight: editorHeight}" style="border: none;">
-            <textarea class="file textarea">{{ snippetFile.content }}</textarea>
+            <textarea v-model="snippetFile.content" class="file textarea"></textarea>
           </div>
         </div>
       </div>
@@ -64,7 +64,6 @@
 </template>
 
 <script>
-// import Backend from '../../api/backend'
 import Card from '../Card.vue'
 import CodeMirror from 'codemirror'
 import 'codemirror/addon/display/placeholder'
@@ -80,7 +79,11 @@ export default {
   components: { Card, CollapsibleControls },
 
   mixins: [Editor, Filters],
-  props: ['title', 'action', 'index'],
+  props: {
+    title: { type: String, default: undefined },
+    action: { type: String, default: undefined },
+    index: { type: Number, default: undefined }
+  },
 
   data() {
     return {
@@ -141,7 +144,6 @@ export default {
       tabSize: this.snippetFile.language.tabs
     })
 
-    //
     // set focus on title textfield
     setTimeout(() => {
       this.$el.querySelector('input[type=text]').focus()
@@ -170,12 +172,6 @@ export default {
         this.$forceUpdate()
       }
     },
-
-    submitAction(e) {
-      e.preventDefault()
-      // Backend.snippet[this.action](this)
-    },
-
     cancelAction(e) {
       e.preventDefault()
       if (this.$store.state.snippets.mode === 'create') {

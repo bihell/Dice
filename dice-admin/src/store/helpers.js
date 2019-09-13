@@ -3,31 +3,6 @@ import Factory from '../views/snippet/mixins/factory'
 import SnippetsBuilder from '../views/snippet/mixins/snippets_builder'
 
 export default {
-  localStorage: {
-    setDefault: (commit) => {
-      // We use _ (lodash) to convert underscore_case to camelCase
-      const localActive = {
-        labels: JSON.parse(localStorage.getItem('labels_active')) || {},
-        labelSnippets: _.mapKeys(JSON.parse(localStorage.getItem('label_snippets_active')) || {}, (v, k) => _.camelCase(k))
-      }
-
-      if (localActive.labelSnippets.id) {
-        commit('setActiveLabelSnippet', localActive.labelSnippets)
-        commit('setSnippetMode', 'show')
-      } else {
-        const snippet = Factory.methods.factory().snippet
-
-        if (_.isEmpty(localActive.labels)) {
-          commit('setRenderAllSnippetsFlag', true)
-        } else {
-          commit('setActiveLabel', localActive.labels)
-          snippet.label = localActive.labels
-        }
-        commit('setActiveLabelSnippet', snippet)
-        commit('setSnippetMode', 'create')
-      }
-    }
-  },
 
   data: {
     setSnippets: (commit, data) => {
@@ -74,7 +49,6 @@ export default {
   active: {
     setLabel: (state, label) => {
       const snippet = Factory.methods.factory().snippet
-      localStorage.setItem('label_snippets_active', JSON.stringify(snippet))
       state.labels.edit.name = label.name
       state.labelSnippets.active = snippet
       state.labelSnippets.mode = 'create'
@@ -96,14 +70,12 @@ export default {
     setLabelSnippet: (state) => {
       // ignore active label update for initial and new snippets states
       if (!state.flags.renderAllSnippets && state.labelSnippets.active.label.id !== -1) {
-        localStorage.setItem('labels_active', JSON.stringify(state.labelSnippets.active.label))
         state.labels.active = state.labelSnippets.active.label
       }
 
       // for the case if current active label has been destroyed by snippet reset state to default
       if (state.labelSnippets.active.label.id === -1) {
         if (!_.find(state.labels.items, { id: state.labels.active.id })) {
-          localStorage.removeItem('labels_active')
           state.labels.active = {}
           state.flags.renderAllSnippets = true
         }

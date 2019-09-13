@@ -11,7 +11,6 @@ export default {
   },
 
   setDefaultActiveEntities({ commit, state }) {
-    StoreHelpers.localStorage.setDefault(commit)
     StoreHelpers.data.setLabelSnippets({ commit, state }, this)
   }
 }

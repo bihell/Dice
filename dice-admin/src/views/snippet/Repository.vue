@@ -37,7 +37,6 @@
             <span>标签列表</span>
           </div>
           <ul class="menu-list">
-            <p v-if="!label.length" class="menu-text">No labels found.</p>
             <li v-for="item in label" :key="item.id">
               <a :class="{'is-active': item.id === labelActiveId}" href="#" @click="labelClick(item.id)">
                 <span class="with-text-overflow">{{

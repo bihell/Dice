@@ -8,7 +8,7 @@
       <form action="/" @submit="submitAction">
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Title *</label>
+            <label class="label">标题 *</label>
           </div>
           <div class="field-body">
             <div class="field">
@@ -21,7 +21,7 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Description</label>
+            <label class="label">描述</label>
           </div>
           <div class="field-body">
             <div class="field">
@@ -34,7 +34,7 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Label</label>
+            <label class="label">标签 *</label>
           </div>
           <div class="field-body">
             <div class="field">
@@ -175,19 +175,19 @@ export default {
         label: this.$store.state.labelSnippets.edit.label
       }
 
-      async function saveData(store, notify) {
+      async function saveData(store, notify, action) {
         await saveSnippet(data).then(response => {
           if (response.success) {
             notify({
               title: 'Success',
-              message: '代码段已' + this.action,
+              message: '代码段已' + action,
               type: 'success',
               duration: 2000
             })
           } else {
             notify({
               title: 'error',
-              message: '代码段' + this.action + '失败！',
+              message: '代码段' + action + '失败！',
               type: 'error',
               duration: 2000
             })
@@ -202,7 +202,7 @@ export default {
           store.commit('setLabelSnippets', response.data)
         })
       }
-      saveData(this.$store, this.$notify)
+      saveData(this.$store, this.$notify, this.action)
     },
     cancelAction(e) {
       e.preventDefault()

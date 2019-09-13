@@ -32,8 +32,6 @@ import java.util.List;
 @Transactional(rollbackFor = Throwable.class)
 public class SnippetServiceImpl implements SnippetService {
 
-    static final String ARTICLE_CACHE_NAME = "articles";
-
     @Resource
     private ArticleMapper articleMapper;
 
@@ -55,16 +53,29 @@ public class SnippetServiceImpl implements SnippetService {
         if (!StringUtils.isEmpty(snippet.getId())) {
             article.setId(snippet.getId());
         }
-        article.setTitle(snippet.getTitle());
+        if (StringUtils.isEmpty(snippet.getTitle())) {
+            throw new TipException("代码段标题不能为空");
+        } else {
+            article.setTitle(snippet.getTitle());
+        }
         article.setContent(snippet.getDescription());
-        article.setTags(snippet.getLabel());
+        if (StringUtils.isEmpty(snippet.getLabel())) {
+            throw new TipException("代码段标签不能为空");
+        } else {
+            article.setTags(snippet.getLabel());
+        }
         article.setStatus(Types.PUBLISH);
         if (null != article.getId()) {
             // 更新代码段
             article.updateById();
             // 更新代码段文件
             snippet.getSnippetFiles().forEach(snippetFile -> {
-                System.out.println("aaaaa" + snippetFile.getDestroy());
+                if (StringUtils.isEmpty(snippetFile.getTitle())) {
+                    throw new TipException("代码段文件标题不能为空");
+                }
+                if (StringUtils.isEmpty(snippetFile.getContent())) {
+                    throw new TipException("代码段文件内容不能为空");
+                }
                 if (null != snippetFile.getDestroy() && snippetFile.getDestroy()) {
                     snippetFile.deleteById();
                 } else if (null != snippetFile.getId()) {
@@ -80,6 +91,12 @@ public class SnippetServiceImpl implements SnippetService {
             article.insert();
             // 保存代码段文件
             snippet.getSnippetFiles().forEach(snippetFile -> {
+                if (StringUtils.isEmpty(snippetFile.getTitle())) {
+                    throw new TipException("代码段文件标题不能为空");
+                }
+                if (StringUtils.isEmpty(snippetFile.getContent())) {
+                    throw new TipException("代码段文件内容不能为空");
+                }
                 snippetFile.setSnippetId(article.getId());
                 snippetFile.insert();
             });
@@ -114,7 +131,6 @@ public class SnippetServiceImpl implements SnippetService {
             log.info("删除代码段: {}", article);
 
             // 删除代码段文件
-
             int commentsResult = snippetFilesMapper.delete(new QueryWrapper<SnippetFile>().lambda().eq(SnippetFile::getSnippetId, snippetId));
             log.info("删除对应的代码段,数量: {}", commentsResult);
 

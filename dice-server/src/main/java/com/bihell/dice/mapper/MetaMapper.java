@@ -29,10 +29,10 @@ public interface MetaMapper extends BaseMapper<Meta> {
     /**
      * 获取属性以及属性下的文章
      *
-     * @param type
-     * @param title
-     * @param snippetFileContent
-     * @return
+     * @param type 标签类型
+     * @param title 文章标题（目前只有代码段功能使用）
+     * @param snippetFileContent 代码段文件内容
+     * @return  List<MetaDto>
      */
     @SelectProvider(type = MetaSql.class, method = "selectMetaDtos")
     List<MetaDto> selectMetaDtos(@Param("type") String type, @Param("title") String title, @Param("snippetFileContent") String snippetFileContent);

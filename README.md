@@ -22,6 +22,14 @@
 │   └── docker-compose.yml  // docker-compose文件
 ```
 
+### 部分界面
+
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice4.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice5.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice7.png)
+![](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
+![代码段](https://raw.githubusercontent.com/bihell/blog-img/master/snippet.png)
+
 ### 部署方式
 
 注：博客管理后台默认的账号：dice，密码：123456
@@ -125,13 +133,3 @@
     4.3 访问地址
 
       启动完成后，浏览器访问 `http://localhost:8010/admin`
-
-### 部分界面
-
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice4.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice5.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice6.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice7.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice2.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice3.png)

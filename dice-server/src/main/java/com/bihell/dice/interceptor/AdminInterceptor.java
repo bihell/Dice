@@ -51,13 +51,13 @@ public class AdminInterceptor implements HandlerInterceptor {
                 if (null == user) {
                     // 要设置跨域，不然输出信息没有
 
-                    System.out.println(request.getHeader(HttpHeaders.ORIGIN));
                     if (request.getHeader(HttpHeaders.ORIGIN) != null) {
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, request.getHeader(HttpHeaders.ORIGIN));
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, PUT, DELETE");
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "86400");
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-requested-with");
+                        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,"content-type");
                     }
                     PrintWriter out = response.getWriter();
                     ObjectMapper mapper = new ObjectMapper();

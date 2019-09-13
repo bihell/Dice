@@ -54,7 +54,7 @@
       <div :id="`card-content-${index}`" slot="card-content" class="card-content is-paddingless shadow-light">
         <div class="field">
           <div class="editor" :style="{maxHeight: editorHeight}" style="border: none;">
-            <textarea class="file textarea" placeholder="Paste a snippet of code">{{ snippetFile.content }}</textarea>
+            <textarea class="file textarea">{{ snippetFile.content }}</textarea>
           </div>
         </div>
       </div>
@@ -95,8 +95,8 @@ export default {
       },
 
       set(value) {
-        // const index = this.index
-        // this.$store.commit('setLabelSnippetEditFileTitle', { index, value })
+        const index = this.index
+        this.$store.commit('setLabelSnippetEditFileTitle', { index, value })
       }
     },
 
@@ -106,8 +106,8 @@ export default {
       },
 
       set(value) {
-        // const index = this.index
-        // this.$store.commit('setLabelSnippetEditFileLanguage', { index, value })
+        const index = this.index
+        this.$store.commit('setLabelSnippetEditFileLanguage', { index, value })
         this.editor.setOption('mode', processEditorMode(value))
       }
     },
@@ -118,33 +118,14 @@ export default {
       },
 
       set(value) {
-        // const index = this.index
-        // this.$store.commit('setLabelSnippetEditFileTabs', { index, value })
+        const index = this.index
+        this.$store.commit('setLabelSnippetEditFileTabs', { index, value })
         this.editor.setOption('tabSize', value)
       }
     },
 
     snippet() {
-      // return this.$store.state.labelSnippets.edit
-      return { description: 'test description',
-        id: 11,
-        label: 'test lable',
-        snippetFiles: [{ content: 'test code 2',
-          created_at: '2019-08-30T15:02:46.606Z',
-          id: 20,
-          language: 'automatically',
-          snippet_id: 11,
-          tabs: 4,
-          title: 'test file 2',
-          updated_at: '2019-08-30T15:02:46.606Z' }, { content: '# markdown 测试↵##  markdown 测试标题↵↵```↵markdown hello↵```',
-          created_at: '2019-08-30T15:02:46.603Z',
-          id: 19,
-          language: 'markdown',
-          snippet_id: 11,
-          tabs: 4,
-          title: 'test title 1',
-          updated_at: '2019-09-06T05:54:58.426Z' }],
-        title: 'test title' }
+      return this.$store.state.labelSnippets.edit
     },
 
     snippetFile() {
@@ -167,27 +148,27 @@ export default {
     }, 100)
 
     // TODO: replace scrollIntoView to something where smooth is compatible with all browsers
-    // if (this.$store.state.flags.scrollToLatestFile) {
-    //   this.$store.commit('setScrollToLatestFileFlag', false)
-    //   setTimeout(() => {
-    //     if (this.index) {
-    //       const el = document.getElementById(`snippet-file-form-${this.index}`)
-    //       if (el) {
-    //         el.scrollIntoView({ behavior: 'smooth' })
-    //       }
-    //     }
-    //   }, 200)
-    // }
+    if (this.$store.state.flags.scrollToLatestFile) {
+      this.$store.commit('setScrollToLatestFileFlag', false)
+      setTimeout(() => {
+        if (this.index) {
+          const el = document.getElementById(`snippet-file-form-${this.index}`)
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' })
+          }
+        }
+      }, 200)
+    }
   },
 
   methods: {
     destroyFile(snippetIndex, e) {
       e.preventDefault()
 
-      // if (this.snippet.snippetFiles.length > 1) {
-      //   this.$store.commit('removeSnippetFile', snippetIndex)
-      //   this.$forceUpdate()
-      // }
+      if (this.snippet.snippetFiles.length > 1) {
+        this.$store.commit('removeSnippetFile', snippetIndex)
+        this.$forceUpdate()
+      }
     },
 
     submitAction(e) {
@@ -197,11 +178,11 @@ export default {
 
     cancelAction(e) {
       e.preventDefault()
-      // if (this.$store.state.snippets.mode === 'create') {
-      //   this.$store.commit('setSnippetMode', null)
-      // } else {
-      //   this.$store.commit('setSnippetMode', 'show')
-      // }
+      if (this.$store.state.snippets.mode === 'create') {
+        this.$store.commit('setSnippetMode', null)
+      } else {
+        this.$store.commit('setSnippetMode', 'show')
+      }
     }
   }
 }

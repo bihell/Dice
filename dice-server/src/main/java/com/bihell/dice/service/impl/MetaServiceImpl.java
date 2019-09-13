@@ -59,9 +59,9 @@ public class MetaServiceImpl implements MetaService {
      * @return List<MetaDto>
      */
     @Override
-    public List<MetaDto> getMetaDtos(String type) {
+    public List<MetaDto> getMetaDtos(String type, String title, String snippetFileContent) {
         type = verifyType(type);
-        return metaMapper.selectMetaDtos(type);
+        return metaMapper.selectMetaDtos(type, title, snippetFileContent);
     }
 
     /**

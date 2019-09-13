@@ -13,7 +13,7 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input id="title" v-model="snippet.snippetTitle" name="title" class="input" type="text">
+                <input id="title" v-model="editSnippetTitle" name="title" class="input" type="text">
               </div>
             </div>
           </div>
@@ -26,7 +26,7 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input v-model="snippet.snippetDescription" name="description" class="input" />
+                <input v-model="editSnippetDescription" name="description" class="input" />
               </div>
             </div>
           </div>
@@ -39,7 +39,7 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input id="snippet-labels" v-model="snippet.snippetLabel" class="input" type="text">
+                <input id="snippet-labels" v-model="editSnippetLabel" class="input" type="text">
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
               type="button"
               @click="addFile($store.state.snippets.indexOf(snippet), $event)"
             >
-              Add file
+              添加文件
             </button>
           </div>
 
@@ -67,7 +67,7 @@
               <button class="button is-primary" type="submit" @click="submitAction">{{ action | capitalize }}</button>
             </div>
             <div class="control">
-              <button class="button is-text" type="button" @click="cancelAction">Cancel</button>
+              <button class="button is-text" type="button" @click="cancelAction">取消</button>
             </div>
           </div>
         </div>
@@ -83,6 +83,7 @@ import SnippetFileForm from '../snippet_file/Form.vue'
 import 'codemirror/addon/display/placeholder'
 import '../../../utils/codemirror_modes'
 import Filters from '../mixins/filters'
+import { saveSnippet } from '@/api/snippet'
 
 export default {
 
@@ -91,72 +92,44 @@ export default {
   mixins: [Filters],
   props: ['title', 'action'],
 
-  data() {
-    return {
-      snippetFiles: [{}],
-      snippet: { snippetTitle: '', snippetDescription: '', snippetLabel: '' }
-    }
-  },
-
   computed: {
-    // editSnippetTitle: {
-    //   get() {
-    //     // return this.$store.state.labelSnippets.edit.title
-    //     return 'test title'
-    //   },
-    //
-    //   set(value) {
-    //     // this.$store.commit('setLabelSnippetsEditTitle', value)
-    //   }
-    // },
+    editSnippetTitle: {
+      get() {
+        return this.$store.state.labelSnippets.edit.title
+      },
 
-    // editSnippetDescription: {
-    //   get() {
-    //     return 'test description'
-    //     // return this.$store.state.labelSnippets.edit.description
-    //   },
-    //
-    //   set(value) {
-    //     // this.$store.commit('setLabelSnippetsEditDescription', value)
-    //   }
-    // },
-    //
-    // editSnippetLabel: {
-    //   get() {
-    //     return 'test lable'
-    //     // return this.$store.state.labelSnippets.edit.label
-    //   },
-    //
-    //   set(value) {
-    //     // this.$store.commit('setLabelSnippetEditLabel', value)
-    //   }
-    // }
+      set(value) {
+        this.$store.commit('setLabelSnippetsEditTitle', value)
+      }
+    },
 
-    // snippet() {
-    //   return ''
-    //   // return this.$store.state.labelSnippets.edit
-    // }
+    editSnippetDescription: {
+      get() {
+        return this.$store.state.labelSnippets.edit.description
+      },
 
-    // snippetFiles() {
-    //   return [{ content: 'test code 2',
-    //     created_at: '2019-08-30T15:02:46.606Z',
-    //     id: 20,
-    //     language: 'automatically',
-    //     snippet_id: 11,
-    //     tabs: 4,
-    //     title: 'test file 2',
-    //     updated_at: '2019-08-30T15:02:46.606Z' }, { content: '# markdown 测试↵##  markdown 测试标题↵↵```↵markdown hello↵```',
-    //     created_at: '2019-08-30T15:02:46.603Z',
-    //     id: 19,
-    //     language: 'markdown',
-    //     snippet_id: 11,
-    //     tabs: 4,
-    //     title: 'test title 1',
-    //     updated_at: '2019-09-06T05:54:58.426Z' }]
-    //   return this.$store.state.labelSnippets.edit.snippetFiles
-    //
-    //   return []
-    // }
+      set(value) {
+        this.$store.commit('setLabelSnippetsEditDescription', value)
+      }
+    },
+
+    editSnippetLabel: {
+      get() {
+        return this.$store.state.labelSnippets.edit.label
+      },
+
+      set(value) {
+        this.$store.commit('setLabelSnippetEditLabel', value)
+      }
+    },
+
+    snippet() {
+      return this.$store.state.labelSnippets.edit
+    },
+
+    snippetFiles() {
+      return this.$store.state.labelSnippets.edit.snippetFiles
+    }
   },
 
   mounted() {
@@ -171,22 +144,48 @@ export default {
       e.preventDefault()
 
       // TODO: move to action
-      // this.$store.commit('addSnippetFile', snippetIndex)
-      // this.$store.commit('setScrollToLatestFileFlag', true)
+      this.$store.commit('addSnippetFile', snippetIndex)
+      this.$store.commit('setScrollToLatestFileFlag', true)
     },
 
     submitAction(e) {
       e.preventDefault()
+      const snippetFilesAttributes = []
+      this.$store.state.labelSnippets.edit.snippetFiles.forEach((snippetFile, index) => {
+        snippetFilesAttributes.push({
+          id: snippetFile.id || null,
+          title: snippetFile.title,
+          content: this.$children[0].$children[index].editor.getValue(),
+          language: snippetFile.language,
+          tabs: snippetFile.tabs
+        })
+        if (snippetFile.hasOwnProperty('_destroy')) {
+          snippetFilesAttributes[snippetFilesAttributes.length - 1]['destroy'] = true
+        }
+      })
+
+      const data = {
+        id: this.snippet.id || null,
+        title: this.$store.state.labelSnippets.edit.title,
+        description: this.$store.state.labelSnippets.edit.description,
+        snippetFiles: snippetFilesAttributes,
+        label: this.$store.state.labelSnippets.edit.label
+      }
+
+      // console.log(this.$store.state.labelSnippets.edit.snippetFiles)
+
+      saveSnippet(data)
+
       // Backend.snippet[this.action](this)
     },
 
     cancelAction(e) {
       e.preventDefault()
-      // if (this.$store.state.snippets.mode === 'create') {
-      //   this.$store.commit('setSnippetMode', null)
-      // } else {
-      //   this.$store.commit('setSnippetMode', 'show')
-      // }
+      if (this.$store.state.snippets.mode === 'create') {
+        this.$store.commit('setSnippetMode', null)
+      } else {
+        this.$store.commit('setSnippetMode', 'show')
+      }
     }
   }
 }

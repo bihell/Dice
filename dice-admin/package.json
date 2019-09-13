@@ -58,6 +58,7 @@
     "js-cookie": "2.2.0",
     "jsonlint": "1.6.3",
     "jszip": "3.2.1",
+    "lodash": "^4.17.15",
     "mavon-editor": "^2.7.5",
     "mobile-detect": "^1.4.3",
     "normalize.css": "7.0.0",

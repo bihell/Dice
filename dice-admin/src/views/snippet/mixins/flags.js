@@ -1,8 +1,8 @@
 export default {
   computed: {
     readyFlag() {
-      // return this.$store.state.flags.ready
-      return true
+      return this.$store.state.flags.ready
+      // return true
     }
   }
 }

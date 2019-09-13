@@ -3,17 +3,17 @@
   <div id="show-snippet">
     <header slot="card-header" class="card-header">
       <div class="card-header-title with-text-overflow">
-        {{ snippet.id ? snippet.title : 'Select snippet' }}
+        {{ snippet.id ? snippet.title : '请选择「代码段」' }}
       </div>
 
       <div v-if="snippet.id" class="card-header-icon">
         <a id="snippet-edit" class="button is-outlined is-small" @click="editSnippet">
           <i class="el-icon-edit"></i>
-          <span>Edit</span>
+          <span>编辑</span>
         </a>
         <a id="snippet-delete" class="button is-outlined is-small is-danger" @click="destroySnippet">
           <i class="el-icon-delete"></i>
-          <span>Delete</span>
+          <span>删除</span>
         </a>
       </div>
     </header>
@@ -25,7 +25,7 @@
       <p class="is-italic">Files ({{ snippet.snippetFiles.length }})</p>
     </div>
     <p v-else class="card-description no-wrap">
-      Nothing to show. Select a snippet to view or create the new one!
+      没有内容可以显示，请选择一个「代码段」或者「新建」一个！
     </p>
 
     <div
@@ -39,42 +39,45 @@
 </template>
 
 <script>
-// import Card from '../Card.vue'
-// import VueMarkdown from 'vue-markdown'
 import SnippetFileShow from '../snippet_file/Show.vue'
+import { deleteSnippet } from '@/api/snippet'
+import Factory from '../mixins/factory'
 
 export default {
   name: 'SnippetShow',
   // props: ['index'],
 
   components: { SnippetFileShow },
-  data() {
-    return {
-      tags: [{ name: 'bihell', count: 12, active: 1 }, { name: 'dice', count: 10086, active: 0 }],
-      showSnippet: 'show',
-      snippet: { title: 'test title', id: 1, description: 'test description', snippetFiles: [{ id: 2 }, { id: 3 }] }
-    }
-  },
+  // data() {
+  //   return {
+  //     // tags: [{ name: 'bihell', count: 12, active: 1 }, { name: 'dice', count: 10086, active: 0 }],
+  //     // showSnippet: 'show'
+  //     // snippet: { title: 'test title', id: 1, description: 'test description', snippetFiles: [{ id: 2 }, { id: 3 }] }
+  //   }
+  // },
 
   computed: {
     showSnippetFile() {
-      return 'show'
-      // return this.$store.state.labelSnippets.mode
-    }
+      return this.$store.state.labelSnippets.mode
+    },
 
-    // snippet() {
-    //   return true
-    //   // return this.$store.state.labelSnippets.active
-    // }
+    snippet() {
+      console.log(this.$store.state.labelSnippets.active)
+      return this.$store.state.labelSnippets.active
+    }
   },
 
   methods: {
     editSnippet(e) {
       e.preventDefault()
-      // this.$store.commit('setSnippetMode', 'edit')
+      this.$store.commit('setSnippetMode', 'edit')
     },
-
     destroySnippet() {
+      deleteSnippet(this.$store.state.labelSnippets.active.id).then(response => {
+        this.$store.commit('setActiveLabelSnippet', Factory.methods.factory().snippet)
+        this.$store.dispatch('setDefaultActiveEntities')
+      })
+
       // Notifications.confirm(
       //   'Are you really sure you want to delete snippet ' +
       //       "<span class='has-text-weight-bold is-italic'>" +
@@ -85,8 +88,7 @@ export default {
       //       Backend.snippet.destroy(this)
       //     }
       //   })
-    }
-  }
+    } }
 }
 </script>
 <style scoped lang="scss">

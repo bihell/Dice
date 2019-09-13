@@ -88,7 +88,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/snippet/Repository.vue'),
         name: 'snippet',
-        meta: { title: '代码片段', icon: 'setting' }
+        meta: { title: '代码片段', icon: 'snippet' }
       }
     ]
   },

@@ -4,6 +4,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import { Message } from 'element-ui'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -47,7 +48,7 @@ router.beforeEach(async(to, from, next) => {
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
-          this.$util.message.error(error || 'Has Error')
+          Message.error(error || 'Has Error')
           next(`/admin/login?redirect=${to.path}`)
           NProgress.done()
         }

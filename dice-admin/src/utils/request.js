@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import { MessageBox, Loading } from 'element-ui'
+import { MessageBox, Message, Loading } from 'element-ui'
 import store from '@/store'
 // import { getToken } from '@/utils/auth'
 
@@ -68,7 +68,11 @@ service.interceptors.response.use(
     // if the custom code is not 20000, it is judged as an error.
     if (!res.success) {
       if (res.code !== 999) {
-        this.$util.message.error(res.msg || 'Error')
+        Message({
+          message: res.msg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
       } else {
         // to re-login
         MessageBox.confirm('你已经登出，可以按「取消」按钮停留在此页面或者重新登录。', '登出提示', {
@@ -93,7 +97,11 @@ service.interceptors.response.use(
       loadingInstance = null
     }
     console.log('err' + error) // for debug
-    this.$util.message.error(error.message)
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
     return Promise.reject(error)
   }
 )

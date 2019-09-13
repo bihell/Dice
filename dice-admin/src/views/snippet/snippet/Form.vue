@@ -175,22 +175,12 @@ export default {
         label: this.$store.state.labelSnippets.edit.label
       }
 
-      async function saveData(store, notify, action) {
+      async function saveData(store, message, action) {
         await saveSnippet(data).then(response => {
           if (response.success) {
-            notify({
-              title: 'Success',
-              message: '代码段已' + action,
-              type: 'success',
-              duration: 2000
-            })
+            message.success('代码段已' + action)
           } else {
-            notify({
-              title: 'error',
-              message: '代码段' + action + '失败！',
-              type: 'error',
-              duration: 2000
-            })
+            message.error('代码段' + action + '失败')
           }
         })
         // 更新标签列表
@@ -202,7 +192,7 @@ export default {
           store.commit('setLabelSnippets', response.data)
         })
       }
-      saveData(this.$store, this.$notify, this.action)
+      saveData(this.$store, this.$util.message, this.action)
     },
     cancelAction(e) {
       e.preventDefault()

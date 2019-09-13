@@ -61,16 +61,12 @@ service.interceptors.response.use(
     // if the custom code is not 20000, it is judged as an error.
     if (!res.success) {
       if (res.code !== 999) {
-        Message({
-          message: res.msg || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
+        this.$util.message.error(res.msg || 'Error')
       } else {
         // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
+        MessageBox.confirm('你已经登出，可以按「取消」按钮停留在此页面或者重新登录。', '登出提示', {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           store.dispatch('user/resetToken').then(() => {
@@ -90,11 +86,7 @@ service.interceptors.response.use(
       loadingInstance = null
     }
     console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    this.$util.message.error(error.message)
     return Promise.reject(error)
   }
 )

@@ -16,7 +16,7 @@
         <el-col :xs="24" :sm="8" :md="8" :lg="8">
           <div class="panel">
             <div class="panel-content">
-              <el-form-item label="状态">
+              <el-form-item>
                 <el-switch
                   v-model="page.status"
                   active-value="publish"
@@ -24,6 +24,14 @@
                   active-text="公开"
                   inactive-text="隐藏"
                 />
+              </el-form-item>
+              <el-form-item>
+                <el-switch
+                  v-model="page.allowComment"
+                  active-text="开启评论"
+                  inactive-text="关闭"
+                >
+                </el-switch>
               </el-form-item>
               <el-form-item>
                 <el-button-group>

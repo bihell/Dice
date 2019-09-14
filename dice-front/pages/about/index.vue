@@ -1,13 +1,15 @@
 <template>
   <div id="about">
     <div v-highlight class="markdown-body" v-html="content"></div>
-
+    <comment v-if="content.allowComment" :article-id="content.id"></comment>
     <big-img :visible.sync="showDialog" :img="img"></big-img>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import BigImg from '~/components/BigImg.vue'
+import Comment from '~/components/Comment.vue'
+
 
 const pageTitle = 'About'
 
@@ -16,7 +18,7 @@ export default {
     return { title: `关于` }
   },
   components: {
-    BigImg
+    BigImg,Comment
   },
   data () {
     return {

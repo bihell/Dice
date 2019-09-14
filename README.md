@@ -24,11 +24,12 @@
 
 ### 部分界面
 
+![博客前端](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
 ![](https://raw.githubusercontent.com/bihell/blog-img/master/dice4.png)
 ![](https://raw.githubusercontent.com/bihell/blog-img/master/dice5.png)
 ![](https://raw.githubusercontent.com/bihell/blog-img/master/dice7.png)
-![](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
 ![代码段](https://raw.githubusercontent.com/bihell/blog-img/master/snippet.png)
+![媒体库](https://raw.githubusercontent.com/bihell/blog-img/master/dice-media.png)
 
 ### 部署方式
 

@@ -63,6 +63,14 @@
                   inactive-text="隐藏"
                 />
               </el-form-item>
+              <el-form-item>
+                <el-switch
+                  v-model="article.allowComment"
+                  active-text="开启评论"
+                  inactive-text="关闭"
+                >
+                </el-switch>
+              </el-form-item>
               <el-form-item label="创建日期">
                 <el-date-picker
                   v-model="article.created"
@@ -141,7 +149,8 @@ export default {
         content: '',
         status: '',
         created: '',
-        modified: ''
+        modified: '',
+        allowComment: true
       },
       rules: {
         title: [

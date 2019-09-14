@@ -8,11 +8,11 @@
         <el-radio-group v-model="tool.status" @change="init">
           <el-radio-button label="">全部</el-radio-button>
           <el-radio-button
-            :label="this.$util.STATIC.STATUS_PUBLISH"
+            :label="this.$static.STATUS_PUBLISH"
           >公开
           </el-radio-button>
           <el-radio-button
-            :label="this.$util.STATIC.STATUS_DRAFT"
+            :label="this.$static.STATUS_DRAFT"
           >隐藏
           </el-radio-button>
         </el-radio-group>
@@ -33,7 +33,6 @@
           @keyup.enter.native="init"
         />
         <el-button
-          type="primary"
           icon="el-icon-edit"
           style="margin-left: 16px;"
           @click="handleNew"
@@ -154,8 +153,8 @@ export default {
           frontUrl: this.$serverConfig.frontUrl + 'article/' + data.id,
           publish: this.$dayjs(data.created).format('YYYY-MM-DD HH:mm'),
           modified: this.$dayjs(data.modified).format('YYYY-MM-DD HH:mm'),
-          category: data.category || this.$util.STATIC.DEFAULT_CATEGORY,
-          status: this.$util.STATIC.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
+          category: data.category || this.$static.DEFAULT_CATEGORY,
+          status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
         }
         this.articleDatas.push(article)
       }

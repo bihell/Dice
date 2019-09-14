@@ -86,19 +86,9 @@ export default {
     this.clipboard = new ClipboardJS(`#snippet-copy-${this.index}`)
 
     this.clipboard.on('success', e => {
-      this.$notify({
-        title: 'Success',
-        message: '代码段已拷贝',
-        type: 'success',
-        duration: 2000
-      })
+      this.$util.message.success('已拷贝')
     }).on('error', e => {
-      this.$notify({
-        title: 'error',
-        message: '代码段拷贝失败！',
-        type: 'error',
-        duration: 2000
-      })
+      this.$util.message.error('拷贝失败')
     })
   },
 

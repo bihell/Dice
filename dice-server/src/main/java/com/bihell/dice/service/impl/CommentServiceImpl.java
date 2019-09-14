@@ -13,15 +13,15 @@ import com.bihell.dice.service.CommentService;
 import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.Types;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import javax.annotation.Resource;
 
 /**
  * 评论 Service 实现类
@@ -32,12 +32,12 @@ import javax.annotation.Resource;
 @Slf4j
 @Service("commentsService")
 @Transactional(rollbackFor = Throwable.class)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class CommentServiceImpl implements CommentService {
 
     private static final String COMMENT_CACHE_NAME = "comments";
 
-    @Resource
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
 
     /**
      * 保存评论

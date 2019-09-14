@@ -11,11 +11,12 @@ import com.bihell.dice.mapper.ArticleMapper;
 import com.bihell.dice.mapper.MiddleMapper;
 import com.bihell.dice.service.MetaService;
 import com.bihell.dice.util.Types;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -29,16 +30,14 @@ import java.util.Set;
  */
 @Service("metasService")
 @Transactional(rollbackFor = Throwable.class)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class MetaServiceImpl implements MetaService {
 
-    @Resource
-    private MetaMapper metaMapper;
+    private final MetaMapper metaMapper;
 
-    @Resource
-    private ArticleMapper articleMapper;
+    private final ArticleMapper articleMapper;
 
-    @Resource
-    private MiddleMapper middleMapper;
+    private final MiddleMapper middleMapper;
 
     /**
      * 根据属性以及属性下的已发布文章

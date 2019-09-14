@@ -92,6 +92,18 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/media-library',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/media-library/Index.vue'),
+        name: 'media-library',
+        meta: { title: '媒体库', icon: 'perm-media' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

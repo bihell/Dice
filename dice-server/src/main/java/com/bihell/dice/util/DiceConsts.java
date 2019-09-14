@@ -1,5 +1,7 @@
 package com.bihell.dice.util;
 
+import java.io.File;
+
 /**
  * 常量工具类
  *
@@ -85,4 +87,28 @@ public interface DiceConsts {
      */
     Integer MAX_SNIPPET_DESCRIPTION_COUNT = 200000;
 
+    /**
+     * 用户目录
+     */
+    String USER_HOME = System.getProperties().getProperty("user.home") + File.separator;
+
+    /**
+     * Dice保存目录
+     */
+    String DICE_HOME = ".dice" + File.separator;
+
+    /**
+     * 上传文件的路径
+     */
+    String UPLOAD_DIR = "upload" + File.separator;
+
+    /**
+     * 媒体文件夹路径
+     */
+    String MEDIA_DIR = UPLOAD_DIR + "media" + File.separator;
+
+    /**
+     * 媒体缩略图后缀
+     */
+    String MEDIA_THUMBNAIL_SUFFIX = "_thumbnail";
 }

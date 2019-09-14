@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.mapper.LogMapper;
 import com.bihell.dice.model.domain.Log;
 import com.bihell.dice.service.LogService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 
 /**
  * 日志 Service 实现类
@@ -18,10 +18,10 @@ import javax.annotation.Resource;
  */
 @Service("logsService")
 @Transactional(rollbackFor = Throwable.class)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class LogServiceImpl implements LogService {
 
-    @Resource
-    private LogMapper logMapper;
+    private final LogMapper logMapper;
 
     @Override
     public void save(String action, String data, String message, String type) {
@@ -48,14 +48,14 @@ public class LogServiceImpl implements LogService {
     /**
      * 获取日志
      *
-     * @param current  当前分页
-     * @param limit 分页大小
+     * @param current 当前分页
+     * @param limit   分页大小
      * @return Page<Log>
      */
     @Override
     public IPage<Log> getLogs(Integer current, Integer limit) {
-        Page<Log> page = new Page<>(current,limit);
-        return logMapper.selectPage(page,null);
+        Page<Log> page = new Page<>(current, limit);
+        return logMapper.selectPage(page, null);
     }
 
 }

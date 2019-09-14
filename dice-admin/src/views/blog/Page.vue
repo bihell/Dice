@@ -86,7 +86,7 @@ export default {
         this.page.id = ''
         this.page.title = ''
         this.page.content = ''
-        this.page.status = this.$util.STATIC.STATUS_PUBLISH
+        this.page.status = this.$static.STATUS_PUBLISH
       }
     },
     savePage(formName) {

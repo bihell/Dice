@@ -12,14 +12,14 @@ import com.bihell.dice.model.dto.Snippet;
 import com.bihell.dice.service.MetaService;
 import com.bihell.dice.service.SnippetService;
 import com.bihell.dice.util.Types;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
-
 
 /**
  * 文章 Service 实现类
@@ -30,16 +30,14 @@ import java.util.List;
 @Slf4j
 @Service("snippetService")
 @Transactional(rollbackFor = Throwable.class)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SnippetServiceImpl implements SnippetService {
 
-    @Resource
-    private ArticleMapper articleMapper;
+    private final ArticleMapper articleMapper;
 
-    @Resource
-    private MetaService metasService;
+    private final MetaService metasService;
 
-    @Resource
-    private SnippetFileMapper snippetFilesMapper;
+    private final SnippetFileMapper snippetFilesMapper;
 
     /**
      * 保存或更新文章

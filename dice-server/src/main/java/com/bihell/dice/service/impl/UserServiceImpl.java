@@ -22,7 +22,6 @@ import java.util.Date;
 @Transactional(rollbackFor = Throwable.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-
     @Override
     public User login(String username, String password) {
 

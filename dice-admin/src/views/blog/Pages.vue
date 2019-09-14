@@ -2,7 +2,6 @@
   <div class="app-container">
     <div class="tool-container" style="justify-content: flex-end">
       <el-button
-        type="primary"
         icon="el-icon-edit"
         style="margin-left: 16px;"
         @click="handleNew"
@@ -39,13 +38,12 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <router-link :to="'/blog/page/edit/'+scope.row.id" class="link-type">
-            <el-button type="primary" size="small">
+            <el-button size="small">
               编辑
             </el-button>
           </router-link>
           <el-button
             size="small"
-            type="danger"
             @click="handleDelete(scope.row.id)"
           >删除
           </el-button>
@@ -101,7 +99,7 @@ export default {
           title: data.title,
           publish: this.$dayjs(data.created).format('YYYY-MM-DD HH:mm'),
           modified: this.$dayjs(data.modified).format('YYYY-MM-DD HH:mm'),
-          status: this.$util.STATIC.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
+          status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
         }
         this.pageDatas.push(page)
       }

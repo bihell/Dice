@@ -9,9 +9,9 @@ import com.bihell.dice.service.CommentService;
 import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * 后台评论管理 Controller
@@ -21,10 +21,10 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/v1/api/admin/comment")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class CommentController extends BaseController {
 
-    @Resource
-    private CommentService commentService;
+    private final CommentService commentService;
 
     /**
      * 获取所有评论

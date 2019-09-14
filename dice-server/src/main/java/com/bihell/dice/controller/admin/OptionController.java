@@ -3,10 +3,11 @@ package com.bihell.dice.controller.admin;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.service.OptionService;
 import com.bihell.dice.util.RestResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -16,10 +17,10 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/v1/api/admin/option")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class OptionController extends BaseController {
 
-    @Resource
-    private OptionService optionService;
+    private final OptionService optionService;
 
     /**
      * 获取所有设置

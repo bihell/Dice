@@ -5,10 +5,11 @@ import com.bihell.dice.model.domain.User;
 import com.bihell.dice.service.UserService;
 import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.RestResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -19,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/v1/api/admin/user")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AuthController extends BaseController {
 
-    @Resource
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * 后台登录

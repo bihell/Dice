@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS dice;
-CREATE DATABASE dice CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE dice CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 USE dice;
 
 CREATE TABLE sys_option
@@ -104,6 +104,19 @@ create table snippet_file
 
 create index index_snippet_files_on_snippet_id
     on snippet_file (snippet_id);
+
+
+CREATE TABLE media
+(
+    id   INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    created TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    modified TIMESTAMP NOT NULL DEFAULT current_timestamp ON UPDATE current_timestamp,
+    name VARCHAR(255) NOT NULL,
+    url VARCHAR(1023) NOT NULL,
+    thumb_url VARCHAR(1023),
+    suffix VARCHAR(255) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 
 INSERT INTO user (username, password_md5, email, screen_name)

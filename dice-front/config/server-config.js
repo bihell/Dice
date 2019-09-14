@@ -1,9 +1,9 @@
 const isProd = process.env.NODE_ENV === 'production'
 
-const devUrl = 'http://127.0.0.1:9090'
+const devUrl = 'http://127.0.0.1:9091'
 const devProxy = {
   host: '127.0.0.1',
-  port: 9090
+  port: 9091
 }
 
 const prodUrl = ''

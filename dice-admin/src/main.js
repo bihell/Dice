@@ -38,11 +38,12 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
-Vue.prototype.$util = DiceUtil
+Vue.prototype.$util = DiceUtil.FUNCTIONS
 Vue.prototype.$api = Blog
 Vue.prototype.$serverConfig = serverConfig
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$api_user = User
+Vue.prototype.$static = DiceUtil.STATIC
 
 new Vue({
   el: '#app',

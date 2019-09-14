@@ -4,9 +4,9 @@ import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.dto.Snippet;
 import com.bihell.dice.service.SnippetService;
 import com.bihell.dice.util.RestResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * 代码片段 Controller
@@ -16,10 +16,10 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/v1/api/admin/snippet")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SnippetController extends BaseController {
 
-    @Resource
-    private SnippetService snippetService;
+    private final SnippetService snippetService;
 
     /**
      * 创建或更新代码段

@@ -182,7 +182,7 @@ export default {
           tags: '',
           category: '',
           content: '',
-          status: this.$util.STATIC.STATUS_PUBLISH,
+          status: this.$static.STATUS_PUBLISH,
           created: Date.now(),
           modified: Date.now()
         }

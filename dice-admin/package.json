@@ -74,7 +74,8 @@
     "vue-splitpane": "1.0.4",
     "vuedraggable": "^2.23.0",
     "vuex": "^3.1.1",
-    "xlsx": "^0.15.1"
+    "xlsx": "^0.15.1",
+    "qs": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",

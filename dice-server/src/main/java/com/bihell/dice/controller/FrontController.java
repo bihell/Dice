@@ -12,10 +12,11 @@ import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -27,22 +28,18 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/v1/api")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FrontController extends BaseController {
 
-    @Resource
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
-    @Resource
-    private MetaService metaService;
+    private final MetaService metaService;
 
-    @Resource
-    private CommentService commentService;
+    private final CommentService commentService;
 
-    @Resource
-    private EmailService emailService;
+    private final EmailService emailService;
 
-    @Resource
-    private OptionService optionService;
+    private final OptionService optionService;
 
     /**
      * 文章列表

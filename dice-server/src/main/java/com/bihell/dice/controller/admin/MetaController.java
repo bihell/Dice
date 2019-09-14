@@ -3,9 +3,9 @@ package com.bihell.dice.controller.admin;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.service.MetaService;
 import com.bihell.dice.util.RestResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * 属性(标签和分类)管理 Controller
@@ -15,10 +15,10 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/v1/api/admin/meta")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class MetaController extends BaseController {
 
-    @Resource
-    private MetaService metaService;
+    private final MetaService metaService;
 
     /**
      * 获取所有属性

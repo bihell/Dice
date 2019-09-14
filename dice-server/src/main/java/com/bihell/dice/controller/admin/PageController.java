@@ -11,10 +11,10 @@ import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * 自定义页面管理 Controller
@@ -24,13 +24,12 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/v1/api/admin/page")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PageController extends BaseController {
 
-    @Resource
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
-    @Resource
-    private LogService logService;
+    private final LogService logService;
 
     /**
      * 自定义页面列表

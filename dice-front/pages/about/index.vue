@@ -1,7 +1,7 @@
 <template>
   <div id="about">
-    <div v-highlight class="markdown-body" v-html="content"></div>
-    <comment v-if="content.allowComment" :article-id="content.id"></comment>
+    <div v-highlight class="markdown-body" v-html="page.content"></div>
+    <comment v-if="page.allowComment" :article-id="page.id"></comment>
     <big-img :visible.sync="showDialog" :img="img"></big-img>
   </div>
 </template>
@@ -27,8 +27,8 @@ export default {
     }
   },
   computed: {
-    content () {
-      return this.$store.state.article.page.content
+      page () {
+      return this.$store.state.article.page
     }
   },
   fetch ({ store }) {

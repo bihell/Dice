@@ -73,7 +73,8 @@ public class PageController extends BaseController {
     public RestResponse savePage(@RequestParam(value = "id", required = false) Integer id,
                                  @RequestParam(value = "title") String title,
                                  @RequestParam(value = "content") String content,
-                                 @RequestParam(value = "status", defaultValue = Types.DRAFT) String status) {
+                                 @RequestParam(value = "status", defaultValue = Types.DRAFT) String status,
+                                 @RequestParam(value = "allowComment", defaultValue = "false") Boolean allowComment) {
         User user = this.user();
         Article page = new Article();
         if (!StringUtils.isEmpty(id)) {
@@ -83,6 +84,7 @@ public class PageController extends BaseController {
         page.setContent(content);
         page.setStatus(status);
         page.setAuthorId(user.getId());
+        page.setAllowComment(allowComment);
         articleService.savePage(page);
         return RestResponse.ok("保存文章成功");
     }

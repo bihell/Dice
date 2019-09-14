@@ -19,13 +19,11 @@
       />
       <el-table-column label="发布日期" width="160" show-overflow-tooltip>
         <template slot-scope="scope">
-          <i class="el-icon-time" />
           <span style="margin-left: 10px">{{ scope.row.publish }}</span>
         </template>
       </el-table-column>
       <el-table-column label="修改日期" width="160" show-overflow-tooltip>
         <template slot-scope="scope">
-          <i class="el-icon-time" />
           <span style="margin-left: 10px">{{ scope.row.modified }}</span>
         </template>
       </el-table-column>

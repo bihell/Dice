@@ -65,7 +65,9 @@ export default {
         id: '',
         title: '',
         content: '',
-        status: ''
+        status: '',
+        allowComment: false
+
       },
       rules: {
         title: [
@@ -89,12 +91,14 @@ export default {
           this.page.title = data.title
           this.page.content = data.content
           this.page.status = data.status
+          this.page.allowComment = data.allowComment
         })
       } else {
         this.page.id = ''
         this.page.title = ''
         this.page.content = ''
         this.page.status = this.$static.STATUS_PUBLISH
+        this.page.allowComment = false
       }
     },
     savePage(formName) {

@@ -35,12 +35,20 @@
               </el-form-item>
               <el-form-item>
                 <el-button-group>
-                  <el-button
-                    type="primary"
-                    size="small"
-                    @click="onPublish"
-                  >发布页面
-                  </el-button>
+                  <el-row>
+                    <el-button
+                      type="success"
+                      size="small"
+                      @click="onSave"
+                    >保存
+                    </el-button>
+                    <el-button
+                      type="primary"
+                      size="small"
+                      @click="onPublish"
+                    >发布
+                    </el-button>
+                  </el-row>
                 </el-button-group>
               </el-form-item>
             </div>
@@ -101,24 +109,24 @@ export default {
         this.page.allowComment = false
       }
     },
-    savePage(formName) {
-      if (this.submitting) {
-        this.$util.message.warning('请不要提交过快!')
-        return
-      }
-      this.$refs[formName].validate(valid => {
+    onPublish() {
+      this.$refs['pageForm'].validate(valid => {
         if (valid) {
-          this.submitting = true
           this.$api.blog.savePage(this.page).then(() => {
             this.$router.push('/blog/page')
-            this.$util.message.success('发布自定义页面成功!')
-            this.submitting = false
+            this.$util.message.success('发布页面成功!')
           })
         }
       })
     },
-    onPublish() {
-      this.savePage('pageForm')
+    onSave() {
+      this.$refs['pageForm'].validate(valid => {
+        if (valid) {
+          this.$api.blog.savePage(this.page).then(() => {
+            this.$util.message.success('保存页面成功!')
+          })
+        }
+      })
     }
   }
 }

@@ -74,6 +74,7 @@ public class PageController extends BaseController {
                                  @RequestParam(value = "title") String title,
                                  @RequestParam(value = "content") String content,
                                  @RequestParam(value = "status", defaultValue = Types.DRAFT) String status,
+                                 @RequestParam(value = "priority", defaultValue = "0") Integer priority,
                                  @RequestParam(value = "allowComment", defaultValue = "false") Boolean allowComment) {
         User user = this.user();
         Article page = new Article();
@@ -85,6 +86,7 @@ public class PageController extends BaseController {
         page.setStatus(status);
         page.setAuthorId(user.getId());
         page.setAllowComment(allowComment);
+        page.setPriority(priority);
         articleService.savePage(page);
         return RestResponse.ok("保存文章成功");
     }

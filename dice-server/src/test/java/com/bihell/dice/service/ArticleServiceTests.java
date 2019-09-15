@@ -46,4 +46,8 @@ public class ArticleServiceTests {
         Article article = new Article().selectById(15);
         articleService.saveArticle(article);
     }
+    @Test
+    public void getFrontPage(){
+        System.out.println(articleService.getFrontPage(6));
+    }
 }

@@ -36,9 +36,14 @@ export const actions = {
     const { data } = await api.getArchives()
     commit('archive/SET_DATA', data)
   },
+  // 自定义页面目录
+  async getPageMenu({ commit }) {
+    const { data } = await api.getPageMenu()
+    commit('article/SET_PAGE_MENU', data)
+  },
   // 自定义页面
-  async getPage({ commit }, title) {
-    const { data } = await api.getPage(title)
+  async getPage({ commit }, id) {
+    const { data } = await api.getPage(id)
     commit('article/SET_PAGE', data)
   },
   // 评论列表
@@ -85,5 +90,6 @@ export const actions = {
   // 全局服务初始化
   async nuxtServerInit({ dispatch }) {
     await dispatch('getOptions')
+    await dispatch('getPageMenu')
   }
 }

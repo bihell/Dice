@@ -23,4 +23,5 @@ public class ArticleQuery {
 
     private String content;
 
+    private Integer priority;
 }

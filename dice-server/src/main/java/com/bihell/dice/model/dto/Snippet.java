@@ -1,6 +1,5 @@
 package com.bihell.dice.model.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.bihell.dice.model.domain.SnippetFile;
 import lombok.Data;
 

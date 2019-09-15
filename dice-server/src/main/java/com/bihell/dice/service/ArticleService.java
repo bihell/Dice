@@ -91,10 +91,10 @@ public interface ArticleService {
     /**
      * 根据title获取前端自定义页面
      *
-     * @param title 页面标题
+     * @param id 页面id
      * @return Article
      */
-    Article getFrontPage(String title);
+    Article getFrontPage(Integer id);
 
     /**
      * 分页查询后端自定义页面
@@ -136,4 +136,11 @@ public interface ArticleService {
      * @return boolean
      */
     boolean deletePage(Integer id);
+
+    /**
+     * 获取前端自定义页面信息列表
+     *
+     * @return List<ArticleInfoDto>
+     */
+    List<Article> getFrontPageList();
 }

@@ -24,23 +24,24 @@ CREATE TABLE user
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-CREATE TABLE article
+create table article
 (
-    id            INT PRIMARY KEY      NOT NULL AUTO_INCREMENT,
-    title         VARCHAR(255)         NOT NULL,
-    created       TIMESTAMP            NOT NULL DEFAULT current_timestamp,
-    modified      TIMESTAMP            NOT NULL DEFAULT current_timestamp ON UPDATE current_timestamp,
-    content       MEDIUMTEXT,
-    author_id     INT,
-    hits          INT     DEFAULT 0    NOT NULL,
-    tags          VARCHAR(255),
-    category      VARCHAR(255),
-    status        VARCHAR(32),
-    type          VARCHAR(32),
-    allow_comment BOOLEAN DEFAULT TRUE NOT NULL,
-    comment_count INT     DEFAULT 0    NOT NULL
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+    type          varchar(45)                          not null,
+    id            int auto_increment
+        primary key,
+    created       timestamp  default CURRENT_TIMESTAMP not null,
+    modified      timestamp  default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    allow_comment tinyint(1) default 1                 not null,
+    author_id     int                                  null,
+    comment_count int        default 0                 not null,
+    content       mediumtext                           null,
+    hits          int        default 0                 not null,
+    priority      int        default 0                 not null,
+    status        varchar(32)                          null,
+    title         varchar(255)                         not null,
+    category      varchar(500)                         null,
+    tags          varchar(500)                         null
+);
 
 CREATE TABLE comment
 (

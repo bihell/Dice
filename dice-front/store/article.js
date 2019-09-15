@@ -5,7 +5,8 @@ export const state = () => ({
     currentPage: 1
   },
   detail: {},
-  page: {}
+  page: {},
+  pageMenu: []
 })
 
 export const mutations = {
@@ -17,5 +18,8 @@ export const mutations = {
   },
   SET_PAGE(state, data) {
     state.page = data
+  },
+  SET_PAGE_MENU(state, data) {
+    state.pageMenu = data
   }
 }

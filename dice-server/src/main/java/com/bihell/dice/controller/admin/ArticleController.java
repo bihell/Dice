@@ -71,6 +71,7 @@ public class ArticleController extends BaseController {
      * @param category     文章分类
      * @param status       {@link Types#DRAFT},{@link Types#PUBLISH}
      * @param allowComment 是否允许评论
+     * @param priority     排序权重
      * @return {@see RestResponse.ok()}
      */
     @PostMapping
@@ -82,6 +83,7 @@ public class ArticleController extends BaseController {
                                     @RequestParam(value = "status", defaultValue = Types.DRAFT) String status,
                                     @RequestParam(value = "allowComment", defaultValue = "false") Boolean allowComment,
                                     @RequestParam(value = "created") Long created,
+                                    @RequestParam(value = "priority", defaultValue = "0") Integer priority,
                                     @RequestParam(value = "modified") Long modified) {
         User user = this.user();
         Article article = new Article();
@@ -97,6 +99,7 @@ public class ArticleController extends BaseController {
         article.setAuthorId(user.getId());
         article.setCreated(new java.util.Date(created));
         article.setModified(new java.util.Date(modified));
+        article.setPriority(priority);
         Integer articleId = articleService.saveArticle(article);
         return RestResponse.ok(articleId);
     }

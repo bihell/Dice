@@ -25,6 +25,14 @@
                   inactive-text="隐藏"
                 />
               </el-form-item>
+              <el-form-item label="排序权重">
+                <el-input-number
+                  v-model="page.priority"
+                  :min="0"
+                  size="mini"
+                  controls-position="right"
+                ></el-input-number>
+              </el-form-item>
               <el-form-item>
                 <el-switch
                   v-model="page.allowComment"
@@ -68,14 +76,13 @@ export default {
   },
   data: function() {
     return {
-      submitting: false,
       page: {
         id: '',
         title: '',
         content: '',
-        status: '',
-        allowComment: false
-
+        status: this.$static.STATUS_PUBLISH,
+        allowComment: false,
+        priority: 0
       },
       rules: {
         title: [
@@ -100,12 +107,14 @@ export default {
           this.page.content = data.content
           this.page.status = data.status
           this.page.allowComment = data.allowComment
+          this.page.priority = data.priority
         })
       } else {
         this.page.id = ''
         this.page.title = ''
         this.page.content = ''
         this.page.status = this.$static.STATUS_PUBLISH
+        this.page.priority = 0
         this.page.allowComment = false
       }
     },

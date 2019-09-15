@@ -34,14 +34,14 @@ public class PageController extends BaseController {
     /**
      * 自定义页面列表
      *
-     * @param page  第几页
-     * @param limit 每页数量
+     * @param pageNum  第几页
+     * @param pageSize 每页数量
      * @return {@see Pagination<Article>}
      */
     @GetMapping
-    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer page,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit) {
-        IPage<Article> pages = articleService.getAdminPages(page, limit);
+    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize) {
+        IPage<Article> pages = articleService.getAdminPages(pageNum, pageSize);
         return RestResponse.ok(new Pagination<Article>(pages));
     }
 

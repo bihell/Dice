@@ -53,21 +53,20 @@
 
         <div class="field is-horizontal form-footer" style="justify-content: space-between">
           <div class="control">
-            <button
-              class="button is-primary is-outlined"
-              type="button"
+            <el-button
+              type="primary"
               @click="addFile($store.state.snippets.indexOf(snippet), $event)"
             >
               添加文件
-            </button>
+            </el-button>
           </div>
 
           <div class="field is-grouped">
             <div class="control">
-              <button class="button is-primary" type="submit" @click="submitAction">{{ action | capitalize }}</button>
+              <el-button type="primary" @click="submitAction">{{ action | capitalize }} </el-button>
             </div>
             <div class="control">
-              <button class="button is-text" type="button" @click="cancelAction">取消</button>
+              <el-button @click="cancelAction">取消</el-button>
             </div>
           </div>
         </div>

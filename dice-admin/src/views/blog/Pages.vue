@@ -2,14 +2,21 @@
   <div class="app-container">
     <div class="tool-container" style="justify-content: flex-end">
       <el-button
-        icon="el-icon-edit"
+        type="primary"
+        icon="el-icon-document-add"
         style="margin-left: 16px;"
         @click="handleNew"
       >新页面
       </el-button>
     </div>
 
-    <el-table :data="pageDatas" border stripe style="width: 100%">
+    <el-table
+      :data="pageDetail"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+    >
       <el-table-column prop="id" label="id" width="60" />
       <el-table-column
         prop="title"
@@ -49,30 +56,32 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="admin-page">
-      <el-pagination
-        layout="total,prev, pager, next"
-        :current-page.sync="currentPage"
-        :page-size="pageSize"
-        :total="total"
-        @current-change="init"
-      />
-    </div>
+
+    <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="init" />
+
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { getPages } from '@/api/blog'
+
 export default {
+  components: {
+    Pagination
+  },
   data: function() {
     return {
-      pageDatas: [],
-      total: 0,
-      pageSize: 10,
-      currentPage: 1
+      pageDetail: [],
+      listQuery: {
+        total: 0,
+        pageSize: 12,
+        pageNum: 1
+      }
     }
   },
   mounted() {
-    this.currentPage = Number(this.$route.query.page) || 1
+    this.listQuery.pageNum = Number(this.$route.query.page) || 1
     this.init()
   },
   methods: {
@@ -93,7 +102,7 @@ export default {
       })
     },
     initPageDatas(pages) {
-      this.pageDatas = []
+      this.pageDetail = []
       for (const key in pages) {
         const data = pages[key]
         const page = {
@@ -103,7 +112,7 @@ export default {
           modified: this.$dayjs(data.modified).format('YYYY-MM-DD HH:mm'),
           status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
         }
-        this.pageDatas.push(page)
+        this.pageDetail.push(page)
       }
     },
     deletePage(id) {
@@ -113,10 +122,10 @@ export default {
       })
     },
     init() {
-      this.$api.blog.getPages(this.currentPage).then(data => {
-        this.initPageDatas(data.list)
-        this.total = data.total
-        this.pageSize = data.pageSize
+      getPages(this.currentPage, this.limit).then(response => {
+        this.initPageDatas(response.data.list)
+        this.listQuery.total = response.data.total
+        this.listQuery.pageSize = response.data.pageSize
       })
     }
   }

@@ -1,5 +1,7 @@
 import { get, post, del } from '../utils/request'
+import request from '@/utils/request2'
 import util from '../utils/dice.js'
+// import Qs from 'qs'
 
 const blog = {
   getUser() {
@@ -20,17 +22,6 @@ const blog = {
     }
     return get('/admin/site/logs', params)
   },
-  getArticles(page, title, status, content, category, tag) {
-    const params = {
-      page: page,
-      title: title,
-      status: status,
-      category: category,
-      tag: tag,
-      content: content
-    }
-    return get('/admin/article', params)
-  },
   getArticle(id) {
     return get('/admin/article/' + id)
   },
@@ -39,12 +30,6 @@ const blog = {
   },
   deleteArticle(id) {
     return del('/admin/article/' + id)
-  },
-  getComments(page) {
-    const params = {
-      page: page
-    }
-    return get('/admin/comment', params)
   },
   getCommentDetail(id) {
     return get('/admin/comment/' + id)
@@ -109,12 +94,6 @@ const blog = {
     }
     return del('/admin/meta', params)
   },
-  getPages(page) {
-    const params = {
-      page: page
-    }
-    return get('/admin/page', params)
-  },
   getPage(id) {
     return get('/admin/page/' + id)
   },
@@ -128,4 +107,31 @@ const blog = {
 
 export default {
   blog
+}
+
+// 获取文章列表
+export function getArticles(params) {
+  return request({
+    url: '/admin/article',
+    method: 'get',
+    params: params
+  })
+}
+
+// 获取评论列表
+export function getComments(params) {
+  return request({
+    url: '/admin/comment',
+    method: 'get',
+    params: params
+  })
+}
+
+// 获取自定义页面列表
+export function getPages(params) {
+  return request({
+    url: '/admin/page',
+    method: 'get',
+    params: params
+  })
 }

@@ -27,12 +27,3 @@ export function deleteMedia(id) {
   )
 }
 
-// // 保存或更新代码段
-// export function saveSnippet(data) {
-//   return request({
-//     url: '/admin/snippet',
-//     method: 'post',
-//     data
-//   })
-// }
-

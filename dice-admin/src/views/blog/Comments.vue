@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
-    <el-table :data="commentDatas" border style="width: 100%">
+    <el-table
+      :data="commentDetail"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+    >
       <el-table-column prop="id" label="id" width="60" />
       <el-table-column
         prop="name"
@@ -24,7 +30,7 @@
         show-overflow-tooltip
       >
         <template slot-scope="scope">
-          <i class="el-icon-time" />
+          <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.created }}</span>
         </template>
       </el-table-column>
@@ -89,44 +95,46 @@
         <el-col :xs="24" :sm="12" :md="9">{{ comment.agent }}</el-col>
       </el-row>
     </el-dialog>
-    <div class="admin-page">
-      <el-pagination
-        layout="total,prev, pager, next"
-        :current-page.sync="currentPage"
-        :page-size="pageSize"
-        :total="total"
-        @current-change="init"
-      />
-    </div>
+
+    <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="init" />
+
   </div>
 </template>
 
 <script>
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { getComments } from '@/api/blog'
+
 export default {
+  components: {
+    Pagination
+  },
   data: function() {
     return {
-      commentDatas: [],
+      commentDetail: [],
       comment: {},
-      total: 0,
-      pageSize: 10,
-      currentPage: 1,
       detailVisible: false,
       hasReplay: false,
       isMobile: false,
-      dialogWidth: '60%'
+      dialogWidth: '60%',
+      listQuery: {
+        total: 0,
+        pageSize: 12,
+        pageNum: 1
+      }
     }
   },
   mounted() {
-    this.currentPage = Number(this.$route.query.page) || 1
+    this.listQuery.pageNum = Number(this.$route.query.page) || 1
     this.init()
   },
   methods: {
     init() {
-      this.$api.blog.getComments(this.currentPage).then(data => {
-        this.commentDatas = data.list
-        this.total = data.total
-        this.pageSize = data.pageSize
-        for (const comment of this.commentDatas) {
+      getComments(this.listQuery).then(response => {
+        this.commentDetail = response.data.list
+        this.total = response.data.total
+        this.pageSize = response.data.pageSize
+        for (const comment of this.commentDetail) {
           comment.created = this.$dayjs(comment.created).format(
             'YYYY-MM-DD HH:mm'
           )
@@ -183,11 +191,6 @@ export default {
 <style scoped>
 .el-table {
   border: 1px solid #e6ebf5;
-}
-
-.admin-page {
-  margin-top: 30px;
-  text-align: center;
 }
 
 .comment-dialog .comment-row-detail {

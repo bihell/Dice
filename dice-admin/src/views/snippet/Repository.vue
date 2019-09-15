@@ -17,13 +17,17 @@
           @keyup.enter.native="handleSearch"
         />
         <el-button
+          v-waves
+          type="primary"
           icon="el-icon-search"
           style="margin-left: 16px;"
           @click="handleSearch"
         >搜索
         </el-button>
         <el-button
-          icon="el-icon-edit"
+          v-waves
+          type="primary"
+          icon="el-icon-document-add"
           style="margin-left: 16px;"
           @click="handleNew"
         >新建
@@ -83,9 +87,11 @@ import SnippetEdit from './snippet/Edit.vue'
 import SnippetNew from './snippet/New.vue'
 import { getAllTags, getSnippetByMeta, getSnippetById } from '@/api/snippet'
 import Factory from './mixins/factory'
+import waves from '@/directive/waves' // waves directive
 
 export default {
   components: { SnippetShow, SnippetEdit, SnippetNew },
+  directives: { waves },
   data() {
     return {
       querySnippet: { title: '', snippetFileContent: '' },

@@ -1,13 +1,19 @@
 <template>
   <div class="upload-component">
     <el-button
+      type="primary"
       icon="el-icon-upload"
       @click="uploadVisible = !uploadVisible"
     >
       <span v-if="uploadVisible">隐藏</span>
       <span v-else>上传</span>
     </el-button>
-    <el-button v-show="uploadVisible" type="info" @click="clearUploadFile">
+    <el-button
+      v-show="uploadVisible"
+      v-waves
+      type="info"
+      @click="clearUploadFile"
+    >
       清空上传列表
     </el-button>
     <transition name="flow">
@@ -43,9 +49,11 @@
 
 <script>
 import serverConfig from '../../../server-config'
+import waves from '@/directive/waves' // waves directive
 
 export default {
   name: 'Upload',
+  directives: { waves },
   props: {
     afterUpload: {
       type: Function,

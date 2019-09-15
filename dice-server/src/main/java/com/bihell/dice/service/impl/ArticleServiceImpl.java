@@ -288,14 +288,14 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 根据title获取前端自定义页面
      *
-     * @param title 页面标题
+     * @param id 页面标题
      * @return Article
      */
     @Override
-    @Cacheable(value = ARTICLE_CACHE_NAME, key = "'front_page['+#title+']'")
-    public Article getFrontPage(String title) {
+    @Cacheable(value = ARTICLE_CACHE_NAME, key = "'front_page['+#id+']'")
+    public Article getFrontPage(Integer id) {
         Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
-                .eq(Article::getTitle, title)
+                .eq(Article::getId, id)
                 .eq(Article::getStatus, Types.PUBLISH)
                 .eq(Article::getType, Types.PAGE));
         String content = DiceUtil.contentTransform(article.getContent(), false, true);
@@ -367,8 +367,6 @@ public class ArticleServiceImpl implements ArticleService {
         if (null == page.getAuthorId()) {
             throw new TipException("请先登陆");
         }
-
-
         if (null != page.getId()) {
             page.updateById();
         } else {
@@ -437,5 +435,21 @@ public class ArticleServiceImpl implements ArticleService {
         }
         page.setStatus(Types.DELETE);
         return page.updateById();
+    }
+
+    /**
+     * 获取前端自定义页面信息列表
+     *
+     * @return List<ArticleInfoDto>
+     */
+    @Override
+    @Cacheable(value = ARTICLE_CACHE_NAME, key = "'front_pages'")
+    public List<Article> getFrontPageList() {
+
+        return articleMapper.selectList(new QueryWrapper<Article>().lambda()
+                .select(Article.class, info -> !"content".equals(info.getColumn()))
+                .eq(Article::getType, Types.PAGE)
+                .ne(Article::getStatus, Types.DELETE)
+                .orderByDesc(Article::getPriority, Article::getId));
     }
 }

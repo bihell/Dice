@@ -17,8 +17,11 @@ const api = {
   getTags() {
     return get('/tag')
   },
-  getPage(title) {
-    return get('/page/' + title)
+  getPageMenu() {
+    return get('/page')
+  },
+  getPage(id) {
+    return get('/page/' + id)
   },
   getArchives() {
     return get('/archive')

@@ -25,6 +25,14 @@
                   inactive-text="隐藏"
                 />
               </el-form-item>
+              <el-form-item label="排序权重">
+                <el-input-number
+                  v-model="page.priority"
+                  :min="0"
+                  size="mini"
+                  controls-position="right"
+                ></el-input-number>
+              </el-form-item>
               <el-form-item>
                 <el-switch
                   v-model="page.allowComment"
@@ -35,12 +43,20 @@
               </el-form-item>
               <el-form-item>
                 <el-button-group>
-                  <el-button
-                    type="primary"
-                    size="small"
-                    @click="onPublish"
-                  >发布页面
-                  </el-button>
+                  <el-row>
+                    <el-button
+                      type="success"
+                      size="small"
+                      @click="onSave"
+                    >保存
+                    </el-button>
+                    <el-button
+                      type="primary"
+                      size="small"
+                      @click="onPublish"
+                    >发布
+                    </el-button>
+                  </el-row>
                 </el-button-group>
               </el-form-item>
             </div>
@@ -60,14 +76,13 @@ export default {
   },
   data: function() {
     return {
-      submitting: false,
       page: {
         id: '',
         title: '',
         content: '',
-        status: '',
-        allowComment: false
-
+        status: this.$static.STATUS_PUBLISH,
+        allowComment: false,
+        priority: 0
       },
       rules: {
         title: [
@@ -92,33 +107,35 @@ export default {
           this.page.content = data.content
           this.page.status = data.status
           this.page.allowComment = data.allowComment
+          this.page.priority = data.priority
         })
       } else {
         this.page.id = ''
         this.page.title = ''
         this.page.content = ''
         this.page.status = this.$static.STATUS_PUBLISH
+        this.page.priority = 0
         this.page.allowComment = false
       }
     },
-    savePage(formName) {
-      if (this.submitting) {
-        this.$util.message.warning('请不要提交过快!')
-        return
-      }
-      this.$refs[formName].validate(valid => {
+    onPublish() {
+      this.$refs['pageForm'].validate(valid => {
         if (valid) {
-          this.submitting = true
           this.$api.blog.savePage(this.page).then(() => {
             this.$router.push('/blog/page')
-            this.$util.message.success('发布自定义页面成功!')
-            this.submitting = false
+            this.$util.message.success('发布页面成功!')
           })
         }
       })
     },
-    onPublish() {
-      this.savePage('pageForm')
+    onSave() {
+      this.$refs['pageForm'].validate(valid => {
+        if (valid) {
+          this.$api.blog.savePage(this.page).then(() => {
+            this.$util.message.success('保存页面成功!')
+          })
+        }
+      })
     }
   }
 }

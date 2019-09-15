@@ -65,6 +65,11 @@ public class Article extends Model<Article> {
     private String category;
 
     /**
+     * 文章优先级
+     */
+    private Integer priority;
+
+    /**
      * 内容状态
      */
     private String status;

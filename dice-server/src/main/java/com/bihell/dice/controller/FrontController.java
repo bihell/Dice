@@ -3,10 +3,7 @@ package com.bihell.dice.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.domain.Comment;
-import com.bihell.dice.model.dto.Archive;
-import com.bihell.dice.model.dto.CommentDto;
-import com.bihell.dice.model.dto.MetaDto;
-import com.bihell.dice.model.dto.Pagination;
+import com.bihell.dice.model.dto.*;
 import com.bihell.dice.service.*;
 import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.DiceUtil;
@@ -126,14 +123,25 @@ public class FrontController extends BaseController {
     }
 
     /**
+     * 获取自定义页面的列表,根据权重排序
+     *
+     * @return {@see List<NoteInfo>}
+     */
+    @GetMapping("page")
+    public RestResponse pageList() {
+        List<Article> pages = articleService.getFrontPageList();
+        return RestResponse.ok(pages);
+    }
+
+    /**
      * 自定义页面
      *
-     * @param title 页面标题
+     * @param id 页面id
      * @return {@see Article}
      */
-    @GetMapping("page/{title}")
-    public RestResponse page(@PathVariable String title) {
-        Article page = articleService.getFrontPage(title);
+    @GetMapping("page/{id}")
+    public RestResponse page(@PathVariable Integer id) {
+        Article page = articleService.getFrontPage(id);
         if (null == page) {
             return error404();
         }

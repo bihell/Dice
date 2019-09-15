@@ -37,6 +37,7 @@
           </el-button>
           <el-button
             size="small"
+            type="danger"
             @click="handleDelete(scope.row.id)"
           >删除
           </el-button>

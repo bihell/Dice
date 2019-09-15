@@ -10,12 +10,9 @@
 import BigImg from '~/components/BigImg.vue'
 import Comment from '~/components/Comment.vue'
 
-
-// const pageTitle = 'About'
-
 export default {
   head () {
-    return { title: `关于` }
+      return { title: `${this.page.title}` }
   },
   components: {
     BigImg,Comment
@@ -34,10 +31,6 @@ export default {
   fetch ({ store, params }) {
     return store.dispatch('getPage', params.id)
   },
-
-    // fetch ({ store }) {
-    //     return store.dispatch('getPage', pageTitle)
-    // },
   mounted () {
     this.mountedEvent()
   },

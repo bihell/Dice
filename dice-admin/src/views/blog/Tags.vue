@@ -15,6 +15,7 @@
                 <span class="meta-count">{{ tag.count }}</span>
                 <el-button
                   size="small"
+                  type="danger"
                   @click="deleteTagHandle(tag.name)"
                 >删除</el-button>
               </span>
@@ -47,6 +48,7 @@
                 <span class="meta-count">{{ category.count }}</span>
                 <el-button
                   size="small"
+                  type="danger"
                   @click="deleteCategoryHandle(category.name)"
                 >删除</el-button>
               </span>

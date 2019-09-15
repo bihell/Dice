@@ -150,7 +150,7 @@ INSERT INTO middle (a_id, m_id)
 VALUES (1, 2);
 
 INSERT INTO article (title, created, modified, content, author_id, tags, category, status, type)
-VALUES ('About', now(), now(), '# About me
+VALUES ('关于', now(), now(), '# About me
 ### Hello word
 这是关于我的页面
 

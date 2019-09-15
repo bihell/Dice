@@ -35,13 +35,14 @@
       />
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <router-link :to="'/blog/page/edit/'+scope.row.id" class="link-type">
-            <el-button size="small">
-              编辑
-            </el-button>
-          </router-link>
           <el-button
             size="small"
+            @click="handleEdit(scope.row.id)"
+          >编辑
+          </el-button>
+          <el-button
+            size="small"
+            type="danger"
             @click="handleDelete(scope.row.id)"
           >删除
           </el-button>
@@ -77,6 +78,9 @@ export default {
   methods: {
     handleNew() {
       this.$router.push('/blog/page/create')
+    },
+    handleEdit(id) {
+      this.$router.push('/blog/page/edit/' + id)
     },
     handleDelete(id) {
       this.$confirm('此操作将永久删除该自定义页面, 是否继续?', '提示', {

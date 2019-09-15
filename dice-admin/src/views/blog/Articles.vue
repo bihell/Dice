@@ -83,15 +83,16 @@
           <span style="margin-left: 10px">{{ scope.row.modified }}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="140" align="center">
+      <el-table-column fixed="right" label="操作" width="150" align="center">
         <template slot-scope="scope">
-          <router-link :to="'/blog/article/edit/'+scope.row.id" class="link-type">
-            <el-button size="small">
-              编辑
-            </el-button>
-          </router-link>
           <el-button
             size="small"
+            @click="handleEdit(scope.row.id)"
+          >编辑
+          </el-button>
+          <el-button
+            size="small"
+            type="danger"
             @click="handleDelete(scope.row.id)"
           >删除
           </el-button>
@@ -132,6 +133,9 @@ export default {
   methods: {
     handleNew() {
       this.$router.push('/blog/article/create')
+    },
+    handleEdit(id) {
+      this.$router.push('/blog/article/edit/' + id)
     },
     handleDelete(id) {
       this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {

@@ -13,11 +13,6 @@ public class LogServiceTests {
     LogService logService;
 
     @Test
-    public void save(){
-        logService.save("test","testdata","testmessage","testtype","test ip",1);
-    }
-
-    @Test
     public void getLogs(){
         logService.getLogs(1,2);
     }

@@ -8,7 +8,6 @@ import com.bihell.dice.model.domain.User;
 import com.bihell.dice.service.ArticleService;
 import com.bihell.dice.service.LogService;
 import com.bihell.dice.util.DiceConsts;
-import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
 import lombok.RequiredArgsConstructor;
@@ -100,7 +99,6 @@ public class PageController extends BaseController {
     @DeleteMapping("{id}")
     public RestResponse deletePage(@PathVariable Integer id) {
         if (articleService.deletePage(id)) {
-            logService.save(Types.LOG_ACTION_DELETE, "id:" + id, Types.LOG_MESSAGE_DELETE_PAGE, Types.LOG_TYPE_OPERATE, DiceUtil.getIp());
             return RestResponse.ok("删除自定义页面成功");
         } else {
             return RestResponse.fail();

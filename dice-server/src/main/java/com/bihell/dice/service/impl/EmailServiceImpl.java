@@ -1,12 +1,12 @@
 package com.bihell.dice.service.impl;
 
 import com.bihell.dice.model.domain.Comment;
+import com.bihell.dice.model.enums.LogType;
 import com.bihell.dice.service.EmailService;
 import com.bihell.dice.service.LogService;
 import com.bihell.dice.service.OptionService;
 import com.bihell.dice.util.DiceConsts;
 import com.bihell.dice.util.OptionKeys;
-import com.bihell.dice.util.Types;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 发送邮件 Service 实现类
@@ -41,7 +41,8 @@ public class EmailServiceImpl implements EmailService {
 
     private final LogService logService;
 
-    private final TemplateEngine templateEngine;
+    private static String LOG_MESSAGE_SEND_EMAIL_SUCCESS = "发送邮件成功";
+    private static String LOG_MESSAGE_SEND_EMAIL_FAIL = "发送邮件失败";
 
     @Override
     @Async
@@ -50,17 +51,17 @@ public class EmailServiceImpl implements EmailService {
             return;
         }
 
-        Context context = getEmailContext(comment);
-        String content = templateEngine.process("mail_admin", context);
+        Map<String, String> params = getEmailParams(comment);
+        String content = DiceConsts.getEmailTemplateAdminContent(params);
 
         String logData = content + ";  发送给管理员";
-        log.info("sendEmailToAdmin start: {}", new Date().toString());
+        log.info("sendEmailToAdmin start: {}", new Date());
         try {
             String emailUsername = optionService.get(OptionKeys.EMAIL_USERNAME);
             sendEmail(content, emailUsername);
-            logService.save(Types.LOG_ACTION_SEND_EMAIL, logData, Types.LOG_MESSAGE_SEND_EMAIL_SUCCESS, Types.LOG_TYPE_EMAIL);
+            logService.save(logData, LOG_MESSAGE_SEND_EMAIL_SUCCESS, LogType.EMAIL);
         } catch (Exception e) {
-            logService.save(Types.LOG_ACTION_SEND_EMAIL, logData, Types.LOG_MESSAGE_SEND_EMAIL_FAIL, Types.LOG_TYPE_EMAIL);
+            logService.save(logData, LOG_MESSAGE_SEND_EMAIL_FAIL, LogType.EMAIL);
             log.error(e.getMessage());
         }
     }
@@ -72,16 +73,17 @@ public class EmailServiceImpl implements EmailService {
             return;
         }
 
-        Context context = getEmailContext(comment);
-        String content = templateEngine.process("mail_user", context);
+        Map<String, String> params = getEmailParams(comment);
+        String content = DiceConsts.getEmailTemplateUserContent(params);
 
         String logData = content + ";  发送给:" + replyEmail;
-        log.info("sendEmailToUser start: {}", new Date().toString());
+        log.info("sendEmailToUser start: {}", new Date());
         try {
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaa");
             sendEmail(content, replyEmail);
-            logService.save(Types.LOG_ACTION_SEND_EMAIL, logData, Types.LOG_MESSAGE_SEND_EMAIL_SUCCESS, Types.LOG_TYPE_EMAIL);
+            logService.save(logData, LOG_MESSAGE_SEND_EMAIL_SUCCESS, LogType.EMAIL);
         } catch (Exception e) {
-            logService.save(Types.LOG_ACTION_SEND_EMAIL, logData, Types.LOG_MESSAGE_SEND_EMAIL_FAIL, Types.LOG_TYPE_EMAIL);
+            logService.save(logData, LOG_MESSAGE_SEND_EMAIL_FAIL, LogType.EMAIL);
             log.error(e.getMessage());
         }
     }
@@ -101,32 +103,6 @@ public class EmailServiceImpl implements EmailService {
         String adminUserEmail = optionService.get(OptionKeys.EMAIL_USERNAME, "");
         // 如果是管理员的回复则不必通知管理员
         return StringUtils.isEmpty(adminUserEmail) || !adminUserEmail.equals(email);
-    }
-
-    /**
-     * 获取邮件Context
-     *
-     * @param comment 评论
-     * @return {@see Context}
-     */
-    private Context getEmailContext(Comment comment) {
-        Context context = new Context();
-
-        String websiteName = optionService.get(OptionKeys.BLOG_NAME);
-        String website = optionService.get(OptionKeys.BLOG_WEBSITE);
-
-        // 如果网址最后没有/,则补上
-        if (!StringUtils.isEmpty(website)
-                && website.lastIndexOf("/") != website.length()) {
-            website = website + "/";
-        }
-
-        context.setVariable("websiteName", websiteName);
-        context.setVariable("website", website);
-        context.setVariable("name", comment.getName());
-        context.setVariable("content", comment.getContent());
-        context.setVariable("articleId", String.valueOf(comment.getArticleId()));
-        return context;
     }
 
     /**
@@ -171,5 +147,31 @@ public class EmailServiceImpl implements EmailService {
         mailSender.setUsername(username);
         mailSender.setPassword(password);
         return mailSender;
+    }
+
+    /**
+     * 获取邮件Context
+     *
+     * @param comment 评论
+     * @return {@see Context}
+     */
+    private Map<String, String> getEmailParams(Comment comment) {
+        Map<String, String> params = new HashMap<>();
+
+        String websiteName = optionService.get(OptionKeys.BLOG_NAME);
+        String website = optionService.get(OptionKeys.BLOG_WEBSITE);
+
+        // 如果网址最后没有/,则补上
+        if (!StringUtils.isEmpty(website)
+                && website.lastIndexOf("/") != website.length()) {
+            website = website + "/";
+        }
+
+        params.put("websiteName", websiteName);
+        params.put("website", website);
+        params.put("name", comment.getName());
+        params.put("content", comment.getContent());
+        params.put("articleId", String.valueOf(comment.getArticleId()));
+        return params;
     }
 }

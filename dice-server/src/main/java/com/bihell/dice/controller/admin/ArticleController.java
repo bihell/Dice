@@ -113,7 +113,6 @@ public class ArticleController extends BaseController {
     @DeleteMapping("{id}")
     public RestResponse deleteArticle(@PathVariable Integer id) {
         if (articleService.deleteArticle(id)) {
-            logService.save(Types.LOG_ACTION_DELETE, "id:" + id, Types.LOG_MESSAGE_DELETE_ARTICLE, Types.LOG_TYPE_OPERATE, DiceUtil.getIp());
             return RestResponse.ok("删除文章成功");
         } else {
             return RestResponse.fail();

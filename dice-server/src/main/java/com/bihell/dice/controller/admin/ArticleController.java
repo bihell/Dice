@@ -35,14 +35,14 @@ public class ArticleController extends BaseController {
     /**
      * 文章信息列表
      *
-     * @param page  第几页
-     * @param limit 每页数量
+     * @param pageNum  第几页
+     * @param pageSize 每页数量
      * @return {@see Pagination<Article>}
      */
     @GetMapping
-    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer page,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit, ArticleQuery query) {
-        IPage<Article> articles = articleService.getAdminArticles(page, limit, query);
+    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, ArticleQuery query) {
+        IPage<Article> articles = articleService.getAdminArticles(pageNum, pageSize, query);
         return RestResponse.ok(new Pagination<Article>(articles));
     }
 
@@ -113,7 +113,6 @@ public class ArticleController extends BaseController {
     @DeleteMapping("{id}")
     public RestResponse deleteArticle(@PathVariable Integer id) {
         if (articleService.deleteArticle(id)) {
-            logService.save(Types.LOG_ACTION_DELETE, "id:" + id, Types.LOG_MESSAGE_DELETE_ARTICLE, Types.LOG_TYPE_OPERATE, DiceUtil.getIp());
             return RestResponse.ok("删除文章成功");
         } else {
             return RestResponse.fail();

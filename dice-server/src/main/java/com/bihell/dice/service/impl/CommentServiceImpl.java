@@ -69,7 +69,7 @@ public class CommentServiceImpl implements CommentService {
             throw new TipException("网址长度不能超过" + DiceConsts.MAX_COMMENT_WEBSITE_COUNT);
         }
 
-        Article article = new Article().selectOne(new QueryWrapper<Article>().lambda().eq(Article::getAuthorId, comment.getArticleId()));
+        Article article = new Article().selectOne(new QueryWrapper<Article>().lambda().eq(Article::getId, comment.getArticleId()));
         if (null == article) {
             throw new TipException("无法查询到对应评论文章");
         }

@@ -5,7 +5,7 @@
         <span>
           状态：
         </span>
-        <el-radio-group v-model="tool.status" @change="init">
+        <el-radio-group v-model="listQuery.status" @change="init">
           <el-radio-button label="">全部</el-radio-button>
           <el-radio-button
             :label="this.$static.STATUS_PUBLISH"
@@ -19,21 +19,25 @@
       </div>
       <div style="display: flex;">
         <el-input
-          v-model="tool.title"
+          v-model="listQuery.title"
           placeholder="搜索文章标题"
           clearable
           style="max-width: 300px;"
           @keyup.enter.native="init"
         />
         <el-input
-          v-model="tool.content"
+          v-model="listQuery.content"
           placeholder="搜索文章内容"
           clearable
           style="max-width: 300px;margin-left: 5px"
           @keyup.enter.native="init"
         />
+        <el-button type="primary" style="margin-left: 16px;" icon="el-icon-search" @click="init">
+          搜索
+        </el-button>
         <el-button
-          icon="el-icon-edit"
+          type="primary"
+          icon="el-icon-document-add"
           style="margin-left: 16px;"
           @click="handleNew"
         >新文章
@@ -41,7 +45,13 @@
       </div>
     </div>
 
-    <el-table :data="articleDatas" border stripe style="width: 100%">
+    <el-table
+      :data="articleDetail"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+    >
       <el-table-column prop="id" label="ID" width="60" align="center" />
       <el-table-column prop="title" label="标题" show-overflow-tooltip>
         <template slot-scope="scope">
@@ -99,35 +109,36 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="admin-page">
-      <el-pagination
-        layout="total, prev, pager, next"
-        :current-page.sync="currentPage"
-        :page-size="pageSize"
-        :total="total"
-        @current-change="init"
-      />
-    </div>
+
+    <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="init" />
+
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { getArticles } from '@/api/blog'
+
 export default {
+  components: {
+    Pagination
+  },
   data: function() {
     return {
-      tool: {
+      articleDetail: [],
+      listQuery: {
+        total: 0,
+        pageSize: 12,
+        pageNum: 1,
         status: '',
         title: '',
         content: ''
-      },
-      articleDatas: [],
-      total: 0,
-      pageSize: 10,
-      currentPage: 1
+      }
     }
   },
   mounted() {
-    this.currentPage = Number(this.$route.query.page) || 1
+    this.listQuery.pageNum = Number(this.$route.query.page) || 1
     this.init()
   },
   methods: {
@@ -148,7 +159,7 @@ export default {
       })
     },
     initArticleDatas(articles) {
-      this.articleDatas = []
+      this.articleDetail = []
       for (const key in articles) {
         const data = articles[key]
         const article = {
@@ -160,7 +171,7 @@ export default {
           category: data.category || this.$static.DEFAULT_CATEGORY,
           status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
         }
-        this.articleDatas.push(article)
+        this.articleDetail.push(article)
       }
     },
     deleteArticle(id) {
@@ -170,10 +181,10 @@ export default {
       })
     },
     init() {
-      this.$api.blog.getArticles(this.currentPage, this.tool.title, this.tool.status, this.tool.content).then(data => {
-        this.initArticleDatas(data.list)
-        this.total = data.total
-        this.pageSize = data.pageSize
+      getArticles(this.listQuery).then(response => {
+        this.initArticleDatas(response.data.list)
+        this.listQuery.total = response.data.total
+        this.listQuery.pageSize = response.data.pageSize
       })
     }
   }
@@ -214,14 +225,5 @@ export default {
   display: flex;
   justify-content: space-between;
   background: #fff;
-}
-
-.el-table {
-  border: 1px solid #e6ebf5;
-}
-
-.admin-page {
-  margin-top: 30px;
-  text-align: center;
 }
 </style>

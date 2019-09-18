@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.mapper.LogMapper;
 import com.bihell.dice.model.domain.Log;
+import com.bihell.dice.model.enums.LogType;
 import com.bihell.dice.service.LogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +24,31 @@ public class LogServiceImpl implements LogService {
 
     private final LogMapper logMapper;
 
+    /**
+     * 保存操作日志
+     *
+     * @param data    日志数据
+     * @param message 日志信息
+     * @param type    日志类型
+     */
     @Override
-    public void save(String action, String data, String message, String type) {
+    @Transactional(rollbackFor = Throwable.class)
+    public void save(String data, String message, LogType type) {
+        this.save(data, message, type, null, null);
+    }
+
+    @Override
+    public void save(String action, String data, String message, LogType type) {
         this.save(action, data, message, type, null, null);
     }
 
     @Override
-    public void save(String action, String data, String message, String type, String ip) {
+    public void save(String action, String data, String message, LogType type, String ip) {
         this.save(action, data, message, type, ip, null);
     }
 
     @Override
-    public void save(String action, String data, String message, String type, String ip, Integer userId) {
+    public void save(String action, String data, String message, LogType type, String ip, Integer userId) {
         Log log = new Log();
         log.setAction(action);
         log.setData(data);
@@ -56,6 +70,26 @@ public class LogServiceImpl implements LogService {
     public IPage<Log> getLogs(Integer current, Integer limit) {
         Page<Log> page = new Page<>(current, limit);
         return logMapper.selectPage(page, null);
+    }
+
+    /**
+     * 保存操作日志
+     *
+     * @param data    日志数据
+     * @param message 日志信息
+     * @param type    日志类型
+     * @param ip      操作人ip
+     * @param userId  操作人id
+     */
+    @Override
+    public void save(String data, String message, LogType type, String ip, Integer userId) {
+        Log log = new Log();
+        log.setData(data);
+        log.setMessage(message);
+        log.setType(type);
+        log.setIp(ip);
+        log.setUserId(userId);
+        log.insert();
     }
 
 }

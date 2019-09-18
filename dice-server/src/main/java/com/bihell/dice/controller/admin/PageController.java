@@ -8,7 +8,6 @@ import com.bihell.dice.model.domain.User;
 import com.bihell.dice.service.ArticleService;
 import com.bihell.dice.service.LogService;
 import com.bihell.dice.util.DiceConsts;
-import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +33,14 @@ public class PageController extends BaseController {
     /**
      * 自定义页面列表
      *
-     * @param page  第几页
-     * @param limit 每页数量
+     * @param pageNum  第几页
+     * @param pageSize 每页数量
      * @return {@see Pagination<Article>}
      */
     @GetMapping
-    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer page,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit) {
-        IPage<Article> pages = articleService.getAdminPages(page, limit);
+    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize) {
+        IPage<Article> pages = articleService.getAdminPages(pageNum, pageSize);
         return RestResponse.ok(new Pagination<Article>(pages));
     }
 
@@ -100,7 +99,6 @@ public class PageController extends BaseController {
     @DeleteMapping("{id}")
     public RestResponse deletePage(@PathVariable Integer id) {
         if (articleService.deletePage(id)) {
-            logService.save(Types.LOG_ACTION_DELETE, "id:" + id, Types.LOG_MESSAGE_DELETE_PAGE, Types.LOG_TYPE_OPERATE, DiceUtil.getIp());
             return RestResponse.ok("删除自定义页面成功");
         } else {
             return RestResponse.fail();

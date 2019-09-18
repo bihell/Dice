@@ -2,6 +2,7 @@ package com.bihell.dice.model.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.bihell.dice.model.enums.LogType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -42,7 +43,7 @@ public class Log extends Model<Log> {
     /**
      * 操作类型
      */
-    private String type;
+    private LogType type;
 
     /**
      * ip地址

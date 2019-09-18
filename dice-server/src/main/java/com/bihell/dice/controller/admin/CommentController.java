@@ -29,14 +29,14 @@ public class CommentController extends BaseController {
     /**
      * 获取所有评论
      *
-     * @param page  第几页
-     * @param limit 每页数量
+     * @param pageNum  第几页
+     * @param pageSize 每页数量
      * @return {@see Pagination<Comment>}
      */
     @GetMapping
-    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer page,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit) {
-        IPage<Comment> comments = commentService.getAdminComments(page, limit);
+    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize) {
+        IPage<Comment> comments = commentService.getAdminComments(pageNum, pageSize);
         return RestResponse.ok(new Pagination<Comment>(comments));
     }
 

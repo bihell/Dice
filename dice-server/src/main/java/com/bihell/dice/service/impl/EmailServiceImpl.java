@@ -79,7 +79,6 @@ public class EmailServiceImpl implements EmailService {
         String logData = content + ";  发送给:" + replyEmail;
         log.info("sendEmailToUser start: {}", new Date());
         try {
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaa");
             sendEmail(content, replyEmail);
             logService.save(logData, LOG_MESSAGE_SEND_EMAIL_SUCCESS, LogType.EMAIL);
         } catch (Exception e) {

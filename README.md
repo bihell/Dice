@@ -2,6 +2,8 @@
   <img align="center" src="https://raw.githubusercontent.com/bihell/blog-img/master/logo.png"/>
 </p>
 
+[![codebeat badge](https://codebeat.co/badges/eb0bdd65-dad1-45e6-aea6-371c64d4d943)](https://codebeat.co/projects/github-com-bihell-dice-master)
+
 * 基于`node` `java` `spring-boot` `vue` `nuxt` 开发的个人管理系统，目前已经实现博客功能
 * 支持传统手动部署和`docker`部署
 * 功能精简但齐全，界面简洁却美观，满足个人日常使用要求

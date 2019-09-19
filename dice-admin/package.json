@@ -11,8 +11,7 @@
     "lint": "eslint --ext .js,.vue src",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "test:ci": "npm run lint && npm run test:unit",
-    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
-    "new": "plop"
+    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "husky": {
     "hooks": {
@@ -98,7 +97,6 @@
     "husky": "^3.0.5",
     "lint-staged": "^9.2.5",
     "node-sass": "^4.9.0",
-    "plop": "^2.4.0",
     "runjs": "^4.3.2",
     "sass-loader": "^7.3.1",
     "script-ext-html-webpack-plugin": "^2.1.4",

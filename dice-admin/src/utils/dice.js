@@ -11,7 +11,8 @@ const STATIC = {
   STATUS_DRAFT: 'draft',
   META_CATEGORY: 'category',
   META_TAG: 'tag',
-  META_SNIPPET_TAG: 'snippet_tag'
+  META_SNIPPET_TAG: 'snippet_tag',
+  DEFAULT_PAGE_SIZE: 13
 }
 
 /** **********************************************************/

@@ -119,7 +119,7 @@ export default {
       dialogWidth: '60%',
       listQuery: {
         total: 0,
-        pageSize: 12,
+        pageSize: this.$static.DEFAULT_PAGE_SIZE,
         pageNum: 1
       }
     }

@@ -65,7 +65,7 @@ public class ArticleServiceImpl implements ArticleService {
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, Types.PUBLISH)
                 .eq(Article::getType, Types.POST)
-                .orderByDesc(Article::getCreated);
+                .orderByDesc(Article::getPriority,Article::getCreated);
         IPage<Article> result = articleMapper.selectPage(page, wrapper);
 
         result.getRecords().forEach(article -> {
@@ -110,6 +110,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .eq(Article::getType, Types.POST)
                 .ne(Article::getStatus, Types.DELETE)
                 .eq(!StringUtils.isEmpty(query.getStatus()), Article::getStatus, query.getStatus())
+                .eq(!StringUtils.isEmpty(query.getPriority()), Article::getPriority, query.getPriority())
                 .like(!StringUtils.isEmpty(query.getTitle()), Article::getTitle, query.getTitle())
                 .like(!StringUtils.isEmpty(query.getTag()), Article::getTags, query.getTag())
                 .like(!StringUtils.isEmpty(query.getCategory()), Article::getCategory, query.getCategory())

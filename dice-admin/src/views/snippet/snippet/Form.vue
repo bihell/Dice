@@ -54,6 +54,7 @@
         <div class="field is-horizontal form-footer" style="justify-content: space-between">
           <div class="control">
             <el-button
+              size="small"
               type="primary"
               @click="addFile($store.state.snippets.indexOf(snippet), $event)"
             >
@@ -66,7 +67,7 @@
               <el-button type="primary" @click="submitAction">{{ action | capitalize }} </el-button>
             </div>
             <div class="control">
-              <el-button @click="cancelAction">取消</el-button>
+              <el-button size="small" @click="cancelAction">取消</el-button>
             </div>
           </div>
         </div>

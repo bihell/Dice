@@ -28,14 +28,14 @@ public class MediaController {
     /**
      * 分页获取媒体资源
      *
-     * @param page  第几页
-     * @param limit 每页数量
+     * @param pageNum  第几页
+     * @param pageSize 每页数量
      * @return {@see Page<Media>}
      */
     @GetMapping
-    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer page,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer limit) {
-        IPage<Media> medias = mediaService.pageAdminMedias(page, limit);
+    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize) {
+        IPage<Media> medias = mediaService.pageAdminMedias(pageNum, pageSize);
         return RestResponse.ok(new Pagination<Media>(medias));
     }
 

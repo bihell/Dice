@@ -1,10 +1,10 @@
 import request from '@/utils/request2'
 import Qs from 'qs'
 
-export function pageMedia(limit, page) {
+export function pageMedia(pageSize, pageNum) {
   const params = {
-    limit: limit,
-    page: page
+    pageSize: pageSize,
+    pageNum: pageNum
   }
   return request(
     {

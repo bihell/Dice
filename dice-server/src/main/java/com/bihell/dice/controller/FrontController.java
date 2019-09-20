@@ -163,7 +163,6 @@ public class FrontController extends BaseController {
         return RestResponse.ok(new Pagination<Comment>(comments));
     }
 
-
     /**
      * 发表评论
      *

@@ -3,6 +3,7 @@
     <el-button
       type="primary"
       icon="el-icon-upload"
+      size="small"
       @click="uploadVisible = !uploadVisible"
     >
       <span v-if="uploadVisible">隐藏</span>
@@ -11,6 +12,7 @@
     <el-button
       v-show="uploadVisible"
       v-waves
+      size="small"
       type="info"
       @click="clearUploadFile"
     >

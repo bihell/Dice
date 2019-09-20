@@ -4,6 +4,7 @@
       <el-button
         type="primary"
         icon="el-icon-document-add"
+        size="small"
         style="margin-left: 16px;"
         @click="handleNew"
       >新页面

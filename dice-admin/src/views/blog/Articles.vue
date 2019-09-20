@@ -5,7 +5,7 @@
         <span>
           状态：
         </span>
-        <el-radio-group v-model="listQuery.status" @change="init">
+        <el-radio-group v-model="listQuery.status" size="mini" @change="init">
           <el-radio-button label="">全部</el-radio-button>
           <el-radio-button
             :label="this.$static.STATUS_PUBLISH"
@@ -20,6 +20,7 @@
       <div style="display: flex;">
         <el-input
           v-model="listQuery.title"
+          size="small"
           placeholder="搜索文章标题"
           clearable
           style="max-width: 300px;"
@@ -27,18 +28,20 @@
         />
         <el-input
           v-model="listQuery.content"
+          size="small"
           placeholder="搜索文章内容"
           clearable
           style="max-width: 300px;margin-left: 5px"
           @keyup.enter.native="init"
         />
-        <el-button type="primary" style="margin-left: 16px;" icon="el-icon-search" @click="init">
+        <el-button type="primary" style="margin-left: 16px;" icon="el-icon-search" size="small" @click="init">
           搜索
         </el-button>
         <el-button
           type="primary"
           icon="el-icon-document-add"
           style="margin-left: 16px;"
+          size="small"
           @click="handleNew"
         >新文章
         </el-button>

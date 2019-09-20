@@ -19,6 +19,7 @@
         <el-button
           v-waves
           type="primary"
+          size="small"
           icon="el-icon-search"
           style="margin-left: 16px;"
           @click="handleSearch"
@@ -27,6 +28,7 @@
         <el-button
           v-waves
           type="primary"
+          size="small"
           icon="el-icon-document-add"
           style="margin-left: 16px;"
           @click="handleNew"

@@ -18,18 +18,15 @@
         </el-col>
       </el-row>
     </div>
-    <pagination
-      :page-size="pageSize"
-      :total="total"
-      @changePage="changePage"
-    ></pagination>
+    <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="init" />
   </div>
 </template>
 
 <script>
 import Upload from '../../components/Upload/Upload'
 import MediaItem from '../../components/Upload/MediaItem'
-import Pagination from '../../components/Upload/Pagination'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+
 import { pageMedia } from '@/api/media'
 
 export default {
@@ -41,26 +38,24 @@ export default {
   data: function() {
     return {
       mediaDatas: [],
-      total: 0,
-      pageSize: 10,
-      currentPage: 1,
-      uploadDialog: false
+      listQuery: {
+        total: 0,
+        pageSize: 12,
+        pageNum: 1
+      }
     }
   },
   mounted() {
-    this.currentPage = Number(this.$route.query.page) || 1
+    this.listQuery.pageNum = Number(this.$route.query.page) || 1
     this.init()
   },
   methods: {
-    changePage(page) {
-      this.currentPage = page
-      this.init()
-    },
     init() {
-      pageMedia(12, this.currentPage).then(data => {
-        this.mediaDatas = data.data.list
-        this.total = data.data.total
-        this.pageSize = data.data.pageSize
+      pageMedia(this.listQuery.pageSize, this.listQuery.pageNum).then(response => {
+        this.mediaDatas = response.data.list
+        this.listQuery.total = response.data.total
+        this.listQuery.pageSize = response.data.pageSize
+        this.listQuery.pageNum = response.data.pageNum
         for (const media of this.mediaDatas) {
           if (media.thumbUrl && media.thumbUrl !== '') {
             media.showUrl = this.$util.getServerMediaUrl(media.thumbUrl)
@@ -69,9 +64,6 @@ export default {
           }
         }
       })
-    },
-    showUploadDialog() {
-      this.uploadDialog = true
     },
     afterUpload(response) {
       if (response.success) {

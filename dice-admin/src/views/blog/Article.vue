@@ -92,6 +92,13 @@
                 />
               </el-form-item>
               <el-form-item>
+                <el-button
+                  size="small"
+                  @click="showMediaDialog"
+                >媒体库
+                </el-button>
+              </el-form-item>
+              <el-form-item>
                 <el-button-group>
                   <el-row>
                     <el-button
@@ -128,19 +135,58 @@
         </el-col>
       </el-row>
     </el-form>
+    <el-dialog
+      :visible.sync="mediaDialog"
+      top="10vh"
+      :fullscreen="isMobile"
+      append-to-body
+      center
+      width="80%"
+    >
+      <upload :after-upload="afterUpload"></upload>
+      <div class="media-list">
+        <el-row>
+          <el-col
+            v-for="media in mediaDialogData.mediaDatas"
+            :key="media.id"
+            style="padding: 6px"
+            :xs="24"
+            :sm="12"
+            :md="12"
+            :lg="6"
+            :xl="4"
+          >
+            <media-item
+              :media="media"
+              :after-delete="afterDeleteMedia"
+            ></media-item>
+          </el-col>
+        </el-row>
+        <pagination v-show="mediaDialogData.total>0" :total="mediaDialogData.total" :page.sync="mediaDialogData.pageNum" :limit.sync="mediaDialogData.pageSize" @pagination="showMediaDialog" />
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor'
+import Upload from '../../components/Upload/Upload'
+import MediaItem from '../../components/Upload/MediaItem'
+import { pageMedia } from '@/api/media'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
   components: {
-    MarkdownEditor
+    MarkdownEditor,
+    MediaItem,
+    Upload,
+    Pagination
   },
   data: function() {
     return {
       submitting: false,
+      isMobile: false,
+      mediaDialog: false,
       article: {
         id: '',
         title: '',
@@ -163,7 +209,13 @@ export default {
       selectTags: [],
       tags: [],
       categories: [],
-      flagFalse: false
+      flagFalse: false,
+      mediaDialogData: {
+        mediaDatas: [],
+        total: 0,
+        pageSize: 10,
+        pageNum: 1
+      }
     }
   },
   watch: {
@@ -267,16 +319,52 @@ export default {
       this.getArticle()
       this.getTags()
       this.getCategories()
+    },
+    showMediaDialog() {
+      this.isMobile = document.body.clientWidth < 768
+      this.mediaDialog = true
+      pageMedia(this.mediaDialogData.pageSize, this.mediaDialogData.pageNum).then(response => {
+        this.mediaDialogData.mediaDatas = response.data.list
+        this.mediaDialogData.total = response.data.total
+        this.mediaDialogData.pageSize = response.data.pageSize
+        this.mediaDialogData.pageNum = response.data.pageNum
+        for (const media of this.mediaDialogData.mediaDatas) {
+          if (media.thumbUrl && media.thumbUrl !== '') {
+            media.showUrl = this.$util.getServerMediaUrl(media.thumbUrl)
+          } else {
+            media.showUrl = this.$util.getServerMediaUrl(media.url)
+          }
+        }
+      })
+    },
+    afterDeleteMedia(data) {
+      if (data.success) {
+        this.showMediaDialog(1)
+      }
+    },
+    afterUpload(response) {
+      if (response.success) {
+        pageMedia(this.mediaDialogData.pageSize, this.mediaDialogData.pageNum)
+          .then(response => {
+            this.mediaDialogData.mediaDatas = response.data.list
+            this.mediaDialogData.total = response.data.total
+            this.mediaDialogData.pageSize = response.data.pageSize
+            this.mediaDialogData.pageNum = response.data.pageNum
+            for (const media of this.mediaDialogData.mediaDatas) {
+              if (media.thumbUrl && media.thumbUrl !== '') {
+                media.showUrl = this.$util.getServerMediaUrl(media.thumbUrl)
+              } else {
+                media.showUrl = this.$util.getServerMediaUrl(media.url)
+              }
+            }
+          })
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.el-select {
-  width: 100%;
-}
-
 a {
   text-decoration: none;
 }

@@ -9,7 +9,6 @@ import com.bihell.dice.model.query.ArticleQuery;
 import com.bihell.dice.service.ArticleService;
 import com.bihell.dice.service.LogService;
 import com.bihell.dice.util.DiceConsts;
-import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.RestResponse;
 import com.bihell.dice.util.Types;
 import lombok.RequiredArgsConstructor;

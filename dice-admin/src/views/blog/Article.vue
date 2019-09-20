@@ -65,6 +65,16 @@
               </el-form-item>
               <el-form-item>
                 <el-switch
+                  v-model="article.priority"
+                  active-value="1"
+                  inactive-value="0"
+                  active-text="置顶"
+                  inactive-text="普通"
+                >
+                </el-switch>
+              </el-form-item>
+              <el-form-item>
+                <el-switch
                   v-model="article.allowComment"
                   active-text="开启评论"
                   inactive-text="关闭"
@@ -196,6 +206,7 @@ export default {
         status: '',
         created: '',
         modified: '',
+        priority: 0,
         allowComment: true
       },
       rules: {
@@ -213,7 +224,7 @@ export default {
       mediaDialogData: {
         mediaDatas: [],
         total: 0,
-        pageSize: 10,
+        pageSize: this.$static.DEFAULT_PAGE_SIZE,
         pageNum: 1
       }
     }

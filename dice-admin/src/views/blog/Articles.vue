@@ -1,51 +1,73 @@
 <template>
   <div class="app-container">
     <div class="tool-container">
-      <div>
-        <span>
-          状态：
-        </span>
-        <el-radio-group v-model="listQuery.status" size="mini" @change="init">
-          <el-radio-button label="">全部</el-radio-button>
-          <el-radio-button
-            :label="this.$static.STATUS_PUBLISH"
-          >公开
-          </el-radio-button>
-          <el-radio-button
-            :label="this.$static.STATUS_DRAFT"
-          >隐藏
-          </el-radio-button>
-        </el-radio-group>
-      </div>
-      <div style="display: flex;">
-        <el-input
-          v-model="listQuery.title"
-          size="small"
-          placeholder="搜索文章标题"
-          clearable
-          style="max-width: 300px;"
-          @keyup.enter.native="init"
-        />
-        <el-input
-          v-model="listQuery.content"
-          size="small"
-          placeholder="搜索文章内容"
-          clearable
-          style="max-width: 300px;margin-left: 5px"
-          @keyup.enter.native="init"
-        />
-        <el-button type="primary" style="margin-left: 16px;" icon="el-icon-search" size="small" @click="init">
-          搜索
-        </el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-document-add"
-          style="margin-left: 16px;"
-          size="small"
-          @click="handleNew"
-        >新文章
-        </el-button>
-      </div>
+      <el-row style="width: 100%">
+        <el-col :xs="24" :sm="24" :md="12" :lg="4">
+          <span>
+            状态：
+          </span>
+          <el-radio-group v-model="listQuery.status" size="mini" @change="init">
+            <el-radio-button label="">全部</el-radio-button>
+            <el-radio-button
+              :label="this.$static.STATUS_PUBLISH"
+            >公开
+            </el-radio-button>
+            <el-radio-button
+              :label="this.$static.STATUS_DRAFT"
+            >隐藏
+            </el-radio-button>
+          </el-radio-group>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="12" :lg="7">
+          <span>
+            类型：
+          </span>
+          <el-radio-group
+            v-model="listQuery.priority"
+            size="mini"
+            @change="init"
+          >
+            <el-radio-button label="">全部</el-radio-button>
+            <el-radio-button label="0">普通
+            </el-radio-button>
+            <el-radio-button label="1">置顶
+            </el-radio-button>
+          </el-radio-group>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="12" :lg="5">
+          <el-input
+            v-model="listQuery.title"
+            size="small"
+            placeholder="搜索文章标题"
+            clearable
+            @keyup.enter.native="init"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="12" :lg="5" style="margin-left: 10px">
+          <el-input
+            v-model="listQuery.content"
+            size="small"
+            placeholder="搜索文章内容"
+            clearable
+            @keyup.enter.native="init"
+          />
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="12" :lg="1" style="margin-left: 10px">
+          <el-button type="primary" icon="el-icon-search" size="small" @click="init">
+            搜索
+          </el-button>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="12" :lg="1" style="margin-left: 20px">
+          <el-button
+            type="primary"
+            icon="el-icon-document-add"
+            size="small"
+            @click="handleNew"
+          >新文章
+          </el-button>
+        </el-col>
+      </el-row>
+
     </div>
 
     <el-table
@@ -83,6 +105,21 @@
             disable-transitions
             effect="plain"
           >{{ scope.row.status }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="priority"
+        label="类型"
+        width="68"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          <el-tag
+            :type="scope.row.priority === '置顶' ? 'warning' : ''"
+            effect="plain"
+            disable-transitions
+          >{{ scope.row.priority }}
           </el-tag>
         </template>
       </el-table-column>
@@ -132,11 +169,12 @@ export default {
       articleDetail: [],
       listQuery: {
         total: 0,
-        pageSize: 12,
+        pageSize: this.$static.DEFAULT_PAGE_SIZE,
         pageNum: 1,
         status: '',
         title: '',
-        content: ''
+        content: '',
+        priority: ''
       }
     }
   },
@@ -172,7 +210,8 @@ export default {
           publish: this.$dayjs(data.created).format('YYYY-MM-DD HH:mm'),
           modified: this.$dayjs(data.modified).format('YYYY-MM-DD HH:mm'),
           category: data.category || this.$static.DEFAULT_CATEGORY,
-          status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
+          status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏',
+          priority: data.priority === 0 ? '普通' : '置顶'
         }
         this.articleDetail.push(article)
       }

@@ -17,8 +17,7 @@ logging:
   level:
     root: info
     com.bihell.dice.mapper: trace
-  pattern:
-    console: '%p%m%n'
+
 
 dice:
   doc-disabled: false

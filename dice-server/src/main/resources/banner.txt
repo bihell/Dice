@@ -1,4 +1,4 @@
-
+${AnsiColor.BLUE}
 
                                                     ,---,        ,---,   ,----..       ,---,.
                                                   .'  .' `\   ,`--.' |  /   /   \    ,'  .' |
@@ -13,3 +13,5 @@
                                                 ;   :  .'     ;   |.'  |   :    /  |   :   .'
                                                 |   ,.'       '---'     \   \ .'   |   | ,'
                                                 '---'                    `---`     `----'
+${AnsiColor.BRIGHT_YELLOW}
+::: Spring-Boot ${spring-boot.version}     ::: Dice (version:${application.formatted-version})

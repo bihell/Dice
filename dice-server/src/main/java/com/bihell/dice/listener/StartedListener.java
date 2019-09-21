@@ -36,7 +36,7 @@ public class StartedListener implements ApplicationListener<ApplicationStartedEv
         String baseUrl = optionService.getBaseUrl();
 
         if (!diceProperties.isDocDisabled()) {
-            log.info("Swagger was enable at  {}/swagger-ui.html", baseUrl);
+            log.info("Swagger URL {}/swagger-ui.html", baseUrl);
         }
     }
 

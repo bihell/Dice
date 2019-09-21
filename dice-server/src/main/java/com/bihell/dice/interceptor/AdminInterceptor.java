@@ -56,7 +56,7 @@ public class AdminInterceptor implements HandlerInterceptor {
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, PUT, DELETE");
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "86400");
                         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "x-requested-with");
-                        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "content-type");
+                        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,  HttpHeaders.CONTENT_TYPE);
                     }
                     PrintWriter out = response.getWriter();
                     ObjectMapper mapper = new ObjectMapper();

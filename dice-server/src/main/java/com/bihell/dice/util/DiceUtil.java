@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -378,5 +380,20 @@ public class DiceUtil {
                 log.error(e.getMessage(), e);
             }
         }
+    }
+
+    /**
+     * Gets machine IP address.
+     *
+     * @return current machine IP address.
+     */
+    public static String getMachineIP() {
+        InetAddress machineAddress;
+        try {
+            machineAddress = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            machineAddress = InetAddress.getLoopbackAddress();
+        }
+        return machineAddress.getHostAddress();
     }
 }

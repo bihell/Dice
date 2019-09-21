@@ -1,5 +1,7 @@
 package com.bihell.dice.config;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -16,7 +18,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SwaggerConfig {
+
+    private final DiceProperties diceProperties;
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -25,7 +31,8 @@ public class SwaggerConfig {
                 // 自行修改为自己的包路径
                 .apis(RequestHandlerSelectors.basePackage("com.bihell.dice"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .enable(!diceProperties.isDocDisabled());
     }
 
     private ApiInfo apiInfo() {

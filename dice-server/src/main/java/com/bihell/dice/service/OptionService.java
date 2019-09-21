@@ -1,5 +1,7 @@
 package com.bihell.dice.service;
 
+import org.springframework.lang.NonNull;
+
 import java.util.Map;
 
 /**
@@ -55,4 +57,12 @@ public interface OptionService {
      * @return Map
      */
     Map<String, String> getFrontOptionMap();
+
+    /**
+     * Gets blog base url. (Without /)
+     *
+     * @return blog base url (If blog url isn't present, current machine IP address will be default)
+     */
+    @NonNull
+    String getBaseUrl();
 }

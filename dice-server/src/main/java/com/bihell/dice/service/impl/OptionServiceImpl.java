@@ -8,6 +8,7 @@ import com.bihell.dice.util.DiceUtil;
 import com.bihell.dice.util.OptionKeys;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -28,6 +29,14 @@ import java.util.stream.Collectors;
 public class OptionServiceImpl implements OptionService {
 
     private static final String OPTION_CACHE_NAME = "options";
+
+    private final ApplicationContext applicationContext;
+
+
+    public OptionServiceImpl(
+            ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     /**
      * 获取所有设置的key-value
@@ -114,5 +123,18 @@ public class OptionServiceImpl implements OptionService {
         Map<String, String> allOptions = getAllOptionMap();
         OptionKeys.FRONT_OPTION_KEYS.forEach(key -> frontOptions.put(key, allOptions.getOrDefault(key, "")));
         return frontOptions;
+    }
+
+    /**
+     * Gets blog base url. (Without /)
+     *
+     * @return blog base url (If blog url isn't present, current machine IP address will be default)
+     */
+    @Override
+    public String getBaseUrl() {
+        // Get server port
+        String serverPort = applicationContext.getEnvironment().getProperty("server.port", "8080");
+
+        return String.format("http://%s:%s", DiceUtil.getMachineIP(), serverPort);
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-tabs type="border-card">
+    <el-tabs type="card">
       <el-tab-pane label="博客设置">
         <el-form ref="websiteForm" :model="options" :rules="websiteRules">
           <el-form-item label="博客名:">

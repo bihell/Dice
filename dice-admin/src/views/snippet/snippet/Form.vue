@@ -155,11 +155,13 @@ export default {
       e.preventDefault()
       // TODO: 这里代码有重复有时间要整合
       const snippetFilesAttributes = []
+      // 因为用了 element UI 的组件，这里需要先把 form 过滤出来
+      const content = this.$children[0].$children.filter(children => children.$el.tagName === 'FORM')
       this.$store.state.labelSnippets.edit.snippetFiles.forEach((snippetFile, index) => {
         snippetFilesAttributes.push({
           id: snippetFile.id || null,
           title: snippetFile.title,
-          content: this.$children[0].$children[index].editor.getValue(),
+          content: content[index].editor.getValue(),
           language: snippetFile.language,
           tabs: snippetFile.tabs
         })

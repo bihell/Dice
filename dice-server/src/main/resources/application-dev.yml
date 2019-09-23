@@ -17,7 +17,5 @@ logging:
   level:
     root: info
     com.bihell.dice.mapper: trace
-
-
 dice:
   doc-disabled: false

@@ -83,7 +83,7 @@ import SnippetFileForm from '../snippet_file/Form.vue'
 import 'codemirror/addon/display/placeholder'
 import '../../../utils/codemirror_modes'
 import Filters from '../mixins/filters'
-import { saveSnippet, getSnippetByMeta } from '@/api/snippet'
+import { saveSnippet, getSnippetByMeta, getSnippetById } from '@/api/snippet'
 import { getAllTags } from '@/api/snippet'
 
 export default {
@@ -155,11 +155,13 @@ export default {
       e.preventDefault()
       // TODO: 这里代码有重复有时间要整合
       const snippetFilesAttributes = []
+      // 因为用了 element UI 的组件，这里需要先把 form 过滤出来
+      const content = this.$children[0].$children.filter(children => children.$el.tagName === 'FORM')
       this.$store.state.labelSnippets.edit.snippetFiles.forEach((snippetFile, index) => {
         snippetFilesAttributes.push({
           id: snippetFile.id || null,
           title: snippetFile.title,
-          content: this.$children[0].$children[index].editor.getValue(),
+          content: content[index].editor.getValue(),
           language: snippetFile.language,
           tabs: snippetFile.tabs
         })
@@ -179,6 +181,11 @@ export default {
         await saveSnippet(data).then(response => {
           if (response.success) {
             message.success('代码段已' + action)
+            // 代码段创建或更新后直接展示
+            getSnippetById(response.data).then(response => {
+              store.commit('setActiveLabelSnippet', response.data)
+              store.commit('setSnippetMode', 'show')
+            })
           } else {
             message.error('代码段' + action + '失败')
           }

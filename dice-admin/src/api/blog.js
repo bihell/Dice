@@ -1,7 +1,6 @@
 import { get, post, del } from '../utils/request'
 import request from '@/utils/request2'
 import util from '../utils/dice.js'
-// import Qs from 'qs'
 
 const blog = {
   getUser() {
@@ -24,9 +23,6 @@ const blog = {
   },
   getArticle(id) {
     return get('/admin/article/' + id)
-  },
-  saveArticle(article) {
-    return post('/admin/article', article)
   },
   deleteArticle(id) {
     return del('/admin/article/' + id)
@@ -107,6 +103,15 @@ const blog = {
 
 export default {
   blog
+}
+
+// 保存文章
+export function saveArticle(data) {
+  return request({
+    url: '/admin/article',
+    method: 'post',
+    data
+  })
 }
 
 // 获取文章列表

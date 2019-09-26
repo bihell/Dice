@@ -184,6 +184,7 @@ import Upload from '../../components/Upload/Upload'
 import MediaItem from '../../components/Upload/MediaItem'
 import { pageMedia } from '@/api/media'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { saveArticle } from '@/api/blog'
 
 export default {
   components: {
@@ -194,7 +195,6 @@ export default {
   },
   data: function() {
     return {
-      submitting: false,
       isMobile: false,
       mediaDialog: false,
       article: {
@@ -295,18 +295,12 @@ export default {
       })
     },
     submitArticle(formName, success) {
-      if (this.submitting) {
-        this.$util.message.warning('请不要提交过快!')
-        return
-      }
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.submitting = true
           const params = this.article
           params.tags = this.$util.tagsToString(this.selectTags)
-          this.$api.blog.saveArticle(params).then(data => {
-            success(data)
-            this.submitting = false
+          saveArticle(params).then(response => {
+            success(response.data)
           })
         }
       })

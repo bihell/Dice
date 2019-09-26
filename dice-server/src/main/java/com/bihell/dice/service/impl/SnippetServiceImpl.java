@@ -11,7 +11,7 @@ import com.bihell.dice.model.dto.ArticleInfoDto;
 import com.bihell.dice.model.dto.Snippet;
 import com.bihell.dice.service.MetaService;
 import com.bihell.dice.service.SnippetService;
-import com.bihell.dice.util.Types;
+import com.bihell.dice.utils.Types;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

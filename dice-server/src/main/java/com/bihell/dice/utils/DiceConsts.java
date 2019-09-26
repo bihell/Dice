@@ -1,4 +1,4 @@
-package com.bihell.dice.util;
+package com.bihell.dice.utils;
 
 import java.io.File;
 import java.util.Map;
@@ -10,6 +10,32 @@ import java.util.Map;
  * @since 2017/7/9 22:21
  */
 public interface DiceConsts {
+
+    /**
+     * Access token cache prefix.
+     */
+    String TOKEN_ACCESS_CACHE_PREFIX = "dice.admin.access.token.";
+
+    /**
+     * Refresh token cache prefix.
+     */
+    String TOKEN_REFRESH_CACHE_PREFIX = "dice.admin.refresh.token.";
+
+    String ACCESS_TOKEN_CACHE_PREFIX = "dice.admin.access_token.";
+
+    String REFRESH_TOKEN_CACHE_PREFIX = "dice.admin.refresh_token.";
+
+    /**
+     * Expired seconds.
+     */
+    int ACCESS_TOKEN_EXPIRED_SECONDS = 24 * 3600;
+
+    int REFRESH_TOKEN_EXPIRED_DAYS = 30;
+
+    /**
+     * Admin token param name.
+     */
+    String ADMIN_TOKEN_QUERY_NAME = "admin_token";
 
     /**
      * 登陆用户session key

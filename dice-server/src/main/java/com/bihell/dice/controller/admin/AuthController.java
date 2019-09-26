@@ -1,16 +1,18 @@
 package com.bihell.dice.controller.admin;
 
+import com.bihell.dice.cache.lock.CacheLock;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.params.LoginParam;
 import com.bihell.dice.service.UserService;
-import com.bihell.dice.util.DiceConsts;
-import com.bihell.dice.util.RestResponse;
+import com.bihell.dice.utils.RestResponse;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * 后台用户验证 Controller
@@ -28,26 +30,14 @@ public class AuthController extends BaseController {
     /**
      * 后台登录
      *
-     * @param response   {@link HttpServletResponse}
-     * @param username   用户名
-     * @param password   密码
-     * @param rememberMe 是否记住
+     * @param loginParam Login param
      * @return {@see RestResponse.ok()}
      */
     @PostMapping("login")
-    public RestResponse login(HttpServletResponse response, @RequestParam String username, @RequestParam String password, String rememberMe) {
-
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            return RestResponse.fail("用户名和密码不能为空");
-        }
-
-        User user = userService.login(username, password);
-
-
-        request.getSession().setAttribute(DiceConsts.USER_SESSION_KEY, user);
-        System.out.println(request.getSession());
-
-        return RestResponse.ok(user);
+    @ApiOperation("Login")
+    @CacheLock(autoDelete = false)
+    public RestResponse auth(@RequestBody @Valid LoginParam loginParam) {
+        return RestResponse.ok(userService.authenticate(loginParam));
     }
 
     /**
@@ -56,14 +46,10 @@ public class AuthController extends BaseController {
      * @return {@see RestResponse.ok()}
      */
     @PostMapping("logout")
+    @ApiOperation("Logs out (Clear session)")
+    @CacheLock(autoDelete = false)
     public RestResponse logout() {
-        User user = this.user();
-        System.out.println(request.getSession());
-        if (null == user) {
-            return RestResponse.fail("没有用户登陆");
-        }
-
-        request.getSession().removeAttribute(DiceConsts.USER_SESSION_KEY);
+        userService.clearToken();
         return RestResponse.ok();
     }
 
@@ -119,10 +105,6 @@ public class AuthController extends BaseController {
     @GetMapping("user_info")
     public RestResponse getUser() {
         User user = this.user();
-        if (null == user) {
-            return RestResponse.fail("没有用户登陆");
-        }
-
         return RestResponse.ok(user);
     }
 

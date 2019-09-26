@@ -1,4 +1,4 @@
-package com.bihell.dice.util;
+package com.bihell.dice.utils;
 
 import java.util.Arrays;
 import java.util.List;

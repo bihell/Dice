@@ -1,4 +1,4 @@
-package com.bihell.dice.util;
+package com.bihell.dice.utils;
 
 /**
  * 通用的Type类型

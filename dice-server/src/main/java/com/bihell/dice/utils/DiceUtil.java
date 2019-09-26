@@ -1,4 +1,4 @@
-package com.bihell.dice.util;
+package com.bihell.dice.utils;
 
 import com.vladsch.flexmark.ast.Node;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
@@ -10,6 +10,7 @@ import com.bihell.dice.exception.TipException;
 import com.bihell.dice.model.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.lang.NonNull;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -29,10 +30,9 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
+import java.util.UUID;
 
 /**
  * 公用工具类
@@ -42,6 +42,16 @@ import java.util.Iterator;
  */
 @Slf4j
 public class DiceUtil {
+
+    /**
+     * Gets random uuid without dash.
+     *
+     * @return random uuid without dash
+     */
+    @NonNull
+    public static String randomUUIDWithoutDash() {
+        return org.apache.commons.lang3.StringUtils.remove(UUID.randomUUID().toString(), '-');
+    }
 
     /**
      * markdown 扩展设置
@@ -68,21 +78,6 @@ public class DiceUtil {
      */
     private DiceUtil() {
         throw new TipException("Constructor not allow");
-    }
-
-
-    /**
-     * 获取session中的users对象
-     *
-     * @return session中的用户
-     */
-    public static User getLoginUser() {
-        HttpSession session = getSession();
-        if (null == session) {
-            return null;
-        }
-        System.out.println(session);
-        return (User) session.getAttribute(DiceConsts.USER_SESSION_KEY);
     }
 
     /**
@@ -255,21 +250,6 @@ public class DiceUtil {
         }
 
         return (T) value;
-    }
-
-    /**
-     * 日期转化
-     *
-     * @param dateInString 需要转换日期的字符串
-     * @return 转换后的日期
-     */
-    public static Date getDateFromString(String dateInString) {
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            return formatter.parse(dateInString);
-        } catch (Exception e) {
-            throw new TipException("日期转换错误："+e);
-        }
     }
 
     /**

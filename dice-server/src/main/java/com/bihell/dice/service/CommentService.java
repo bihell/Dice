@@ -3,7 +3,7 @@ package com.bihell.dice.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.model.domain.Comment;
 import com.bihell.dice.model.dto.CommentDto;
-import com.bihell.dice.util.Types;
+import com.bihell.dice.utils.Types;
 
 /**
  * 评论 Service 接口

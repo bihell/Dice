@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import VueStorage from 'vue-ls'
 import Cookies from 'js-cookie'
 
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
@@ -27,7 +27,11 @@ import VueHighlightJS from 'vue-highlightjs'
 
 // Tell Vue.js to use vue-highlightjs
 Vue.use(VueHighlightJS)
-
+Vue.use(VueStorage, {
+  namespace: 'dice_',
+  name: 'ls',
+  storage: 'local'
+})
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })

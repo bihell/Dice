@@ -2,7 +2,6 @@ import axios from 'axios'
 import qs from 'qs'
 import { MessageBox, Message, Loading } from 'element-ui'
 import store from '@/store'
-// import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -13,12 +12,22 @@ const service = axios.create({
 
 // request interceptor
 let loadingInstance = null
+
+function setTokenToHeader(config) {
+  // set token
+  const token = store.getters.token
+  if (token && token.access_token) {
+    config.headers['Authorization'] = token.access_token
+  }
+}
 service.interceptors.request.use(
   config => {
     // do something before request is sent
     if (loadingInstance === null) {
       loadingInstance = Loading.service({ target: '#router-main', fullscreen: false })
     }
+
+    setTokenToHeader(config)
 
     if (
       config.method === 'post' ||
@@ -29,12 +38,6 @@ service.interceptors.request.use(
       config.data = qs.stringify(config.data)
     }
 
-    // if (store.getters.token) {
-    //   // let each request carry token
-    //   // ['X-Token'] is a custom headers key
-    //   // please modify it according to the actual situation
-    //   config.headers['X-Token'] = getToken()
-    // }
     return config
   },
   error => {

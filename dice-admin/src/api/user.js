@@ -1,7 +1,12 @@
 import { post, get } from '@/utils/request'
+import request from '@/utils/request2'
 
 export function login(data) {
-  return post('/admin/user/login', data)
+  return request({
+    url: '/admin/user/login',
+    method: 'post',
+    data
+  })
 }
 
 export function logout() {

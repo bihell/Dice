@@ -30,7 +30,6 @@
         show-overflow-tooltip
       >
         <template slot-scope="scope">
-          <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.created }}</span>
         </template>
       </el-table-column>
@@ -103,7 +102,7 @@
 
 <script>
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getComments } from '@/api/blog'
+import { getComments, getCommentDetail, deleteComment } from '@/api/blog'
 
 export default {
   components: {
@@ -155,8 +154,8 @@ export default {
       }
     },
     handleDetail(id) {
-      this.$api.blog.getCommentDetail(id).then(data => {
-        this.initDetail(data)
+      getCommentDetail(id).then(response => {
+        this.initDetail(response.data)
         this.detailVisible = true
         if (document.body.clientWidth < 768) {
           this.isMobile = true
@@ -179,7 +178,7 @@ export default {
         .catch(() => {})
     },
     deleteComment(id) {
-      this.$api.blog.deleteComment(id).then(data => {
+      deleteComment(id).then(() => {
         this.$util.message.success('删除成功!')
         this.init()
       })

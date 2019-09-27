@@ -1,6 +1,6 @@
 package com.bihell.dice.mapper;
 
-import com.bihell.dice.util.Types;
+import com.bihell.dice.utils.Types;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;

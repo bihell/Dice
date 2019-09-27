@@ -5,12 +5,13 @@ import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.params.ArticleParam;
 import com.bihell.dice.model.query.ArticleQuery;
 import com.bihell.dice.service.ArticleService;
 import com.bihell.dice.service.LogService;
-import com.bihell.dice.util.DiceConsts;
-import com.bihell.dice.util.RestResponse;
-import com.bihell.dice.util.Types;
+import com.bihell.dice.utils.DiceConsts;
+import com.bihell.dice.utils.RestResponse;
+import com.bihell.dice.utils.Types;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -62,44 +63,12 @@ public class ArticleController extends BaseController {
 
     /**
      * 新建或修改文章
-     *
-     * @param id           文章id
-     * @param title        文章标题
-     * @param content      文章内容
-     * @param tags         文章标签
-     * @param category     文章分类
-     * @param status       {@link Types#DRAFT},{@link Types#PUBLISH}
-     * @param allowComment 是否允许评论
-     * @param priority     排序权重
-     * @return {@see RestResponse.ok()}
      */
     @PostMapping
-    public RestResponse saveArticle(@RequestParam(value = "id", required = false) Integer id,
-                                    @RequestParam(value = "title") String title,
-                                    @RequestParam(value = "content") String content,
-                                    @RequestParam(value = "tags") String tags,
-                                    @RequestParam(value = "category") String category,
-                                    @RequestParam(value = "status", defaultValue = Types.DRAFT) String status,
-                                    @RequestParam(value = "allowComment", defaultValue = "false") Boolean allowComment,
-                                    @RequestParam(value = "created") Long created,
-                                    @RequestParam(value = "priority", defaultValue = "0") Integer priority,
-                                    @RequestParam(value = "modified") Long modified) {
+    public RestResponse saveArticle(@RequestBody ArticleParam articleParam) {
         User user = this.user();
-        Article article = new Article();
-        if (!StringUtils.isEmpty(id)) {
-            article.setId(id);
-        }
-        article.setTitle(title);
-        article.setContent(content);
-        article.setTags(tags);
-        article.setCategory(category);
-        article.setStatus(status);
-        article.setAllowComment(allowComment);
-        article.setAuthorId(user.getId());
-        article.setCreated(new java.util.Date(created));
-        article.setModified(new java.util.Date(modified));
-        article.setPriority(priority);
-        Integer articleId = articleService.saveArticle(article);
+        articleParam.setAuthorId(user.getId());
+        Integer articleId = articleService.saveArticle(articleParam);
         return RestResponse.ok(articleId);
     }
 

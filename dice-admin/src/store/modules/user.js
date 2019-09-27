@@ -1,9 +1,9 @@
 import { login, logout } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import Vue from 'vue'
 
 const state = {
-  token: getToken(),
+  token: null,
   name: '',
   avatar: '',
   introduction: '',
@@ -12,7 +12,12 @@ const state = {
 
 const mutations = {
   SET_TOKEN: (state, token) => {
+    Vue.ls.set('Access-Token', token)
     state.token = token
+  },
+  CLEAR_TOKEN: state => {
+    Vue.ls.remove('Access-Token')
+    state.token = null
   },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
@@ -34,14 +39,18 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(() => {
-        commit('SET_TOKEN', 'admin-token')
-        setToken('admin-token')
+      login({ username: username.trim(), password: password }).then(response => {
+        commit('SET_TOKEN', response.data)
+        // setToken('admin-token')
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
+  },
+
+  setCurrentToken({ commit }) {
+    commit('SET_TOKEN', Vue.ls.get('Access-Token'))
   },
 
   // get user info
@@ -74,9 +83,8 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
+        commit('CLEAR_TOKEN')
         commit('SET_ROLES', [])
-        removeToken()
         resetRouter()
         resolve()
       }).catch(error => {
@@ -90,7 +98,6 @@ const actions = {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      removeToken()
       resolve()
     })
   },
@@ -101,7 +108,7 @@ const actions = {
       const token = role + '-token'
 
       commit('SET_TOKEN', token)
-      setToken(token)
+      // setToken(token)
 
       const { roles } = await dispatch('getInfo')
 

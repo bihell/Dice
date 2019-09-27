@@ -1,5 +1,6 @@
 package com.bihell.dice.service;
 
+import com.bihell.dice.model.params.LoginParam;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,6 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
 
-    @Test
-    public void login(){
-        userService.login("dice","123456");
-    }
 
     @Test
     public void resetPassword(){
@@ -27,6 +24,4 @@ public class UserServiceTests {
     public void resetUser(){
         userService.resetUser("dice","dice","tpxcer@outlook.com");
     }
-
-
 }

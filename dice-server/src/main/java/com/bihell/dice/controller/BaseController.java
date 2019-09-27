@@ -1,10 +1,12 @@
 package com.bihell.dice.controller;
 
 import com.bihell.dice.model.domain.User;
-import com.bihell.dice.util.*;
+import com.bihell.dice.security.context.SecurityContextHolder;
+import com.bihell.dice.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * 公共类 Controller
@@ -21,7 +23,7 @@ public abstract class BaseController {
     protected CacheUtil cacheUtil;
 
     protected User user() {
-        return DiceUtil.getLoginUser();
+        return Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getDetail().getUser();
     }
 
     protected RestResponse error404() {

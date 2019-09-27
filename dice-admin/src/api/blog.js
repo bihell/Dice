@@ -1,112 +1,13 @@
-import { get, post, del } from '../utils/request'
-import request from '@/utils/request2'
+import request from '@/utils/request'
 import util from '../utils/dice.js'
-// import Qs from 'qs'
 
-const blog = {
-  getUser() {
-    return get('/admin/user')
-  },
-  getOptions() {
-    return get('/admin/option/all')
-  },
-  saveOptions(options) {
-    return post('/admin/option/save', options)
-  },
-  getArticleCount() {
-    return get('/admin/article/count')
-  },
-  getLogs(page) {
-    const params = {
-      page: page
-    }
-    return get('/admin/site/logs', params)
-  },
-  getArticle(id) {
-    return get('/admin/article/' + id)
-  },
-  saveArticle(article) {
-    return post('/admin/article', article)
-  },
-  deleteArticle(id) {
-    return del('/admin/article/' + id)
-  },
-  getCommentDetail(id) {
-    return get('/admin/comment/' + id)
-  },
-  deleteComment(id) {
-    return del('/admin/comment/' + id)
-  },
-  getCommentCount() {
-    return get('/admin/comment/count')
-  },
-  getAllCategories() {
-    const params = {
-      type: util.STATIC.META_CATEGORY
-    }
-    return get('/admin/meta', params)
-  },
-  getAllTags() {
-    const params = {
-      type: util.STATIC.META_TAG
-    }
-    return get('/admin/meta', params)
-  },
-  saveCategory(name) {
-    const params = {
-      name: name,
-      type: util.STATIC.META_CATEGORY
-    }
-    return post('/admin/meta', params)
-  },
-  saveTag(name) {
-    const params = {
-      name: name,
-      type: util.STATIC.META_TAG
-    }
-    return post('/admin/meta', params)
-  },
-  updateCategory(id, name) {
-    const params = {
-      name: name,
-      type: util.STATIC.META_CATEGORY
-    }
-    return post('/admin/meta/' + id, params)
-  },
-  updateTag(id, name) {
-    const params = {
-      name: name,
-      type: util.STATIC.META_TAG
-    }
-    return post('/admin/meta/' + id, params)
-  },
-  deleteCategory(name) {
-    const params = {
-      name: name,
-      type: util.STATIC.META_CATEGORY
-    }
-    return del('/admin/meta', params)
-  },
-  deleteTag(name) {
-    const params = {
-      name: name,
-      type: util.STATIC.META_TAG
-    }
-    return del('/admin/meta', params)
-  },
-  getPage(id) {
-    return get('/admin/page/' + id)
-  },
-  savePage(page) {
-    return post('/admin/page', page)
-  },
-  deletePage(id) {
-    return del('/admin/page/' + id)
-  }
-}
-
-export default {
-  blog
+// 保存文章
+export function saveArticle(data) {
+  return request({
+    url: '/admin/article',
+    method: 'post',
+    data
+  })
 }
 
 // 获取文章列表
@@ -133,5 +34,164 @@ export function getPages(params) {
     url: '/admin/page',
     method: 'get',
     params: params
+  })
+}
+
+export function getOptions() {
+  return request({
+    url: '/admin/option/all',
+    method: 'get'
+  })
+}
+
+export function saveOptions(options) {
+  return request({
+    url: '/admin/option/save',
+    method: 'post',
+    params: options
+  })
+}
+
+export function getArticle(id) {
+  return request({
+    url: '/admin/article/' + id,
+    method: 'get'
+  })
+}
+
+export function deleteArticle(id) {
+  return request({
+    url: '/admin/article/' + id,
+    method: 'delete'
+  })
+}
+
+export function getCommentDetail(id) {
+  return request({
+    url: '/admin/comment/' + id,
+    method: 'get'
+  })
+}
+
+export function deleteComment(id) {
+  return request({
+    url: '/admin/comment/' + id,
+    method: 'delete'
+  })
+}
+
+export function getAllCategories() {
+  const params = {
+    type: util.STATIC.META_CATEGORY
+  }
+  return request({
+    url: '/admin/meta',
+    method: 'get',
+    params: params
+  })
+}
+
+export function getAllTags() {
+  const params = {
+    type: util.STATIC.META_TAG
+  }
+  return request({
+    url: '/admin/meta',
+    method: 'get',
+    params: params
+  })
+}
+
+export function saveCategory(name) {
+  const params = {
+    name: name,
+    type: util.STATIC.META_CATEGORY
+  }
+  return request({
+    url: '/admin/meta',
+    method: 'post',
+    params: params
+  })
+}
+
+export function saveTag(name) {
+  const params = {
+    name: name,
+    type: util.STATIC.META_TAG
+  }
+  return request({
+    url: '/admin/meta',
+    method: 'post',
+    params: params
+  })
+}
+
+export function updateCategory(id, name) {
+  const params = {
+    name: name,
+    type: util.STATIC.META_CATEGORY
+  }
+  return request({
+    url: '/admin/meta' + id,
+    method: 'post',
+    params: params
+  })
+}
+
+export function updateTag(id, name) {
+  const params = {
+    name: name,
+    type: util.STATIC.META_TAG
+  }
+  return request({
+    url: '/admin/meta' + id,
+    method: 'post',
+    params: params
+  })
+}
+
+export function deleteCategory(name) {
+  const params = {
+    name: name,
+    type: util.STATIC.META_CATEGORY
+  }
+  return request({
+    url: '/admin/meta',
+    method: 'delete',
+    params: params
+  })
+}
+
+export function deleteTag(name) {
+  const params = {
+    name: name,
+    type: util.STATIC.META_TAG
+  }
+  return request({
+    url: '/admin/meta',
+    method: 'delete',
+    params: params
+  })
+}
+
+export function getPage(id) {
+  return request({
+    url: '/admin/page/' + id,
+    method: 'get'
+  })
+}
+
+export function savePage(page) {
+  return request({
+    url: '/admin/page',
+    method: 'post',
+    params: page
+  })
+}
+
+export function deletePage(id) {
+  return request({
+    url: '/admin/page/' + id,
+    method: 'delete'
   })
 }

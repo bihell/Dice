@@ -71,6 +71,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+import { getAllCategories, getAllTags, saveCategory, saveTag, updateCategory, updateTag, deleteCategory, deleteTag } from '@/api/blog'
+
 export default {
   data() {
     return {
@@ -88,16 +90,16 @@ export default {
   },
   methods: {
     getTags() {
-      this.$api.blog.getAllTags().then(data => {
-        for (const key in data) {
-          this.tags.push(data[key])
+      getAllTags().then(response => {
+        for (const key in response.data) {
+          this.tags.push(response.data[key])
         }
       })
     },
     getCategories() {
-      this.$api.blog.getAllCategories().then(data => {
-        for (const key in data) {
-          this.categories.push(data[key])
+      getAllCategories().then(response => {
+        for (const key in response.data) {
+          this.categories.push(response.data[key])
         }
       })
     },
@@ -115,7 +117,7 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        this.$api.blog.deleteTag(tagName).then(() => {
+        deleteTag(tagName).then(() => {
           this.refreshTags()
           this.$message({
             type: 'success',
@@ -131,7 +133,7 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        this.$api.blog.deleteCategory(categoryName).then(() => {
+        deleteCategory(categoryName).then(() => {
           this.refreshCategories()
           this.$message({
             type: 'success',
@@ -150,7 +152,7 @@ export default {
         return
       }
       if (this.tagId !== null && this.tagId !== '') {
-        this.$api.blog.updateTag(this.tagId, this.tagName).then(() => {
+        updateTag(this.tagId, this.tagName).then(() => {
           this.refreshTags()
           this.$message({
             message: '更新tag成功!',
@@ -158,7 +160,7 @@ export default {
           })
         })
       } else {
-        this.$api.blog.saveTag(this.tagName).then(() => {
+        saveTag(this.tagName).then(() => {
           this.refreshTags()
           this.$message({
             message: '新建tag成功!',
@@ -176,7 +178,7 @@ export default {
         return
       }
       if (this.categoryId !== null && this.categoryId !== '') {
-        this.$api.blog.updateCategory(this.categoryId, this.categoryName).then(() => {
+        updateCategory(this.categoryId, this.categoryName).then(() => {
           this.refreshCategories()
           this.$message({
             message: '更新category成功!',
@@ -184,7 +186,7 @@ export default {
           })
         })
       } else {
-        this.$api.blog.saveCategory(this.categoryName).then(() => {
+        saveCategory(this.categoryName).then(() => {
           this.refreshCategories()
           this.$message({
             message: '新建category成功!',

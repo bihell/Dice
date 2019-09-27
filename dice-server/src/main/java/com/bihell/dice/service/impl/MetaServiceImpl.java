@@ -10,7 +10,7 @@ import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.ArticleMapper;
 import com.bihell.dice.mapper.MiddleMapper;
 import com.bihell.dice.service.MetaService;
-import com.bihell.dice.util.Types;
+import com.bihell.dice.utils.Types;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

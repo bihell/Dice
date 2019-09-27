@@ -1,4 +1,4 @@
-import request from '@/utils/request2'
+import request from '@/utils/request'
 import util from '../utils/dice'
 import Qs from 'qs'
 

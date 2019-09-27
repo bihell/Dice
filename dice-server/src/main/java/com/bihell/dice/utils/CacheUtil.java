@@ -1,4 +1,4 @@
-package com.bihell.dice.util;
+package com.bihell.dice.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;

@@ -2,15 +2,30 @@ package com.bihell.dice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bihell.dice.cache.StringCacheStore;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.UserMapper;
 import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.params.LoginParam;
+import com.bihell.dice.security.AuthToken;
+import com.bihell.dice.security.SecurityUtil;
+import com.bihell.dice.security.authentication.Authentication;
+import com.bihell.dice.security.context.SecurityContextHolder;
 import com.bihell.dice.service.UserService;
-import com.bihell.dice.util.DiceUtil;
+import com.bihell.dice.utils.DiceUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import static com.bihell.dice.utils.DiceConsts.ACCESS_TOKEN_EXPIRED_SECONDS;
+import static com.bihell.dice.utils.DiceConsts.REFRESH_TOKEN_EXPIRED_DAYS;
 
 /**
  * User Service 层实现类
@@ -19,27 +34,78 @@ import java.util.Date;
  * @since 2017/7/12 21:24
  */
 @Service("usersService")
+@Slf4j
 @Transactional(rollbackFor = Throwable.class)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    private final StringCacheStore cacheStore;
+
+    /**
+     * Authenticates.
+     *
+     * @param loginParam login param must not be null
+     * @return authentication token
+     */
     @Override
-    public User login(String username, String password) {
+    public AuthToken authenticate(LoginParam loginParam) {
+        Assert.notNull(loginParam, "Login param must not be null");
+
+        String username = loginParam.getUsername();
 
         User user = new User().selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username).or().eq(User::getEmail, username));
         if (null == user) {
             throw new TipException("用户名或者密码错误");
         }
-        String md5 = DiceUtil.getMd5(password);
+        String md5 = DiceUtil.getMd5(loginParam.getPassword());
         if (!md5.equals(user.getPasswordMd5())) {
             throw new TipException("用户名或者密码错误");
         }
+
+        // todo 这里清空 Token 之后还能获得用户信，后续另外处理
+//        if (SecurityContextHolder.getContext().isAuthenticated()) {
+//            // If the user has been logged in
+//            throw new TipException("您已登录，请不要重复登录");
+//        }
+
+        // Log it then login successful
+        log.info("用户登录: {}", user.getUsername());
         user.setLogged(new Date());
         user.updateById();
 
-        //清空密码
-        user.setPasswordMd5(null);
-        return user;
+        // Generate new token
+        return buildAuthToken(user);
+    }
 
+    /**
+     * Clears authentication.
+     */
+    @Override
+    public void clearToken() {
+        // Check if the current is logging in
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new TipException("您尚未登录，因此无法注销");
+        }
+
+        // Get current user
+        User user = authentication.getDetail().getUser();
+
+        // Clear access token
+        cacheStore.getAny(SecurityUtil.buildAccessTokenKey(user), String.class).ifPresent(accessToken -> {
+            // Delete token
+            cacheStore.delete(SecurityUtil.buildTokenAccessKey(accessToken));
+            cacheStore.delete(SecurityUtil.buildAccessTokenKey(user));
+        });
+
+        // Clear refresh token
+        cacheStore.getAny(SecurityUtil.buildRefreshTokenKey(user), String.class).ifPresent(refreshToken -> {
+            cacheStore.delete(SecurityUtil.buildTokenRefreshKey(refreshToken));
+            cacheStore.delete(SecurityUtil.buildRefreshTokenKey(user));
+        });
+
+        log.info("You have been logged out, looking forward to your next visit!");
     }
 
     @Override
@@ -76,5 +142,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setEmail(email);
 
         return user.updateById();
+    }
+
+    /**
+     * Builds authentication token.
+     *
+     * @param user user info must not be null
+     * @return authentication token
+     */
+    @NonNull
+    private AuthToken buildAuthToken(@NonNull User user) {
+        Assert.notNull(user, "User must not be null");
+
+        // Generate new token
+        AuthToken token = new AuthToken();
+
+        token.setAccessToken(DiceUtil.randomUUIDWithoutDash());
+        token.setExpiredIn(ACCESS_TOKEN_EXPIRED_SECONDS);
+        token.setRefreshToken(DiceUtil.randomUUIDWithoutDash());
+
+        // Cache those tokens, just for clearing
+        cacheStore.putAny(SecurityUtil.buildAccessTokenKey(user), token.getAccessToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
+        cacheStore.putAny(SecurityUtil.buildRefreshTokenKey(user), token.getRefreshToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
+
+        // Cache those tokens with user id
+        cacheStore.putAny(SecurityUtil.buildTokenAccessKey(token.getAccessToken()), user.getId(), ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
+        cacheStore.putAny(SecurityUtil.buildTokenRefreshKey(token.getRefreshToken()), user.getId(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
+
+        return token;
     }
 }

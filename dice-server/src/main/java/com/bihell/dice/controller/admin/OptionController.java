@@ -2,7 +2,7 @@ package com.bihell.dice.controller.admin;
 
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.service.OptionService;
-import com.bihell.dice.util.RestResponse;
+import com.bihell.dice.utils.RestResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

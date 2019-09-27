@@ -1,11 +1,11 @@
 package com.bihell.dice.interceptor;
 
-import com.bihell.dice.cache.StringCacheStore;
 import com.bihell.dice.security.SecurityUtil;
 import com.bihell.dice.security.UserDetail;
 import com.bihell.dice.security.authentication.AuthenticationImpl;
 import com.bihell.dice.security.context.SecurityContextHolder;
 import com.bihell.dice.security.context.SecurityContextImpl;
+import com.bihell.dice.service.RedisService;
 import com.bihell.dice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bihell.dice.model.domain.User;
@@ -26,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.Optional;
 
 import static com.bihell.dice.utils.DiceConsts.ADMIN_TOKEN_QUERY_NAME;
 
@@ -47,9 +46,9 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     private final static String ALLOW_HEADERS = org.apache.commons.lang3.StringUtils.joinWith(",", HttpHeaders.CONTENT_TYPE, HttpHeaders.AUTHORIZATION);
 
-    private final StringCacheStore cacheStore;
-
     private final UserService userService;
+
+    private final RedisService redisService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -90,9 +89,9 @@ public class AdminInterceptor implements HandlerInterceptor {
                 }
 
                 // Get user id from cache
-                Optional<Integer> optionalUserId = cacheStore.getAny(SecurityUtil.buildTokenAccessKey(token), Integer.class);
+                Integer userId = (Integer) redisService.get(SecurityUtil.buildTokenAccessKey(token));
 
-                if (!optionalUserId.isPresent()) {
+                if (userId == null) {
                     PrintWriter out = response.getWriter();
                     ObjectMapper mapper = new ObjectMapper();
                     out.print(mapper.writeValueAsString(RestResponse.fail(ErrorCode.TOKEN_ERROR.getCode(), ErrorCode.TOKEN_ERROR.getMsg())));
@@ -101,7 +100,7 @@ public class AdminInterceptor implements HandlerInterceptor {
                 }
 
                 // Get the user
-                User user = userService.getById(optionalUserId.get());
+                User user = userService.getById(userId);
                 user.setPasswordMd5("");
 
                 // Build user detail
@@ -123,7 +122,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     }
 
-    protected String getTokenFromRequest(@NonNull HttpServletRequest request) {
+    private String getTokenFromRequest(@NonNull HttpServletRequest request) {
         Assert.notNull(request, "Http servlet request must not be null");
 
         // Get from header

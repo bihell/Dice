@@ -1,6 +1,5 @@
 package com.bihell.dice.controller.admin;
 
-import com.bihell.dice.cache.lock.CacheLock;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.params.LoginParam;
@@ -35,7 +34,6 @@ public class AuthController extends BaseController {
      */
     @PostMapping("login")
     @ApiOperation("Login")
-    @CacheLock(autoDelete = false)
     public RestResponse auth(@RequestBody @Valid LoginParam loginParam) {
         return RestResponse.ok(userService.authenticate(loginParam));
     }
@@ -47,7 +45,6 @@ public class AuthController extends BaseController {
      */
     @PostMapping("logout")
     @ApiOperation("Logs out (Clear session)")
-    @CacheLock(autoDelete = false)
     public RestResponse logout() {
         userService.clearToken();
         return RestResponse.ok();

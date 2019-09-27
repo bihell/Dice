@@ -50,6 +50,16 @@ services:
     command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker -Dmaven.test.skip=true
     depends_on:
     - dice-mysql
+    - dice-redis
+    restart: always
+
+  dice-redis:
+    container_name: dice-redis
+    build:
+      context: ./
+      dockerfile: ./dice-docker/dice-redis-Dockerfile
+    environment:
+      TZ: Asia/Shanghai
     restart: always
 
   dice-admin:
@@ -71,3 +81,5 @@ services:
       TZ: Asia/Shanghai
     expose:
     - "3000"
+    depends_on:
+    - dice-server

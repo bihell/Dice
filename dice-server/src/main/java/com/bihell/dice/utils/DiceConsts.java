@@ -28,9 +28,9 @@ public interface DiceConsts {
     /**
      * Expired seconds.
      */
-    int ACCESS_TOKEN_EXPIRED_SECONDS = 24 * 3600;
+    long ACCESS_TOKEN_EXPIRED_SECONDS = 24 * 3600;
 
-    int REFRESH_TOKEN_EXPIRED_DAYS = 30;
+    long REFRESH_TOKEN_EXPIRED_DAYS = 30;
 
     /**
      * Admin token param name.

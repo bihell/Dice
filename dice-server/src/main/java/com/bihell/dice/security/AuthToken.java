@@ -22,7 +22,7 @@ public class AuthToken {
      * Expired in. (seconds)
      */
     @JsonProperty("expired_in")
-    private int expiredIn;
+    private long expiredIn;
 
     /**
      * Refresh token.

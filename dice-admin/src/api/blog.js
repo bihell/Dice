@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import util from '../utils/dice.js'
+import util from '@/utils/dice.js'
 
 // 保存文章
 export function saveArticle(data) {

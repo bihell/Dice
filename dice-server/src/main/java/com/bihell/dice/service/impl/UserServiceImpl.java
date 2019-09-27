@@ -2,7 +2,6 @@ package com.bihell.dice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bihell.dice.cache.StringCacheStore;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.UserMapper;
 import com.bihell.dice.model.domain.User;
@@ -11,6 +10,7 @@ import com.bihell.dice.security.AuthToken;
 import com.bihell.dice.security.SecurityUtil;
 import com.bihell.dice.security.authentication.Authentication;
 import com.bihell.dice.security.context.SecurityContextHolder;
+import com.bihell.dice.service.RedisService;
 import com.bihell.dice.service.UserService;
 import com.bihell.dice.utils.DiceUtil;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ import static com.bihell.dice.utils.DiceConsts.REFRESH_TOKEN_EXPIRED_DAYS;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-    private final StringCacheStore cacheStore;
+    private final RedisService redisService;
 
     /**
      * Authenticates.
@@ -92,18 +92,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // Get current user
         User user = authentication.getDetail().getUser();
 
-        // Clear access token
-        cacheStore.getAny(SecurityUtil.buildAccessTokenKey(user), String.class).ifPresent(accessToken -> {
-            // Delete token
-            cacheStore.delete(SecurityUtil.buildTokenAccessKey(accessToken));
-            cacheStore.delete(SecurityUtil.buildAccessTokenKey(user));
-        });
+        String accessToken = (String) redisService.get(SecurityUtil.buildAccessTokenKey(user));
+        if (accessToken != null) {
+            redisService.remove(SecurityUtil.buildTokenAccessKey(accessToken));
+            redisService.remove(SecurityUtil.buildAccessTokenKey(user));
+        }
 
-        // Clear refresh token
-        cacheStore.getAny(SecurityUtil.buildRefreshTokenKey(user), String.class).ifPresent(refreshToken -> {
-            cacheStore.delete(SecurityUtil.buildTokenRefreshKey(refreshToken));
-            cacheStore.delete(SecurityUtil.buildRefreshTokenKey(user));
-        });
+        String refreshToken = (String) redisService.get(SecurityUtil.buildRefreshTokenKey(user));
+        if (accessToken != null) {
+            redisService.remove(SecurityUtil.buildTokenRefreshKey(refreshToken));
+            redisService.remove(SecurityUtil.buildRefreshTokenKey(user));
+        }
 
         log.info("You have been logged out, looking forward to your next visit!");
     }
@@ -162,12 +161,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         token.setRefreshToken(DiceUtil.randomUUIDWithoutDash());
 
         // Cache those tokens, just for clearing
-        cacheStore.putAny(SecurityUtil.buildAccessTokenKey(user), token.getAccessToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
-        cacheStore.putAny(SecurityUtil.buildRefreshTokenKey(user), token.getRefreshToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
+        redisService.set(SecurityUtil.buildAccessTokenKey(user), token.getAccessToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
+        redisService.set(SecurityUtil.buildRefreshTokenKey(user), token.getRefreshToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
 
         // Cache those tokens with user id
-        cacheStore.putAny(SecurityUtil.buildTokenAccessKey(token.getAccessToken()), user.getId(), ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
-        cacheStore.putAny(SecurityUtil.buildTokenRefreshKey(token.getRefreshToken()), user.getId(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
+        redisService.set(SecurityUtil.buildTokenAccessKey(token.getAccessToken()), user.getId(), ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
+        redisService.set(SecurityUtil.buildTokenRefreshKey(token.getRefreshToken()), user.getId(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
 
         return token;
     }

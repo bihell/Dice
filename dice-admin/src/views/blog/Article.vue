@@ -184,7 +184,7 @@ import Upload from '../../components/Upload/Upload'
 import MediaItem from '../../components/Upload/MediaItem'
 import { pageMedia } from '@/api/media'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { saveArticle } from '@/api/blog'
+import { saveArticle, getArticle, getAllTags } from '@/api/blog'
 
 export default {
   components: {
@@ -243,8 +243,8 @@ export default {
       const id = this.$route.params.id
       // 如果有id则表示编辑文章,获取文章信息
       if (id) {
-        this.$api.blog.getArticle(id).then(data => {
-          this.initArticle(data)
+        getArticle(id).then(response => {
+          this.initArticle(response.data)
         })
       } else {
         // 如果没有id则表示新增文章,不用清空文章信息
@@ -273,11 +273,11 @@ export default {
       this.selectTags = this.$util.stringToTags(data.tags)
     },
     getTags() {
-      this.$api.blog.getAllTags().then(data => {
-        for (const key in data) {
+      getAllTags().then(response => {
+        for (const key in response.data) {
           const tag = {
-            value: data[key].name,
-            label: data[key].name
+            value: response.data[key].name,
+            label: response.data[key].name
           }
           this.tags.push(tag)
         }

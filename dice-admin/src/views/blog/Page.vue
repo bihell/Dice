@@ -69,6 +69,7 @@
 
 <script>
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor'
+import { getPage, savePage } from '@/api/blog'
 
 export default {
   components: {
@@ -101,13 +102,13 @@ export default {
     getPage() {
       const id = this.$route.params.id
       if (id) {
-        this.$api.blog.getPage(id).then(data => {
-          this.page.id = data.id
-          this.page.title = data.title
-          this.page.content = data.content
-          this.page.status = data.status
-          this.page.allowComment = data.allowComment
-          this.page.priority = data.priority
+        getPage(id).then(response => {
+          this.page.id = response.data.id
+          this.page.title = response.data.title
+          this.page.content = response.data.content
+          this.page.status = response.data.status
+          this.page.allowComment = response.data.allowComment
+          this.page.priority = response.data.priority
         })
       } else {
         this.page.id = ''
@@ -121,7 +122,7 @@ export default {
     onPublish() {
       this.$refs['pageForm'].validate(valid => {
         if (valid) {
-          this.$api.blog.savePage(this.page).then(() => {
+          savePage(this.page).then(() => {
             this.$router.push('/blog/page')
             this.$util.message.success('发布页面成功!')
           })
@@ -131,7 +132,7 @@ export default {
     onSave() {
       this.$refs['pageForm'].validate(valid => {
         if (valid) {
-          this.$api.blog.savePage(this.page).then(() => {
+          savePage(this.page).then(() => {
             this.$util.message.success('保存页面成功!')
           })
         }

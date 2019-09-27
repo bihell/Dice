@@ -65,7 +65,7 @@
 
 <script type="text/ecmascript-6">
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getPages } from '@/api/blog'
+import { getPages, deletePage } from '@/api/blog'
 
 export default {
   components: {
@@ -117,7 +117,7 @@ export default {
       }
     },
     deletePage(id) {
-      this.$api.blog.deletePage(id).then(() => {
+      deletePage(id).then(() => {
         this.$util.message.success('删除成功!')
         this.init()
       })

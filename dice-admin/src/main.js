@@ -17,8 +17,6 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
-import Blog from './api/blog'
-import User from './api/user'
 import DiceUtil from './utils/dice'
 import serverConfig from '../server-config'
 import dayjs from 'dayjs'
@@ -43,10 +41,8 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 Vue.prototype.$util = DiceUtil.FUNCTIONS
-Vue.prototype.$api = Blog
 Vue.prototype.$serverConfig = serverConfig
 Vue.prototype.$dayjs = dayjs
-Vue.prototype.$api_user = User
 Vue.prototype.$static = DiceUtil.STATIC
 
 new Vue({

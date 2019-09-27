@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 import { MessageBox, Message, Loading } from 'element-ui'
 import store from '@/store'
 
@@ -7,10 +6,10 @@ import store from '@/store'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API + '/v1/api/', // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
+  crossDomain: true,
   timeout: 5000 // request timeout
 })
 
-// request interceptor
 let loadingInstance = null
 
 function setTokenToHeader(config) {
@@ -20,24 +19,17 @@ function setTokenToHeader(config) {
     config.headers['Authorization'] = token.access_token
   }
 }
+
+// request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+
     if (loadingInstance === null) {
       loadingInstance = Loading.service({ target: '#router-main', fullscreen: false })
     }
 
     setTokenToHeader(config)
-
-    if (
-      config.method === 'post' ||
-      config.method === 'put' ||
-      config.method === 'delete'
-    ) {
-      // 序列化
-      config.data = qs.stringify(config.data)
-    }
-
     return config
   },
   error => {
@@ -52,7 +44,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -108,83 +100,5 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-/**
- * get 请求方法
- * @param url
- * @param params
- * @returns {Promise}
- */
-export function get(url, params = {}) {
-  return new Promise((resolve, reject) => {
-    service.get(url, {
-      params: params
-    })
-      .then(response => {
-        resolve(response.data)
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
-}
-
-/**
- * post 请求方法
- * @param url
- * @param params
- * @returns {Promise}
- */
-export function post(url, params = {}) {
-  return new Promise((resolve, reject) => {
-    service.post(url, params).then(
-      response => {
-        resolve(response.data)
-      },
-      err => {
-        reject(err)
-      }
-    )
-  })
-}
-
-/**
- * put方法
- * @param url
- * @param params
- * @returns {Promise}
- */
-export function put(url, params = {}) {
-  return new Promise((resolve, reject) => {
-    service.put(url, params).then(
-      response => {
-        resolve(response.data)
-      },
-      err => {
-        reject(err)
-      }
-    )
-  })
-}
-
-/**
- * delete方法
- * @param url
- * @param params
- * @returns {Promise}
- */
-export function del(url, params = {}) {
-  return new Promise((resolve, reject) => {
-    service.delete(url, {
-      params: params
-    })
-      .then(response => {
-        resolve(response.data)
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
-}
 
 export default service

@@ -1,4 +1,4 @@
-import request from '@/utils/request2'
+import request from '@/utils/request'
 import Qs from 'qs'
 
 export function pageMedia(pageSize, pageNum) {

@@ -191,6 +191,9 @@
 </template>
 
 <script type="text/ecmascript-6">
+import { getUser, resetUser, resetPassword } from '@/api/user'
+import { getOptions, saveOptions } from '@/api/blog'
+
 export default {
   data: function() {
     const repeatPasswordValidate = (rule, value, callback) => {
@@ -276,14 +279,14 @@ export default {
   },
   methods: {
     getUser() {
-      this.$api_user.user.getUser().then(data => {
-        this.userForm.username = data.username
-        this.userForm.email = data.email
+      getUser().then(response => {
+        this.userForm.username = response.data.username
+        this.userForm.email = response.data.email
       })
     },
     getOptions() {
-      this.$api.blog.getOptions().then(data => {
-        const options = data
+      getOptions().then(response => {
+        const options = response.data
         for (const key in options) {
           this.options[key] = options[key]
         }
@@ -291,29 +294,29 @@ export default {
       })
     },
     submitUser() {
-      this.$api_user.user.resetUser(this.userForm.username, this.userForm.email).then(data => {
-        if (data === true) {
+      resetUser(this.userForm.username, this.userForm.email).then(response => {
+        if (response.data === true) {
           this.$util.message.success('更新设置成功!')
         } else {
-          const message = data.msg || '保存失败,未更新数据库'
+          const message = response.data.msg || '保存失败,未更新数据库'
           this.$util.message.error(message)
         }
         this.$router.push('/admin/login')
       })
     },
     submitPassword() {
-      this.$api_user.user.resetPassword(this.passwordForm.oldPassword, this.passwordForm.newPassword).then(data => {
-        if (data === true) {
+      resetPassword(this.passwordForm.oldPassword, this.passwordForm.newPassword).then(response => {
+        if (response.data === true) {
           this.$util.message.success('更新设置成功!')
         } else {
-          const message = data.msg || '保存失败,未更新数据库'
+          const message = response.data.msg || '保存失败,未更新数据库'
           this.$util.message.error(message)
         }
         this.$router.push('/admin/login')
       })
     },
     submitOptions() {
-      this.$api.blog.saveOptions(this.options)
+      saveOptions(this.options)
         .then(() => {
           this.$util.message.success('更新设置成功!')
         })

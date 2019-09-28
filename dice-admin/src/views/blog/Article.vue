@@ -184,7 +184,7 @@ import Upload from '../../components/Upload/Upload'
 import MediaItem from '../../components/Upload/MediaItem'
 import { pageMedia } from '@/api/media'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { saveArticle, getArticle, getAllTags } from '@/api/blog'
+import { saveArticle, getArticle, getAllTags, getAllCategories } from '@/api/blog'
 
 export default {
   components: {
@@ -284,7 +284,7 @@ export default {
       })
     },
     getCategories() {
-      this.$api.blog.getAllCategories().then(data => {
+      getAllCategories().then(data => {
         for (const key in data) {
           const category = {
             value: data[key].name,

@@ -284,11 +284,11 @@ export default {
       })
     },
     getCategories() {
-      getAllCategories().then(data => {
-        for (const key in data) {
+      getAllCategories().then(response => {
+        for (const key in response.data) {
           const category = {
-            value: data[key].name,
-            label: data[key].name
+            value: response.data[key].name,
+            label: response.data[key].name
           }
           this.categories.push(category)
         }

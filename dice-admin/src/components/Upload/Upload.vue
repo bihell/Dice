@@ -32,6 +32,7 @@
         :before-upload="beforeUpload"
         :on-success="successUpload"
         :on-error="errorUpload"
+        :headers="header"
       >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
@@ -52,6 +53,7 @@
 <script>
 import serverConfig from '../../../server-config'
 import waves from '@/directive/waves' // waves directive
+import store from '@/store'
 
 export default {
   name: 'Upload',
@@ -69,7 +71,8 @@ export default {
       uploadData: {
         name: '',
         path: ''
-      }
+      },
+      header: { Authorization: store.getters.token.access_token }
     }
   },
   methods: {

@@ -254,7 +254,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @return List<Archive>
      */
     @Override
-    @Cacheable(value = ARTICLE_CACHE_NAME, key = "'archives'")
+    // todo  这里用了 redis 之后缓存序列化有问题，暂时注释掉
+    //@Cacheable(value = ARTICLE_CACHE_NAME, key = "'archives'")
     public List<Archive> getArchives() {
         List<Article> articles = new Article().selectList(new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, Types.PUBLISH)

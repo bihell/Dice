@@ -21,4 +21,5 @@ logging:
     org:
       springframework:
         web: INFO
-  file: log/dice.log
+  file:
+    name: log/dice.log

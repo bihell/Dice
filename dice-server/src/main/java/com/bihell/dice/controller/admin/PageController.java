@@ -62,30 +62,12 @@ public class PageController extends BaseController {
     /**
      * 新建或修改自定义页面
      *
-     * @param id      自定义页面id
-     * @param title   标题
-     * @param content 内容
-     * @param status  {@link Types#DRAFT},{@link Types#PUBLISH}
+     * @param page 页面实体
      * @return {@see String}
      */
     @PostMapping
-    public RestResponse savePage(@RequestParam(value = "id", required = false) Integer id,
-                                 @RequestParam(value = "title") String title,
-                                 @RequestParam(value = "content") String content,
-                                 @RequestParam(value = "status", defaultValue = Types.DRAFT) String status,
-                                 @RequestParam(value = "priority", defaultValue = "0") Integer priority,
-                                 @RequestParam(value = "allowComment", defaultValue = "false") Boolean allowComment) {
-        User user = this.user();
-        Article page = new Article();
-        if (!StringUtils.isEmpty(id)) {
-            page.setId(id);
-        }
-        page.setTitle(title);
-        page.setContent(content);
-        page.setStatus(status);
-        page.setAuthorId(user.getId());
-        page.setAllowComment(allowComment);
-        page.setPriority(priority);
+    public RestResponse savePage(@RequestBody Article page) {
+        page.setAuthorId(this.user().getId());
         articleService.savePage(page);
         return RestResponse.ok("保存文章成功");
     }

@@ -185,7 +185,7 @@ export function savePage(page) {
   return request({
     url: '/admin/page',
     method: 'post',
-    params: page
+    data: page
   })
 }
 

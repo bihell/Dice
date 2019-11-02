@@ -11,6 +11,9 @@
         <li v-for="(list, index) in links" :key="index" class="tab-item">
           <nuxt-link :to="{ path: list.path }" exact>{{ list.name }}</nuxt-link>
         </li>
+        <li class="tab-item">
+          <a href="/feed.xml">RSS订阅</a>
+        </li>
       </ul>
       <div class="header-menu">
         <div class="header-menu-icon" @click="toggle">

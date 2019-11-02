@@ -8,13 +8,10 @@ import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.params.ArticleParam;
 import com.bihell.dice.model.query.ArticleQuery;
 import com.bihell.dice.service.ArticleService;
-import com.bihell.dice.service.LogService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
-import com.bihell.dice.utils.Types;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,8 +26,6 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController extends BaseController {
 
     private final ArticleService articleService;
-
-    private final LogService logService;
 
     /**
      * 文章信息列表
@@ -66,8 +61,7 @@ public class ArticleController extends BaseController {
      */
     @PostMapping
     public RestResponse saveArticle(@RequestBody ArticleParam articleParam) {
-        User user = this.user();
-        articleParam.setAuthorId(user.getId());
+        articleParam.setAuthorId(this.user().getId());
         Integer articleId = articleService.saveArticle(articleParam);
         return RestResponse.ok(articleId);
     }

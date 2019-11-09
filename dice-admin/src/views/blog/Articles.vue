@@ -36,7 +36,7 @@
         </el-col>
         <el-col :xs="24" :sm="24" :md="12" :lg="5">
           <el-input
-            v-model="listQuery.title"
+            v-model.trim="listQuery.title"
             size="small"
             placeholder="搜索文章标题"
             clearable
@@ -45,7 +45,7 @@
         </el-col>
         <el-col :xs="24" :sm="24" :md="12" :lg="5" style="margin-left: 10px">
           <el-input
-            v-model="listQuery.content"
+            v-model.trim="listQuery.content"
             size="small"
             placeholder="搜索文章内容"
             clearable

@@ -26,13 +26,13 @@
         show-overflow-tooltip
       />
       <el-table-column label="发布日期" width="160" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.publish }}</span>
+        <template slot-scope="{row}">
+          <span style="margin-left: 10px">{{ row.publish }}</span>
         </template>
       </el-table-column>
       <el-table-column label="修改日期" width="160" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.modified }}</span>
+        <template slot-scope="{row}">
+          <span style="margin-left: 10px">{{ row.modified }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -42,16 +42,16 @@
         show-overflow-tooltip
       />
       <el-table-column fixed="right" label="操作" width="150">
-        <template slot-scope="scope">
+        <template slot-scope="{row}">
           <el-button
             size="small"
-            @click="handleEdit(scope.row.id)"
+            @click="handleEdit(row.id)"
           >编辑
           </el-button>
           <el-button
             size="small"
             type="danger"
-            @click="handleDelete(scope.row.id)"
+            @click="handleDelete(row.id)"
           >删除
           </el-button>
         </template>

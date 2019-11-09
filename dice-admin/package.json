@@ -46,7 +46,7 @@
     "clipboard": "2.0.4",
     "codemirror": "^5.48.4",
     "dayjs": "^1.8.16",
-    "echarts": "4.2.1",
+    "echarts": "^4.4.0",
     "element-ui": "^2.12.0",
     "file-saver": "^2.0.2",
     "fuse.js": "^3.4.5",

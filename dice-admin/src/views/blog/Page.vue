@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form ref="pageForm" :rules="rules" :model="page">
       <el-row :gutter="30">
-        <el-col :xs="24" :sm="16" :md="16" :lg="16">
+        <el-col :xs="24" :sm="16" :md="16" :lg="20">
           <el-form-item prop="title">
             <el-input
               v-model="page.title"
@@ -10,10 +10,10 @@
             />
           </el-form-item>
           <el-form-item prop="content">
-            <markdown-editor v-model="page.content" />
+            <markdown-editor v-model="page.content" :on-save="onSave" />
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="8" :md="8" :lg="8">
+        <el-col :xs="24" :sm="8" :md="8" :lg="4">
           <div class="panel">
             <div class="panel-content">
               <el-form-item>

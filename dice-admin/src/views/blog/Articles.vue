@@ -79,18 +79,18 @@
     >
       <el-table-column prop="id" label="ID" width="60" align="center" />
       <el-table-column prop="title" label="标题" show-overflow-tooltip>
-        <template slot-scope="scope">
+        <template slot-scope="{row}">
           <el-link
-            :href="scope.row.frontUrl"
+            :href="row.frontUrl"
             target="_blank"
             type="primary"
-          >{{ scope.row.title }}
+          >{{ row.title }}
           </el-link>
         </template>
       </el-table-column>
       <el-table-column prop="category" label="分类" width="150" align="center" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <el-tag effect="plain">{{ scope.row.category }}</el-tag>
+        <template slot-scope="{row}">
+          <el-tag effect="plain">{{ row.category }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -99,12 +99,12 @@
         width="68"
         show-overflow-tooltip
       >
-        <template slot-scope="scope">
+        <template slot-scope="{row}">
           <el-tag
-            :type="scope.row.status === '公开' ? 'success' : 'warning'"
+            :type="row.status === '公开' ? 'success' : 'warning'"
             disable-transitions
             effect="plain"
-          >{{ scope.row.status }}
+          >{{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
@@ -114,36 +114,36 @@
         width="68"
         show-overflow-tooltip
       >
-        <template slot-scope="scope">
+        <template slot-scope="{row}">
           <el-tag
-            :type="scope.row.priority === '置顶' ? 'warning' : ''"
+            :type="row.priority === '置顶' ? 'warning' : ''"
             effect="plain"
             disable-transitions
-          >{{ scope.row.priority }}
+          >{{ row.priority }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="发布日期" width="150" show-overflow-tooltip align="center">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.publish }}</span>
+        <template slot-scope="{row}">
+          <span style="margin-left: 10px">{{ row.publish }}</span>
         </template>
       </el-table-column>
       <el-table-column label="修改日期" width="150" show-overflow-tooltip align="center">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.modified }}</span>
+        <template slot-scope="{row}">
+          <span style="margin-left: 10px">{{ row.modified }}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150" align="center">
-        <template slot-scope="scope">
+        <template slot-scope="{row}">
           <el-button
             size="small"
-            @click="handleEdit(scope.row.id)"
+            @click="handleEdit(row.id)"
           >编辑
           </el-button>
           <el-button
             size="small"
             type="danger"
-            @click="handleDelete(scope.row.id)"
+            @click="handleDelete(row.id)"
           >删除
           </el-button>
         </template>

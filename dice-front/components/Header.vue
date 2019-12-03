@@ -14,6 +14,9 @@
         <li class="tab-item">
           <a href="/feed.xml">RSS订阅</a>
         </li>
+        <li class="tab-item">
+          <a href="https://github.com/bihell/Dice">GitHub</a>
+        </li>
       </ul>
       <div class="header-menu">
         <div class="header-menu-icon" @click="toggle">

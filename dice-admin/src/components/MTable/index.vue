@@ -14,7 +14,7 @@
               <template v-if="item.icon">
                 <el-dropdown trigger="click">
                   <el-button circle class="border-none">
-                    <svg-icon icon-class="item.icon" class="icon" />
+                    <svg-icon :icon-class="item.icon" />
                   </el-button>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item v-for="(btn, index) in item.options" :key="index" v-permission="btn.code ? btn.code : 'no-permission'">

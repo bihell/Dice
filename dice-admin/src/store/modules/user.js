@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/user'
+import { login, logout } from '@/api/auth'
 import router, { resetRouter } from '@/router'
 import Vue from 'vue'
 

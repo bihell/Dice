@@ -45,3 +45,12 @@ export function resetPassword(oldPassword, newPassword) {
     params: params
   })
 }
+
+// 获取文章列表
+export function getUserList(params) {
+  return request({
+    url: '/admin/user/user_list',
+    method: 'get',
+    params: params
+  })
+}

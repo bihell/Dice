@@ -42,7 +42,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     private static final String AUTH_URIS = "/v1/api/admin";
 
-    private static final String[] IGNORE_URIS = {"/v1/api/admin/user/login"};
+    private static final String[] IGNORE_URIS = {"/v1/api/admin/auth/login"};
 
     private final static String ALLOW_HEADERS = org.apache.commons.lang3.StringUtils.joinWith(",", HttpHeaders.CONTENT_TYPE, HttpHeaders.AUTHORIZATION);
 

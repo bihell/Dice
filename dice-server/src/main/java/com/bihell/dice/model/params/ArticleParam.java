@@ -3,10 +3,7 @@ package com.bihell.dice.model.params;
 import com.bihell.dice.model.domain.Article;
 
 /**
- * Login param.
- *
- * @author johnniang
- * @date 3/28/19
+ * @author haseochen
  */
 public class ArticleParam extends Article {
 

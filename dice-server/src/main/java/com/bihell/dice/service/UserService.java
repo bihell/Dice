@@ -1,5 +1,6 @@
 package com.bihell.dice.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.params.LoginParam;
@@ -47,4 +48,13 @@ public interface UserService extends IService<User> {
      * Clears authentication.
      */
     void clearToken();
+
+    /**
+     * 获取用户列表
+     * @param currentPage 当前页面
+     * @param pageSize 每页数量
+     * @param userQuery 查询参数
+     * @return
+     */
+    IPage<User> getUserList(Integer currentPage, Integer pageSize, User userQuery);
 }

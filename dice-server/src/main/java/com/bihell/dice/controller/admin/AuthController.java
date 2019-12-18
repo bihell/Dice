@@ -1,9 +1,13 @@
 package com.bihell.dice.controller.admin;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
+import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
 import com.bihell.dice.service.UserService;
+import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +24,7 @@ import javax.validation.Valid;
  * @since 2017/7/11 20:15
  */
 @RestController
-@RequestMapping("/v1/api/admin/user")
+@RequestMapping("/v1/api/admin/auth")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AuthController extends BaseController {
 
@@ -103,6 +107,20 @@ public class AuthController extends BaseController {
     public RestResponse getUser() {
         User user = this.user();
         return RestResponse.ok(user);
+    }
+
+    /**
+     * 获取用户列表
+     *
+     * @param currentPage  当前页面
+     * @param pageSize 每页数量
+     * @return {@see Pagination<Article>}
+     */
+    @GetMapping("/user_list")
+    public RestResponse list(@RequestParam(required = false, defaultValue = "1") Integer currentPage,
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize,  User userQuery) {
+        IPage<User> userList = userService.getUserList(currentPage, pageSize, userQuery);
+        return RestResponse.ok(new Pagination<Article>(userList));
     }
 
 }

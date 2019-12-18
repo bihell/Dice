@@ -191,7 +191,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { getUser, resetUser, resetPassword } from '@/api/user'
+import { getUser, resetUser, resetPassword } from '@/api/auth'
 import { getOptions, saveOptions } from '@/api/blog'
 
 export default {

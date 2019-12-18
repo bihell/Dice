@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import serverConfig from '../../../server-config'
+import serverConfig from '../../utils/server-config'
 import waves from '@/directive/waves' // waves directive
 import store from '@/store'
 

@@ -11,17 +11,12 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
-
 import * as filters from './filters' // global filters
-import DiceUtil from './utils/dice'
-import serverConfig from '../server-config'
-import dayjs from 'dayjs'
-
 import VueHighlightJS from 'vue-highlightjs'
+import prototype from './utils/prototype'
 
 // Tell Vue.js to use vue-highlightjs
 Vue.use(VueHighlightJS)
@@ -33,17 +28,13 @@ Vue.use(VueStorage, {
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
-
+Vue.use(prototype)
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
 Vue.config.productionTip = false
-Vue.prototype.$util = DiceUtil.FUNCTIONS
-Vue.prototype.$serverConfig = serverConfig
-Vue.prototype.$dayjs = dayjs
-Vue.prototype.$static = DiceUtil.STATIC
 
 new Vue({
   el: '#app',

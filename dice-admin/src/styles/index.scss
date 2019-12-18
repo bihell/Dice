@@ -1,4 +1,4 @@
-@import './variables.scss';
+  @import './variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
 @import './element-ui.scss';
@@ -188,4 +188,8 @@ aside {
 
 .multiselect--active {
   z-index: 1000 !important;
+}
+
+.border-none {
+  border: 0 !important;
 }

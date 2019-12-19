@@ -171,6 +171,21 @@ CREATE TABLE `auth_item` (
      KEY `IDX_ITEM_CODE` (`item_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
+create table dim_project
+(
+    id         bigint auto_increment
+        primary key,
+    type       varchar(16)  not null comment '产品类型',
+    type_name  varchar(255) null comment '产品名',
+    is_display tinyint(1)   null comment '是否在顶部显示',
+    style      text         null,
+    domain     varchar(255) null comment '系统域名'
+)
+    charset = UTF8MB4;
+
+create index IDX_TYPE
+    on dim_project (type);
+
 
 INSERT INTO user (username, password_md5, email, screen_name)
 VALUES ('dice', '3e6693e83d186225b85b09e71c974d2d', '', 'admin');

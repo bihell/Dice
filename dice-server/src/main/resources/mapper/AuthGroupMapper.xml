@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bihell.dice.mapper.AuthGroupMapper">
+
+    <select id="queryByProjectType" parameterType="com.bihell.dice.model.params.Param" resultType="com.bihell.dice.model.domain.AuthGroup">
+        SELECT t.*
+        FROM auth_group t
+        <where>
+            t.status = 1
+            <if test="criteria != null and criteria.length()>0">AND (t.group_name like concat("%",#{criteria},"%"))</if>
+            <if test="projectType != null and projectType.length()>0">AND t.project_type = #{projectType}</if>
+        </where>
+        ORDER BY t.order
+    </select>
+
+</mapper>

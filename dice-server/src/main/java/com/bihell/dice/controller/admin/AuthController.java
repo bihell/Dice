@@ -2,13 +2,14 @@ package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
+import com.bihell.dice.mapper.AuthGroupMapper;
 import com.bihell.dice.mapper.AuthItemMapper;
-import com.bihell.dice.model.domain.AuthItem;
 import com.bihell.dice.model.domain.DimProject;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
 import com.bihell.dice.model.params.Param;
+import com.bihell.dice.service.AuthGroupService;
 import com.bihell.dice.service.UserService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
@@ -33,6 +34,8 @@ public class AuthController extends BaseController {
 
     private final UserService userService;
     private final AuthItemMapper authItemMapper;
+    private final AuthGroupService authGroupService;
+    private final AuthGroupMapper authGroupMapper;
 
     /**
      * 后台登录
@@ -136,6 +139,12 @@ public class AuthController extends BaseController {
 
     @GetMapping("/item/list")
     public RestResponse getItemList(Param param) {
-        return RestResponse.ok(authItemMapper.queryAuthItemByProjectType(param));
+        return RestResponse.ok(authItemMapper.queryByProjectType(param));
     }
+
+    @GetMapping("/group/list")
+    public RestResponse getGroupList(Param param) {
+        return RestResponse.ok(authGroupService.getGroupList(param));
+    }
+
 }

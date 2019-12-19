@@ -22,7 +22,6 @@ public interface CommentService {
     /**
      * 获取文章下的评论
      *
-     * @param page      第几页
      * @param limit     每页数量
      * @param articleId 文章id
      * @return Page<Comment>
@@ -32,7 +31,6 @@ public interface CommentService {
     /**
      * 获取文章下的评论
      *
-     * @param page  第几页
      * @param limit 每页数量
      * @return Page<Comment>
      */

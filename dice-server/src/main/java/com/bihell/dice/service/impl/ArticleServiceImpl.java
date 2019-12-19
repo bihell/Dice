@@ -11,7 +11,6 @@ import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.ArticleMapper;
 import com.bihell.dice.mapper.CommentMapper;
 import com.bihell.dice.model.domain.Comment;
-import com.bihell.dice.model.query.ArticleQuery;
 import com.bihell.dice.service.ArticleService;
 import com.bihell.dice.service.MetaService;
 import com.bihell.dice.utils.DiceConsts;
@@ -103,7 +102,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return Page<Article>
      */
     @Override
-    public IPage<Article> getAdminArticles(Integer current, Integer limit, ArticleQuery query) {
+    public IPage<Article> getAdminArticles(Integer current, Integer limit, Article query) {
         Page<Article> page = new Page<>(current, limit);
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
@@ -112,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .eq(!StringUtils.isEmpty(query.getStatus()), Article::getStatus, query.getStatus())
                 .eq(!StringUtils.isEmpty(query.getPriority()), Article::getPriority, query.getPriority())
                 .like(!StringUtils.isEmpty(query.getTitle()), Article::getTitle, query.getTitle())
-                .like(!StringUtils.isEmpty(query.getTag()), Article::getTags, query.getTag())
+                .like(!StringUtils.isEmpty(query.getTags()), Article::getTags, query.getTags())
                 .like(!StringUtils.isEmpty(query.getCategory()), Article::getCategory, query.getCategory())
                 .like(!StringUtils.isEmpty(query.getContent()), Article::getContent, query.getContent())
                 .orderByDesc(Article::getCreated);

@@ -2,7 +2,8 @@ package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
-import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.domain.AuthItem;
+import com.bihell.dice.model.domain.DimProject;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
@@ -114,13 +115,24 @@ public class AuthController extends BaseController {
      *
      * @param currentPage  当前页面
      * @param pageSize 每页数量
-     * @return {@see Pagination<Article>}
      */
     @GetMapping("/user_list")
     public RestResponse list(@RequestParam(required = false, defaultValue = "1") Integer currentPage,
                               @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize,  User userQuery) {
         IPage<User> userList = userService.getUserList(currentPage, pageSize, userQuery);
-        return RestResponse.ok(new Pagination<Article>(userList));
+        return RestResponse.ok(new Pagination<User>(userList));
     }
 
+    /**
+     * 获取项目列表
+     **/
+    @GetMapping("/project/project_list")
+    public RestResponse getProjectList() {
+        return RestResponse.ok(new DimProject().selectAll());
+    }
+
+    @GetMapping("/item/list")
+    public RestResponse getItemList() {
+        return RestResponse.ok(new AuthItem().selectAll());
+    }
 }

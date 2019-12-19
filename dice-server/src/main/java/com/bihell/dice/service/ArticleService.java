@@ -3,7 +3,6 @@ package com.bihell.dice.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.dto.Archive;
-import com.bihell.dice.model.query.ArticleQuery;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public interface ArticleService {
      * @param query 查询条件
      * @return Page<Article>
      */
-    IPage<Article> getAdminArticles(Integer page, Integer limit, ArticleQuery query);
+    IPage<Article> getAdminArticles(Integer page, Integer limit, Article query);
 
     /**
      * 根据id获取后端文章

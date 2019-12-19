@@ -22,13 +22,6 @@ export function getUser() {
   })
 }
 
-export function getAllSubSystem() {
-  return request({
-    url: '/admin/auth/project_list',
-    method: 'get'
-  })
-}
-
 export function resetUser(username, email) {
   const params = {
     username: username,
@@ -57,6 +50,32 @@ export function resetPassword(oldPassword, newPassword) {
 export function getUserList(params) {
   return request({
     url: '/admin/auth/user_list',
+    method: 'get',
+    params: params
+  })
+}
+
+// 项目
+export function getAllSubSystem() {
+  return request({
+    url: '/admin/auth/project/project_list',
+    method: 'get'
+  })
+}
+
+// 菜单 item
+export function getItemList(params) {
+  return request({
+    url: '/admin/auth/item/list',
+    method: 'get',
+    params: params
+  })
+}
+
+// 菜单 group
+export function getGroupList(params) {
+  return request({
+    url: '/admin/auth/group/list',
     method: 'get',
     params: params
   })

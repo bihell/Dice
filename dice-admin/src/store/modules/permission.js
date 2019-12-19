@@ -1,4 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import * as authApi from '@/api/auth'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -36,13 +37,17 @@ export function filterAsyncRoutes(routes, roles) {
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  allSubSystemList: []
 }
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
+  },
+  SET_ALL_SUB_SYSTEM: (state, subSystem) => {
+    state.allSubSystemList = subSystem
   }
 }
 
@@ -57,6 +62,22 @@ const actions = {
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
+    })
+  },
+  getAllSubSystem({ commit }) {
+    return new Promise((resolve, reject) => {
+      authApi.getAllSubSystem().then(res => {
+        if (res.data) {
+          const result = res.data
+          const subSystem = (result && result.length) ? result : []
+          commit('SET_ALL_SUB_SYSTEM', subSystem)
+          resolve()
+        } else {
+          resolve([])
+        }
+      }).catch(error => {
+        reject(error)
+      })
     })
   }
 }

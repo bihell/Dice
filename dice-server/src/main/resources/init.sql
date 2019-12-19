@@ -10,7 +10,7 @@ CREATE TABLE sys_option
     created      TIMESTAMP       NOT NULL DEFAULT current_timestamp,
     modified     TIMESTAMP       NOT NULL DEFAULT current_timestamp ON UPDATE current_timestamp
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = UTF8MB4;
 
 CREATE TABLE user
 (
@@ -22,7 +22,7 @@ CREATE TABLE user
     created      TIMESTAMP       NOT NULL DEFAULT current_timestamp,
     logged       TIMESTAMP       NOT NULL DEFAULT current_timestamp ON UPDATE current_timestamp
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = UTF8MB4;
 
 create table article
 (
@@ -59,7 +59,7 @@ CREATE TABLE comment
     status     INT                      DEFAULT 0 NOT NULL,
     created    TIMESTAMP       NOT NULL DEFAULT current_timestamp
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = UTF8MB4;
 
 CREATE TABLE meta
 (
@@ -67,7 +67,7 @@ CREATE TABLE meta
     name VARCHAR(255)    NOT NULL,
     type VARCHAR(45)     NOT NULL
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = UTF8MB4;
 
 CREATE TABLE middle
 (
@@ -75,7 +75,7 @@ CREATE TABLE middle
     a_id INT             NOT NULL,
     m_id INT             NOT NULL
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = UTF8MB4;
 
 CREATE TABLE log
 (
@@ -88,7 +88,7 @@ CREATE TABLE log
     user_id INT,
     created TIMESTAMP       NOT NULL DEFAULT current_timestamp
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = UTF8MB4;
 
 create table snippet_file
 (
@@ -117,7 +117,74 @@ CREATE TABLE media
     thumb_url VARCHAR(1023),
     suffix VARCHAR(255) NOT NULL
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = UTF8MB4;
+
+CREATE TABLE `auth_group` (
+      `group_id` int(11) NOT NULL AUTO_INCREMENT,
+      `group_name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
+      `group_url` varchar(255) NOT NULL DEFAULT '',
+      `project_type` varchar(16) NOT NULL DEFAULT '' COMMENT '系统类型',
+      `order` int(11) DEFAULT NULL,
+      `is_display` int(11) DEFAULT NULL COMMENT '显示状态（0不显示，1显示）',
+      `style` varchar(255) DEFAULT NULL,
+      `status` int(11) DEFAULT NULL COMMENT '状态（0无效1有效）',
+      `creator` int(11) DEFAULT NULL,
+      `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+      `modifier` int(11) DEFAULT NULL,
+      `modify_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最近修改时间',
+      PRIMARY KEY (`group_id`),
+      KEY `IDX_PROJECT_TYPE` (`project_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE `auth_classes` (
+    `classes_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '分类ID',
+    `classes_name` varchar(255) NOT NULL DEFAULT '' COMMENT '分类名',
+    `classes_url` varchar(255) NOT NULL,
+    `group_id` int(11) NOT NULL COMMENT '所属项目',
+    `order` int(11) DEFAULT NULL,
+    `is_display` int(11) DEFAULT NULL COMMENT '显示状态（0不显示，1显示）',
+    `style` varchar(255) DEFAULT NULL,
+    `status` int(11) DEFAULT NULL,
+    `creator` int(11) DEFAULT NULL,
+    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    `modifier` int(11) DEFAULT NULL,
+    `modify_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`classes_id`),
+    KEY `IDX_GROUP_ID` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE `auth_item` (
+     `item_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '权限项ID',
+     `item_name` varchar(255) NOT NULL COMMENT '权限项名称',
+     `item_code` varchar(255) NOT NULL,
+     `classes_id` int(11) NOT NULL,
+     `order` int(11) DEFAULT NULL,
+     `style` varchar(255) DEFAULT NULL,
+     `auto_flag` tinyint(4) DEFAULT NULL,
+     `outer_url` varchar(1000) DEFAULT NULL,
+     `status` int(11) DEFAULT NULL,
+     `creator` int(11) DEFAULT NULL,
+     `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+     `modifier` int(11) DEFAULT NULL,
+     `modify_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+     PRIMARY KEY (`item_id`),
+     KEY `IDX_ITEM_CODE` (`item_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+create table dim_project
+(
+    id         bigint auto_increment
+        primary key,
+    type       varchar(16)  not null comment '产品类型',
+    type_name  varchar(255) null comment '产品名',
+    is_display tinyint(1)   null comment '是否在顶部显示',
+    style      text         null,
+    domain     varchar(255) null comment '系统域名'
+)
+    charset = UTF8MB4;
+
+create index IDX_TYPE
+    on dim_project (type);
 
 
 INSERT INTO user (username, password_md5, email, screen_name)

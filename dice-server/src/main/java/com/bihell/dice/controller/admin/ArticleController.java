@@ -5,7 +5,6 @@ import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.params.ArticleParam;
-import com.bihell.dice.model.query.ArticleQuery;
 import com.bihell.dice.service.ArticleService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
@@ -35,7 +34,7 @@ public class ArticleController extends BaseController {
      */
     @GetMapping
     public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, ArticleQuery query) {
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, Article query) {
         IPage<Article> articles = articleService.getAdminArticles(pageNum, pageSize, query);
         return RestResponse.ok(new Pagination<Article>(articles));
     }

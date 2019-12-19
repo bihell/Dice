@@ -1,7 +1,6 @@
 package com.bihell.dice.service;
 
 import com.bihell.dice.model.domain.Article;
-import com.bihell.dice.model.query.ArticleQuery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +23,6 @@ public class ArticleServiceTests {
     @Test
     public void getFrontArticle() {
         System.out.println(articleService.getFrontArticle(1));
-    }
-
-    @Test
-    public void getAdminArticles() {
-        System.out.println(articleService.getAdminArticles(1, 10, new ArticleQuery()));
     }
 
     @Test

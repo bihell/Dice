@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bihell.dice.mapper.AuthItemMapper">
+
+    <select id="queryByProjectType" parameterType="com.bihell.dice.model.params.Param" resultType="com.bihell.dice.model.domain.AuthItem">
+        SELECT t.*
+        FROM auth_item t
+        join auth_classes t1 on t.classes_id=t1.classes_id and t1.status=1
+        join auth_group t2 on t1.group_id=t2.group_id and t2.status=1
+        <where>
+            t.status = 1
+            <if test="criteria != null and criteria.length()>0">AND (t.item_name like concat("%",#{criteria},"%"))</if>
+            <if test="roleId != null">AND t.item_id in (select distinct item_id from rel_role_item where
+                role_id=#{roleId} and status=1)
+            </if>
+            <if test="projectType != null">AND (t2.project_type = #{projectType})</if>
+        </where>
+        ORDER BY t.item_id desc
+    </select>
+
+</mapper>

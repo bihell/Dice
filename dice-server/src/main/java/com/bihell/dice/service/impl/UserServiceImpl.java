@@ -1,6 +1,9 @@
 package com.bihell.dice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.UserMapper;
@@ -20,6 +23,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +44,7 @@ import static com.bihell.dice.utils.DiceConsts.REFRESH_TOKEN_EXPIRED_DAYS;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private final RedisService redisService;
+    private final UserMapper userMapper;
 
     /**
      * Authenticates.
@@ -105,6 +110,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         log.info("You have been logged out, looking forward to your next visit!");
+    }
+
+    /**
+     * 获取用户列表
+     *
+     * @param currentPage 当前页面
+     * @param pageSize    每页数量
+     * @param userQuery   查询参数
+     * @return
+     */
+    @Override
+    public IPage<User> getUserList(Integer currentPage, Integer pageSize, User userQuery) {
+        Page<User> page = new Page<>(currentPage, pageSize);
+        LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda()
+                .select(User.class, info -> !"passwordMd5".equals(info.getProperty()))
+                .like(!StringUtils.isEmpty(userQuery.getUsername()),User::getUsername,userQuery.getUsername())
+                .orderByDesc(User::getCreated);
+
+        return userMapper.selectPage(page, wrapper);
     }
 
     @Override

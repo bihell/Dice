@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import java.util.Date;
  * @since 2017/7/9 22:09
  */
 
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)

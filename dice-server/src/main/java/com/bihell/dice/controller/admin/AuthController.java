@@ -1,9 +1,17 @@
 package com.bihell.dice.controller.admin;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
+import com.bihell.dice.mapper.AuthGroupMapper;
+import com.bihell.dice.mapper.AuthItemMapper;
+import com.bihell.dice.model.domain.DimProject;
 import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
+import com.bihell.dice.model.params.Param;
+import com.bihell.dice.service.AuthGroupService;
 import com.bihell.dice.service.UserService;
+import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +28,14 @@ import javax.validation.Valid;
  * @since 2017/7/11 20:15
  */
 @RestController
-@RequestMapping("/v1/api/admin/user")
+@RequestMapping("/v1/api/admin/auth")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AuthController extends BaseController {
 
     private final UserService userService;
+    private final AuthItemMapper authItemMapper;
+    private final AuthGroupService authGroupService;
+    private final AuthGroupMapper authGroupMapper;
 
     /**
      * 后台登录
@@ -103,6 +114,37 @@ public class AuthController extends BaseController {
     public RestResponse getUser() {
         User user = this.user();
         return RestResponse.ok(user);
+    }
+
+    /**
+     * 获取用户列表
+     *
+     * @param currentPage  当前页面
+     * @param pageSize 每页数量
+     */
+    @GetMapping("/user_list")
+    public RestResponse list(@RequestParam(required = false, defaultValue = "1") Integer currentPage,
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize,  User userQuery) {
+        IPage<User> userList = userService.getUserList(currentPage, pageSize, userQuery);
+        return RestResponse.ok(new Pagination<User>(userList));
+    }
+
+    /**
+     * 获取项目列表
+     **/
+    @GetMapping("/project/project_list")
+    public RestResponse getProjectList() {
+        return RestResponse.ok(new DimProject().selectAll());
+    }
+
+    @GetMapping("/item/list")
+    public RestResponse getItemList(Param param) {
+        return RestResponse.ok(authItemMapper.queryByProjectType(param));
+    }
+
+    @GetMapping("/group/list")
+    public RestResponse getGroupList(Param param) {
+        return RestResponse.ok(authGroupService.getGroupList(param));
     }
 
 }

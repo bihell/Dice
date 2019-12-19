@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bihell.dice.mapper.AuthClassesMapper">
+
+    <resultMap id="ResultMap" type="com.bihell.dice.model.domain.AuthClasses">
+<!--        <id column="classes_id" property="classesId" jdbcType="INTEGER"/>-->
+<!--        <result column="classes_name" property="classesName" jdbcType="VARCHAR"/>-->
+<!--        <result column="classes_url" property="classesUrl" jdbcType="VARCHAR"/>-->
+<!--        <result column="group_id" property="groupId" jdbcType="INTEGER"/>-->
+<!--        <result column="order" property="order" jdbcType="INTEGER"/>-->
+<!--        <result column="is_display" property="isDisplay" jdbcType="BOOLEAN"/>-->
+<!--        <result column="style" property="style" jdbcType="VARCHAR"/>-->
+
+<!--        <result column="status" property="status" jdbcType="INTEGER"/>-->
+<!--        <result column="creator" property="creator" jdbcType="INTEGER"/>-->
+<!--        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>-->
+<!--        <result column="modifier" property="modifier" jdbcType="INTEGER"/>-->
+<!--        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>-->
+<!--        <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>-->
+    </resultMap>
+
+    <resultMap id="RichResultMap" type="com.bihell.dice.model.domain.AuthClasses" extends="ResultMap">
+        <collection property="children" ofType="com.bihell.dice.model.domain.AuthItem">
+            <id column="i_item_id" property="itemId" jdbcType="INTEGER"/>
+            <result column="i_classes_id" property="classesId" jdbcType="INTEGER"/>
+            <result column="i_item_name" property="itemName" jdbcType="VARCHAR"/>
+            <result column="i_item_code" property="itemCode" jdbcType="VARCHAR"/>
+            <result column="i_outer_url" property="outerUrl" jdbcType="VARCHAR"/>
+            <result column="i_auto_flag" property="autoFlag" jdbcType="BOOLEAN"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryByGroupId" parameterType="java.lang.Integer" resultMap="RichResultMap">
+        select t.classes_id,t.classes_name,t.classes_url,t.group_id,t.order,t.is_display,t.style
+             ,t1.classes_id i_classes_id,t1.item_id i_item_id,t1.item_name i_item_name,t1.item_code i_item_code,t1.auto_flag i_auto_flag,t1.outer_url i_outer_url
+        from auth_classes t
+                 left join auth_item t1 on t.classes_id=t1.classes_id and t1.status=1
+        where t.status=1 and t.group_id = #{groupId}
+        order by t.order,t1.order
+    </select>
+
+</mapper>

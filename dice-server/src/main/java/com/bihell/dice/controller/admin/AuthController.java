@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.mapper.AuthGroupMapper;
 import com.bihell.dice.mapper.AuthItemMapper;
+import com.bihell.dice.model.domain.AuthGroup;
 import com.bihell.dice.model.domain.DimProject;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.dto.Pagination;
@@ -147,4 +148,13 @@ public class AuthController extends BaseController {
         return RestResponse.ok(authGroupService.getGroupList(param));
     }
 
+    @PostMapping("/group/add")
+    public RestResponse addGroup(@RequestBody AuthGroup authGroup) {
+        if (authGroup.insert()){
+            return RestResponse.ok(authGroup);
+        } else
+        {
+            return RestResponse.fail("插入失败");
+        }
+    }
 }

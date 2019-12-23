@@ -27,6 +27,7 @@ public class AuthGroup extends BaseEntity<AuthGroup> {
 
     private String projectType;
 
+    @TableField(value = "`order`")
     private Integer order;
 
     private Boolean isDisplay;

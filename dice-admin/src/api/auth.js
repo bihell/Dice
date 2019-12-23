@@ -72,11 +72,26 @@ export function getItemList(params) {
   })
 }
 
-// 菜单 group
+/**
+ *一级菜单 group
+ */
+
+// 获取一级菜单
+
 export function getGroupList(params) {
   return request({
     url: '/admin/auth/group/list',
     method: 'get',
     params: params
+  })
+}
+
+// 新增一个一级菜单
+
+export function addGroup(data) {
+  return request({
+    url: '/admin/auth/group/add',
+    method: 'post',
+    data
   })
 }

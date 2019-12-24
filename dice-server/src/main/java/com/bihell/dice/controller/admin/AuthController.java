@@ -4,14 +4,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.mapper.AuthGroupMapper;
 import com.bihell.dice.mapper.AuthItemMapper;
-import com.bihell.dice.model.domain.AuthGroup;
-import com.bihell.dice.model.domain.DimProject;
-import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.domain.*;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
-import com.bihell.dice.model.params.Param;
+import com.bihell.dice.model.params.ApiParam;
 import com.bihell.dice.service.AuthGroupService;
 import com.bihell.dice.service.UserService;
+import com.bihell.dice.service.impl.AuthItemServiceImpl;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
 import io.swagger.annotations.ApiOperation;
@@ -37,6 +36,7 @@ public class AuthController extends BaseController {
     private final AuthItemMapper authItemMapper;
     private final AuthGroupService authGroupService;
     private final AuthGroupMapper authGroupMapper;
+    private final AuthItemServiceImpl authItemService;
 
     /**
      * 后台登录
@@ -139,12 +139,12 @@ public class AuthController extends BaseController {
     }
 
     @GetMapping("/item/list")
-    public RestResponse getItemList(Param param) {
+    public RestResponse getItemList(ApiParam param) {
         return RestResponse.ok(authItemMapper.queryByProjectType(param));
     }
 
     @GetMapping("/group/list")
-    public RestResponse getGroupList(Param param) {
+    public RestResponse getGroupList(ApiParam param) {
         return RestResponse.ok(authGroupService.getGroupList(param));
     }
 
@@ -157,4 +157,60 @@ public class AuthController extends BaseController {
             return RestResponse.fail("插入失败");
         }
     }
+
+    @GetMapping("/group/get")
+    public RestResponse getGroupSingle(@RequestParam Integer id) {
+            return RestResponse.ok(new AuthGroup().selectById(id));
+    }
+
+    @PostMapping("/group/update")
+    public RestResponse updateGroupSingle(@RequestBody AuthGroup authGroup) {
+        if(authGroup.updateById()){
+            return RestResponse.ok(authGroup);
+        } else
+        {
+            return RestResponse.fail("更新失败");
+        }
+    }
+
+    @PostMapping("/classes/add")
+    public RestResponse addClass(@RequestBody AuthClasses authClasses) {
+        if (authClasses.insert()){
+            return RestResponse.ok(authClasses);
+        } else
+        {
+            return RestResponse.fail("插入失败");
+        }
+    }
+
+    @GetMapping("/classes/get")
+    public RestResponse getClassesSingle(@RequestParam Integer id) {
+        return RestResponse.ok(new AuthClasses().selectById(id));
+    }
+
+    @PostMapping("/classes/update")
+    public RestResponse updateClassesSingle(@RequestBody AuthClasses authClasses) {
+        if(authClasses.updateById()){
+            return RestResponse.ok(authClasses);
+        } else
+        {
+            return RestResponse.fail("更新失败");
+        }
+    }
+
+    @PostMapping("/item/add")
+    public RestResponse addItem(@RequestBody AuthItem authItem) {
+        return RestResponse.ok(authItemService.save(authItem));
+    }
+
+    @GetMapping("/item/get")
+    public RestResponse getItemSingle(@RequestParam Integer id) {
+        return RestResponse.ok(new AuthItem().selectById(id));
+    }
+
+    @PostMapping("/item/update")
+    public RestResponse updateItemSingle(@RequestBody AuthItem authItem) {
+        return RestResponse.ok(authItemService.update(authItem));
+    }
 }
+

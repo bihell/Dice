@@ -8,7 +8,7 @@ import lombok.Data;
  * @author haseochen
  */
 @Data
-public class Param {
+public class ApiParam {
     private String projectType;
     /**
      * 搜索词

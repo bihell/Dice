@@ -2,7 +2,6 @@ package com.bihell.dice.model.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -17,16 +16,17 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class AuthItem extends Model<AuthItem> {
+public class AuthItem extends BaseEntity<AuthItem> {
 
-    @TableId
-    private Integer itemId;
+    @TableId(value = "item_id")
+    private Integer id;
 
     private String itemName;
 
     private String itemCode;
 
     private Integer classesId;
+
     @TableField(value = "`order`")
     private Integer order;
 
@@ -38,8 +38,10 @@ public class AuthItem extends Model<AuthItem> {
     private Boolean autoFlag;
 
     private String outerUrl;
+
     @TableField(exist = false)
     private String name;
+
     @TableField(exist = false)
     private List<Integer> apiIds;
 

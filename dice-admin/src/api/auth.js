@@ -173,3 +173,45 @@ export function updateItem(data) {
     data
   })
 }
+
+/**
+ * api
+ */
+
+// 获取api列表
+export function getApiList(params) {
+  return request({
+    url: '/admin/auth/api/list',
+    method: 'get',
+    params: params
+  })
+}
+
+// 新增api
+export function addApi(data) {
+  return request({
+    url: '/admin/auth/api/add',
+    method: 'post',
+    data
+  })
+}
+
+// 获取一个api
+export function getApi(id) {
+  return request({
+    url: '/admin/auth/api/get',
+    method: 'get',
+    params: { id }
+  })
+}
+
+// 更新一个api
+export function updateApi(data) {
+  console.log(data)
+
+  return request({
+    url: '/admin/auth/api/update',
+    method: 'post',
+    data
+  })
+}

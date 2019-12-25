@@ -7,7 +7,7 @@
     </resultMap>
 
 
-    <select id="queryByProjectType" parameterType="com.bihell.dice.model.params.ApiParam" resultMap="ResultMap">
+    <select id="queryByParam" parameterType="com.bihell.dice.model.params.QueryParam" resultMap="ResultMap">
         SELECT t.*
         FROM auth_item t
         join auth_classes t1 on t.classes_id=t1.classes_id and t1.status=1

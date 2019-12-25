@@ -4,7 +4,7 @@ import com.bihell.dice.mapper.AuthClassesMapper;
 import com.bihell.dice.mapper.AuthGroupMapper;
 import com.bihell.dice.model.domain.AuthClasses;
 import com.bihell.dice.model.domain.AuthGroup;
-import com.bihell.dice.model.params.ApiParam;
+import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.service.AuthGroupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +32,8 @@ public class AuthGroupServiceImpl implements AuthGroupService {
      * @return List<AuthGroup>
      */
     @Override
-    public List<AuthGroup> getGroupList(ApiParam param) {
-        List<AuthGroup> groupList = authGroupMapper.queryByProjectType(param);
+    public List<AuthGroup> getGroupList(QueryParam param) {
+        List<AuthGroup> groupList = authGroupMapper.queryByParam(param);
 
         if (CollectionUtils.isEmpty(groupList)) {
             return groupList;

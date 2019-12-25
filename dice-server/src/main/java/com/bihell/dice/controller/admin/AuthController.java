@@ -1,21 +1,25 @@
 package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.controller.BaseController;
-import com.bihell.dice.mapper.AuthGroupMapper;
+import com.bihell.dice.mapper.AuthApiMapper;
 import com.bihell.dice.mapper.AuthItemMapper;
 import com.bihell.dice.model.domain.*;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
-import com.bihell.dice.model.params.ApiParam;
+import com.bihell.dice.model.params.QueryParam;
+import com.bihell.dice.service.AuthApiService;
 import com.bihell.dice.service.AuthGroupService;
+import com.bihell.dice.service.AuthItemService;
 import com.bihell.dice.service.UserService;
-import com.bihell.dice.service.impl.AuthItemServiceImpl;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
+import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +39,9 @@ public class AuthController extends BaseController {
     private final UserService userService;
     private final AuthItemMapper authItemMapper;
     private final AuthGroupService authGroupService;
-    private final AuthGroupMapper authGroupMapper;
-    private final AuthItemServiceImpl authItemService;
+    private final AuthItemService authItemService;
+    private final AuthApiMapper authApiMapper;
+    private final AuthApiService authApiService;
 
     /**
      * 后台登录
@@ -120,12 +125,12 @@ public class AuthController extends BaseController {
     /**
      * 获取用户列表
      *
-     * @param currentPage  当前页面
-     * @param pageSize 每页数量
+     * @param currentPage 当前页面
+     * @param pageSize    每页数量
      */
     @GetMapping("/user_list")
     public RestResponse list(@RequestParam(required = false, defaultValue = "1") Integer currentPage,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize,  User userQuery) {
+                             @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, User userQuery) {
         IPage<User> userList = userService.getUserList(currentPage, pageSize, userQuery);
         return RestResponse.ok(new Pagination<User>(userList));
     }
@@ -139,46 +144,43 @@ public class AuthController extends BaseController {
     }
 
     @GetMapping("/item/list")
-    public RestResponse getItemList(ApiParam param) {
-        return RestResponse.ok(authItemMapper.queryByProjectType(param));
+    public RestResponse getItemList(QueryParam param) {
+        return RestResponse.ok(authItemMapper.queryByParam(param));
     }
 
     @GetMapping("/group/list")
-    public RestResponse getGroupList(ApiParam param) {
+    public RestResponse getGroupList(QueryParam param) {
         return RestResponse.ok(authGroupService.getGroupList(param));
     }
 
     @PostMapping("/group/add")
     public RestResponse addGroup(@RequestBody AuthGroup authGroup) {
-        if (authGroup.insert()){
+        if (authGroup.insert()) {
             return RestResponse.ok(authGroup);
-        } else
-        {
+        } else {
             return RestResponse.fail("插入失败");
         }
     }
 
     @GetMapping("/group/get")
     public RestResponse getGroupSingle(@RequestParam Integer id) {
-            return RestResponse.ok(new AuthGroup().selectById(id));
+        return RestResponse.ok(new AuthGroup().selectById(id));
     }
 
     @PostMapping("/group/update")
     public RestResponse updateGroupSingle(@RequestBody AuthGroup authGroup) {
-        if(authGroup.updateById()){
+        if (authGroup.updateById()) {
             return RestResponse.ok(authGroup);
-        } else
-        {
+        } else {
             return RestResponse.fail("更新失败");
         }
     }
 
     @PostMapping("/classes/add")
     public RestResponse addClass(@RequestBody AuthClasses authClasses) {
-        if (authClasses.insert()){
+        if (authClasses.insert()) {
             return RestResponse.ok(authClasses);
-        } else
-        {
+        } else {
             return RestResponse.fail("插入失败");
         }
     }
@@ -190,10 +192,9 @@ public class AuthController extends BaseController {
 
     @PostMapping("/classes/update")
     public RestResponse updateClassesSingle(@RequestBody AuthClasses authClasses) {
-        if(authClasses.updateById()){
+        if (authClasses.updateById()) {
             return RestResponse.ok(authClasses);
-        } else
-        {
+        } else {
             return RestResponse.fail("更新失败");
         }
     }
@@ -212,5 +213,35 @@ public class AuthController extends BaseController {
     public RestResponse updateItemSingle(@RequestBody AuthItem authItem) {
         return RestResponse.ok(authItemService.update(authItem));
     }
-}
 
+    @GetMapping("/api/list")
+    public RestResponse getApiList(QueryParam queryParam) {
+        return RestResponse.ok(new Pagination<AuthApi>(authApiMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
+    }
+
+    /**
+     * 批量保存，根据换行符来分隔，apiPath是个数组
+     */
+    @PostMapping(value = "/api/add")
+    public RestResponse addApi(@RequestBody AuthApi authApi) {
+        Preconditions.checkArgument(!CollectionUtils.isEmpty(authApi.getApiPaths()), "参数缺失");
+
+        for (String apiPath : authApi.getApiPaths()) {
+            authApi.setApiPath(apiPath);
+            authApiService.add(authApi);
+        }
+
+        return RestResponse.ok();
+    }
+
+    @GetMapping("/api/get")
+    public RestResponse getApiSingle(@RequestParam Integer id) {
+        return RestResponse.ok(new AuthApi().selectById(id));
+    }
+
+    @PostMapping("/api/update")
+    public RestResponse updateApiSingle(@RequestBody AuthApi authApi) {
+        System.out.println(authApi);
+        return RestResponse.ok(authApiService.update(authApi));
+    }
+}

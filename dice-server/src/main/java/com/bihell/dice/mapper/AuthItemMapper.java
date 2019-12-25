@@ -2,7 +2,7 @@ package com.bihell.dice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.model.domain.AuthItem;
-import com.bihell.dice.model.params.ApiParam;
+import com.bihell.dice.model.params.QueryParam;
 import java.util.List;
 
 /**
@@ -16,5 +16,5 @@ public interface AuthItemMapper extends BaseMapper<AuthItem> {
      * @param param
      * @return
      */
-    List<AuthItem> queryByProjectType(ApiParam param);
+    List<AuthItem> queryByParam(QueryParam param);
 }

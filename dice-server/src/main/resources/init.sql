@@ -182,10 +182,58 @@ create table dim_project
     domain     varchar(255) null comment '系统域名'
 )
     charset = UTF8MB4;
-
 create index IDX_TYPE
     on dim_project (type);
 
+create table auth_api
+(
+    api_id       int auto_increment
+        primary key,
+    api_type     varchar(255) default ''                null comment 'API类型',
+    api_path     varchar(255) default ''                not null,
+    project_type varchar(64)  default ''                not null comment '类目权限类型',
+    status       int                                    null comment '状态（0无效1有效）',
+    creator      int                                    null,
+    create_time  timestamp    default CURRENT_TIMESTAMP null,
+    modifier     int                                    null,
+    modify_time  timestamp    default CURRENT_TIMESTAMP null
+)
+    charset = UTF8MB4;
+create index IDX_PROJECT_TYPE
+    on auth_api (project_type);
+
+
+create table auth_rel_item_api
+(
+    id          int auto_increment
+        primary key,
+    item_id     int                                 not null comment '操作项id',
+    api_id      int(4)                              not null comment 'api id',
+    status      int                                 null,
+    creator     int                                 null comment '创建人',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    modifier    int                                 null comment '修改人',
+    modify_time timestamp default CURRENT_TIMESTAMP null comment '修改时间'
+)
+    charset = UTF8MB4;
+create index IDX_ITEM_API
+    on auth_rel_item_api (item_id, api_id);
+
+create table auth_rel_role_api
+(
+    id          bigint(11) auto_increment
+        primary key,
+    role_id     int(4)                              not null comment '角色id',
+    api_id      int(4)                              not null comment '权限项id',
+    status      int                                 null,
+    creator     int                                 null comment '创建人',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    modifier    int                                 null comment '修改人',
+    modify_time timestamp default CURRENT_TIMESTAMP null comment '修改时间'
+)
+    charset = UTF8MB4;
+create index IDX_ROLE_API
+    on auth_rel_role_api(role_id, api_id);
 
 INSERT INTO user (username, password_md5, email, screen_name)
 VALUES ('dice', '3e6693e83d186225b85b09e71c974d2d', '', 'admin');

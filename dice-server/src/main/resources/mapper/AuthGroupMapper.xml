@@ -6,7 +6,7 @@
         <id column="group_id" property="id" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="queryByProjectType" parameterType="com.bihell.dice.model.params.ApiParam" resultMap="ResultMap">
+    <select id="queryByParam" parameterType="com.bihell.dice.model.params.QueryParam" resultMap="ResultMap">
         SELECT t.*
         FROM auth_group t
         <where>

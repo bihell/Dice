@@ -174,6 +174,14 @@ export function updateItem(data) {
   })
 }
 
+export function saveItemApi(data) {
+  return request({
+    url: '/admin/auth/item/assign/api',
+    method: 'post',
+    data
+  })
+}
+
 /**
  * api
  */
@@ -207,8 +215,6 @@ export function getApi(id) {
 
 // 更新一个api
 export function updateApi(data) {
-  console.log(data)
-
   return request({
     url: '/admin/auth/api/update',
     method: 'post',

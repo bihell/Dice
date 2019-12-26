@@ -14,4 +14,6 @@ public interface AuthItemService {
     AuthItem save(AuthItem authItem);
 
     AuthItem update(AuthItem authItem) ;
+
+    void assignApi(AuthItem authItem);
 }

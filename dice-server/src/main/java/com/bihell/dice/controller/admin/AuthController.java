@@ -214,6 +214,13 @@ public class AuthController extends BaseController {
         return RestResponse.ok(authItemService.update(authItem));
     }
 
+    @PostMapping("/item/assign/api")
+    public RestResponse saveItemApi(@RequestBody AuthItem authItem) {
+        Preconditions.checkArgument(authItem != null && authItem.getId() != null, "参数缺失");
+        authItemService.assignApi(authItem);
+        return RestResponse.ok();
+    }
+
     @GetMapping("/api/list")
     public RestResponse getApiList(QueryParam queryParam) {
         return RestResponse.ok(new Pagination<AuthApi>(authApiMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));

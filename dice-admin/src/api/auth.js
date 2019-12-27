@@ -46,12 +46,39 @@ export function resetPassword(oldPassword, newPassword) {
   })
 }
 
-// 获取文章列表
+// 获取用户列表
 export function getUserList(params) {
   return request({
-    url: '/admin/auth/user_list',
+    url: '/admin/auth/user/list',
     method: 'get',
     params: params
+  })
+}
+
+// 获取单个用户
+export function getUserSingle(id) {
+  return request({
+    url: '/admin/auth/user/get',
+    method: 'get',
+    params: { id }
+  })
+}
+
+// 获取单个用户
+export function updateUserSingle(data) {
+  return request({
+    url: '/admin/auth/user/update',
+    method: 'post',
+    data
+  })
+}
+
+// 获取用户列表
+export function addUser(data) {
+  return request({
+    url: '/admin/auth/user/add',
+    method: 'post',
+    data
   })
 }
 

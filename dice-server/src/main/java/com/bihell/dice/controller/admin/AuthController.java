@@ -13,7 +13,6 @@ import com.bihell.dice.service.AuthApiService;
 import com.bihell.dice.service.AuthGroupService;
 import com.bihell.dice.service.AuthItemService;
 import com.bihell.dice.service.UserService;
-import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiOperation;
@@ -124,15 +123,29 @@ public class AuthController extends BaseController {
 
     /**
      * 获取用户列表
-     *
-     * @param currentPage 当前页面
-     * @param pageSize    每页数量
      */
-    @GetMapping("/user_list")
-    public RestResponse list(@RequestParam(required = false, defaultValue = "1") Integer currentPage,
-                             @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, User userQuery) {
-        IPage<User> userList = userService.getUserList(currentPage, pageSize, userQuery);
+    @GetMapping("/user/list")
+    public RestResponse list(QueryParam queryParam) {
+
+        IPage<User> userList = userService.getUserList(queryParam);
         return RestResponse.ok(new Pagination<User>(userList));
+    }
+
+    @PostMapping("/user/add")
+    public RestResponse addUser(@RequestBody User user) {
+        userService.addUser(user);
+        return RestResponse.ok();
+    }
+
+    @PostMapping("/user/update")
+    public RestResponse updateUserSingle(@RequestBody User user) {
+        userService.updateUser(user);
+        return RestResponse.ok();
+    }
+
+    @GetMapping("/user/get")
+    public RestResponse getUserSingle(@RequestParam Integer id) {
+        return RestResponse.ok(userService.getUserSingle(id));
     }
 
     /**
@@ -237,7 +250,6 @@ public class AuthController extends BaseController {
             authApi.setApiPath(apiPath);
             authApiService.add(authApi);
         }
-
         return RestResponse.ok();
     }
 

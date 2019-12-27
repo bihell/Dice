@@ -9,6 +9,7 @@ import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.UserMapper;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.params.LoginParam;
+import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.security.AuthToken;
 import com.bihell.dice.security.SecurityUtil;
 import com.bihell.dice.security.authentication.Authentication;
@@ -115,20 +116,49 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 获取用户列表
      *
-     * @param currentPage 当前页面
-     * @param pageSize    每页数量
-     * @param userQuery   查询参数
      * @return
      */
     @Override
-    public IPage<User> getUserList(Integer currentPage, Integer pageSize, User userQuery) {
-        Page<User> page = new Page<>(currentPage, pageSize);
+    public IPage<User> getUserList(QueryParam queryParam) {
+        Page<User> page = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda()
                 .select(User.class, info -> !"passwordMd5".equals(info.getProperty()))
-                .like(!StringUtils.isEmpty(userQuery.getUsername()),User::getUsername,userQuery.getUsername())
+                .like(User::getUsername, queryParam.getCriteria())
                 .orderByDesc(User::getCreated);
 
         return userMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public void addUser(User user) {
+        if (user.selectCount(new QueryWrapper<User>().lambda().eq(User::getUsername, user.getUsername()).or().eq(User::getEmail, user.getEmail())) < 1) {
+            user.setPasswordMd5(DiceUtil.getMd5(user.getPasswordMd5()));
+            user.insert();
+        } else {
+            throw new TipException("用户名或邮箱已存在");
+        }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        if (user.selectCount(new QueryWrapper<User>()
+                .ne("id", user.getId())
+                .and(field -> {
+                    field.eq("username", user.getUsername()).or().eq("email", user.getEmail());
+                })) < 1) {
+            user.setPasswordMd5(DiceUtil.getMd5(user.getPasswordMd5()));
+            user.updateById();
+        } else {
+            throw new TipException("用户名或邮箱已存在");
+        }
+    }
+
+    @Override
+    public User getUserSingle(Integer id) {
+        LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda()
+                .select(User.class, info -> !"passwordMd5".equals(info.getProperty()))
+                .eq(User::getId, id);
+        return userMapper.selectOne(wrapper);
     }
 
     @Override

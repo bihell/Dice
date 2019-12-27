@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.params.LoginParam;
+import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.security.AuthToken;
 import org.springframework.lang.NonNull;
 
@@ -14,6 +15,12 @@ import org.springframework.lang.NonNull;
  * @since 2017/7/12 21:25
  */
 public interface UserService extends IService<User> {
+
+    void addUser(User user);
+
+    void updateUser(User user);
+
+    User getUserSingle(Integer id);
 
     /**
      * 修改用户密码
@@ -51,10 +58,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 获取用户列表
-     * @param currentPage 当前页面
-     * @param pageSize 每页数量
-     * @param userQuery 查询参数
      * @return
      */
-    IPage<User> getUserList(Integer currentPage, Integer pageSize, User userQuery);
+    IPage<User> getUserList(QueryParam queryParam);
 }

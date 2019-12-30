@@ -235,6 +235,97 @@ create table auth_rel_role_api
 create index IDX_ROLE_API
     on auth_rel_role_api(role_id, api_id);
 
+
+-- auto-generated definition
+create table auth_role
+(
+    role_id      int auto_increment comment '角色ID'
+        primary key,
+    role_name    varchar(255) default ''                not null comment '角色名',
+    user_type    int(4)                                 not null comment '用户类型',
+    role_type    int(4)                                 not null comment '角色类型 1:管理员 2:用户',
+    project_type varchar(255)                           null comment '系统类型',
+    description  varchar(255)                           null comment '描述',
+    status       int(255)                               null comment '状态（0无效1有效）',
+    creator      int                                    null,
+    create_time  timestamp    default CURRENT_TIMESTAMP null,
+    modifier     int                                    null,
+    modify_time  timestamp    default CURRENT_TIMESTAMP null
+)
+    charset = UTF8MB4;
+
+create table auth_rel_role_user
+(
+    id          int auto_increment
+        primary key,
+    user_id     int                                 not null comment '用户id',
+    role_id     int(4)                              not null comment '角色id',
+    status      int                                 null,
+    creator     int                                 null comment '创建人',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    modifier    int                                 null comment '修改人',
+    modify_time timestamp default CURRENT_TIMESTAMP null comment '修改时间'
+)
+    charset = utf8mb4;
+
+create index IDX_USER_ROLE
+    on auth_rel_role_user (user_id, role_id);
+
+create table auth_content
+(
+    id            bigint(11) auto_increment
+        primary key,
+    project_type  varchar(255) default ''                not null,
+    content_type  varchar(255) default ''                not null,
+    content_name  varchar(255) default ''                not null,
+    content_value varchar(255)                           null,
+    status        tinyint                                null,
+    creator       int                                    null,
+    create_time   timestamp    default CURRENT_TIMESTAMP null,
+    modifier      int                                    null,
+    modify_time   timestamp    default CURRENT_TIMESTAMP null
+)
+    charset = UTF8MB4;
+
+create index IDX_CONTENT_TYPE
+    on auth_content (content_type);
+
+create index IDX_PROJECT_TYPE
+    on auth_content (project_type);
+
+
+create table auth_rel_role_content
+(
+    id          bigint(11) auto_increment
+        primary key,
+    role_id     int(4)                              not null comment '角色id',
+    content_id  int(4)                              not null comment '权限项id',
+    status      int                                 null,
+    creator     int                                 null comment '创建人',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    modifier    int                                 null comment '修改人',
+    modify_time timestamp default CURRENT_TIMESTAMP null comment '修改时间'
+)
+    charset = UTF8MB4;
+create index IDX_ROLE_CONTENT
+    on auth_rel_role_content (role_id, content_id);
+
+create table auth_rel_role_item
+(
+    id          bigint(11) auto_increment
+        primary key,
+    role_id     int(4)                              not null comment '角色id',
+    item_id     int(4)                              not null comment '权限项id',
+    status      int                                 null,
+    creator     int                                 null comment '创建人',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    modifier    int                                 null comment '修改人',
+    modify_time timestamp default CURRENT_TIMESTAMP null comment '修改时间'
+)
+    charset = UTF8MB4;
+create index IDX_ROLE_ITEM
+    on auth_rel_role_item (role_id, item_id);
+
 INSERT INTO user (username, password_md5, email, screen_name)
 VALUES ('dice', '3e6693e83d186225b85b09e71c974d2d', '', 'admin');
 

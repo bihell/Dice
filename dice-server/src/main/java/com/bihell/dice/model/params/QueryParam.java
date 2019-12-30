@@ -31,4 +31,10 @@ public class QueryParam {
      * 每页大小
      */
     private int pageSize = 13;
+
+    private Integer userId;
+
+    private Integer roleType;
+
+    private Integer userType;
 }

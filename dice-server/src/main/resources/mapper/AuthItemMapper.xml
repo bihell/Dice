@@ -23,4 +23,20 @@
         ORDER BY t.item_id desc
     </select>
 
+    <select id="queryByProjectType" parameterType="java.lang.String" resultMap="ResultMap">
+        select *
+        from auth_item t
+                 join auth_classes t1 on t.classes_id=t1.classes_id and t1.status=1
+                 join auth_group t2 on t1.group_id=t2.group_Id and t2.status=1
+        where t.status=1 and t2.project_type = #{projectType}
+    </select>
+
+    <delete id="deleteByRoleId" parameterType="java.util.Map">
+        update auth_rel_role_item set status=0 where role_id = #{roleId}
+        <if test="itemIds != null and itemIds.size()>0">
+            AND item_id in
+            <foreach collection="itemIds" index="index" item="item" open="(" close=")" separator=",">#{item}</foreach>
+        </if>
+    </delete>
+
 </mapper>

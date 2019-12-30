@@ -3,6 +3,8 @@ package com.bihell.dice.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.model.domain.AuthItem;
 import com.bihell.dice.model.params.QueryParam;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -17,4 +19,8 @@ public interface AuthItemMapper extends BaseMapper<AuthItem> {
      * @return
      */
     List<AuthItem> queryByParam(QueryParam param);
+
+    List<AuthItem> queryByProjectType(String projectType);
+
+    void deleteByRoleId(@Param("roleId") Integer roleId, @Param("itemIds") List<Integer> itemIds);
 }

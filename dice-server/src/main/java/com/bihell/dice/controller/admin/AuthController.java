@@ -4,15 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.mapper.AuthApiMapper;
+import com.bihell.dice.mapper.AuthContentMapper;
 import com.bihell.dice.mapper.AuthItemMapper;
+import com.bihell.dice.mapper.AuthRoleMapper;
 import com.bihell.dice.model.domain.*;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
 import com.bihell.dice.model.params.QueryParam;
-import com.bihell.dice.service.AuthApiService;
-import com.bihell.dice.service.AuthGroupService;
-import com.bihell.dice.service.AuthItemService;
-import com.bihell.dice.service.UserService;
+import com.bihell.dice.service.*;
 import com.bihell.dice.utils.RestResponse;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +40,10 @@ public class AuthController extends BaseController {
     private final AuthItemService authItemService;
     private final AuthApiMapper authApiMapper;
     private final AuthApiService authApiService;
+    private final AuthRoleMapper authRoleMapper;
+    private final AuthContentMapper authContentMapper;
+    private final AuthContentService authContentService;
+    private final AuthRoleService authRoleService;
 
     /**
      * 后台登录
@@ -260,7 +263,88 @@ public class AuthController extends BaseController {
 
     @PostMapping("/api/update")
     public RestResponse updateApiSingle(@RequestBody AuthApi authApi) {
-        System.out.println(authApi);
         return RestResponse.ok(authApiService.update(authApi));
+    }
+
+
+    /**
+     * 给角色分配操作项
+     */
+    @PostMapping("/role/assign/item")
+    public RestResponse assignRoleItem(@RequestBody AuthRole authRole) {
+        Preconditions.checkArgument(authRole != null && authRole.getId() != null, "参数缺失");
+        authRoleService.assignItem(authRole);
+        return RestResponse.ok();
+    }
+
+    /**
+     * 给角色分配API
+     */
+    @PostMapping("/role/assign/api")
+    public RestResponse assignRoleApi(@RequestBody AuthRole authRole) {
+        Preconditions.checkArgument(authRole != null && authRole.getId() != null, "参数缺失");
+        authRoleService.assignApi(authRole);
+        return RestResponse.ok();
+    }
+
+    /**
+     * 给角色分配内容项
+     */
+    @PostMapping("/role/assign/content")
+    public RestResponse assignRoleContent(@RequestBody AuthRole authRole) {
+        Preconditions.checkArgument(authRole != null && authRole.getId() != null, "参数缺失");
+        authRoleService.assignContent(authRole);
+        return RestResponse.ok();
+    }
+
+    /**
+     * 给角色分配用户
+     */
+    @PostMapping("/role/assign/user")
+    public RestResponse assignRoleUser(@RequestBody AuthRole authRole) {
+        Preconditions.checkArgument(authRole != null && authRole.getId() != null, "参数缺失");
+        authRoleService.assignUser(authRole);
+        return RestResponse.ok();
+    }
+
+
+    @PostMapping("/role/update")
+    public RestResponse updateRoleSingle(@RequestBody AuthRole authRole) {
+        return RestResponse.ok(authRoleService.update(authRole));
+    }
+
+    @PostMapping("/role/add")
+    public RestResponse addRole(@RequestBody AuthRole authRole) {
+        return RestResponse.ok(authRoleService.save(authRole));
+    }
+
+    @GetMapping("/role/list")
+    public RestResponse getRoleList(QueryParam queryParam) {
+        return RestResponse.ok(new Pagination<AuthRole>(authRoleMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
+    }
+
+    @GetMapping("/role/get")
+    public RestResponse getRoleSingle(@RequestParam Integer id) {
+        return RestResponse.ok(new AuthRole().selectById(id));
+    }
+
+    @GetMapping("/content/list")
+    public RestResponse getContentList(QueryParam queryParam) {
+        return RestResponse.ok(new Pagination<AuthContent>(authContentMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
+    }
+
+    @PostMapping("/content/add")
+    public RestResponse addContent(@RequestBody AuthContent authContent) {
+        return RestResponse.ok(authContentService.save(authContent));
+    }
+
+    @GetMapping("/content/get")
+    public RestResponse getContentSingle(@RequestParam Integer id) {
+        return RestResponse.ok(new AuthContent().selectById(id));
+    }
+
+    @PostMapping("/content/update")
+    public RestResponse updateContentSingle(@RequestBody AuthContent authContent) {
+        return RestResponse.ok(authContentService.update(authContent));
     }
 }

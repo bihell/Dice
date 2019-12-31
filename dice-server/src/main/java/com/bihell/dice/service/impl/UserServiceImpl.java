@@ -2,11 +2,14 @@ package com.bihell.dice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bihell.dice.exception.TipException;
+import com.bihell.dice.mapper.AuthRelRoleUserMapper;
 import com.bihell.dice.mapper.UserMapper;
+import com.bihell.dice.model.domain.AuthRelRoleUser;
 import com.bihell.dice.model.domain.User;
 import com.bihell.dice.model.params.LoginParam;
 import com.bihell.dice.model.params.QueryParam;
@@ -24,7 +27,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -46,6 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     private final RedisService redisService;
     private final UserMapper userMapper;
+    private final AuthRelRoleUserMapper authRelRoleUserMapper;
 
     /**
      * Authenticates.
@@ -127,6 +131,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .orderByDesc(User::getCreated);
 
         return userMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public void assignRole(User user) {
+
+        authRelRoleUserMapper.update(null, new UpdateWrapper<AuthRelRoleUser>().lambda()
+                .eq(AuthRelRoleUser::getUserId, user.getId())
+                .set(AuthRelRoleUser::getStatus, 0));
+
+        if (CollectionUtils.isEmpty(user.getRoleIds())) {
+            return;
+        }
+        for (Integer roleId : user.getRoleIds()) {
+            if (roleId == null) {
+                continue;
+            }
+
+            AuthRelRoleUser authRelRoleUser = new AuthRelRoleUser();
+            authRelRoleUser.setUserId(user.getId());
+            authRelRoleUser.setRoleId(roleId);
+            authRelRoleUser.insert();
+        }
     }
 
     @Override

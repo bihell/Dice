@@ -55,6 +55,15 @@ export function getUserList(params) {
   })
 }
 
+// 获取用户列表
+export function getAllUsers(params) {
+  return request({
+    url: '/admin/auth/user/list/all',
+    method: 'get',
+    params: params
+  })
+}
+
 // 获取单个用户
 export function getUserSingle(id) {
   return request({
@@ -73,10 +82,19 @@ export function updateUserSingle(data) {
   })
 }
 
-// 获取用户列表
+// 增加用户
 export function addUser(data) {
   return request({
     url: '/admin/auth/user/add',
+    method: 'post',
+    data
+  })
+}
+
+// 保存用户所属角色
+export function saveRoles(data) {
+  return request({
+    url: '/admin/auth/user/assign/role',
     method: 'post',
     data
   })
@@ -244,6 +262,122 @@ export function getApi(id) {
 export function updateApi(data) {
   return request({
     url: '/admin/auth/api/update',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * role
+ */
+
+// 保存角色API
+export function saveRoleApi(data) {
+  return request({
+    url: '/admin/auth/role/assign/api',
+    method: 'post',
+    data
+  })
+}
+
+// 保存角色内容
+export function saveRoleContent(data) {
+  return request({
+    url: '/admin/auth/role/assign/content',
+    method: 'post',
+    data
+  })
+}
+
+// 保存角色用户
+export function saveRoleUser(data) {
+  return request({
+    url: '/admin/auth/role/assign/User',
+    method: 'post',
+    data
+  })
+}
+
+// 保存角色操作项
+export function saveRoleItem(data) {
+  return request({
+    url: '/admin/auth/role/assign/item',
+    method: 'post',
+    data
+  })
+}
+
+// 新增role
+export function addRole(data) {
+  return request({
+    url: '/admin/auth/role/add',
+    method: 'post',
+    data
+  })
+}
+
+// 获取角色列表
+export function getRoleList(params) {
+  return request({
+    url: '/admin/auth/role/list',
+    method: 'get',
+    params: params
+  })
+}
+
+// 获取一个角色
+export function getRoleSingle(id) {
+  return request({
+    url: '/admin/auth/role/get',
+    method: 'get',
+    params: { id }
+  })
+}
+
+// 更新一个二级菜单
+export function updateRoleSingle(data) {
+  return request({
+    url: '/admin/auth/role/update',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * content
+ */
+
+// 获取内容列表
+export function getContentList(params) {
+  return request({
+    url: '/admin/auth/content/list',
+    method: 'get',
+    params: params
+  })
+}
+
+// 新增内容
+export function addContent(data) {
+  return request({
+    url: '/admin/auth/content/add',
+    method: 'post',
+    data
+  })
+}
+
+// 获取一个内容
+export function getContentSingle(id) {
+  return request({
+    url: '/admin/auth/content/get',
+    method: 'get',
+    params: { id }
+  })
+}
+
+// 更新一个内容
+export function updateContentSingle(data) {
+  return request({
+    url: '/admin/auth/content/update',
     method: 'post',
     data
   })

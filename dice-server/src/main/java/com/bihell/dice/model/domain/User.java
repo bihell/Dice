@@ -1,12 +1,15 @@
 package com.bihell.dice.model.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -34,11 +37,13 @@ public class User extends Model<User> {
     /**
      * 用户密码 md5存储
      */
+    @JsonIgnore
     private String passwordMd5;
 
     /**
      * 用户邮箱
      */
+    @JsonIgnore
     private String email;
 
     /**
@@ -49,11 +54,17 @@ public class User extends Model<User> {
     /**
      * 用户创建时间
      */
+    @JsonIgnore
     private Date created;
 
     /**
      * 最后登陆时间
      */
+    @JsonIgnore
     private Date logged;
+
+    @TableField(exist = false)
+    @JsonIgnore
+    private List<Integer> roleIds;
 
 }

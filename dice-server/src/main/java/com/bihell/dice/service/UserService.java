@@ -61,4 +61,6 @@ public interface UserService extends IService<User> {
      * @return
      */
     IPage<User> getUserList(QueryParam queryParam);
+
+    void assignRole(User user);
 }

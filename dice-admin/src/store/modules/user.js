@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/auth'
+import { login, logout, getAllUsers } from '@/api/auth'
 import router, { resetRouter } from '@/router'
 import Vue from 'vue'
 
@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  users: []
 }
 
 const mutations = {
@@ -30,6 +31,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_USERS: (state, users) => {
+    state.users = users
   }
 }
 
@@ -128,6 +132,24 @@ const actions = {
       dispatch('tagsView/delAllViews', null, { root: true })
 
       resolve()
+    })
+  },
+
+  getAllUsers({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getAllUsers().then(res => {
+        if (res.data && res.data.list) {
+          const data = res.data.list
+          data.forEach(item => {
+            const prefix = item.id < 0 ? '【ToB】' : '【普通用户】'
+            item.username = `${prefix}${item.username}`
+          })
+          commit('SET_USERS', data)
+        }
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
     })
   }
 }

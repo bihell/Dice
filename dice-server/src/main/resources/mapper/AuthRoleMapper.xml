@@ -23,12 +23,12 @@
     <select id="queryByParam" parameterType="com.bihell.dice.model.params.QueryParam" resultMap="ResultMap">
         SELECT t.*,t1.user_count
         FROM auth_role t
-        left join (select role_id,count(1) user_count from auth_rel_user_role where status=1 group by role_id) t1 on
+        left join (select role_id,count(1) user_count from auth_rel_role_user where status=1 group by role_id) t1 on
         t.role_id=t1.role_id
         <where>
             t.status = 1
             <if test="queryParam.criteria != null and queryParam.criteria.length()>0">AND (t.role_name like concat("%",#{queryParam.criteria},"%"))</if>
-            <if test="queryParam.userId != null">and t.role_id in (select distinct role_id from rel_user_role where status=1 and
+            <if test="queryParam.userId != null">and t.role_id in (select distinct role_id from auth_rel_role_user where status=1 and
                 user_id=#{queryParam.userId} )
             </if>
             <if test="queryParam.roleType != null">and t.role_type = #{queryParam.roleType}</if>

@@ -1,12 +1,10 @@
 package com.bihell.dice.controller.admin;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.controller.BaseController;
-import com.bihell.dice.mapper.AuthApiMapper;
-import com.bihell.dice.mapper.AuthContentMapper;
-import com.bihell.dice.mapper.AuthItemMapper;
-import com.bihell.dice.mapper.AuthRoleMapper;
+import com.bihell.dice.mapper.*;
 import com.bihell.dice.model.domain.*;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
@@ -44,6 +42,7 @@ public class AuthController extends BaseController {
     private final AuthContentMapper authContentMapper;
     private final AuthContentService authContentService;
     private final AuthRoleService authRoleService;
+    private final UserMapper userMapper;
 
     /**
      * 后台登录
@@ -134,9 +133,23 @@ public class AuthController extends BaseController {
         return RestResponse.ok(new Pagination<User>(userList));
     }
 
+    /**
+     * 获取所有用户
+     */
+    @GetMapping("/user/list/all")
+    public RestResponse getAllUsers(QueryParam queryParam) {
+        return RestResponse.ok(new Pagination<User>(userMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
+    }
+
     @PostMapping("/user/add")
     public RestResponse addUser(@RequestBody User user) {
         userService.addUser(user);
+        return RestResponse.ok();
+    }
+
+    @PostMapping("/user/assign/role")
+    public RestResponse assignRole(@RequestBody User user) {
+        userService.assignRole(user);
         return RestResponse.ok();
     }
 

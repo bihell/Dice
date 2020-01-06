@@ -180,7 +180,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog width="800px" :visible.sync="apiDialog.dialogFormVisible">
+    <el-dialog width="830px" :visible.sync="apiDialog.dialogFormVisible">
       <div slot="title"> <span class="dialog-custom-title" v-html="apiDialog.title" /></div>
       <el-transfer
         ref="transfer"

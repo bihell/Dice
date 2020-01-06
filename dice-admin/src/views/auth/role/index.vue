@@ -42,7 +42,7 @@
               <svg-icon icon-class="edit" size="20" />
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-permission="'/auth/role/list/update'">
+              <el-dropdown-item v-permission="''">
                 <el-link
                   :underline="false"
                   type="primary"
@@ -71,20 +71,20 @@
                 > 分配用户 </el-link>
               </el-dropdown-item>
               <!--              todo-list  完成后在处理跳转-->
-              <!--              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="'/auth/role/list/auth'">-->
-              <!--                <el-link-->
-              <!--                  :underline="false"-->
-              <!--                  type="primary"-->
-              <!--                  @click="handleItem(scope.row)"-->
-              <!--                > 分配操作项 </el-link>-->
-              <!--              </el-dropdown-item>-->
-              <!--              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="'/auth/role/list/show/auth'">-->
-              <!--                <el-link-->
-              <!--                  :underline="false"-->
-              <!--                  type="primary"-->
-              <!--                  @click="handleShow(scope.row)"-->
-              <!--                > 查看操作项 </el-link>-->
-              <!--              </el-dropdown-item>-->
+              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="''">
+                <el-link
+                  :underline="false"
+                  type="primary"
+                  @click="handleItem(scope.row)"
+                > 分配操作项 </el-link>
+              </el-dropdown-item>
+              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="'/auth/role/list/show/auth'">
+                <el-link
+                  :underline="false"
+                  type="primary"
+                  @click="handleShow(scope.row)"
+                > 查看操作项 </el-link>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>

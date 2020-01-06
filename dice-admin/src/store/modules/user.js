@@ -71,7 +71,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('CLEAR_TOKEN')
-        commit('SET_ROLES', [])
 
         // reset visited views and cached views
         // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485

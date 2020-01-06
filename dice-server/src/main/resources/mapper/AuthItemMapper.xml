@@ -15,7 +15,7 @@
         <where>
             t.status = 1
             <if test="criteria != null and criteria.length()>0">AND (t.item_name like concat("%",#{criteria},"%"))</if>
-            <if test="roleId != null">AND t.item_id in (select distinct item_id from rel_role_item where
+            <if test="roleId != null">AND t.item_id in (select distinct item_id from auth_rel_role_item where
                 role_id=#{roleId} and status=1)
             </if>
             <if test="projectType != null">AND (t2.project_type = #{projectType})</if>

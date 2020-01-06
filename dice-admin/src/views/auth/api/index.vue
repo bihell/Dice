@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-wrap mb-3">
       <div>
-        <el-button v-permission="'/auth/api/list/add'" type="primary" icon="el-icon-edit" size="small" @click="handleCreate">
+        <el-button v-permission="'/auth/api/add'" type="primary" icon="el-icon-edit" size="small" @click="handleCreate">
           新增
         </el-button>
       </div>

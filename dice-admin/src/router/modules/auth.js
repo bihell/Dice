@@ -37,6 +37,20 @@ const authRouter = {
       meta: { title: '角色管理', icon: 'documentation' }
     },
     {
+      path: 'role/item',
+      component: () => import('@/views/auth/menu'),
+      name: 'RoleMenuItem',
+      meta: { title: '分配权限', icon: 'documentation' },
+      hidden: true
+    },
+    {
+      path: 'role/show',
+      component: () => import('@/views/auth/menu'),
+      name: 'RoleMenuShow',
+      meta: { title: '查看权限', icon: 'documentation' },
+      hidden: true
+    },
+    {
       path: 'content/list',
       component: () => import('@/views/auth/content'),
       name: 'ContentList',

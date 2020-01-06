@@ -124,6 +124,9 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 
     }
 
+    /**
+     * 只删除、新增当前项目下的item
+     */
     @Override
     public void assignItem(AuthRole authRole) {
         List<AuthItem> itemList = authItemMapper.queryByProjectType(authRole.getProjectType());

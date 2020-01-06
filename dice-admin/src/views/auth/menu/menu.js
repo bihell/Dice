@@ -178,10 +178,10 @@ export default {
     this.form2.data = this.$initData(this.form2.fieldList)
     this.form3.data = this.$initData(this.form3.fieldList)
     const path = this.$route.path
-    if ((path === '/role/item' || path === '/role/show') && this.$route.query && this.$route.query.id) {
+    if ((path === '/auth/role/item' || path === '/auth/role/show') && this.$route.query && this.$route.query.id) {
       this.showCheckBox = true
       this.initItemCodes()
-      if (path === '/role/item') {
+      if (path === '/auth/role/item') {
         this.edit = true
       }
     }

@@ -60,13 +60,13 @@ export default {
             {
               type: 'primary',
               label: '编辑',
-              code: '/auth/user/system/list/update',
+              code: '/auth/user/update',
               event: this.handleUser
             },
             {
               type: 'primary',
               label: '分配角色',
-              code: '/auth/user/list/roles',
+              code: '/auth/user/assign/role',
               event: this.handleRoles
             }
           ]

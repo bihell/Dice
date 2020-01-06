@@ -61,22 +61,22 @@ public class GlobalExceptionHandler {
         return RestResponse.fail(e.getMessage());
     }
 
-    /**
-     * NotFound异常返回
-     *
-     * @param req {@link HttpServletRequest}
-     * @param e   {@link Exception}
-     * @return {@link RestResponse}
-     */
-    @ExceptionHandler(value = NotFoundException.class)
-    public RestResponse NotFoundErrorHandler(HttpServletRequest req, NotFoundException e) {
-        String message = "";
-        if (null != e.getClz()) {
-            message = e.getClz().getSimpleName();
-        }
-        message += "资源不存在!";
-        return RestResponse.fail(ErrorCode.NOT_FOUND.getCode(), message);
-    }
+//    /**
+//     * NotFound异常返回
+//     *
+//     * @param req {@link HttpServletRequest}
+//     * @param e   {@link Exception}
+//     * @return {@link RestResponse}
+//     */
+//    @ExceptionHandler(value = NotFoundException.class)
+//    public RestResponse NotFoundErrorHandler(HttpServletRequest req, NotFoundException e) {
+//        String message = "";
+//        if (null != e.getClz()) {
+//            message = e.getClz().getSimpleName();
+//        }
+//        message += "资源不存在!";
+//        return RestResponse.fail(ErrorCode.NOT_FOUND.getCode(), message);
+//    }
 
     /**
      * NotLogin异常返回

@@ -2,6 +2,7 @@
   <div class="app-container">
     <div class="tool-container" style="justify-content: flex-end">
       <el-button
+        v-permission="'/blog/page/new'"
         type="primary"
         icon="el-icon-document-add"
         size="small"
@@ -44,11 +45,13 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="{row}">
           <el-button
+            v-permission="'/blog/page/update'"
             size="small"
             @click="handleEdit(row.id)"
           >编辑
           </el-button>
           <el-button
+            v-permission="'/blog/page/delete'"
             size="small"
             type="danger"
             @click="handleDelete(row.id)"

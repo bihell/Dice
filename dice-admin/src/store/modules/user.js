@@ -1,4 +1,5 @@
 import { login, logout, getAllUsers } from '@/api/auth'
+import { getUserInfo } from '@/api/oneAuth'
 import router, { resetRouter } from '@/router'
 import Vue from 'vue'
 
@@ -6,8 +7,6 @@ const state = {
   token: null,
   name: '',
   avatar: '',
-  introduction: '',
-  roles: [],
   users: []
 }
 
@@ -20,17 +19,11 @@ const mutations = {
     Vue.ls.remove('Access-Token')
     state.token = null
   },
-  SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction
-  },
   SET_NAME: (state, name) => {
     state.name = name
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
   },
   SET_USERS: (state, users) => {
     state.users = users
@@ -57,29 +50,19 @@ const actions = {
     commit('SET_TOKEN', Vue.ls.get('Access-Token'))
   },
 
-  // get user info
+  // 获取用户信息
+  // todo 目前AVATAR 写死以后增加对应字段
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      // getInfo(state.token).then(response => {
-      const data = {
-        roles: ['admin'],
-        introduction: 'I am a super administrator',
-        avatar: '/admin/avatar.jpeg',
-        name: 'Super Admin'
-      }
-
-      const { roles, name, avatar, introduction } = data
-
-      // roles must be a non-empty array
-      if (!roles || roles.length <= 0) {
-        reject('getInfo: roles must be a non-null array!')
-      }
-
-      commit('SET_ROLES', roles)
-      commit('SET_NAME', name)
-      commit('SET_AVATAR', avatar)
-      commit('SET_INTRODUCTION', introduction)
-      resolve(data)
+      getUserInfo().then(res => {
+        if (res.data) {
+          commit('SET_NAME', res.data.screenName)
+          commit('SET_AVATAR', '/admin/avatar.jpeg')
+        }
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 

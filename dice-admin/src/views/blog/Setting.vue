@@ -22,6 +22,7 @@
           </el-form-item>
           <el-form-item>
             <el-button
+              v-permission="'/blog/setting/save'"
               type="primary"
               size="small"
               @click="submitAfterValidate('websiteForm')"
@@ -74,6 +75,7 @@
 
           <el-form-item>
             <el-button
+              v-permission="'/blog/setting/save'"
               type="primary"
               size="small"
               @click="submitOptions"
@@ -82,7 +84,9 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="邮箱设置">
+      <el-tab-pane
+        label="邮箱设置"
+      >
         <el-form ref="emailForm" :model="options" :rules="emailRules">
           <el-form-item label="是否设置邮箱提醒:">
             <el-switch v-model="options.is_email" />
@@ -121,6 +125,7 @@
           </div>
           <el-form-item>
             <el-button
+              v-permission="'/blog/setting/save'"
               type="primary"
               size="small"
               @click="submitAfterValidate('emailForm')"
@@ -140,6 +145,7 @@
           </el-form-item>
           <el-form-item>
             <el-button
+              v-permission="'/blog/setting/save'"
               type="primary"
               size="small"
               @click="submitAfterValidate('userForm')"
@@ -178,6 +184,7 @@
           </el-form-item>
           <el-form-item>
             <el-button
+              v-permission="'/blog/setting/save'"
               type="primary"
               size="small"
               @click="submitAfterValidate('passwordForm')"

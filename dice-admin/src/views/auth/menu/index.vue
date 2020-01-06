@@ -58,19 +58,19 @@
                     <svg-icon icon-class="dots-vertical" size="20" />
                   </div>
                   <el-dropdown-menu slot="dropdown" class="menu-bar-dropdown-item">
-                    <el-dropdown-item v-if="node.level === 1" @click.native="() => openDialog(1,1, data, node)">
+                    <el-dropdown-item v-if="node.level === 1" v-permission="'/auth/menu/addPageGroup'" @click.native="() => openDialog(1,1, data, node)">
                       添加页面分组
                     </el-dropdown-item>
-                    <el-dropdown-item v-if="node.level === 2" @click.native="() => openDialog(2,1, data)">
+                    <el-dropdown-item v-if="node.level === 2" v-permission="'/auth/menu/addPage'" @click.native="() => openDialog(2,1, data)">
                       添加页面
                     </el-dropdown-item>
-                    <el-dropdown-item v-if="node.level === 3" @click.native="() => openDialog(3,1, data)">
+                    <el-dropdown-item v-if="node.level === 3" v-permission="'/auth/menu/addItem'" @click.native="() => openDialog(3,1, data)">
                       添加功能
                     </el-dropdown-item>
-                    <el-dropdown-item v-if="node.level === 4" @click.native="() => openApiDialog(data)">
+                    <el-dropdown-item v-if="node.level === 4" v-permission="'/auth/menu/addItem'" @click.native="() => openApiDialog(data)">
                       配置API
                     </el-dropdown-item>
-                    <el-dropdown-item v-if="node.level !== 1" @click.native="() => openDialog(node.level -1,2, data)">
+                    <el-dropdown-item v-if="node.level !== 1" v-permission="'/auth/menu/edit'" @click.native="() => openDialog(node.level -1,2, data)">
                       编辑
                     </el-dropdown-item>
                   </el-dropdown-menu>

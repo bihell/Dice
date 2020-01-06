@@ -1,6 +1,7 @@
 <template>
   <div class="upload-component">
     <el-button
+      v-permission="'/tool/media/upload'"
       type="primary"
       icon="el-icon-upload"
       size="small"

@@ -10,7 +10,6 @@ export default {
   data() {
     return {
       list: [],
-      total: 0,
       columns: [{
         prop: 'id',
         label: 'id'

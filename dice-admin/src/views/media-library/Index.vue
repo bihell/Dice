@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <upload :after-upload="afterUpload"></upload>
-    <el-divider></el-divider>
+    <upload :after-upload="afterUpload" />
+    <el-divider />
     <div class="media-list">
       <el-row>
         <el-col
@@ -14,7 +14,7 @@
           :lg="6"
           :xl="4"
         >
-          <media-item :media="media" :after-delete="init"></media-item>
+          <media-item :media="media" :after-delete="init" />
         </el-col>
       </el-row>
     </div>

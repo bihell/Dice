@@ -12,7 +12,7 @@ const STATIC = {
   META_CATEGORY: 'category',
   META_TAG: 'tag',
   META_SNIPPET_TAG: 'snippet_tag',
-  DEFAULT_PAGE_SIZE: 13
+  DEFAULT_PAGE_SIZE: 12
 }
 
 /** **********************************************************/

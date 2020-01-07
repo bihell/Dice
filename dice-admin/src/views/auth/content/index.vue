@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-wrap mb-3">
       <div>
-        <el-button v-permission="'/auth/conent/list/add'" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button v-permission="'/auth/conent/add'" type="primary" icon="el-icon-edit" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -11,7 +11,7 @@
           <el-option label="不限制" value />
           <el-option v-for="item in subSystem" :key="item.type" :label="item.typeName" :value="item.type" />
         </el-select>
-        <el-input v-model="listQuery.criteria" placeholder="内容名称" style="width: 200px;" class="mr-3" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.criteria" placeholder="内容名称" clearable style="width: 200px;" class="mr-3" @keyup.enter.native="handleFilter" />
         <el-button v-waves icon="el-icon-search" type="primary" @click="handleFilter">
           搜索
         </el-button>
@@ -24,7 +24,7 @@
         :columns="columns"
       />
 
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getCurrentList" />
+      <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getCurrentList" />
 
     </el-card>
 

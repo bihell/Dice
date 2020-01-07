@@ -302,7 +302,7 @@ export default {
       this._dealDialogData(row, 1)
     },
     handleContent(row) {
-      this.isCustomTransfer = true
+      this.isCustomTransfer = false
       this._dealDialogData(row, 2)
     },
     handleUser(row) {

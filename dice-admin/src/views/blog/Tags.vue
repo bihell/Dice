@@ -49,6 +49,7 @@
               <span style="float: right;clear: both">
                 <span class="meta-count">{{ category.count }}</span>
                 <el-button
+                  v-permission="'/blog/tag/delete'"
                   size="small"
                   type="danger"
                   @click="deleteCategoryHandle(category.name)"

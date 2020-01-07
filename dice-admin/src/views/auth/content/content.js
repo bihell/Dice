@@ -37,7 +37,7 @@ export default {
             type: 'primary',
             label: '编辑',
             // icon: 'square-edit-outline',
-            code: '/auth/content/list/update',
+            code: '/auth/content/update',
             event: this.handleUpdate
           }
         ]

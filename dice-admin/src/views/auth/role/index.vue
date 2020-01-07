@@ -42,43 +42,42 @@
               <svg-icon icon-class="edit" size="20" />
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-permission="''">
+              <el-dropdown-item v-permission="'/auth/role/update'">
                 <el-link
                   :underline="false"
                   type="primary"
                   @click="handleUpdate(scope.row)"
                 > 编辑 </el-link>
               </el-dropdown-item>
-              <el-dropdown-item v-if="scope.row.userType === 2" v-permission="'/auth/role/list/dealapi'">
+              <el-dropdown-item v-if="scope.row.userType === 2" v-permission="'/auth/role/assign_api'">
                 <el-link
                   :underline="false"
                   type="primary"
                   @click="handleApi(scope.row)"
                 > 分配API </el-link>
               </el-dropdown-item>
-              <el-dropdown-item v-permission="'/auth/role/list/content'">
+              <el-dropdown-item v-permission="'/auth/role/assign_content'">
                 <el-link
                   :underline="false"
                   type="primary"
                   @click="handleContent(scope.row)"
                 > 分配内容 </el-link>
               </el-dropdown-item>
-              <el-dropdown-item v-permission="'/auth/role/list/user'">
+              <el-dropdown-item v-permission="'/auth/role/assign_user'">
                 <el-link
                   :underline="false"
                   type="primary"
                   @click="handleUser(scope.row)"
                 > 分配用户 </el-link>
               </el-dropdown-item>
-              <!--              todo-list  完成后在处理跳转-->
-              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="''">
+              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="'/auth/role/assign_item'">
                 <el-link
                   :underline="false"
                   type="primary"
                   @click="handleItem(scope.row)"
                 > 分配操作项 </el-link>
               </el-dropdown-item>
-              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="'/auth/role/list/show/auth'">
+              <el-dropdown-item v-if="scope.row.userType === 1" v-permission="'/auth/role/show_item'">
                 <el-link
                   :underline="false"
                   type="primary"
@@ -112,7 +111,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog ref="cc" width="800px" :visible.sync="transfer.dialogFormVisible">
+    <el-dialog ref="cc" width="830px" :visible.sync="transfer.dialogFormVisible">
       <div slot="title"> <span class="dialog-custom-title" v-html="transfer.title" /></div>
       <template v-if="!isCustomTransfer">
         <el-transfer

@@ -1,20 +1,39 @@
 version: '3'
 services:
-  dice-nginx:
-    container_name: dice-nginx
+  dice-openresty:
+    container_name: dice-openresty
     build:
       context: ./
-      dockerfile: ./dice-docker/dice-nginx/nginx-Dockerfile
+      dockerfile: ./dice-docker/dice-openresty/openresty-Dockerfile
     environment:
       TZ: Asia/Shanghai
     ports:
     - "80:80"
     volumes:
-    - ~/.dice/logs/nginx:/var/log/nginx
+    - ~/.dice/logs/openresty:/usr/local/openresty/nginx/logs
     depends_on:
     - dice-server
     - dice-admin
     - dice-front
+    networks:
+      dice-net:
+        ipv4_address: 172.28.1.1
+
+  # dice-nginx:
+  #   container_name: dice-nginx
+  #   build:
+  #     context: ./
+  #     dockerfile: ./dice-docker/dice-nginx/nginx-Dockerfile
+  #   environment:
+  #     TZ: Asia/Shanghai
+  #   ports:
+  #   - "80:80"
+  #   volumes:
+  #   - ~/.dice/logs/nginx:/var/log/nginx
+  #   depends_on:
+  #   - dice-server
+  #   - dice-admin
+  #   - dice-front
 
   dice-mysql:
     container_name: dice-mysql
@@ -31,6 +50,9 @@ services:
     volumes:
     - ~/.dice/mysql/mysql_data:/var/lib/mysql
     restart: always
+    networks:
+      dice-net:
+        ipv4_address: 172.28.1.2
 
   dice-server:
     container_name: dice-server
@@ -52,6 +74,9 @@ services:
     - dice-mysql
     - dice-redis
     restart: always
+    networks:
+      dice-net:
+        ipv4_address: 172.28.1.3
 
   dice-redis:
     container_name: dice-redis
@@ -61,6 +86,9 @@ services:
     environment:
       TZ: Asia/Shanghai
     restart: always
+    networks:
+      dice-net:
+        ipv4_address: 172.28.1.4
 
   dice-admin:
     container_name: dice-admin
@@ -71,6 +99,11 @@ services:
       TZ: Asia/Shanghai
     expose:
     - "3001"
+    depends_on:
+      - dice-server
+    networks:
+      dice-net:
+        ipv4_address: 172.28.1.5
 
   dice-front:
     container_name: dice-front
@@ -83,3 +116,13 @@ services:
     - "3000"
     depends_on:
     - dice-server
+    networks:
+      dice-net:
+        ipv4_address: 172.28.1.6
+
+networks:
+  dice-net:
+      ipam:
+          driver: default
+          config:
+              - subnet: 172.28.0.0/16

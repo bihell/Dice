@@ -24,7 +24,11 @@
 
 > QQ 群：48384453
 
-### 部分界面
+## 开发&部署
+
+请查看开发部署文档：[gitee](https://bihell.gitee.io/big-data/project/dice.html) [github](https://bihell.github.io/big-data/project/dice.html)
+
+## 部分界面
 
 ![博客前端](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
 ![](https://raw.githubusercontent.com/bihell/blog-img/master/dice4.png)

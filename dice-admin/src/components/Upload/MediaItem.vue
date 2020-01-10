@@ -7,7 +7,7 @@
       :src="media.showUrl"
       fit="cover"
       @click="showDetailDialog(media.id)"
-    ></el-image>
+    />
     <div @click="showDetailDialog(media.id)">
       <span class="media-title">{{ media.name }}</span>
     </div>
@@ -17,7 +17,7 @@
           size="mini"
           icon="el-icon-copy-document"
           @click="copyUrl(media.url)"
-        ></el-button>
+        />
         <el-button
           type="primary"
           size="mini"
@@ -26,11 +26,12 @@
         >
         </el-button>
         <el-button
+          v-permission="'/tool/media/delete'"
           type="danger"
           size="mini"
           icon="el-icon-delete"
           @click="handleDelete(media.id)"
-        ></el-button>
+        />
       </el-button-group>
     </div>
   </el-card>

@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
-  <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
+  <div v-if="isExternal" :style="{fontSize: mdiSize}" class="svg-external-icon svg-icon" v-on="$listeners" />
+  <svg v-else :class="svgClass" aria-hidden="true" :style="{fontSize: mdiSize}" v-on="$listeners">
     <use :href="iconName" />
   </svg>
 </template>
@@ -19,9 +19,16 @@ export default {
     className: {
       type: String,
       default: ''
+    },
+    size: {
+      type: [Number, String],
+      default: 14
     }
   },
   computed: {
+    mdiSize() {
+      return this.size === 14 ? 'inherit' : `${this.size}px`
+    },
     isExternal() {
       return isExternal(this.iconClass)
     },

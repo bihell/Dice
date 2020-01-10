@@ -53,6 +53,10 @@ export default (fieldList) => {
         trigger: eventName
       })
     }
+
+    if (item.validatorType === 'email') {
+      obj[item.prop].push({ type: 'email', message: '请输入正确格式的邮箱', trigger: eventName })
+    }
   }
   return obj
 }

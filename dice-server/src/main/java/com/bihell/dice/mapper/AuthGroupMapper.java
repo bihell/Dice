@@ -2,7 +2,7 @@ package com.bihell.dice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.model.domain.AuthGroup;
-import com.bihell.dice.model.params.Param;
+import com.bihell.dice.model.params.QueryParam;
 
 import java.util.List;
 
@@ -17,6 +17,6 @@ public interface AuthGroupMapper extends BaseMapper<AuthGroup> {
      * @param param
      * @return
      */
-    List<AuthGroup> queryByProjectType(Param param);
+    List<AuthGroup> queryByParam(QueryParam param);
 
 }

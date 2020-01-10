@@ -37,6 +37,6 @@ public class BaseEntity<T extends Model<?>> extends Model<T> {
      */
     private Integer status = 1;
 
-    private String creatorName;
+//    private String creatorName;
 
 }

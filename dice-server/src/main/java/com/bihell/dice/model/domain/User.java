@@ -1,12 +1,15 @@
 package com.bihell.dice.model.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -55,5 +58,8 @@ public class User extends Model<User> {
      * 最后登陆时间
      */
     private Date logged;
+
+    @TableField(exist = false)
+    private List<Integer> roleIds;
 
 }

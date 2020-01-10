@@ -1,7 +1,7 @@
 package com.bihell.dice.model.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,10 +15,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class AuthClasses extends Model<AuthClasses> {
+public class AuthClasses extends BaseEntity<AuthClasses> {
 
-    @TableId
-    private Integer classesId;
+    @TableId(value = "classes_id")
+    private Integer id;
 
     private String classesName;
 
@@ -26,14 +26,17 @@ public class AuthClasses extends Model<AuthClasses> {
 
     private Integer groupId;
 
+    @TableField(value = "`order`")
     private Integer order;
 
     private Boolean isDisplay;
 
     private String style;
 
+    @TableField(exist = false)
     private List<AuthItem> children;
 
+    @TableField(exist = false)
     private String name;
 
     public String getName() {

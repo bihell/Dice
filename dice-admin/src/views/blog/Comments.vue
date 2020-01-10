@@ -41,6 +41,7 @@
           >详情
           </el-button>
           <el-button
+            v-permission="'/blog/comment/delete'"
             size="small"
             type="danger"
             @click="handleDelete(row.id)"

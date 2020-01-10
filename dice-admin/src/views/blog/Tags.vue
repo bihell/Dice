@@ -14,6 +14,7 @@
               <span style="float: right;clear: both">
                 <span class="meta-count">{{ tag.count }}</span>
                 <el-button
+                  v-permission="'/blog/tag/delete'"
                   size="small"
                   type="danger"
                   @click="deleteTagHandle(tag.name)"
@@ -27,6 +28,7 @@
             class="meta-input"
           />
           <el-button
+            v-permission="'/blog/tag/save'"
             style="float: right;clear: both"
             @click="saveOrUpdateTag"
           >保存标签
@@ -47,6 +49,7 @@
               <span style="float: right;clear: both">
                 <span class="meta-count">{{ category.count }}</span>
                 <el-button
+                  v-permission="'/blog/tag/delete'"
                   size="small"
                   type="danger"
                   @click="deleteCategoryHandle(category.name)"

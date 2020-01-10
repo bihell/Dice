@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bihell.dice.mapper.AuthGroupMapper">
 
-    <select id="queryByProjectType" parameterType="com.bihell.dice.model.params.Param" resultType="com.bihell.dice.model.domain.AuthGroup">
+    <resultMap id="ResultMap" type="com.bihell.dice.model.domain.AuthGroup">
+        <id column="group_id" property="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryByParam" parameterType="com.bihell.dice.model.params.QueryParam" resultMap="ResultMap">
         SELECT t.*
         FROM auth_group t
         <where>

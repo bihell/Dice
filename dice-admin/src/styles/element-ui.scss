@@ -77,3 +77,15 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+// 统一transfer样式
+.el-transfer-panel {
+  width: 300px;
+  height: 500px;
+  .el-transfer-panel__body {
+    height: 443px;
+    .el-transfer-panel__list.is-filterable {
+      height: 396px;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 package com.bihell.dice.service;
 
 import com.bihell.dice.model.domain.AuthGroup;
-import com.bihell.dice.model.params.Param;
+import com.bihell.dice.model.params.QueryParam;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface AuthGroupService {
      * @param param 查询参数
      * @return List<AuthGroup>
      */
-    List<AuthGroup> getGroupList(Param param);
+    List<AuthGroup> getGroupList(QueryParam param);
 }

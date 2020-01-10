@@ -59,6 +59,7 @@
         </el-col>
         <el-col :xs="24" :sm="24" :md="12" :lg="1" style="margin-left: 20px">
           <el-button
+            v-permission="'/blog/article/new'"
             type="primary"
             icon="el-icon-document-add"
             size="small"
@@ -136,11 +137,13 @@
       <el-table-column fixed="right" label="操作" width="150" align="center">
         <template slot-scope="{row}">
           <el-button
+            v-permission="'/blog/article/edit'"
             size="small"
             @click="handleEdit(row.id)"
           >编辑
           </el-button>
           <el-button
+            v-permission="'/blog/article/delete'"
             size="small"
             type="danger"
             @click="handleDelete(row.id)"

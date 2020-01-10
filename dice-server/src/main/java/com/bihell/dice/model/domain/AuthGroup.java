@@ -18,8 +18,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class AuthGroup extends BaseEntity<AuthGroup> {
 
-    @TableId
-    private Integer groupId;
+    @TableId(value = "group_id")
+    private Integer id;
 
     private String groupName;
 
@@ -27,6 +27,7 @@ public class AuthGroup extends BaseEntity<AuthGroup> {
 
     private String projectType;
 
+    @TableField(value = "`order`")
     private Integer order;
 
     private Boolean isDisplay;

@@ -69,7 +69,7 @@ if func.start_with(ngx.var.uri, '/api') or string.find(content_type, 'applicatio
     ngx.log(ngx.INFO, '执行SQL查询: ' .. sql)
 
     res, err, errno, sqlstate = db:query(sql)
-    if not res or not res[1] then
+    if res == null or not res or not res[1] then
         db_utils.close_db(db)
         ngx.log(ngx.WARN, '未授权访问: ' .. user_id)
         func.invalid_exit(access_uri)

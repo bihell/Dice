@@ -41,7 +41,6 @@ public class AuthApiServiceImpl implements AuthApiService {
     @Override
     public AuthApi update(AuthApi authApi) {
         Map<String, Object> param = ImmutableMap.of("api_path", authApi.getApiPath(), "project_type", authApi.getProjectType());
-        System.out.println("-------------------<>---------------");
         Preconditions.checkArgument(authApiMapper.selectByMap(param).size() < 2, "Api 地址重复");
         authApi.updateById();
         return authApi;

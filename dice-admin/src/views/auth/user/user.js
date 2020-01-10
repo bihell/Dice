@@ -23,7 +23,7 @@ export default {
     const repeatPasswordValidate = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入确认密码'))
-      } else if (value !== this.formInfo.data.getPasswordMd5) {
+      } else if (value !== this.formInfo.data.passwordMd5) {
         callback(new Error('两次输入的密码不一样'))
       } else {
         callback()
@@ -114,7 +114,7 @@ export default {
         },
         {
           type: 'password',
-          prop: 'getPasswordMd5',
+          prop: 'passwordMd5',
           label: '密码',
           required: true
         },

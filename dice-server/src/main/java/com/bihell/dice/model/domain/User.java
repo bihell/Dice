@@ -37,13 +37,11 @@ public class User extends Model<User> {
     /**
      * 用户密码 md5存储
      */
-    @JsonIgnore
     private String passwordMd5;
 
     /**
      * 用户邮箱
      */
-    @JsonIgnore
     private String email;
 
     /**
@@ -54,17 +52,14 @@ public class User extends Model<User> {
     /**
      * 用户创建时间
      */
-    @JsonIgnore
     private Date created;
 
     /**
      * 最后登陆时间
      */
-    @JsonIgnore
     private Date logged;
 
     @TableField(exist = false)
-    @JsonIgnore
     private List<Integer> roleIds;
 
 }

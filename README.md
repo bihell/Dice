@@ -19,10 +19,10 @@
 * 项目会持续更新，如果有不完善的地方，欢迎指出
 
 > 演示站点：博客前端 [http://bihell.com](http://bihell.com) ， 管理前端  http://bihell.com/admin](http://bihell.com/admin)
-> 演示账号：demo 密码：123456
-> QQ 群：48384453
 
-```
+> 演示账号：demo 密码：123456
+
+> QQ 群：48384453
 
 ### 部分界面
 
@@ -33,8 +33,6 @@
 ![代码段](https://raw.githubusercontent.com/bihell/blog-img/master/snippet.png)
 ![媒体库](https://raw.githubusercontent.com/bihell/blog-img/master/dice-media.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_api.png)
-![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_content.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_menu.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_role.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_user.png)
-![权限](https://raw.githubusercontent.com/bihell/blog-img/master/dice-media.png)

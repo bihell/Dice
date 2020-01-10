@@ -33,8 +33,6 @@
 ![代码段](https://raw.githubusercontent.com/bihell/blog-img/master/snippet.png)
 ![媒体库](https://raw.githubusercontent.com/bihell/blog-img/master/dice-media.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_api.png)
-![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_content.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_menu.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_role.png)
 ![权限](https://raw.githubusercontent.com/bihell/blog-img/master/auth_user.png)
-![权限](https://raw.githubusercontent.com/bihell/blog-img/master/dice-media.png)

@@ -235,8 +235,6 @@ create table auth_rel_role_api
 create index IDX_ROLE_API
     on auth_rel_role_api(role_id, api_id);
 
-
--- auto-generated definition
 create table auth_role
 (
     role_id      int auto_increment comment '角色ID'

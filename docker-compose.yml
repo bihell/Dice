@@ -19,22 +19,6 @@ services:
       dice-net:
         ipv4_address: 172.28.1.1
 
-  # dice-nginx:
-  #   container_name: dice-nginx
-  #   build:
-  #     context: ./
-  #     dockerfile: ./dice-docker/dice-nginx/nginx-Dockerfile
-  #   environment:
-  #     TZ: Asia/Shanghai
-  #   ports:
-  #   - "80:80"
-  #   volumes:
-  #   - ~/.dice/logs/nginx:/var/log/nginx
-  #   depends_on:
-  #   - dice-server
-  #   - dice-admin
-  #   - dice-front
-
   dice-mysql:
     container_name: dice-mysql
     build:

@@ -9,7 +9,7 @@ const devProxy = {
 const prodUrl = ''
 const prodProxy = {
   protocol: 'http',
-  host: 'dice-nginx',
+  host: 'dice-openresty',
   port: 80
 }
 

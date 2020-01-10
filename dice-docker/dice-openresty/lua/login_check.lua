@@ -7,23 +7,16 @@ end
 
 local func = require("func")
 
+
 --静态资源不进行安全验证
--- local project_path = ''
--- if project_type ~= nil then
---     project_path = '/' .. project_type
--- end
--- local static_path = project_path .. '/static/'
-local default_static_path = '/static/'
--- local icon_path = project_path .. '/favicon.ico'
-local default_icon_path = '/favicon.ico'
--- 本地访问dev域名时app.js前没有/static
-local app_js_path = '/app.js'
-local health_check_path = '/do_not_delete/health_check'
+
 local login_path='/v1/api/admin/auth/login'
-if ngx.var.uri and (ngx.var.uri == default_icon_path or ngx.var.uri == default_icon_path or func.start_with(ngx.var.uri, default_static_path) or func.start_with(ngx.var.uri, default_static_path) or func.start_with(ngx.var.uri, app_js_path) or func.end_with(ngx.var.uri, health_check_path) or func.end_with(ngx.var.uri, login_path)) then
+local admin_path='/v1/api/admin'
+local one_auth_path='/v1/api/one_auth'
+-- 非/v1/api/admin请求、登录不做安全验证
+if ngx.var.uri and ((not func.start_with(ngx.var.uri, admin_path) and not func.start_with(ngx.var.uri, one_auth_path)) or func.end_with(ngx.var.uri, login_path)) then
     return
 end
-
 local json = require("cjson.safe")
 
 -- -- 验证PASS登录
@@ -45,8 +38,6 @@ local function verify_pass_login()
     end
 
     local result = json.decode(res.body)
-
-    ngx.log(ngx.INFO,result.data.id)
 
     if not result or result.code ~= 0 then
         ngx.log(ngx.INFO, string.format('get pass token fail %s',res.body))

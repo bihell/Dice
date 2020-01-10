@@ -7,7 +7,7 @@ if ngx.var.request_method == 'OPTIONS' then
 end
 
 -- access_by_lua_file 只能有一个，需要在执行auth_check之前加载login_check.lua,
-local login_check = assert(loadfile('lua/login_check.lua'))
+local login_check = assert(loadfile('/usr/local/openresty/nginx/lua/login_check.lua'))
 login_check()
 
 local func = require("func")
@@ -17,22 +17,14 @@ local headers = ngx.req.get_headers()
 local user_id = ngx.req.get_headers()[".USERID"]
 local project_type = ngx.req.get_headers()[".PROJECTTYPE"]
 
---静态资源不进行安全验证
-local project_path = ''
-if project_type ~= nil then
-    project_path = '/' .. project_type
-end
-local static_path = project_path .. '/static/'
-local default_static_path = '/static/'
-local icon_path = project_path .. '/favicon.ico'
-local default_icon_path = '/favicon.ico'
--- 本地访问dev域名时app.js前没有/static
-local app_js_path = '/app.js'
-local health_check_path = '/do_not_delete/health_check'
+
 local login_path ='/v1/api/admin/auth/login'
 local logout_path='/v1/api/admin/auth/logout'
+local admin_path='/v1/api/admin'
+local one_auth_path='/v1/api/one_auth'
 
-if ngx.var.uri and (func.end_with(ngx.var.uri, login_path) or ngx.var.uri == icon_path or ngx.var.uri == default_icon_path or func.start_with(ngx.var.uri, static_path) or func.start_with(ngx.var.uri, default_static_path) or func.start_with(ngx.var.uri, app_js_path) or func.end_with(ngx.var.uri, health_check_path) or func.end_with(ngx.var.uri, logout_path)) then
+-- 非/v1/api/admin请求、登录、登出不做安全验证
+if ngx.var.uri and ((not func.start_with(ngx.var.uri, admin_path) and not func.start_with(ngx.var.uri, one_auth_path)) or func.end_with(ngx.var.uri, logout_path) or func.end_with(ngx.var.uri, login_path)) then
     return
 end
 

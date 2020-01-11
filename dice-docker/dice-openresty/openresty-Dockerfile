@@ -7,6 +7,7 @@ COPY ./dice-docker/dice-openresty/conf/nginx.conf /usr/local/openresty/nginx/con
 COPY ./dice-docker/dice-openresty/lua /usr/local/openresty/nginx/lua
 COPY ./dice-docker/dice-openresty/lua/http.lua /usr/local/openresty/lualib/resty/http.lua
 COPY ./dice-docker/dice-openresty/lua/http_headers.lua /usr/local/openresty/lualib/resty/http_headers.lua
+COPY ./dice-admin/dist /usr/local/openresty/nginx/html/dice-admin
 
 EXPOSE 80
 

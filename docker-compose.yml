@@ -13,7 +13,6 @@ services:
     - ~/.dice/logs/openresty:/usr/local/openresty/nginx/logs
     depends_on:
     - dice-server
-    - dice-admin
     - dice-front
     networks:
       dice-net:
@@ -73,21 +72,6 @@ services:
     networks:
       dice-net:
         ipv4_address: 172.28.1.4
-
-  dice-admin:
-    container_name: dice-admin
-    build:
-      context: ./
-      dockerfile: ./dice-docker/dice-admin/dice-admin-Dockerfile
-    environment:
-      TZ: Asia/Shanghai
-    expose:
-    - "3001"
-    depends_on:
-      - dice-server
-    networks:
-      dice-net:
-        ipv4_address: 172.28.1.5
 
   dice-front:
     container_name: dice-front

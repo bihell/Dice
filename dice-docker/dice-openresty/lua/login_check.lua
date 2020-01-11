@@ -39,9 +39,11 @@ local function verify_pass_login()
 
     local result = json.decode(res.body)
 
-    if not result or result.code ~= 0 then
+    if not result or result.code == 999 then
         ngx.log(ngx.INFO, string.format('get pass token fail %s',res.body))
-        func.redirect_login()
+        -- func.redirect_login()
+        ngx.say('{"code":999,"msg":"Token Expired or Not Exist","data":null,"success":false}')
+        ngx.exit(ngx.OK)
     end
 
     ngx.log(ngx.INFO, string.format('get pass info : %s', res.body))

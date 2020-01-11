@@ -25,13 +25,17 @@ local function verify_pass_login()
 
     local http = require "resty.http"
     local httpc = http.new()
-    local res = httpc:request_uri("http://127.0.0.1:9091/v1/api/admin/auth/user_info", {
+    local res, err = httpc:request_uri("http://127.0.0.1:9091/v1/api/admin/auth/user_info", {
         method = "GET",
         headers = {
             ["Content-Type"] = "application/json; charset=utf-8",
             ["Authorization"] = ngx.req.get_headers()['Authorization']
         }
     })
+    if not res or not res.body or res.status ~= ngx.HTTP_OK then
+        ngx.log(ngx.ERR, err)
+        func.error_exit(err)
+    end
 
     local result = json.decode(res.body)
 

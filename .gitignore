@@ -33,3 +33,5 @@ mysql
 
 logs
 *.iml
+
+package-lock.json

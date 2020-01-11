@@ -1,51 +1,22 @@
 ---
 --- 登录校验
 ---
-
 if ngx.var.request_method == 'OPTIONS' then
     return
 end
 
 local func = require("func")
 
---根据域名获取子系统
-local function get_project_type(domain, access_uri)
-    local project = func.get_prefix(domain)
-    if func.start_with(project, "yz") or func.start_with(project, "qa") then
-        project = string.sub(project, 3)
-    end
-    if project == "data" then
-        --如果是项目为data，则取uri中的第一个path
-        project = func.get_prefix(string.sub(access_uri, 2), '/')
-    end
-    return project
-end
-
--- local project_type = get_project_type(ngx.var.host, ngx.var.uri)
--- if project_type == nil or project_type == "unknown" then
---     func.error_exit("unknown project")
--- end
-
--- ngx.req.set_header('.PROJECTTYPE', project_type)
-
 
 --静态资源不进行安全验证
--- local project_path = ''
--- if project_type ~= nil then
---     project_path = '/' .. project_type
--- end
--- local static_path = project_path .. '/static/'
-local default_static_path = '/static/'
--- local icon_path = project_path .. '/favicon.ico'
-local default_icon_path = '/favicon.ico'
--- 本地访问dev域名时app.js前没有/static
-local app_js_path = '/app.js'
-local health_check_path = '/do_not_delete/health_check'
+
 local login_path='/v1/api/admin/auth/login'
-if ngx.var.uri and (ngx.var.uri == default_icon_path or ngx.var.uri == default_icon_path or func.start_with(ngx.var.uri, default_static_path) or func.start_with(ngx.var.uri, default_static_path) or func.start_with(ngx.var.uri, app_js_path) or func.end_with(ngx.var.uri, health_check_path) or func.end_with(ngx.var.uri, login_path)) then
+local admin_path='/v1/api/admin'
+local one_auth_path='/v1/api/one_auth'
+-- 非/v1/api/admin请求、登录不做安全验证
+if ngx.var.uri and ((not func.start_with(ngx.var.uri, admin_path) and not func.start_with(ngx.var.uri, one_auth_path)) or func.end_with(ngx.var.uri, login_path)) then
     return
 end
-
 local json = require("cjson.safe")
 
 -- -- 验证PASS登录
@@ -54,25 +25,21 @@ local function verify_pass_login()
 
     local http = require "resty.http"
     local httpc = http.new()
-    local res, err = httpc:request_uri("http://127.0.0.1:9091/v1/api/admin/auth/user_info", {
+    local res = httpc:request_uri("http://127.0.0.1:9091/v1/api/admin/auth/user_info", {
         method = "GET",
         headers = {
             ["Content-Type"] = "application/json; charset=utf-8",
             ["Authorization"] = ngx.req.get_headers()['Authorization']
         }
     })
-    if not res or not res.body or res.status ~= ngx.HTTP_OK then
-        ngx.log(ngx.ERR, err)
-        func.error_exit(err)
-    end
 
     local result = json.decode(res.body)
 
-    ngx.log(ngx.INFO,result.data.id)
-
-    if not result or result.code ~= 0 then
+    if not result or result.code == 999 then
         ngx.log(ngx.INFO, string.format('get pass token fail %s',res.body))
-        func.redirect_login()
+        -- func.redirect_login()
+        ngx.say('{"code":999,"msg":"Token Expired or Not Exist","data":null,"success":false}')
+        ngx.exit(ngx.OK)
     end
 
     ngx.log(ngx.INFO, string.format('get pass info : %s', res.body))

@@ -22,30 +22,6 @@ export function getUser() {
   })
 }
 
-export function resetUser(username, email) {
-  const params = {
-    username: username,
-    email: email
-  }
-  return request({
-    url: '/admin/auth/reset/user',
-    method: 'post',
-    params: params
-  })
-}
-
-export function resetPassword(oldPassword, newPassword) {
-  const params = {
-    oldPassword: oldPassword,
-    newPassword: newPassword
-  }
-  return request({
-    url: '/admin/auth/reset/password',
-    method: 'post',
-    params: params
-  })
-}
-
 // 获取用户列表
 export function getUserList(params) {
   return request({

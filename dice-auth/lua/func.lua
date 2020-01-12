@@ -22,7 +22,7 @@ function _M.invalid_exit(info)
     ngx.log(ngx.ERR, string.format('invalid access: %s', info))
     ngx.status = 401
     ngx.header.content_type = "application/json; charset=utf-8";
-    ngx.say(string.format([[{"status":-2,"message":"invalid access. %s"}]], info))
+    ngx.say(string.format([[{"code":-2,"msg":"invalid access. %s","success":false}]], info))
     ngx.exit(ngx.OK)
 end
 
@@ -30,7 +30,7 @@ function _M.error_exit(err)
     ngx.log(ngx.ERR, string.format('Server Error: %s', err))
     ngx.status = 500
     ngx.header.content_type = "application/json; charset=utf-8"
-    ngx.say(string.format([[{"status":-1,"message":"Server Error. %s"}]], err))
+    ngx.say(string.format([[{"code":-1,"msg":"Server Error. %s","success":false}]], err))
     ngx.exit(ngx.OK)
 end
 

@@ -101,6 +101,7 @@
             <el-form-item label="邮箱密码:" prop="email_password">
               <el-input
                 v-model="options.email_password"
+                type="password"
                 placeholder="请输入邮箱密码"
               />
             </el-form-item>
@@ -128,66 +129,7 @@
               v-permission="'/blog/setting/save'"
               type="primary"
               size="small"
-              @click="submitAfterValidate('emailForm')"
-            >保存修改
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-      <el-tab-pane label="用户信息">
-        <el-form ref="userForm" :model="userForm" :rules="userRules">
-          <p class="tip">修改后需重新登录</p>
-          <el-form-item label="用户名:" prop="username">
-            <el-input v-model="userForm.username" placeholder="请输入用户名" />
-          </el-form-item>
-          <el-form-item label="邮箱:" prop="email">
-            <el-input v-model="userForm.email" placeholder="请输入邮箱" />
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              v-permission="'/blog/setting/save'"
-              type="primary"
-              size="small"
-              @click="submitAfterValidate('userForm')"
-            >保存修改
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane>
-      <el-tab-pane label="个人设置">
-        <el-form
-          ref="passwordForm"
-          :model="passwordForm"
-          :rules="passwordRules"
-        >
-          <p class="tip">修改后需重新登录</p>
-          <el-form-item label="原密码:" prop="oldPassword">
-            <el-input
-              v-model="passwordForm.oldPassword"
-              type="password"
-              placeholder="请输入原密码"
-            />
-          </el-form-item>
-          <el-form-item label="新密码:" prop="newPassword">
-            <el-input
-              v-model="passwordForm.newPassword"
-              type="password"
-              placeholder="请输入新密码"
-            />
-          </el-form-item>
-          <el-form-item label="确认新密码:" prop="repeatPassword" required>
-            <el-input
-              v-model="passwordForm.repeatPassword"
-              type="password"
-              placeholder="请输入确认新密码"
-            />
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              v-permission="'/blog/setting/save'"
-              type="primary"
-              size="small"
-              @click="submitAfterValidate('passwordForm')"
+              @click="submitOptions()"
             >保存修改
             </el-button>
           </el-form-item>
@@ -198,20 +140,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { getUser, resetUser, resetPassword } from '@/api/auth'
 import { getOptions, saveOptions } from '@/api/blog'
 
 export default {
   data: function() {
-    const repeatPasswordValidate = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请再次输入确认密码'))
-      } else if (value !== this.passwordForm.newPassword) {
-        callback(new Error('两次输入的密码不一样'))
-      } else {
-        callback()
-      }
-    }
     const emailSettingValidate = (rule, value, callback) => {
       if (!this.options.is_email) {
         return callback()
@@ -221,15 +153,6 @@ export default {
       }
     }
     return {
-      userForm: {
-        username: '',
-        email: ''
-      },
-      passwordForm: {
-        oldPassword: '',
-        newPassword: '',
-        repeatPassword: ''
-      },
       options: {
         blog_name: '',
         blog_website: '',
@@ -260,37 +183,13 @@ export default {
         email_port: [
           { validator: emailSettingValidate, trigger: 'blur' }
         ]
-      },
-      userRules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        email: [
-          { type: 'email', message: '请输入正确格式的邮箱', trigger: 'blur' },
-          { required: true, message: '请输入邮箱', trigger: 'blur' }
-        ]
-      },
-      passwordRules: {
-        oldPassword: [
-          { required: true, message: '请输入原密码', trigger: 'blur' }
-        ],
-        newPassword: [
-          { required: true, message: '请输入新密码', trigger: 'blur' }
-        ],
-        repeatPassword: [{ validator: repeatPasswordValidate, trigger: 'blur' }
-        ]
       }
     }
   },
   mounted() {
-    this.getUser()
     this.getOptions()
   },
   methods: {
-    getUser() {
-      getUser().then(response => {
-        this.userForm.username = response.data.username
-        this.userForm.email = response.data.email
-      })
-    },
     getOptions() {
       getOptions().then(response => {
         const options = response.data
@@ -300,48 +199,11 @@ export default {
         this.options.is_email = this.options.is_email && this.options.is_email === 'true'
       })
     },
-    submitUser() {
-      resetUser(this.userForm.username, this.userForm.email).then(response => {
-        if (response.data === true) {
-          this.$util.message.success('更新设置成功!')
-        } else {
-          const message = response.data.msg || '保存失败,未更新数据库'
-          this.$util.message.error(message)
-        }
-        this.$router.push('/admin/login')
-      })
-    },
-    submitPassword() {
-      resetPassword(this.passwordForm.oldPassword, this.passwordForm.newPassword).then(response => {
-        if (response.data === true) {
-          this.$util.message.success('更新设置成功!')
-        } else {
-          const message = response.data.msg || '保存失败,未更新数据库'
-          this.$util.message.error(message)
-        }
-        this.$router.push('/admin/login')
-      })
-    },
     submitOptions() {
       saveOptions(this.options)
         .then(() => {
           this.$util.message.success('更新设置成功!')
         })
-    },
-    submitAfterValidate(formName) {
-      let fuc
-      if (formName === 'userForm') {
-        fuc = this.submitUser
-      } else if (formName === 'passwordForm') {
-        fuc = this.submitPassword
-      } else {
-        fuc = this.submitOptions
-      }
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          fuc()
-        }
-      })
     }
   }
 

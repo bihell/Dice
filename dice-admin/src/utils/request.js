@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message, Loading } from 'element-ui'
+import { Message, Loading } from 'element-ui'
 import store from '@/store'
 
 // create an axios instance
@@ -63,6 +63,7 @@ service.interceptors.response.use(
     // if the custom code is not 20000, it is judged as an error.
     if (!res.success) {
       if (res.code !== 999) {
+        console.log(res)
         Message({
           message: res.msg || 'Error',
           type: 'error',
@@ -70,15 +71,18 @@ service.interceptors.response.use(
         })
       } else {
         // to re-login
-        MessageBox.confirm('你已经登出，可以按「取消」按钮停留在此页面或者重新登录。', '登出提示', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
+        store.dispatch('user/resetToken').then(() => {
+          location.reload()
         })
+        // MessageBox.confirm('你已经登出，可以按「取消」按钮停留在此页面或者重新登录。', '登出提示', {
+        //   confirmButtonText: '重新登录',
+        //   cancelButtonText: '取消',
+        //   type: 'warning'
+        // }).then(() => {
+        //   store.dispatch('user/resetToken').then(() => {
+        //     location.reload()
+        //   })
+        // })
       }
       return Promise.reject(new Error(res.msg || 'Error'))
     } else {

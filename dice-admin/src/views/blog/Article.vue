@@ -153,7 +153,7 @@
       center
       width="80%"
     >
-      <upload :after-upload="afterUpload"></upload>
+      <upload :after-upload="afterUpload" />
       <div class="media-list">
         <el-row>
           <el-col
@@ -169,7 +169,7 @@
             <media-item
               :media="media"
               :after-delete="afterDeleteMedia"
-            ></media-item>
+            />
           </el-col>
         </el-row>
         <pagination v-show="mediaDialogData.total>0" :total="mediaDialogData.total" :page.sync="mediaDialogData.pageNum" :limit.sync="mediaDialogData.pageSize" @pagination="showMediaDialog" />

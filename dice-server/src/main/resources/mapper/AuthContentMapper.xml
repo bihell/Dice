@@ -17,7 +17,6 @@
         <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
     </resultMap>
 
-
     <select id="queryByParam" parameterType="com.bihell.dice.model.params.QueryParam" resultMap="ResultMap">
         SELECT t.*
         FROM auth_content t

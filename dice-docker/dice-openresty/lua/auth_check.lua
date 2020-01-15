@@ -65,11 +65,11 @@ end
 if func.start_with(ngx.var.uri, '/api') or string.find(content_type, 'application/json') or project_type == 'stbp' or string.find(ngx.var.uri, '/v%d') then
     --接口类别权限
     -- 获取用户所有接口权限，根据item查找
-    sql = string.format('select 1 from auth_rel_role_user t join auth_rel_role_item t1 on t1.role_id=t.role_id and t1.status=1 join auth_rel_item_api t2 on t2.item_id=t1.item_id and t2.status=1 join auth_item t3 on t3.item_id=t2.item_id and t3.status=1 join auth_classes t4 on t4.classes_id=t3.classes_id and t4.status=1 join auth_group t5 on t5.group_id=t4.group_id and t5.status=1 join auth_api t6 on t6.api_id=t2.api_id and t6.status=1 and t5.project_type=t6.project_type where t.status=1 and t.user_id=%s and t5.project_type="%s" and t6.api_path like "%s%%" limit 1', user_id, project_type, access_uri)
+    sql = string.format('select 1 from (SELECT 1 FROM auth_api t1 join auth_rel_item_api t2 on t1.api_id=t2.api_id and t2.status=1 join auth_item t3 on t2.item_id=t3.item_id and t3.status=1 join auth_rel_role_item t4 on t3.item_id=t4.item_id and t4.status=1 join auth_rel_role_user t5 on t4.role_id=t5.role_id and t5.status=1 where t1.status=1 and "%s" like concat(t1.api_path,"%%") and t1.project_type="%s" and t5.user_id=%s union all select 1 from auth_api t1 join auth_rel_item_api t2 on t1.api_id=t2.api_id and t2.status=1 join auth_item t3 on t2.item_id=t3.item_id and t3.status=1 join auth_classes t4 on t3.classes_id=t4.classes_id and t4.status=1 join auth_group t5 on t4.group_id=t5.group_id and t5.status=1 join auth_role t6 on t5.project_type=t6.project_type and t6.status=1 and t6.role_type=1 join auth_rel_role_user t7 on t6.role_id=t7.role_id where t1.status=1 and "%s" like concat(t1.api_path,"%%") and t1.project_type="%s" and t7.user_id=%s) t limit 1', access_uri, project_type, user_id, access_uri, project_type, user_id)
     ngx.log(ngx.INFO, '执行SQL查询: ' .. sql)
 
     res, err, errno, sqlstate = db:query(sql)
-    if res == null or not res or not res[1] then
+    if res == nil or not res or not res[1] then
         db_utils.close_db(db)
         ngx.log(ngx.WARN, '未授权访问: ' .. user_id)
         func.invalid_exit(access_uri)
@@ -77,3 +77,5 @@ if func.start_with(ngx.var.uri, '/api') or string.find(content_type, 'applicatio
 end
 
 db_utils.close_db(db)
+
+

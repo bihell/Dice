@@ -81,7 +81,7 @@
 import Card from '../Card.vue'
 import SnippetFileForm from '../snippet_file/Form.vue'
 import 'codemirror/addon/display/placeholder'
-import '../../../utils/codemirror_modes'
+import '../../../../utils/codemirror_modes'
 import Filters from '../mixins/filters'
 import { saveSnippet, getSnippetByMeta, getSnippetById } from '@/api/snippet'
 import { getAllTags } from '@/api/snippet'

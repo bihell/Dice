@@ -42,7 +42,7 @@ style="background:#FFFFFF"
 import Card from '../Card.vue'
 import ClipboardJS from 'clipboard'
 import CollapsibleControls from '../CollapsibleControls.vue'
-import * as HighlighterHelper from '../../../utils/highlighter_helper'
+import * as HighlighterHelper from '../../../../utils/highlighter_helper'
 import VueMarkdown from 'vue-markdown'
 
 export default {

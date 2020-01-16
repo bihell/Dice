@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import Upload from '../../components/Upload/Upload'
-import MediaItem from '../../components/Upload/MediaItem'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import Upload from '../../../components/Upload/Upload'
+import MediaItem from '../../../components/Upload/MediaItem'
+import Pagination from '@/components/Pagination/index' // secondary package based on el-pagination
 
 import { pageMedia } from '@/api/media'
 

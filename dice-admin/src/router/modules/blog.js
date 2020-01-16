@@ -16,7 +16,7 @@ const blogRouter = {
       path: 'article',
       component: () => import('@/views/blog/Articles'),
       name: 'ArticleList',
-      meta: { title: '文章列表', icon: 'documentation' }
+      meta: { title: '文章列表' }
     },
     {
       path: 'article/edit/:id(\\d+)',
@@ -36,19 +36,19 @@ const blogRouter = {
       path: 'comment',
       component: () => import('@/views/blog/Comments'),
       name: 'Comment',
-      meta: { title: '评论列表', icon: 'chat' }
+      meta: { title: '评论列表' }
     },
     {
       path: 'tag',
       component: () => import('@/views/blog/Tags'),
       name: 'Tag',
-      meta: { title: '标签分类', icon: 'Tag' }
+      meta: { title: '标签分类' }
     },
     {
       path: 'page',
       component: () => import('@/views/blog/Pages'),
       name: 'Page',
-      meta: { title: '页面列表', icon: 'page' }
+      meta: { title: '页面列表' }
     },
     {
       path: 'page/edit/:id(\\d+)',
@@ -68,7 +68,7 @@ const blogRouter = {
       path: 'index',
       component: () => import('@/views/blog/Setting'),
       name: 'Setting',
-      meta: { title: '网站设置', icon: 'setting' }
+      meta: { title: '网站设置' }
     }
   ]
 }

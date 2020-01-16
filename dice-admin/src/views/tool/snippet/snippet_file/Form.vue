@@ -68,10 +68,10 @@ import Card from '../Card.vue'
 import CodeMirror from 'codemirror'
 import 'codemirror/addon/display/placeholder'
 import CollapsibleControls from '../CollapsibleControls.vue'
-import '../../../utils/codemirror_modes'
+import '@/utils/codemirror_modes'
 import Editor from '../mixins/editor'
 import Filters from '../mixins/filters'
-import { processEditorMode } from '../../../utils/editor_helper'
+import { processEditorMode } from '@/utils/editor_helper'
 import 'codemirror/lib/codemirror.css'
 
 export default {

@@ -9,6 +9,7 @@ import Layout from '@/layout'
 /* Router Modules */
 import blogRouter from './modules/blog'
 import authRouter from './modules/auth'
+import toolRouter from './modules/tool'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -81,30 +82,7 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   blogRouter,
-  {
-    path: '/snippet',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/snippet/Repository.vue'),
-        name: 'snippet',
-        meta: { title: '代码段', icon: 'snippet' }
-      }
-    ]
-  },
-  {
-    path: '/media-library',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/media-library/Index.vue'),
-        name: 'media-library',
-        meta: { title: '媒体库', icon: 'perm-media' }
-      }
-    ]
-  },
+  toolRouter,
   authRouter,
 
   // 404 page must be placed at the end !!!

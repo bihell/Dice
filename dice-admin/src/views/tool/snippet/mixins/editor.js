@@ -1,5 +1,5 @@
-import { processIosEditorHeight } from '../../../utils/editor_helper'
-import { editorHeightDelta } from '../../../utils/variables'
+import { processIosEditorHeight } from '../../../../utils/editor_helper'
+import { editorHeightDelta } from '../../../../utils/variables'
 
 export default {
   data() {

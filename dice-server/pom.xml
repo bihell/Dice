@@ -55,6 +55,11 @@
             <version>${dynamic-datasource-spring-boot.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
         <!-- spring-mvc -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,6 +1,7 @@
 package com.bihell.dice.service;
 
 import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.service.blog.ArticleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

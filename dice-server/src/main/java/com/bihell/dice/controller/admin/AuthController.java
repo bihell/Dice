@@ -8,7 +8,7 @@ import com.bihell.dice.model.domain.*;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;
 import com.bihell.dice.model.params.QueryParam;
-import com.bihell.dice.service.*;
+import com.bihell.dice.service.auth.*;
 import com.bihell.dice.utils.RestResponse;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiOperation;

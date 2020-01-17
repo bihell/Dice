@@ -1,7 +1,7 @@
 package com.bihell.dice.controller.admin;
 
 import com.bihell.dice.controller.BaseController;
-import com.bihell.dice.service.MetaService;
+import com.bihell.dice.service.blog.MetaService;
 import com.bihell.dice.utils.RestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

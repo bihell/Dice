@@ -1,7 +1,7 @@
 package com.bihell.dice.listener;
 
 import com.bihell.dice.config.DiceProperties;
-import com.bihell.dice.service.OptionService;
+import com.bihell.dice.service.blog.OptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

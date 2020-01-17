@@ -5,7 +5,7 @@ import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.domain.Article;
 import com.bihell.dice.model.params.ArticleParam;
-import com.bihell.dice.service.ArticleService;
+import com.bihell.dice.service.blog.ArticleService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
 import lombok.RequiredArgsConstructor;

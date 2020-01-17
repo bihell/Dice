@@ -2,7 +2,7 @@ package com.bihell.dice.controller.admin;
 
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.dto.Snippet;
-import com.bihell.dice.service.SnippetService;
+import com.bihell.dice.service.tool.SnippetService;
 import com.bihell.dice.utils.RestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

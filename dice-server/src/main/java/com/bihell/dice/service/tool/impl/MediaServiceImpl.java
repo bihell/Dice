@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.exception.NotFoundException;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.MediaMapper;
-import com.bihell.dice.model.domain.Media;
+import com.bihell.dice.model.tool.Media;
 import com.bihell.dice.service.tool.MediaService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.DiceUtil;

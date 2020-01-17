@@ -1,7 +1,8 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model.auth;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.bihell.dice.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

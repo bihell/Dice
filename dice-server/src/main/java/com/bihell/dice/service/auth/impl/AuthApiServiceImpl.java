@@ -1,7 +1,7 @@
 package com.bihell.dice.service.auth.impl;
 
 import com.bihell.dice.mapper.AuthApiMapper;
-import com.bihell.dice.model.domain.AuthApi;
+import com.bihell.dice.model.auth.AuthApi;
 import com.bihell.dice.service.auth.AuthApiService;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;

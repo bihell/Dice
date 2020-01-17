@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bihell.dice.mapper.AuthItemMapper">
 
-    <resultMap id="ResultMap" type="com.bihell.dice.model.domain.AuthItem">
+    <resultMap id="ResultMap" type="com.bihell.dice.model.auth.AuthItem">
         <id column="item_id" property="id" jdbcType="INTEGER"/>
     </resultMap>
 

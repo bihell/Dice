@@ -1,4 +1,4 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model.auth;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

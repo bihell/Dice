@@ -1,7 +1,7 @@
 package com.bihell.dice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bihell.dice.model.domain.SnippetFile;
+import com.bihell.dice.model.tool.SnippetFile;
 
 /**
  * SnippetFiles Mapper

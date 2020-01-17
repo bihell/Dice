@@ -1,7 +1,7 @@
 package com.bihell.dice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bihell.dice.model.domain.AuthItem;
+import com.bihell.dice.model.auth.AuthItem;
 import com.bihell.dice.model.params.QueryParam;
 import org.apache.ibatis.annotations.Param;
 

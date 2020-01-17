@@ -1,12 +1,12 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model.auth;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.bihell.dice.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-
 import java.util.List;
 
 /**
@@ -16,36 +16,31 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class AuthItem extends BaseEntity<AuthItem> {
+public class AuthClasses extends BaseEntity<AuthClasses> {
 
-    @TableId(value = "item_id")
+    @TableId(value = "classes_id")
     private Integer id;
 
-    private String itemName;
+    private String classesName;
 
-    private String itemCode;
+    private String classesUrl;
 
-    private Integer classesId;
+    private Integer groupId;
 
     @TableField(value = "`order`")
     private Integer order;
 
+    private Boolean isDisplay;
+
     private String style;
 
-    /**
-     * itemCode是否自动生成
-     */
-    private Boolean autoFlag;
-
-    private String outerUrl;
+    @TableField(exist = false)
+    private List<AuthItem> children;
 
     @TableField(exist = false)
     private String name;
 
-    @TableField(exist = false)
-    private List<Integer> apiIds;
-
     public String getName() {
-        return this.itemName;
+        return this.classesName;
     }
 }

@@ -1,7 +1,7 @@
 package com.bihell.dice.service.message.impl;
 
-import com.bihell.dice.model.domain.Comment;
-import com.bihell.dice.model.enums.LogType;
+import com.bihell.dice.model.blog.Comment;
+import com.bihell.dice.model.system.LogType;
 import com.bihell.dice.service.message.EmailService;
 import com.bihell.dice.service.system.LogService;
 import com.bihell.dice.service.blog.OptionService;

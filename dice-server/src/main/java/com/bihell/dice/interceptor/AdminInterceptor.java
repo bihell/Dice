@@ -8,7 +8,7 @@ import com.bihell.dice.security.context.SecurityContextImpl;
 import com.bihell.dice.service.system.RedisService;
 import com.bihell.dice.service.auth.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.auth.User;
 import com.bihell.dice.utils.ErrorCode;
 import com.bihell.dice.utils.DiceUtil;
 import com.bihell.dice.utils.RestResponse;

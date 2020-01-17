@@ -1,7 +1,7 @@
 package com.bihell.dice.service.blog;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.model.domain.Comment;
+import com.bihell.dice.model.blog.Comment;
 import com.bihell.dice.model.dto.CommentDto;
 import com.bihell.dice.utils.Types;
 

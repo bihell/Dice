@@ -1,6 +1,7 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model.auth;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.bihell.dice.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -13,13 +14,13 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class AuthRelRoleApi extends BaseEntity<AuthRelRoleApi> {
+public class AuthRelRoleContent extends BaseEntity<AuthRelRoleContent> {
 
     @TableId
     private Integer id;
 
-    private Integer apiId;
-
     private Integer roleId;
+
+    private Integer contentId;
 
 }

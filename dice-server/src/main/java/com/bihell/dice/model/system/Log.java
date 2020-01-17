@@ -1,8 +1,7 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model.system;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.bihell.dice.model.enums.LogType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

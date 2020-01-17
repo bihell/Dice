@@ -1,4 +1,4 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;

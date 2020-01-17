@@ -1,6 +1,6 @@
 package com.bihell.dice.controller;
 
-import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.auth.User;
 import com.bihell.dice.security.context.SecurityContextHolder;
 import com.bihell.dice.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;

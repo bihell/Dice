@@ -2,7 +2,7 @@ package com.bihell.dice.service.blog.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.bihell.dice.model.domain.SysOption;
+import com.bihell.dice.model.blog.SysOption;
 import com.bihell.dice.service.blog.OptionService;
 import com.bihell.dice.utils.DiceUtil;
 import com.bihell.dice.utils.OptionKeys;

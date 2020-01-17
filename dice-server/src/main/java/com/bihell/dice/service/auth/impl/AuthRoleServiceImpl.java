@@ -7,7 +7,7 @@ import com.bihell.dice.mapper.AuthItemMapper;
 import com.bihell.dice.mapper.AuthRelRoleApiMapper;
 import com.bihell.dice.mapper.AuthRelRoleContentMapper;
 import com.bihell.dice.mapper.AuthRelRoleUserMapper;
-import com.bihell.dice.model.domain.*;
+import com.bihell.dice.model.auth.*;
 import com.bihell.dice.service.auth.AuthRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

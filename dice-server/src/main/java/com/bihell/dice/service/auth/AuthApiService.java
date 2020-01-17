@@ -1,8 +1,6 @@
 package com.bihell.dice.service.auth;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.model.domain.AuthApi;
-import com.bihell.dice.model.params.QueryParam;
+import com.bihell.dice.model.auth.AuthApi;
 
 
 /**

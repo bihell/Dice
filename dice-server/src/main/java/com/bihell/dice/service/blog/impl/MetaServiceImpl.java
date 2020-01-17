@@ -2,9 +2,9 @@ package com.bihell.dice.service.blog.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bihell.dice.mapper.MetaMapper;
-import com.bihell.dice.model.domain.Article;
-import com.bihell.dice.model.domain.Meta;
-import com.bihell.dice.model.domain.Middle;
+import com.bihell.dice.model.blog.Article;
+import com.bihell.dice.model.blog.Meta;
+import com.bihell.dice.model.blog.Middle;
 import com.bihell.dice.model.dto.MetaDto;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.ArticleMapper;

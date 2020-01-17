@@ -1,8 +1,8 @@
 package com.bihell.dice.service.system;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.model.domain.Log;
-import com.bihell.dice.model.enums.LogType;
+import com.bihell.dice.model.system.Log;
+import com.bihell.dice.model.system.LogType;
 
 /**
  * 日志 Service 接口

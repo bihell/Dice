@@ -1,4 +1,4 @@
-package com.bihell.dice.model.enums;
+package com.bihell.dice.model.system;
 
 /**
  * 日志类型

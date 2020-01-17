@@ -1,6 +1,6 @@
 package com.bihell.dice.service.auth;
 
-import com.bihell.dice.model.domain.AuthRole;
+import com.bihell.dice.model.auth.AuthRole;
 
 /**
  * @author haseochen

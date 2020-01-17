@@ -2,8 +2,8 @@ package com.bihell.dice.service.auth.impl;
 
 import com.bihell.dice.mapper.AuthClassesMapper;
 import com.bihell.dice.mapper.AuthGroupMapper;
-import com.bihell.dice.model.domain.AuthClasses;
-import com.bihell.dice.model.domain.AuthGroup;
+import com.bihell.dice.model.auth.AuthClasses;
+import com.bihell.dice.model.auth.AuthGroup;
 import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.service.auth.AuthGroupService;
 import lombok.RequiredArgsConstructor;

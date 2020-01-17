@@ -1,7 +1,7 @@
 package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.model.domain.Media;
+import com.bihell.dice.model.tool.Media;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.service.tool.MediaService;
 import com.bihell.dice.utils.DiceConsts;

@@ -1,4 +1,4 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model.tool;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -10,29 +10,19 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 
 /**
- * 设置 Model
- *
- * @author bihell
- * @since 2019-05-20 22:39
+ * @author haseochen
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class SysOption extends Model<SysOption> {
+public class Media extends Model<Media> {
 
+    /**
+     * Id
+     */
     @TableId
     private Integer id;
-
-    /**
-     * 设置key
-     */
-    private String optionKey;
-
-    /**
-     * 设置 value
-     */
-    private String optionValue;
 
     /**
      * 创建时间
@@ -43,4 +33,24 @@ public class SysOption extends Model<SysOption> {
      * 修改时间
      */
     private Date modified;
+
+    /**
+     * 文件名
+     */
+    private String name;
+
+    /**
+     * 文件url
+     */
+    private String url;
+
+    /**
+     * 缩略图url
+     */
+    private String thumbUrl;
+
+    /**
+     * 后缀
+     */
+    private String suffix;
 }

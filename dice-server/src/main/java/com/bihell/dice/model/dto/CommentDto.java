@@ -1,7 +1,7 @@
 package com.bihell.dice.model.dto;
 
-import com.bihell.dice.model.domain.Article;
-import com.bihell.dice.model.domain.Comment;
+import com.bihell.dice.model.blog.Article;
+import com.bihell.dice.model.blog.Comment;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

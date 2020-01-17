@@ -2,7 +2,7 @@ package com.bihell.dice.service.auth;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.auth.User;
 import com.bihell.dice.model.params.LoginParam;
 import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.security.AuthToken;

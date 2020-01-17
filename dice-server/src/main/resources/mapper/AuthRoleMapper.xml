@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bihell.dice.mapper.AuthRoleMapper">
 
-    <resultMap id="ResultMap" type="com.bihell.dice.model.domain.AuthRole">
+    <resultMap id="ResultMap" type="com.bihell.dice.model.auth.AuthRole">
         <id column="role_id" property="id" jdbcType="INTEGER"/>
         <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
         <result column="role_type" property="roleType" jdbcType="INTEGER"/>

@@ -1,7 +1,7 @@
 package com.bihell.dice.service.blog;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.Archive;
 
 import java.util.List;

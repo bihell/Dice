@@ -1,7 +1,7 @@
 package com.bihell.dice.service.tool;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.model.domain.Media;
+import com.bihell.dice.model.tool.Media;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

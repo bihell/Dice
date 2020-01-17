@@ -1,7 +1,7 @@
 package com.bihell.dice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.ArticleInfoDto;
 import com.bihell.dice.utils.Types;
 import org.apache.ibatis.annotations.Param;

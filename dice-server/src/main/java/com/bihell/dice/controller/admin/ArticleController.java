@@ -3,7 +3,7 @@ package com.bihell.dice.controller.admin;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.dto.Pagination;
-import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.params.ArticleParam;
 import com.bihell.dice.service.blog.ArticleService;
 import com.bihell.dice.utils.DiceConsts;

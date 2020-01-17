@@ -1,6 +1,6 @@
 package com.bihell.dice.service.auth;
 
-import com.bihell.dice.model.domain.AuthGroup;
+import com.bihell.dice.model.auth.AuthGroup;
 import com.bihell.dice.model.params.QueryParam;
 
 import java.util.List;

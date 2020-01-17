@@ -1,6 +1,6 @@
 package com.bihell.dice.service.message;
 
-import com.bihell.dice.model.domain.Comment;
+import com.bihell.dice.model.blog.Comment;
 
 /**
  * 发送邮件 Service 接口

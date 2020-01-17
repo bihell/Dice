@@ -1,4 +1,4 @@
-package com.bihell.dice.model.domain;
+package com.bihell.dice.model.tool;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

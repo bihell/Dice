@@ -3,7 +3,7 @@ package com.bihell.dice.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bihell.dice.model.domain.AuthApi;
+import com.bihell.dice.model.auth.AuthApi;
 import com.bihell.dice.model.params.QueryParam;
 import org.apache.ibatis.annotations.Param;
 

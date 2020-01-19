@@ -1,6 +1,6 @@
 package com.bihell.dice.security;
 
-import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.auth.User;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

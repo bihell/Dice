@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bihell.dice.mapper.AuthClassesMapper">
 
-    <resultMap id="ResultMap" type="com.bihell.dice.model.domain.AuthClasses">
+    <resultMap id="ResultMap" type="com.bihell.dice.model.auth.AuthClasses">
         <id column="classes_id" property="id" jdbcType="INTEGER"/>
         <result column="classes_name" property="classesName" jdbcType="VARCHAR"/>
         <result column="classes_url" property="classesUrl" jdbcType="VARCHAR"/>
@@ -17,8 +17,8 @@
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <resultMap id="RichResultMap" type="com.bihell.dice.model.domain.AuthClasses" extends="ResultMap">
-        <collection property="children" ofType="com.bihell.dice.model.domain.AuthItem">
+    <resultMap id="RichResultMap" type="com.bihell.dice.model.auth.AuthClasses" extends="ResultMap">
+        <collection property="children" ofType="com.bihell.dice.model.auth.AuthItem">
             <id column="i_item_id" property="id" jdbcType="INTEGER"/>
             <result column="i_classes_id" property="classesId" jdbcType="INTEGER"/>
             <result column="i_item_name" property="itemName" jdbcType="VARCHAR"/>

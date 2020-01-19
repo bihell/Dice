@@ -1,7 +1,7 @@
 package com.bihell.dice.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.bihell.dice.model.domain.Meta;
+import com.bihell.dice.model.blog.Meta;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

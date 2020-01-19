@@ -2,10 +2,10 @@ package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
-import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.Pagination;
-import com.bihell.dice.service.ArticleService;
-import com.bihell.dice.service.LogService;
+import com.bihell.dice.service.blog.ArticleService;
+import com.bihell.dice.service.system.LogService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
 import lombok.RequiredArgsConstructor;

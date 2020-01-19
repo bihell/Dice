@@ -1,6 +1,6 @@
 package com.bihell.dice.security;
 
-import com.bihell.dice.model.domain.User;
+import com.bihell.dice.model.auth.User;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 

@@ -1,6 +1,6 @@
 package com.bihell.dice.model.dto;
 
-import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.blog.Article;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

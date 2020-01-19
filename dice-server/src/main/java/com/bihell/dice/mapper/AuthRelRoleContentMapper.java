@@ -1,7 +1,7 @@
 package com.bihell.dice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bihell.dice.model.domain.AuthRelRoleContent;
+import com.bihell.dice.model.auth.AuthRelRoleContent;
 
 /**
  *

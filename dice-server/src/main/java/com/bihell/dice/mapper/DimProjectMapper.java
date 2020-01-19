@@ -1,7 +1,7 @@
 package com.bihell.dice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bihell.dice.model.domain.DimProject;
+import com.bihell.dice.model.auth.DimProject;
 
 /**
  * User Mapper

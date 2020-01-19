@@ -2,10 +2,10 @@ package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
-import com.bihell.dice.model.domain.Comment;
+import com.bihell.dice.model.blog.Comment;
 import com.bihell.dice.model.dto.CommentDto;
 import com.bihell.dice.model.dto.Pagination;
-import com.bihell.dice.service.CommentService;
+import com.bihell.dice.service.blog.CommentService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.DiceUtil;
 import com.bihell.dice.utils.RestResponse;

@@ -1,6 +1,6 @@
 package com.bihell.dice.model.dto;
 
-import com.bihell.dice.model.domain.SnippetFile;
+import com.bihell.dice.model.tool.SnippetFile;
 import lombok.Data;
 
 import java.util.List;

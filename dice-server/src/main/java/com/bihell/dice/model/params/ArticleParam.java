@@ -1,6 +1,6 @@
 package com.bihell.dice.model.params;
 
-import com.bihell.dice.model.domain.Article;
+import com.bihell.dice.model.blog.Article;
 
 /**
  * @author haseochen

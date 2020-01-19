@@ -2,7 +2,7 @@ package com.bihell.dice.mapper;
 
 import com.bihell.dice.model.dto.MetaDto;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bihell.dice.model.domain.Meta;
+import com.bihell.dice.model.blog.Meta;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

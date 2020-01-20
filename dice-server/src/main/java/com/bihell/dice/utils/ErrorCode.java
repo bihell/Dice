@@ -58,7 +58,9 @@ public enum ErrorCode {
     /**
      * 无 Token
      */
-    TOKEN_ERROR(999, "Token Expired or Not Exist");
+    TOKEN_ERROR(999, "Token Expired or Not Exist"),
+
+    TASK_CONFIG_ERROR(500, "定时任务配置错误");
 
     private final int code;
     private final String msg;

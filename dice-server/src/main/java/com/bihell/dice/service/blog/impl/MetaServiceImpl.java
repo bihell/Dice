@@ -1,14 +1,14 @@
 package com.bihell.dice.service.blog.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.bihell.dice.mapper.MetaMapper;
+import com.bihell.dice.mapper.blog.MetaMapper;
 import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.blog.Meta;
 import com.bihell.dice.model.blog.Middle;
 import com.bihell.dice.model.dto.MetaDto;
 import com.bihell.dice.exception.TipException;
-import com.bihell.dice.mapper.ArticleMapper;
-import com.bihell.dice.mapper.MiddleMapper;
+import com.bihell.dice.mapper.blog.ArticleMapper;
+import com.bihell.dice.mapper.blog.MiddleMapper;
 import com.bihell.dice.service.blog.MetaService;
 import com.bihell.dice.utils.Types;
 import lombok.RequiredArgsConstructor;

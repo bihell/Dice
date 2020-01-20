@@ -1,4 +1,4 @@
-package com.bihell.dice.mapper;
+package com.bihell.dice.mapper.auth;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.model.auth.AuthClasses;

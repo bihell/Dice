@@ -1,4 +1,4 @@
-package com.bihell.dice.mapper;
+package com.bihell.dice.mapper.blog;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.model.blog.SysOption;

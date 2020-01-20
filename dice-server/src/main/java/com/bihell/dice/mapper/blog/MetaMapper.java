@@ -1,4 +1,4 @@
-package com.bihell.dice.mapper;
+package com.bihell.dice.mapper.blog;
 
 import com.bihell.dice.model.dto.MetaDto;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -49,9 +49,9 @@ public interface MetaMapper extends BaseMapper<Meta> {
             @Result(column = "name", property = "name"),
             @Result(column = "type", property = "type"),
             @Result(column = "id", property = "count",
-                    one = @One(select = "com.bihell.dice.mapper.ArticleMapper.selectPublishCountByMeta")),
+                    one = @One(select = "com.bihell.dice.mapper.blog.ArticleMapper.selectPublishCountByMeta")),
             @Result(column = "id", property = "articles",
-                    many = @Many(select = "com.bihell.dice.mapper.ArticleMapper.selectPublishByMeta"))
+                    many = @Many(select = "com.bihell.dice.mapper.blog.ArticleMapper.selectPublishByMeta"))
     })
     List<MetaDto> selectPublishMetaDtos(@Param("type") String type);
 }

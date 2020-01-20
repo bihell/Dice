@@ -1,8 +1,8 @@
 package com.bihell.dice.service.auth.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.bihell.dice.mapper.AuthItemMapper;
-import com.bihell.dice.mapper.AuthRelItemApiMapper;
+import com.bihell.dice.mapper.auth.AuthItemMapper;
+import com.bihell.dice.mapper.auth.AuthRelItemApiMapper;
 import com.bihell.dice.model.auth.AuthItem;
 import com.bihell.dice.model.auth.AuthRelItemApi;
 import com.bihell.dice.service.auth.AuthItemService;

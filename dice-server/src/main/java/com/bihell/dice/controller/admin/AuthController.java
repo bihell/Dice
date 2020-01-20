@@ -3,7 +3,7 @@ package com.bihell.dice.controller.admin;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.controller.BaseController;
-import com.bihell.dice.mapper.*;
+import com.bihell.dice.mapper.auth.*;
 import com.bihell.dice.model.auth.*;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.model.params.LoginParam;

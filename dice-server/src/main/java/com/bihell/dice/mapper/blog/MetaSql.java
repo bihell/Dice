@@ -1,4 +1,4 @@
-package com.bihell.dice.mapper;
+package com.bihell.dice.mapper.blog;
 
 import com.bihell.dice.utils.Types;
 import org.slf4j.Logger;

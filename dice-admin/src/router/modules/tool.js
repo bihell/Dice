@@ -20,9 +20,21 @@ const toolRouter = {
     },
     {
       path: '/media-library',
-      component: () => import('@/views/tool/media-library/Index.vue'),
+      component: () => import('@/views/tool/media-library'),
       name: 'media-library',
       meta: { title: '媒体库' }
+    },
+    {
+      path: '/task',
+      component: () => import('@/views/tool/task'),
+      name: 'task',
+      meta: { title: '任务管理' }
+    },
+    {
+      path: '/task-log',
+      component: () => import('@/views/tool/task/taskLog'),
+      name: 'task-log',
+      meta: { title: '任务日志' }
     }
   ]
 }

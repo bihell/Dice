@@ -2,7 +2,7 @@ package com.bihell.dice.service.system.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bihell.dice.mapper.LogMapper;
+import com.bihell.dice.mapper.system.LogMapper;
 import com.bihell.dice.model.system.Log;
 import com.bihell.dice.model.system.LogType;
 import com.bihell.dice.service.system.LogService;

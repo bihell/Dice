@@ -23,6 +23,6 @@ public class QuartzJob implements Serializable {
     private String jobStatus;
     private Date nextTime;
     private Date previousTime;
-    private boolean disabled;
+    private Integer status;
     private Map<String, Object> dataMap;
 }

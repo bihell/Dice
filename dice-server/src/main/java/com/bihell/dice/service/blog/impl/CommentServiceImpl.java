@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.exception.TipException;
-import com.bihell.dice.mapper.CommentMapper;
+import com.bihell.dice.mapper.blog.CommentMapper;
 import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.blog.Comment;
 import com.bihell.dice.model.dto.CommentDto;

@@ -1,7 +1,7 @@
 package com.bihell.dice.service.auth.impl;
 
 import com.bihell.dice.exception.TipException;
-import com.bihell.dice.mapper.AuthContentMapper;
+import com.bihell.dice.mapper.auth.AuthContentMapper;
 import com.bihell.dice.model.auth.AuthContent;
 import com.bihell.dice.service.auth.AuthContentService;
 import com.google.common.collect.ImmutableMap;

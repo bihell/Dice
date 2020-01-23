@@ -42,7 +42,9 @@ judge "编译 Dice-Admin 项目"
 cd -
 
 # docker 部署
+docker-compose build
+judge "生成容器"
 docker-compose down
-judge "停止当前容器"
-docker-compose up --build -d
-judge "生成新容器并在后台启动"
+judge "停止容器"
+docker-compose up -d
+judge "启动容器"

@@ -15,10 +15,7 @@
           <a href="/feed.xml">RSS订阅</a>
         </li>
         <li class="tab-item">
-          <a href="https://bihell.gitee.io/big-data/">Big Data</a>
-        </li>
-        <li class="tab-item">
-          <a href="https://github.com/bihell/Dice">GitHub</a>
+          <a href="https://bihell.gitee.io/big-data/">大数据实践</a>
         </li>
       </ul>
       <div class="header-menu">

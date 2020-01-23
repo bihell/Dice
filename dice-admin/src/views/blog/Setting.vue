@@ -25,7 +25,7 @@
               v-permission="'/blog/setting/save'"
               type="primary"
               size="small"
-              @click="submitAfterValidate('websiteForm')"
+              @click="submitOptions"
             >保存修改
             </el-button>
           </el-form-item>

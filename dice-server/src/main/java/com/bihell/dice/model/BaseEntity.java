@@ -1,5 +1,6 @@
 package com.bihell.dice.model;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,5 +36,6 @@ public class BaseEntity<T extends Model<?>> extends Model<T> {
     /**
      * 逻辑删除标识
      */
-    private Integer status = 1;
+    @TableLogic
+    private Integer deleted = 0;
 }

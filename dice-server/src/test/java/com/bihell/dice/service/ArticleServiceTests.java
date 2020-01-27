@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ArticleServiceTests {
@@ -44,5 +46,24 @@ public class ArticleServiceTests {
     @Test
     public void getFrontPage(){
         System.out.println(articleService.getFrontPage(6));
+    }
+
+    @Test
+    // 查询链式调用
+    public void chain(){
+        List<Article> articleList = articleService.lambdaQuery().eq(Article::getId,1).list();
+        articleList.forEach(System.out::println);
+    }
+
+    @Test
+    // 更新链式调用
+    public void chainUpdate(){
+        articleService.lambdaUpdate().eq(Article::getId,1).set(Article::getId,1).update();
+    }
+
+    @Test
+    // 链式调用删除
+    public void chainDelete(){
+        articleService.lambdaUpdate().eq(Article::getId,999).remove();
     }
 }

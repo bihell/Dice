@@ -8,7 +8,7 @@
         <result column="api_path" property="apiPath" jdbcType="VARCHAR"/>
         <result column="project_type" property="projectType" jdbcType="VARCHAR"/>
 
-        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="deleted" property="deleted" jdbcType="INTEGER"/>
         <result column="creator" property="creator" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="modifier" property="modifier" jdbcType="INTEGER"/>
@@ -21,11 +21,11 @@
         SELECT t.*
         FROM auth_api t
         <where>
-            t.status = 1
+            t.deleted = 0
             <if test="queryParam.criteria != null and queryParam.criteria.length()>0">AND (t.api_path like concat("%",#{queryParam.criteria},"%"))</if>
             <if test="queryParam.projectType != null and queryParam.projectType.length()>0">AND t.project_type = #{queryParam.projectType}</if>
-            <if test="queryParam.roleId != null">AND t.api_id in (select distinct api_id from auth_rel_role_api where role_id=#{queryParam.roleId} and status=1)</if>
-            <if test="queryParam.itemId != null">AND t.api_id in (select distinct api_id from auth_rel_item_api where item_id=#{queryParam.itemId} and status=1)</if>
+            <if test="queryParam.roleId != null">AND t.api_id in (select distinct api_id from auth_rel_role_api where role_id=#{queryParam.roleId} and deleted=0)</if>
+            <if test="queryParam.itemId != null">AND t.api_id in (select distinct api_id from auth_rel_item_api where item_id=#{queryParam.itemId} and deleted=0)</if>
         </where>
         ORDER BY t.api_id desc
     </select>

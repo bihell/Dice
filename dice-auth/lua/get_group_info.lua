@@ -14,14 +14,14 @@ end
 
 -- 如果是管理员，返回所有菜单和权限项
 local db = db_utils.get_db()
-local sql = string.format('select 1 from auth_rel_role_user t join auth_role t1 on t.role_id=t1.role_id and t1.role_type=1 and t1.status=1 and t1.project_type="%s" where t.user_id=%s and t.status=1 limit 1', project_type, user_id)
+local sql = string.format('select 1 from auth_rel_role_user t join auth_role t1 on t.role_id=t1.role_id and t1.role_type=1 and t1.deleted=0 and t1.project_type="%s" where t.user_id=%s and t.deleted=0 limit 1', project_type, user_id)
 ngx.log(ngx.INFO, '执行SQL查询: ' .. sql)
 local res, err, errno, sqlstate = db:query(sql)
 -- 当前系统的管理员
 if res and res[1] then
-    sql = string.format('select t.group_id g_group_id,t.group_name g_group_name,t.group_url g_group_url,t.project_type g_project_type,t.order g_order,t.is_display g_is_display,t.style g_style,t1.classes_id c_classes_id,t1.classes_name c_classes_name,t1.classes_url c_classes_url,t1.order c_order,t1.is_display c_is_display,t1.style c_style,t2.item_id i_item_id,t2.item_name i_item_name,t2.item_code i_item_code,t2.order i_order,t2.style i_style,t2.outer_url i_outer_url from auth_group t join auth_classes t1 on t1.group_id=t.group_id and t1.status=1 join auth_item t2 on t2.classes_id=t1.classes_id and t2.status=1 where t.status=1 and t.project_type="%s" order by t.order,t1.order,t2.order', project_type)
+    sql = string.format('select t.group_id g_group_id,t.group_name g_group_name,t.group_url g_group_url,t.project_type g_project_type,t.order g_order,t.is_display g_is_display,t.style g_style,t1.classes_id c_classes_id,t1.classes_name c_classes_name,t1.classes_url c_classes_url,t1.order c_order,t1.is_display c_is_display,t1.style c_style,t2.item_id i_item_id,t2.item_name i_item_name,t2.item_code i_item_code,t2.order i_order,t2.style i_style,t2.outer_url i_outer_url from auth_group t join auth_classes t1 on t1.group_id=t.group_id and t1.deleted=0 join auth_item t2 on t2.classes_id=t1.classes_id and t2.deleted=0 where t.deleted=0 and t.project_type="%s" order by t.order,t1.order,t2.order', project_type)
 else
-    sql = string.format('select t.group_id g_group_id,t.group_name g_group_name,t.group_url g_group_url,t.project_type g_project_type,t.order g_order,t.is_display g_is_display,t.style g_style,t1.classes_id c_classes_id,t1.classes_name c_classes_name,t1.classes_url c_classes_url,t1.order c_order,t1.is_display c_is_display,t1.style c_style,t2.item_id i_item_id,t2.item_name i_item_name,t2.item_code i_item_code,t2.order i_order,t2.style i_style,t2.outer_url i_outer_url from auth_group t join auth_classes t1 on t1.group_id=t.group_id and t1.status=1 join auth_item t2 on t2.classes_id=t1.classes_id and t2.status=1 join auth_rel_role_item t3 on t3.item_id=t2.item_id and t3.status=1 join auth_rel_role_user t4 on t4.role_id=t3.role_id and t4.status=1 where t.status=1 and t.project_type="%s" and t4.user_id=%s order by t.order,t1.order,t2.order', project_type, user_id)
+    sql = string.format('select t.group_id g_group_id,t.group_name g_group_name,t.group_url g_group_url,t.project_type g_project_type,t.order g_order,t.is_display g_is_display,t.style g_style,t1.classes_id c_classes_id,t1.classes_name c_classes_name,t1.classes_url c_classes_url,t1.order c_order,t1.is_display c_is_display,t1.style c_style,t2.item_id i_item_id,t2.item_name i_item_name,t2.item_code i_item_code,t2.order i_order,t2.style i_style,t2.outer_url i_outer_url from auth_group t join auth_classes t1 on t1.group_id=t.group_id and t1.deleted=0 join auth_item t2 on t2.classes_id=t1.classes_id and t2.deleted=0 join auth_rel_role_item t3 on t3.item_id=t2.item_id and t3.deleted=0 join auth_rel_role_user t4 on t4.role_id=t3.role_id and t4.deleted=0 where t.deleted=0 and t.project_type="%s" and t4.user_id=%s order by t.order,t1.order,t2.order', project_type, user_id)
 end
 ngx.log(ngx.INFO, '执行SQL查询: ' .. sql)
 
@@ -110,7 +110,7 @@ end
 
 table.sort(group_list, comp)
 
-ngx.status = 200
+ngx.deleted = 200
 ngx.header.content_type = "application/json; charset=utf-8";
 ngx.say(string.format('{"code":0,"msg":null,"data":%s,"success":true}', json.encode(group_list)))
 ngx.exit(ngx.OK)

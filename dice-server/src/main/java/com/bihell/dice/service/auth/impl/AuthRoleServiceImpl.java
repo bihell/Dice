@@ -1,12 +1,8 @@
 package com.bihell.dice.service.auth.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.auth.AuthItemMapper;
-import com.bihell.dice.mapper.auth.AuthRelRoleApiMapper;
-import com.bihell.dice.mapper.auth.AuthRelRoleContentMapper;
-import com.bihell.dice.mapper.auth.AuthRelRoleUserMapper;
 import com.bihell.dice.model.auth.*;
 import com.bihell.dice.service.auth.*;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +26,6 @@ import java.util.stream.Collectors;
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class AuthRoleServiceImpl implements AuthRoleService {
-
-    private final AuthRelRoleApiMapper authRelRoleApiMapper;
-    private final AuthRelRoleContentMapper authRelRoleContentMapper;
-    private final AuthRelRoleUserMapper authRelRoleUserMapper;
     private final AuthItemMapper authItemMapper;
     private final AuthRelRoleApiService authRelRoleApiService;
     private final AuthRelRoleContentService authRelRoleContentService;
@@ -43,7 +35,9 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     @Override
     public AuthRole save(AuthRole authRole) {
 
-        if (authRole.selectCount(new QueryWrapper<AuthRole>().lambda().eq(AuthRole::getRoleName, authRole.getRoleName()).eq(AuthRole::getStatus, 1)) > 0) {
+        if (authRole.selectCount(new QueryWrapper<AuthRole>().lambda()
+                .eq(AuthRole::getRoleName, authRole.getRoleName())
+        ) > 0) {
             throw new TipException("内容重复！");
         } else {
             authRole.insert();
@@ -56,7 +50,6 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     public AuthRole update(AuthRole authRole) {
         if (authRole.selectCount(new QueryWrapper<AuthRole>().lambda()
                 .eq(AuthRole::getRoleName, authRole.getRoleName())
-                .eq(AuthRole::getStatus, 1)
                 .ne(AuthRole::getId, authRole.getId())) > 0) {
             throw new TipException("内容重复！");
         } else {
@@ -67,9 +60,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 
     @Override
     public void assignApi(AuthRole authRole) {
-        authRelRoleApiMapper.update(null, new UpdateWrapper<AuthRelRoleApi>().lambda()
-                .eq(AuthRelRoleApi::getRoleId, authRole.getId())
-                .set(AuthRelRoleApi::getStatus, 0));
+        authRole.deleteById();
 
         if (!CollectionUtils.isEmpty(authRole.getApiIds())) {
             List<AuthRelRoleApi> authRelRoleApiList = authRole.getApiIds().stream()
@@ -82,9 +73,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 
     @Override
     public void assignContent(AuthRole authRole) {
-        authRelRoleContentMapper.update(null, new UpdateWrapper<AuthRelRoleContent>().lambda()
-                .eq(AuthRelRoleContent::getRoleId, authRole.getId())
-                .set(AuthRelRoleContent::getStatus, 0));
+        authRole.deleteById();
 
         if (!CollectionUtils.isEmpty(authRole.getContentIds())) {
             List<AuthRelRoleContent> authRelRoleContentList = authRole.getContentIds().stream()
@@ -97,9 +86,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 
     @Override
     public void assignUser(AuthRole authRole) {
-        authRelRoleUserMapper.update(null, new UpdateWrapper<AuthRelRoleUser>().lambda()
-                .eq(AuthRelRoleUser::getRoleId, authRole.getId())
-                .set(AuthRelRoleUser::getStatus, 0));
+        authRole.deleteById();
 
         if (!CollectionUtils.isEmpty(authRole.getUserIds())) {
             List<AuthRelRoleUser> authRelRoleUserList = authRole.getUserIds().stream()

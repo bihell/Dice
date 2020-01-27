@@ -142,11 +142,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void assignRole(User user) {
-
-        authRelRoleUserMapper.update(null, new UpdateWrapper<AuthRelRoleUser>().lambda()
-                .eq(AuthRelRoleUser::getUserId, user.getId())
-                .set(AuthRelRoleUser::getStatus, 0));
-
+        user.deleteById();
         if (!CollectionUtils.isEmpty(user.getRoleIds())) {
             List<AuthRelRoleUser> authRelRoleUserList = user.getRoleIds().stream()
                     .filter(Objects::nonNull)

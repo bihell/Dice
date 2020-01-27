@@ -6,6 +6,7 @@ import com.bihell.dice.mapper.auth.AuthRelItemApiMapper;
 import com.bihell.dice.model.auth.AuthItem;
 import com.bihell.dice.model.auth.AuthRelItemApi;
 import com.bihell.dice.service.auth.AuthItemService;
+import com.bihell.dice.service.auth.AuthRelItemApiService;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @author haseochen
@@ -28,6 +32,7 @@ import java.util.UUID;
 public class AuthItemServiceImpl implements AuthItemService {
     private final AuthItemMapper authItemMapper;
     private final AuthRelItemApiMapper authRelItemApiMapper;
+    private final AuthRelItemApiService authRelItemApiService;
 
     @Override
     public AuthItem save(AuthItem authItem) {
@@ -51,16 +56,13 @@ public class AuthItemServiceImpl implements AuthItemService {
 
     @Override
     public void assignApi(AuthItem authItem) {
-        authRelItemApiMapper.delete(new QueryWrapper<AuthRelItemApi>().lambda().eq(AuthRelItemApi::getItemId,authItem.getId()));
-        if (CollectionUtils.isEmpty(authItem.getApiIds())) {
-            return;
-        }
-        for (Integer apiId : authItem.getApiIds()) {
-            if (apiId == null) {
-                continue;
-            }
-            AuthRelItemApi authItemApi = new AuthRelItemApi().setApiId(apiId).setItemId(authItem.getId());
-            authItemApi.insert();
+        authRelItemApiMapper.delete(new QueryWrapper<AuthRelItemApi>().lambda().eq(AuthRelItemApi::getItemId, authItem.getId()));
+        if (!CollectionUtils.isEmpty(authItem.getApiIds())) {
+            List<AuthRelItemApi> authRelItemApiList = authItem.getApiIds().stream()
+                    .filter(Objects::nonNull)
+                    .map(i -> new AuthRelItemApi().setApiId(i).setItemId(authItem.getId()))
+                    .collect(Collectors.toList());
+            authRelItemApiService.saveBatch(authRelItemApiList);
         }
     }
 }

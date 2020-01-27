@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.Archive;
 import com.bihell.dice.exception.TipException;
@@ -39,7 +40,7 @@ import java.util.List;
 @Service("articlesService")
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     static final String ARTICLE_CACHE_NAME = "articles";
 
@@ -233,21 +234,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
-     * 文章数量
-     *
-     * @return Integer
-     */
-
-    @Override
-    @Cacheable(value = ARTICLE_CACHE_NAME, key = "'article_count'")
-    public Integer count() {
-
-        return articleMapper.selectCount(new QueryWrapper<Article>().lambda()
-                .eq(Article::getType, Types.POST)
-                .ne(Article::getStatus, Types.DELETE));
-    }
-
-    /**
      * 获取归档信息
      *
      * @return List<Archive>
@@ -377,6 +363,8 @@ public class ArticleServiceImpl implements ArticleService {
 
         return page.getId();
     }
+
+
 
     /**
      * 保存或更新代码段

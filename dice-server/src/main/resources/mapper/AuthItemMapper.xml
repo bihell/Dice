@@ -10,13 +10,13 @@
     <select id="queryByParam" parameterType="com.bihell.dice.model.params.QueryParam" resultMap="ResultMap">
         SELECT t.*
         FROM auth_item t
-        join auth_classes t1 on t.classes_id=t1.classes_id and t1.status=1
-        join auth_group t2 on t1.group_id=t2.group_id and t2.status=1
+        join auth_classes t1 on t.classes_id=t1.classes_id and t1.deleted=0
+        join auth_group t2 on t1.group_id=t2.group_id and t2.deleted=0
         <where>
-            t.status = 1
+            t.deleted = 0
             <if test="criteria != null and criteria.length()>0">AND (t.item_name like concat("%",#{criteria},"%"))</if>
             <if test="roleId != null">AND t.item_id in (select distinct item_id from auth_rel_role_item where
-                role_id=#{roleId} and status=1)
+                role_id=#{roleId} and deleted=0)
             </if>
             <if test="projectType != null">AND (t2.project_type = #{projectType})</if>
         </where>
@@ -26,13 +26,13 @@
     <select id="queryByProjectType" parameterType="java.lang.String" resultMap="ResultMap">
         select *
         from auth_item t
-                 join auth_classes t1 on t.classes_id=t1.classes_id and t1.status=1
-                 join auth_group t2 on t1.group_id=t2.group_Id and t2.status=1
-        where t.status=1 and t2.project_type = #{projectType}
+                 join auth_classes t1 on t.classes_id=t1.classes_id and t1.deleted=0
+                 join auth_group t2 on t1.group_id=t2.group_Id and t2.deleted=0
+        where t.deleted=0 and t2.project_type = #{projectType}
     </select>
 
     <delete id="deleteByRoleId" parameterType="java.util.Map">
-        update auth_rel_role_item set status=0 where role_id = #{roleId}
+        update auth_rel_role_item set deleted=1 where role_id = #{roleId}
         <if test="itemIds != null and itemIds.size()>0">
             AND item_id in
             <foreach collection="itemIds" index="index" item="item" open="(" close=")" separator=",">#{item}</foreach>

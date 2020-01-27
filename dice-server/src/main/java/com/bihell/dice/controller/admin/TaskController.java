@@ -28,8 +28,6 @@ public class TaskController extends BaseController {
     private final TaskMapper taskMapper;
     private final TaskService taskService;
     private final TaskLogMapper taskLogMapper;
-//    private final TaskLogService taskLogService;
-
 
     /**
      * 获取定时任务管理列表

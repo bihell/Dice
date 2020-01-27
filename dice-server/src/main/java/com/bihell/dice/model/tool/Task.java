@@ -41,4 +41,6 @@ public class Task extends BaseEntity<Task> {
     private Date execAt;
 
     private String execResult;
+
+    private Integer status;
 }

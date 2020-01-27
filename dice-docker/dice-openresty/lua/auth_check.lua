@@ -46,7 +46,7 @@ json.encode_sparse_array(true)
 ngx.log(ngx.INFO, 'project_type: ' .. project_type .. ' access_uri: ' .. access_uri .. ' content_type: ' .. content_type)
 -- 先校验是不是管理员
 local db = db_utils.get_db()
-local sql = string.format('select 1 from auth_rel_role_user t join auth_role t1 on t.role_id=t1.role_id and t1.role_type=1 and t1.status=1 and t1.project_type="%s" where t.user_id=%s and t.status=1 limit 1', project_type, user_id)
+local sql = string.format('select 1 from auth_rel_role_user t join auth_role t1 on t.role_id=t1.role_id and t1.role_type=1 and t1.deleted=0 and t1.project_type="%s" where t.user_id=%s and t.deleted=0 limit 1', project_type, user_id)
 ngx.log(ngx.INFO, '执行SQL查询: ' .. sql)
 local res, err, errno, sqlstate = db:query(sql)
 -- 当前系统的管理员
@@ -65,7 +65,7 @@ end
 if func.start_with(ngx.var.uri, '/api') or string.find(content_type, 'application/json') or project_type == 'stbp' or string.find(ngx.var.uri, '/v%d') then
     --接口类别权限
     -- 获取用户所有接口权限，根据item查找
-    sql = string.format('select 1 from (SELECT 1 FROM auth_api t1 join auth_rel_item_api t2 on t1.api_id=t2.api_id and t2.status=1 join auth_item t3 on t2.item_id=t3.item_id and t3.status=1 join auth_rel_role_item t4 on t3.item_id=t4.item_id and t4.status=1 join auth_rel_role_user t5 on t4.role_id=t5.role_id and t5.status=1 where t1.status=1 and "%s" like concat(t1.api_path,"%%") and t1.project_type="%s" and t5.user_id=%s union all select 1 from auth_api t1 join auth_rel_item_api t2 on t1.api_id=t2.api_id and t2.status=1 join auth_item t3 on t2.item_id=t3.item_id and t3.status=1 join auth_classes t4 on t3.classes_id=t4.classes_id and t4.status=1 join auth_group t5 on t4.group_id=t5.group_id and t5.status=1 join auth_role t6 on t5.project_type=t6.project_type and t6.status=1 and t6.role_type=1 join auth_rel_role_user t7 on t6.role_id=t7.role_id where t1.status=1 and "%s" like concat(t1.api_path,"%%") and t1.project_type="%s" and t7.user_id=%s) t limit 1', access_uri, project_type, user_id, access_uri, project_type, user_id)
+    sql = string.format('select 1 from (SELECT 1 FROM auth_api t1 join auth_rel_item_api t2 on t1.api_id=t2.api_id and t2.deleted=0 join auth_item t3 on t2.item_id=t3.item_id and t3.deleted=0 join auth_rel_role_item t4 on t3.item_id=t4.item_id and t4.deleted=0 join auth_rel_role_user t5 on t4.role_id=t5.role_id and t5.deleted=0 where t1.deleted=0 and "%s" like concat(t1.api_path,"%%") and t1.project_type="%s" and t5.user_id=%s union all select 1 from auth_api t1 join auth_rel_item_api t2 on t1.api_id=t2.api_id and t2.deleted=0 join auth_item t3 on t2.item_id=t3.item_id and t3.deleted=0 join auth_classes t4 on t3.classes_id=t4.classes_id and t4.deleted=0 join auth_group t5 on t4.group_id=t5.group_id and t5.deleted=0 join auth_role t6 on t5.project_type=t6.project_type and t6.deleted=0 and t6.role_type=1 join auth_rel_role_user t7 on t6.role_id=t7.role_id where t1.deleted=0 and "%s" like concat(t1.api_path,"%%") and t1.project_type="%s" and t7.user_id=%s) t limit 1', access_uri, project_type, user_id, access_uri, project_type, user_id)
     ngx.log(ngx.INFO, '执行SQL查询: ' .. sql)
 
     res, err, errno, sqlstate = db:query(sql)

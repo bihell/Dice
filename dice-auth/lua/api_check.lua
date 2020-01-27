@@ -110,22 +110,6 @@ local function init_post_args()
         -- json
         post_args_body = json.decode(ngx.req.get_body_data())
     end
-
-    --local post_args_str = string_utils:sort_and_join_kv(post_args_body, "&")
-    --post_args_str = string_utils:try_decode(post_args_body, max_decode_time)
-    --if type(post_args_body) == "table" then
-    --    -- 获取post中的json用ngx.req.get_body_data()
-    --    local json = require("cjson.safe")
-    --
-    --
-    --    decode_body = string_utils:try_decode(post_args_sort, max_decode_time)
-    --else
-    --    -- 获取post中的formdata用ngx.req.get_post_args()
-    --    if string_utils:string_not_empty(post_args_body) then
-    --
-    --    end
-    --end
-    --end
     return post_args_body
 end
 
@@ -187,7 +171,7 @@ end
 
 local function query_secret_key(partner_code)
     local db = db_utils.get_db()
-    local sql = string.format('select secret_key from system_user where status=1 and partner_code="%s"', partner_code)
+    local sql = string.format('select secret_key from system_user where deleted=0 and partner_code="%s"', partner_code)
     local res, err, errno, sqlstate = db:query(sql)
     if not res[1] then
         db_utils.close_db(db)
@@ -199,63 +183,6 @@ local function query_secret_key(partner_code)
     local res_data = res[1]
     return res_data.secret_key
 
-    --local cache = ngx.shared.partner_secret_key
-    --
-    --local secret_cache_key = cache_key .. ":" .. partner_code .. ":" .. partner_code
-    --
-    --local secret_key = ""
-    --
-    --if nil ~= cache then
-    --    secret_key = cache_client:get_cache(cache, secret_cache_key)
-    --end
-    --
-    --if string_utils:string_empty(secret_key) then
-    --    ngx.log(ngx.INFO, string.format("start prepare cache p:%s ....", partner_code))
-    --    -- TODO: fusing mechanism
-    --    local ret, db_object = pcall(function()
-    --        return db_util.get_db()
-    --    end
-    --    )
-    --    if not ret then
-    --        ngx.log(ngx.ERR, "db connection has error")
-    --        return "", true
-    --    end
-    --
-    --    // TODO
-    --local quote_partner_code = ngx.quote_sql_str(partner_code)
-    --local res, err, errno, sqlstate = db_object:query(string.format('select secret_key from system_user where status=1 and partner_code="%s"', quote_partner_code))
-    --if nil ~= err then
-    ---- TODO: fusing mechanism
-    --pcall(close_db, db_object)
-    --ngx.log(ngx.ERR, "sql has error")
-    --return "", true
-    --end
-    --if #res <= 0 then
-    --if nil ~= cache then
-    --cache_client:set_cache(cache, secret_cache_key, "", cache_expire_second)
-    --end
-    ---- TODO: fusing mechanism
-    --pcall(close_db, db_object)
-    --ngx.log(ngx.ERR, "unauthorized")
-    --return "", false
-    --end
-    --
-    --secret_key = res[1].secret_key
-    --
-    --local ret, return_value = pcall(close_db, db_object)
-    --
-    --if not ret then
-    --ngx.log(ngx.ERR, "db connection has error")
-    --end
-    --
-    --if nil ~= cache then
-    --cache_client:set_cache(cache, secret_cache_key, secret_key, cache_expire_second)
-    --end
-    --
-    --ngx.log(ngx.INFO, string.format("end prepare cache p:%s ....", partner_code))
-    --end
-    --return secret_key, false
-    --return "bi-token-2017"
 end
 
 local function check_timestamp(time)
@@ -307,26 +234,6 @@ function _M.check_api_sign()
 
     -- 获取uri上的参数，不支持编码后的url
     local uri_args = ngx.req.get_uri_args()
-    --local query_args = ngx.req.get_uri_args()
-    --if string_utils:string_not_empty(ngx.var.args) then
-    --    local equal_symbol_index = string.find(ngx.var.args, '&', 1)
-    --    if not equal_symbol_index then
-    --        local convert_query_args = string_utils:try_decode(ngx.var.args, 1)
-    --        convert_query_args = string.gsub(convert_query_args, '&', ',')
-    --        local convert1 = string_utils:split(convert_query_args, ',')
-    --        local args_table = {}
-    --        for i, v in ipairs(convert1) do
-    --            local tmp = convert1[i]
-    --            local equal_symbol_index = string.find(tmp, '=', 1)
-    --            if equal_symbol_index > 1 then
-    --                local key = string.sub(tmp, 1, equal_symbol_index - 1)
-    --                local value = string.sub(tmp, equal_symbol_index + 1, string.len(tmp))
-    --                args_table[key] = value
-    --            end
-    --        end
-    --        query_args = args_table
-    --    end
-    --end
 
     local body_args = init_post_args()
 
@@ -334,11 +241,6 @@ function _M.check_api_sign()
     local check_sign_str = generate_sign_string(timestamp, partner_code, body_args, uri_args)
 
     local secret_key = query_secret_key(partner_code)
-
-    --if nil ~= interrupt and interrupt then
-    --    ngx.log(ngx.ERR, "has db error, skip check")
-    --    return ngx.exit(0)
-    --end
 
     --check secret key validation
     if string_utils:string_empty(secret_key) then

@@ -91,6 +91,7 @@ public class JobServiceImpl implements JobService {
         return true;
     }
 
+    @Override
     public QuartzJob getJob(Task task) {
         QuartzJob job = null;
         if (task != null) {
@@ -112,5 +113,52 @@ public class JobServiceImpl implements JobService {
             }
         }
         return job;
+    }
+
+    /**
+     * 获取单个任务
+     *
+     * @param jobName
+     * @param jobGroup
+     * @return
+     */
+
+    @Override
+    public QuartzJob getJob(String jobName, String jobGroup) throws SchedulerException {
+        QuartzJob job = null;
+        TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
+        Trigger trigger = scheduler.getTrigger(triggerKey);
+        if (null != trigger) {
+            job = new QuartzJob();
+            job.setJobName(jobName);
+            job.setJobGroup(jobGroup);
+            job.setDescription("触发器:" + trigger.getKey());
+            job.setNextTime(trigger.getNextFireTime());
+            job.setPreviousTime(trigger.getPreviousFireTime());
+            Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
+            job.setJobStatus(triggerState.name());
+            if (trigger instanceof CronTrigger) {
+                CronTrigger cronTrigger = (CronTrigger) trigger;
+                String cronExpression = cronTrigger.getCronExpression();
+                job.setCronExpression(cronExpression);
+            }
+        }
+        return job;
+    }
+
+    /**
+     * 删除任务
+     */
+    @Override
+    public boolean deleteJob(QuartzJob job) {
+        logger.info("删除任务：{}", job.getJobName());
+        JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
+        try {
+            scheduler.deleteJob(jobKey);
+            return true;
+        } catch (SchedulerException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return false;
     }
 }

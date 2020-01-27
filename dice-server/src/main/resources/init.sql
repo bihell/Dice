@@ -361,6 +361,11 @@ create table task_log
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (1, 'dice', '3e6693e83d186225b85b09e71c974d2d', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-01-08 16:13:10');
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (2, 'demo', '3e6693e83d186225b85b09e71c974d2d', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-01-07 21:10:34');
 
+INSERT INTO dice.task (id, concurrent, cron, data, exec_at, exec_result, job_class, job_group, name, note, status, creator, create_time, modifier, modify_time) VALUES (1, 0, '0/6 * * * * ?', '{
+"appname": "dice",
+"version":2
+}', '2020-01-27 14:54:24', '执行成功', 'com.bihell.dice.service.task.job.HelloJob', 'default', '测试任务1', '测试任务1', 0, 1, '2018-12-28 09:54:00', -1, '2019-03-27 11:47:11');
+
 INSERT INTO article (title, created, modified, content, author_id, hits, tags, category, status, type)
 VALUES ('Hello world', now(), now(), '
 欢迎使用[Dice](https://github.com/bihell/Dice)! 这是你的第一篇博客。快点来写点什么吧

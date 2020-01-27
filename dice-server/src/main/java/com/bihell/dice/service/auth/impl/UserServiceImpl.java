@@ -17,11 +17,13 @@ import com.bihell.dice.security.AuthToken;
 import com.bihell.dice.security.SecurityUtil;
 import com.bihell.dice.security.authentication.Authentication;
 import com.bihell.dice.security.context.SecurityContextHolder;
+import com.bihell.dice.service.auth.AuthRelRoleUserService;
 import com.bihell.dice.service.system.RedisService;
 import com.bihell.dice.service.auth.UserService;
 import com.bihell.dice.utils.DiceUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.bihell.dice.utils.DiceConsts.ACCESS_TOKEN_EXPIRED_SECONDS;
 import static com.bihell.dice.utils.DiceConsts.REFRESH_TOKEN_EXPIRED_DAYS;
@@ -50,6 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final RedisService redisService;
     private final UserMapper userMapper;
     private final AuthRelRoleUserMapper authRelRoleUserMapper;
+    private final AuthRelRoleUserService authRelRoleUserService;
 
     /**
      * Authenticates.
@@ -57,8 +63,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param loginParam login param must not be null
      * @return authentication token
      */
+    @NotNull
     @Override
-    public AuthToken authenticate(LoginParam loginParam) {
+    public AuthToken authenticate(@NotNull LoginParam loginParam) {
         Assert.notNull(loginParam, "Login param must not be null");
 
         String username = loginParam.getUsername();
@@ -140,18 +147,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .eq(AuthRelRoleUser::getUserId, user.getId())
                 .set(AuthRelRoleUser::getStatus, 0));
 
-        if (CollectionUtils.isEmpty(user.getRoleIds())) {
-            return;
-        }
-        for (Integer roleId : user.getRoleIds()) {
-            if (roleId == null) {
-                continue;
-            }
-
-            AuthRelRoleUser authRelRoleUser = new AuthRelRoleUser();
-            authRelRoleUser.setUserId(user.getId());
-            authRelRoleUser.setRoleId(roleId);
-            authRelRoleUser.insert();
+        if (!CollectionUtils.isEmpty(user.getRoleIds())) {
+            List<AuthRelRoleUser> authRelRoleUserList = user.getRoleIds().stream()
+                    .filter(Objects::nonNull)
+                    .map(i-> new AuthRelRoleUser().setUserId(user.getId()).setRoleId(i))
+                    .collect(Collectors.toList());
+            authRelRoleUserService.saveBatch(authRelRoleUserList);
         }
     }
 

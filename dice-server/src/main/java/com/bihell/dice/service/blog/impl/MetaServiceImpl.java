@@ -78,6 +78,7 @@ public class MetaServiceImpl implements MetaService {
             throw new TipException("没有该名称的属性");
         }
         List<Middle> middles = new Middle().selectList(new QueryWrapper<Middle>().lambda().eq(Middle::getMId, meta.getId()));
+        // todo 批量更新
         for (Middle middle : middles) {
             Article article = new Article().selectById(middle.getAId());
             if (null != article) {
@@ -139,6 +140,7 @@ public class MetaServiceImpl implements MetaService {
         }
 
         List<Article> articles = articleMapper.selectByMeta(id);
+        // todo 批量更新
         for (Article article : articles) {
             String metas;
             if (type.equals(Types.CATEGORY)) {

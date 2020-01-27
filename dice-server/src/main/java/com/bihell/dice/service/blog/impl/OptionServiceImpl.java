@@ -6,6 +6,7 @@ import com.bihell.dice.model.blog.SysOption;
 import com.bihell.dice.service.blog.OptionService;
 import com.bihell.dice.utils.DiceUtil;
 import com.bihell.dice.utils.OptionKeys;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
@@ -46,7 +47,8 @@ public class OptionServiceImpl implements OptionService {
     @Override
     @Cacheable(value = OPTION_CACHE_NAME, key = "'options'")
     public Map<String, String> getAllOptionMap() {
-        return new SysOption().selectAll().stream().collect(Collectors.toMap(SysOption::getOptionKey, SysOption::getOptionValue));
+        return new SysOption().selectAll().stream()
+                .collect(Collectors.toMap(SysOption::getOptionKey, SysOption::getOptionValue));
     }
 
     /**
@@ -130,6 +132,7 @@ public class OptionServiceImpl implements OptionService {
      *
      * @return blog base url (If blog url isn't present, current machine IP address will be default)
      */
+    @NotNull
     @Override
     public String getBaseUrl() {
         // Get server port

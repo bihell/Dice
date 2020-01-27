@@ -22,7 +22,7 @@
       <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
     </el-card>
 
-    <el-dialog width="800px" :visible.sync="dialogFormVisible">
+    <el-dialog width="830px" :visible.sync="dialogFormVisible">
       <div slot="title"> <span class="dialog-custom-title" v-html="dialogTitle" /></div>
       <el-transfer
         ref="transfer"
@@ -43,7 +43,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog width="700px" :title="dialog2.title" :visible.sync="dialog2.dialogFormVisible">
+    <el-dialog width="830px" :title="dialog2.title" :visible.sync="dialog2.dialogFormVisible">
       <m-form
         :ref-obj.sync="formInfo.ref"
         :data="formInfo.data"

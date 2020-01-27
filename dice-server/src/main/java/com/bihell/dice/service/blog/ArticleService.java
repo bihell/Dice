@@ -1,6 +1,7 @@
 package com.bihell.dice.service.blog;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.Archive;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @author bihell
  * @since 2017/8/21 22:01
  */
-public interface ArticleService {
+public interface ArticleService extends IService<Article> {
 
     /**
      * 分页查询前端文章
@@ -72,13 +73,6 @@ public interface ArticleService {
      * @return boolean
      */
     boolean deleteArticle(Integer id);
-
-    /**
-     * 文章数量
-     *
-     * @return Integer
-     */
-    Integer count();
 
     /**
      * 获取归档信息

@@ -1,5 +1,6 @@
 package com.bihell.dice.controller.admin;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
 import com.bihell.dice.model.dto.Pagination;
@@ -8,9 +9,12 @@ import com.bihell.dice.model.params.ArticleParam;
 import com.bihell.dice.service.blog.ArticleService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
+import com.bihell.dice.utils.Types;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Wrapper;
 
 /**
  * 后台文章管理 Controller
@@ -86,7 +90,8 @@ public class ArticleController extends BaseController {
      */
     @GetMapping("count")
     public RestResponse count() {
-        return RestResponse.ok(articleService.count());
+        return RestResponse.ok(articleService.count(new QueryWrapper<Article>().lambda()
+                .eq(Article::getType, Types.POST)
+                .ne(Article::getStatus, Types.DELETE)));
     }
-
 }

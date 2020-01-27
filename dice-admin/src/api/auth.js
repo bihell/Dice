@@ -268,7 +268,7 @@ export function saveRoleContent(data) {
 // 保存角色用户
 export function saveRoleUser(data) {
   return request({
-    url: '/admin/auth/role/assign/User',
+    url: '/admin/auth/role/assign/user',
     method: 'post',
     data
   })

@@ -8,7 +8,7 @@ import com.bihell.dice.mapper.auth.AuthRelRoleApiMapper;
 import com.bihell.dice.mapper.auth.AuthRelRoleContentMapper;
 import com.bihell.dice.mapper.auth.AuthRelRoleUserMapper;
 import com.bihell.dice.model.auth.*;
-import com.bihell.dice.service.auth.AuthRoleService;
+import com.bihell.dice.service.auth.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -34,6 +35,10 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     private final AuthRelRoleContentMapper authRelRoleContentMapper;
     private final AuthRelRoleUserMapper authRelRoleUserMapper;
     private final AuthItemMapper authItemMapper;
+    private final AuthRelRoleApiService authRelRoleApiService;
+    private final AuthRelRoleContentService authRelRoleContentService;
+    private final AuthRelRoleUserService authRelRoleUserService;
+    private final AuthRelRoleItemService authRelRoleItemService;
 
     @Override
     public AuthRole save(AuthRole authRole) {
@@ -66,18 +71,12 @@ public class AuthRoleServiceImpl implements AuthRoleService {
                 .eq(AuthRelRoleApi::getRoleId, authRole.getId())
                 .set(AuthRelRoleApi::getStatus, 0));
 
-        if (CollectionUtils.isEmpty(authRole.getApiIds())) {
-            return;
-        }
-        for (Integer apiId : authRole.getApiIds()) {
-            if (apiId == null) {
-                continue;
-            }
-            AuthRelRoleApi roleApi = new AuthRelRoleApi();
-            roleApi.setRoleId(authRole.getId());
-            roleApi.setApiId(apiId);
-
-            roleApi.insert();
+        if (!CollectionUtils.isEmpty(authRole.getApiIds())) {
+            List<AuthRelRoleApi> authRelRoleApiList = authRole.getApiIds().stream()
+                    .filter(Objects::nonNull)
+                    .map(i -> new AuthRelRoleApi().setRoleId(authRole.getId()).setApiId(i))
+                    .collect(Collectors.toList());
+            authRelRoleApiService.saveBatch(authRelRoleApiList);
         }
     }
 
@@ -87,18 +86,12 @@ public class AuthRoleServiceImpl implements AuthRoleService {
                 .eq(AuthRelRoleContent::getRoleId, authRole.getId())
                 .set(AuthRelRoleContent::getStatus, 0));
 
-        if (CollectionUtils.isEmpty(authRole.getContentIds())) {
-            return;
-        }
-        for (Integer contentId : authRole.getContentIds()) {
-            if (contentId == null) {
-                continue;
-            }
-            AuthRelRoleContent authRelRoleContent = new AuthRelRoleContent();
-            authRelRoleContent.setRoleId(authRole.getId());
-            authRelRoleContent.setContentId(contentId);
-
-            authRelRoleContent.insert();
+        if (!CollectionUtils.isEmpty(authRole.getContentIds())) {
+            List<AuthRelRoleContent> authRelRoleContentList = authRole.getContentIds().stream()
+                    .filter(Objects::nonNull)
+                    .map(i->new AuthRelRoleContent().setRoleId(authRole.getId()).setContentId(i))
+                    .collect(Collectors.toList());
+            authRelRoleContentService.saveBatch(authRelRoleContentList);
         }
     }
 
@@ -108,20 +101,13 @@ public class AuthRoleServiceImpl implements AuthRoleService {
                 .eq(AuthRelRoleUser::getRoleId, authRole.getId())
                 .set(AuthRelRoleUser::getStatus, 0));
 
-        if (CollectionUtils.isEmpty(authRole.getUserIds())) {
-            return;
+        if (!CollectionUtils.isEmpty(authRole.getUserIds())) {
+            List<AuthRelRoleUser> authRelRoleUserList = authRole.getUserIds().stream()
+                    .filter(Objects::nonNull)
+                    .map(i->new AuthRelRoleUser().setRoleId(authRole.getId()).setUserId(i))
+                    .collect(Collectors.toList());
+            authRelRoleUserService.saveBatch(authRelRoleUserList);
         }
-        for (Integer userId : authRole.getContentIds()) {
-            if (userId == null) {
-                continue;
-            }
-            AuthRelRoleUser authRelRoleUser = new AuthRelRoleUser();
-            authRelRoleUser.setRoleId(authRole.getId());
-            authRelRoleUser.setUserId(userId);
-
-            authRelRoleUser.insert();
-        }
-
     }
 
     /**
@@ -137,18 +123,12 @@ public class AuthRoleServiceImpl implements AuthRoleService {
         }
         authItemMapper.deleteByRoleId(authRole.getId(), itemIds);
 
-        if (CollectionUtils.isEmpty(authRole.getItemIds())) {
-            return;
-        }
-        for (Integer itemId : authRole.getItemIds()) {
-            if (itemId == null) {
-                continue;
-            }
-            AuthRelRoleItem roleItem = new AuthRelRoleItem();
-            roleItem.setRoleId(authRole.getId());
-            roleItem.setItemId(itemId);
-
-            roleItem.insert();
+        if (!CollectionUtils.isEmpty(authRole.getItemIds())) {
+            List<AuthRelRoleItem> authRelRoleItemList = authRole.getItemIds().stream()
+                    .filter(Objects::nonNull)
+                    .map(i-> new AuthRelRoleItem().setRoleId(authRole.getId()).setItemId(i))
+                    .collect(Collectors.toList());
+            authRelRoleItemService.saveBatch(authRelRoleItemList);
         }
     }
 }

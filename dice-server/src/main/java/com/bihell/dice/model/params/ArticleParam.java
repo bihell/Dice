@@ -8,20 +8,20 @@ import com.bihell.dice.model.blog.Article;
 public class ArticleParam extends Article {
 
     /**
-     * 内容生成时间
+     * 创建时间
      *
-     * @param created
+     * @param createTime
      */
-    public Article setCreated(Long created) {
-        return super.setCreated(new java.util.Date(created));
+    public void setCreateTime(Long createTime) {
+        super.setCreateTime(new java.util.Date(createTime));
     }
 
     /**
-     * 内容修改时间
+     * 修改时间
      *
-     * @param modified
+         * @param modifyTime
      */
-    public Article setModified(Long modified) {
-        return super.setModified(new java.util.Date(modified));
+    public void setModifyTime(Long modifyTime) {
+        super.setModifyTime(new java.util.Date(modifyTime));
     }
 }

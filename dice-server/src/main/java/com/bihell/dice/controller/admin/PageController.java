@@ -2,6 +2,7 @@ package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.controller.BaseController;
+import com.bihell.dice.mapper.blog.ArticleMapper;
 import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.service.blog.ArticleService;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class PageController extends BaseController {
 
     private final ArticleService articleService;
-
+    private final ArticleMapper articleMapper;
     private final LogService logService;
 
     /**
@@ -64,7 +65,7 @@ public class PageController extends BaseController {
      */
     @PostMapping
     public RestResponse savePage(@RequestBody Article page) {
-        page.setAuthorId(this.user().getId());
+        page.setCreator(this.user().getId());
         articleService.savePage(page);
         return RestResponse.ok("保存文章成功");
     }
@@ -77,7 +78,8 @@ public class PageController extends BaseController {
      */
     @DeleteMapping("{id}")
     public RestResponse deletePage(@PathVariable Integer id) {
-        if (articleService.deletePage(id)) {
+
+        if (articleMapper.deleteById(id)>0) {
             return RestResponse.ok("删除自定义页面成功");
         } else {
             return RestResponse.fail();

@@ -24,7 +24,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @return List<Article>
      */
     @Select("SELECT * FROM dice.article WHERE id IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) " +
-            "AND dice.article.type = '" + Types.POST + "' order by created desc")
+            "AND dice.article.type = '" + Types.POST + "' order by create_time desc")
     List<Article> selectByMeta(@Param("metaId") Integer metaId);
 
     /**
@@ -46,7 +46,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     @Select("SELECT * FROM dice.article WHERE id " +
             "IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) " +
-            "AND dice.article.status = '" + Types.PUBLISH + "' AND dice.article.type = '" + Types.POST + "' order by created desc")
+            "AND dice.article.status = '" + Types.PUBLISH + "' AND dice.article.type = '" + Types.POST + "' order by create_time desc")
     List<ArticleInfoDto> selectPublishByMeta(@Param("metaId") Integer metaId);
 
     /**
@@ -56,7 +56,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @return List<Article>
      */
     @Select("SELECT * FROM dice.article WHERE id " +
-            "IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) order by created desc")
+            "IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) order by create_time desc")
     List<ArticleInfoDto> selectSnippetByMeta(@Param("metaId") Integer metaId);
 
     /**

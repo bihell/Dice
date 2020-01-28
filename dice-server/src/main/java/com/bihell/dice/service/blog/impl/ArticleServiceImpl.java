@@ -2,7 +2,6 @@ package com.bihell.dice.service.blog.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -65,7 +64,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, Types.PUBLISH)
                 .eq(Article::getType, Types.POST)
-                .orderByDesc(Article::getPriority,Article::getCreated);
+                .orderByDesc(Article::getPriority,Article::getModifyTime);
         IPage<Article> result = articleMapper.selectPage(page, wrapper);
 
         result.getRecords().forEach(article -> {
@@ -115,7 +114,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .like(!StringUtils.isEmpty(query.getTags()), Article::getTags, query.getTags())
                 .like(!StringUtils.isEmpty(query.getCategory()), Article::getCategory, query.getCategory())
                 .like(!StringUtils.isEmpty(query.getContent()), Article::getContent, query.getContent())
-                .orderByDesc(Article::getCreated);
+                .orderByDesc(Article::getModifyTime);
 
         return articleMapper.selectPage(page, wrapper);
     }
@@ -162,7 +161,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (article.getContent().length() > DiceConsts.MAX_CONTENT_COUNT) {
             throw new TipException("文章内容字数不能超过" + DiceConsts.MAX_CONTENT_COUNT);
         }
-        if (null == article.getAuthorId()) {
+        if (null == article.getCreator()) {
             throw new TipException("请先登陆后发布文章");
         }
 
@@ -206,19 +205,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     @CacheEvict(value = ARTICLE_CACHE_NAME, allEntries = true, beforeInvocation = true)
     public boolean deleteArticle(Integer id) {
-        Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
-                .eq(Article::getId, id)
-                .eq(Article::getType, Types.POST));
-        if (null == article) {
-            throw new TipException("没有id为" + id + "的文章");
-        }
 
-        int rows = articleMapper.update(null, new UpdateWrapper<Article>().lambda()
-                .eq(Article::getId, id)
-                .set(Article::getStatus, Types.DELETE));
-
-        if (rows > 0) {
-            log.info("删除文章: {}", article);
+        if (articleMapper.deleteById(id) > 0) {
+            log.info("删除文章: {}", id);
 
             // 删除文章下的评论
 
@@ -226,8 +215,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             log.info("删除对应的评论,数量: {}", commentsResult);
 
             // 传空的属性，则移除该文章关联的属性
-            metasService.saveOrRemoveMetas("", Types.CATEGORY, article.getId());
-            metasService.saveOrRemoveMetas("", Types.TAG, article.getId());
+            metasService.saveOrRemoveMetas("", Types.CATEGORY, id);
+            metasService.saveOrRemoveMetas("", Types.TAG, id);
             return true;
         }
         return false;
@@ -245,14 +234,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<Article> articles = new Article().selectList(new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, Types.PUBLISH)
                 .eq(Article::getType, Types.POST)
-                .orderByDesc(Article::getCreated));
+                .orderByDesc(Article::getModifyTime));
         List<Archive> archives = new ArrayList<>();
         String current = "";
         for (Article article : articles) {
             // 清空文章内容
             article.setContent("");
             Calendar cal = Calendar.getInstance();
-            cal.setTime(article.getCreated());
+            cal.setTime(article.getCreateTime());
             String dateStr = String.valueOf(cal.get(Calendar.YEAR));
             if (dateStr.equals(current)) {
                 Archive arc = archives.get(archives.size() - 1);
@@ -351,7 +340,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (page.getContent().length() > DiceConsts.MAX_CONTENT_COUNT) {
             throw new TipException("自定义页面容字数不能超过" + DiceConsts.MAX_CONTENT_COUNT);
         }
-        if (null == page.getAuthorId()) {
+        if (null == page.getCreator()) {
             throw new TipException("请先登陆");
         }
         if (null != page.getId()) {
@@ -363,8 +352,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         return page.getId();
     }
-
-
 
     /**
      * 保存或更新代码段
@@ -404,26 +391,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         metasService.saveOrRemoveMetas(snippet.getTags(), Types.SNIPPET_TAG, id);
 
         return snippet.getId();
-    }
-
-    /**
-     * 根据id删除自定义页面
-     *
-     * @param id 页面id
-     * @return boolean
-     */
-    @Override
-    @CacheEvict(value = ARTICLE_CACHE_NAME, allEntries = true, beforeInvocation = true)
-    public boolean deletePage(Integer id) {
-
-        Article page = new Article().selectOne(new QueryWrapper<Article>().lambda()
-                .eq(Article::getId, id)
-                .eq(Article::getType, Types.PAGE));
-        if (null == page) {
-            throw new TipException("没有id为" + id + "的自定义页面");
-        }
-        page.setStatus(Types.DELETE);
-        return page.updateById();
     }
 
     /**

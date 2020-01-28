@@ -123,14 +123,6 @@ public interface ArticleService extends IService<Article> {
     Integer saveSnippet(Article snippet);
 
     /**
-     * 根据id删除自定义页面
-     *
-     * @param id 页面id
-     * @return boolean
-     */
-    boolean deletePage(Integer id);
-
-    /**
      * 获取前端自定义页面信息列表
      *
      * @return List<ArticleInfoDto>

@@ -234,7 +234,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<Article> articles = new Article().selectList(new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, Types.PUBLISH)
                 .eq(Article::getType, Types.POST)
-                .orderByDesc(Article::getModifyTime));
+                .orderByDesc(Article::getCreateTime));
         List<Archive> archives = new ArrayList<>();
         String current = "";
         for (Article article : articles) {

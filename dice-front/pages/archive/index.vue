@@ -16,7 +16,7 @@
               class="tile-title"
             >
               <label class="text-italic">{{
-                article.created | time('MM-dd')
+                article.createTime | time('MM-dd')
               }}</label>
               <nuxt-link :to="{ path: '/article/' + article.id }"
                 >{{ article.title }}

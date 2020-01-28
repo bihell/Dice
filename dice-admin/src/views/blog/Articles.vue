@@ -131,7 +131,7 @@
       </el-table-column>
       <el-table-column label="修改日期" width="150" show-overflow-tooltip align="center">
         <template slot-scope="{row}">
-          <span style="margin-left: 10px">{{ row.modified }}</span>
+          <span style="margin-left: 10px">{{ row.modifyTime }}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="150" align="center">
@@ -210,8 +210,8 @@ export default {
           id: data.id,
           title: data.title,
           frontUrl: this.$serverConfig.frontUrl + 'article/' + data.id,
-          publish: this.$dayjs(data.created).format('YYYY-MM-DD HH:mm'),
-          modified: this.$dayjs(data.modified).format('YYYY-MM-DD HH:mm'),
+          publish: this.$dayjs(data.createTime).format('YYYY-MM-DD HH:mm'),
+          modifyTime: this.$dayjs(data.modifyTime).format('YYYY-MM-DD HH:mm'),
           category: data.category || this.$static.DEFAULT_CATEGORY,
           status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏',
           priority: data.priority === 0 ? '普通' : '置顶'

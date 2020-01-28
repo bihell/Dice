@@ -83,7 +83,7 @@
               </el-form-item>
               <el-form-item label="创建日期">
                 <el-date-picker
-                  v-model="article.created"
+                  v-model="article.createTime"
                   type="datetime"
                   placeholder="创建日期"
                   size="small"
@@ -93,7 +93,7 @@
               </el-form-item>
               <el-form-item label="修改日期">
                 <el-date-picker
-                  v-model="article.modified"
+                  v-model="article.modifyTime"
                   type="datetime"
                   placeholder="修改日期"
                   size="small"
@@ -204,8 +204,8 @@ export default {
         category: '',
         content: '',
         status: '',
-        created: '',
-        modified: '',
+        createTime: '',
+        modifyTime: '',
         priority: 0,
         allowComment: true
       },
@@ -255,8 +255,8 @@ export default {
           category: '',
           content: '',
           status: this.$static.STATUS_PUBLISH,
-          created: Date.now(),
-          modified: Date.now()
+          createTime: Date.now(),
+          modifyTime: Date.now()
         }
         this.initArticle(data)
       }
@@ -268,8 +268,8 @@ export default {
       this.article.category = data.category
       this.article.content = data.content
       this.article.status = data.status
-      this.article.created = new Date(data.created).getTime()
-      this.article.modified = Date.now()
+      this.article.createTime = new Date(data.createTime).getTime()
+      this.article.modifyTime = Date.now()
       this.selectTags = this.$util.stringToTags(data.tags)
     },
     getTags() {

@@ -26,22 +26,25 @@ CREATE TABLE user
 
 create table article
 (
-    type          varchar(45)                          not null,
     id            int auto_increment
         primary key,
-    created       timestamp  default CURRENT_TIMESTAMP not null,
-    modified      timestamp  default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    allow_comment tinyint(1) default 1                 not null,
-    author_id     int                                  null,
-    comment_count int        default 0                 not null,
-    content       mediumtext                           null,
-    hits          int        default 0                 not null,
-    priority      int        default 0                 not null,
-    status        varchar(32)                          null,
-    title         varchar(255)                         not null,
-    category      varchar(500)                         null,
-    tags          varchar(500)                         null
-);
+    title         varchar(255)                         not null comment '内容标题',
+    content       mediumtext                           null comment '内容',
+    hits          int        default 0                 not null comment '点击量',
+    tags          varchar(255)                         null comment '标签列表',
+    category      varchar(255)                         null comment '文章分类',
+    status        varchar(32)                          null comment '内容状态',
+    type          varchar(32)                          null comment '内容类别',
+    allow_comment tinyint(1) default 1                 not null comment '是否允许评论',
+    comment_count int        default 0                 not null comment '评论数量',
+    priority      int        default 0                 null comment '文章优先级',
+    create_time   timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
+    modify_time   timestamp  default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    creator       int                                  null comment '创建人',
+    modifier      int                                  null comment '修改人',
+    deleted       int(1)     default 0                 null comment '逻辑删除标识(0.未删除,1.已删除)'
+)
+    charset = UTF8MB4;
 
 CREATE TABLE comment
 (
@@ -127,7 +130,7 @@ CREATE TABLE `auth_group` (
       `order` int(11) DEFAULT NULL,
       `is_display` int(11) DEFAULT NULL COMMENT '显示状态（0不显示，1显示）',
       `style` varchar(255) DEFAULT NULL,
-      deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+      deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
       `creator` int(11) DEFAULT NULL,
       `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
       `modifier` int(11) DEFAULT NULL,
@@ -144,7 +147,7 @@ CREATE TABLE `auth_classes` (
     `order` int(11) DEFAULT NULL,
     `is_display` int(11) DEFAULT NULL COMMENT '显示状态（0不显示，1显示）',
     `style` varchar(255) DEFAULT NULL,
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     `creator` int(11) DEFAULT NULL,
     `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `modifier` int(11) DEFAULT NULL,
@@ -162,7 +165,7 @@ CREATE TABLE `auth_item` (
      `style` varchar(255) DEFAULT NULL,
      `auto_flag` tinyint(4) DEFAULT NULL,
      `outer_url` varchar(1000) DEFAULT NULL,
-     deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+     deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
      `creator` int(11) DEFAULT NULL,
      `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
      `modifier` int(11) DEFAULT NULL,
@@ -192,7 +195,7 @@ create table auth_api
     api_type     varchar(255) default ''                null comment 'API类型',
     api_path     varchar(255) default ''                not null,
     project_type varchar(64)  default ''                not null comment '类目权限类型',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator      int                                    null,
     create_time  timestamp    default CURRENT_TIMESTAMP null,
     modifier     int                                    null,
@@ -209,7 +212,7 @@ create table auth_rel_item_api
         primary key,
     item_id     int                                 not null comment '操作项id',
     api_id      int(4)                              not null comment 'api id',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator     int                                 null comment '创建人',
     create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
     modifier    int                                 null comment '修改人',
@@ -225,7 +228,7 @@ create table auth_rel_role_api
         primary key,
     role_id     int(4)                              not null comment '角色id',
     api_id      int(4)                              not null comment '权限项id',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator     int                                 null comment '创建人',
     create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
     modifier    int                                 null comment '修改人',
@@ -244,7 +247,7 @@ create table auth_role
     role_type    int(4)                                 not null comment '角色类型 1:管理员 2:用户',
     project_type varchar(255)                           null comment '系统类型',
     description  varchar(255)                           null comment '描述',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator      int                                    null,
     create_time  timestamp    default CURRENT_TIMESTAMP null,
     modifier     int                                    null,
@@ -258,7 +261,7 @@ create table auth_rel_role_user
         primary key,
     user_id     int                                 not null comment '用户id',
     role_id     int(4)                              not null comment '角色id',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator     int                                 null comment '创建人',
     create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
     modifier    int                                 null comment '修改人',
@@ -277,7 +280,7 @@ create table auth_content
     content_type  varchar(255) default ''                not null,
     content_name  varchar(255) default ''                not null,
     content_value varchar(255)                           null,
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator       int                                    null,
     create_time   timestamp    default CURRENT_TIMESTAMP null,
     modifier      int                                    null,
@@ -298,7 +301,7 @@ create table auth_rel_role_content
         primary key,
     role_id     int(4)                              not null comment '角色id',
     content_id  int(4)                              not null comment '权限项id',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator     int                                 null comment '创建人',
     create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
     modifier    int                                 null comment '修改人',
@@ -314,7 +317,7 @@ create table auth_rel_role_item
         primary key,
     role_id     int(4)                              not null comment '角色id',
     item_id     int(4)                              not null comment '权限项id',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator     int                                 null comment '创建人',
     create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
     modifier    int                                 null comment '修改人',
@@ -337,7 +340,7 @@ create table task
     name        varchar(50)  comment '任务名',
     note        varchar(255) null comment '任务说明',
     status       int                                    null comment '状态（0无效1有效）',
-    deleted INT(1) DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
     creator      int                                    comment '创建人',
     create_time  timestamp    default CURRENT_TIMESTAMP comment '创建时间/注册时间',
     modifier     int                                    comment '最后更新人',
@@ -367,7 +370,7 @@ INSERT INTO dice.task (id, concurrent, cron, data, exec_at, exec_result, job_cla
 "version":2
 }', '2020-01-27 14:54:24', '执行成功', 'com.bihell.dice.service.task.job.HelloJob', 'default', '测试任务1', '测试任务1', 0, 1, '2018-12-28 09:54:00', -1, '2019-03-27 11:47:11', 0);
 
-INSERT INTO article (title, created, modified, content, author_id, hits, tags, category, status, type)
+INSERT INTO article (title, create_time, modify_time, content, creator, hits, tags, category, status, type)
 VALUES ('Hello world', now(), now(), '
 欢迎使用[Dice](https://github.com/bihell/Dice)! 这是你的第一篇博客。快点来写点什么吧
 
@@ -378,6 +381,17 @@ public static void main(String[] args){
 ```
 
 > 想要了解更多详细信息，可以查看[文档](https://github.com/bihell/Dice/blob/master/README.md)。', 1, 0, 'First', 'New', 'publish', 'post');
+
+INSERT INTO article (title, create_time, modify_time, content, creator, tags, category, status, type)
+VALUES ('关于', now(), now(), '# About me
+### Hello word
+这是关于我的页面
+
+* [Github](https://github.com/bihell)
+* [哔哩哔哩](https://space.bilibili.com/88900889/video)
+
+### 也可以设置别的页面
+* 比如友链页面', 1, NULL, NULL, 'publish', 'page');
 
 INSERT INTO comment (article_id, content, name, email, website, agree, disagree, ip, agent)
 VALUES ('1', '## 测试评论
@@ -392,17 +406,6 @@ INSERT INTO middle (a_id, m_id)
 VALUES (1, 1);
 INSERT INTO middle (a_id, m_id)
 VALUES (1, 2);
-
-INSERT INTO article (title, created, modified, content, author_id, tags, category, status, type)
-VALUES ('关于', now(), now(), '# About me
-### Hello word
-这是关于我的页面
-
-* [Github](https://github.com/bihell)
-* [哔哩哔哩](https://space.bilibili.com/88900889/video)
-
-### 也可以设置别的页面
-* 比如友链页面', 1, NULL, NULL, 'publish', 'page');
 
 INSERT INTO sys_option (option_key, option_value)
 VALUES ('dice_init', 'true');

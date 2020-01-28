@@ -1,6 +1,6 @@
 <template>
   <div id="page">
-    <div v-highlight class="markdown-body" v-html="page.content"></div>
+    <div v-highlight v-html="page.content" class="markdown-body"></div>
     <comment v-if="page.allowComment" :article-id="page.id"></comment>
     <big-img :visible.sync="showDialog" :img="img"></big-img>
   </div>

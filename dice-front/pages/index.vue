@@ -12,7 +12,7 @@
       </p>
       <p class="article-date text-italic">
         <span class="icon-calendar"></span>
-        {{ article.created | time('yyyy-MM-dd') }}
+        {{ article.createTime | time('yyyy-MM-dd') }}
       </p>
       <p class="article-date">
         <span class="icon-eye"></span> {{ article.hits }}

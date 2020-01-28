@@ -2,16 +2,16 @@ package com.bihell.dice.model;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 /**
  * @author haseochen
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 public class BaseEntity<T extends Model<?>> extends Model<T> {
     /**
      * 创建时间

@@ -64,7 +64,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, Types.PUBLISH)
                 .eq(Article::getType, Types.POST)
-                .orderByDesc(Article::getPriority,Article::getModifyTime);
+                .orderByDesc(Article::getPriority,Article::getCreateTime);
         IPage<Article> result = articleMapper.selectPage(page, wrapper);
 
         result.getRecords().forEach(article -> {

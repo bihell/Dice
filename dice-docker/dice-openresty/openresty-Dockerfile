@@ -9,6 +9,7 @@ COPY ./dice-auth/lua/func.lua /usr/local/openresty/nginx/lua/func.lua
 COPY ./dice-docker/dice-openresty/lua/http.lua /usr/local/openresty/lualib/resty/http.lua
 COPY ./dice-docker/dice-openresty/lua/http_headers.lua /usr/local/openresty/lualib/resty/http_headers.lua
 COPY ./dice-admin/dist /usr/local/openresty/nginx/html/dice-admin
+COPY ./dice-docker/dice-openresty/data /data
 
 EXPOSE 80
 

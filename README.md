@@ -13,12 +13,12 @@
     <a alt="docker-compose"><img src="https://img.shields.io/badge/docker--compose-1.22.0-lightgrey.svg"></a>
 </p>
 
-* 基于`node` `java` `spring-boot` `vue` `nuxt` 开发的个人管理系统，目前已经实现「博客」、「权限管理」、「媒体库」、「代码段」功能
-* 支持传统手动部署和`docker`部署
+* 基于`node` `java` `spring-boot` `vue` `nuxt` 开发的个人管理系统，目前已经实现「博客」、「权限管理」、「媒体库」、「代码段」、「定时任务」等功能
+* 支持`docker`部署
 * 功能精简但齐全，界面简洁却美观，满足个人日常使用要求
 * 项目会持续更新，如果有不完善的地方，欢迎指出
 
-> 演示站点：博客前端 [http://bihell.com](http://bihell.com) ， 管理前端 [http://bihell.com/admin](http://bihell.com/admin)
+> 演示站点：博客前端 [https://bihell.com](http://bihell.com) ， 管理前端 [https://bihell.com/admin](http://bihell.com/admin)
 
 > 演示账号：demo 密码：123456
 

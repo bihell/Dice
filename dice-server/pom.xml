@@ -18,7 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <mybatis-plus-boot.version>3.3.1</mybatis-plus-boot.version>
-        <dynamic-datasource-spring-boot.version>2.5.6</dynamic-datasource-spring-boot.version>
+        <dynamic-datasource-spring-boot.version>3.0.0</dynamic-datasource-spring-boot.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <flexmark.version>0.34.58</flexmark.version>
     </properties>

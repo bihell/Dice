@@ -21,12 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.bihell.dice.utils.DateUtil.convertToLocalDateTimeViaInstant;
+import static com.bihell.dice.utils.DateUtil.convertToLocalDateTime;
 
 /**
  * @author haseochen
@@ -136,8 +135,8 @@ public class JobServiceImpl implements JobService {
             job.setJobName(jobName);
             job.setJobGroup(jobGroup);
             job.setDescription("触发器:" + trigger.getKey());
-            job.setNextTime(convertToLocalDateTimeViaInstant(trigger.getNextFireTime()));
-            job.setPreviousTime(convertToLocalDateTimeViaInstant(trigger.getPreviousFireTime()));
+            job.setNextTime(convertToLocalDateTime(trigger.getNextFireTime()));
+            job.setPreviousTime(convertToLocalDateTime(trigger.getPreviousFireTime()));
             Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
             job.setJobStatus(triggerState.name());
             if (trigger instanceof CronTrigger) {

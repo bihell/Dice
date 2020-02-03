@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -114,8 +113,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .like(!StringUtils.isEmpty(query.getTags()), Article::getTags, query.getTags())
                 .like(!StringUtils.isEmpty(query.getCategory()), Article::getCategory, query.getCategory())
                 .like(!StringUtils.isEmpty(query.getContent()), Article::getContent, query.getContent())
-                .orderByDesc(Article::getModifyTime);
-
+                .orderByDesc(Article::getUpdateTime);
         return articleMapper.selectPage(page, wrapper);
     }
 
@@ -240,9 +238,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         for (Article article : articles) {
             // 清空文章内容
             article.setContent("");
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(article.getCreateTime());
-            String dateStr = String.valueOf(cal.get(Calendar.YEAR));
+            String dateStr = String.valueOf( article.getCreateTime().getDayOfYear());
             if (dateStr.equals(current)) {
                 Archive arc = archives.get(archives.size() - 1);
                 arc.getArticles().add(article);

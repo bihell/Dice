@@ -4,6 +4,7 @@ import com.bihell.dice.model.blog.Article;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Archive {
 
     private String dateStr;
 
-    private Date date;
+    private LocalDateTime date;
 
     private Integer count;
 

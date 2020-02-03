@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
@@ -32,8 +33,7 @@ public abstract class JobExecuter {
         String exeResult = "执行成功";
         TaskLog taskLog = new TaskLog();
         taskLog.setName(taskName);
-        Date exeAt = new Date();
-        taskLog.setExecAt(exeAt);
+        taskLog.setExecAt(LocalDateTime.now());
         taskLog.setIdTask(task.getId());
         //默认是成功 出异常后改成失败
         taskLog.setExecSuccess(1);
@@ -48,7 +48,7 @@ public abstract class JobExecuter {
             taskLog.setJobException(e.getClass().getName());
         }
         task.setExecResult(exeResult);
-        task.setExecAt(exeAt);
+        task.setExecAt(LocalDateTime.now());
         taskLog.insert();
         task.updateById();
         log.info(">>>>>>>>>>>>>>>>>执行定时任务[" + taskName + "]结束<<<<<<<<<<<<<<<<<<<");

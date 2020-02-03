@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -57,5 +58,5 @@ public class Log extends Model<Log> {
     /**
      * 操作时间
      */
-    private Date created;
+    private LocalDateTime created;
 }

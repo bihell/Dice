@@ -29,6 +29,7 @@ public class DateUtil {
         }
     }
 
+    @Deprecated
     public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
@@ -45,7 +46,7 @@ public class DateUtil {
         return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
     }
 
-
+    @Deprecated
     public static LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
@@ -87,16 +88,12 @@ public class DateUtil {
                         .toInstant());
     }
 
-    /**
-     * Java 9
-     */
-//    public LocalDate convertToLocalDate(Date dateToConvert) {
-//    return LocalDate.ofInstant(
-//                      dateToConvert.toInstant(), ZoneId.systemDefault());
-//    }
-//
-//    public LocalDateTime convertToLocalDateTime(Date dateToConvert) {
-//        return LocalDateTime.ofInstant(
-//                dateToConvert.toInstant(), ZoneId.systemDefault());
-//    }
+    public static LocalDate convertToLocalDate(Date dateToConvert) {
+        return LocalDate.ofInstant(dateToConvert.toInstant(), ZoneId.systemDefault());
+    }
+
+    public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return LocalDateTime.ofInstant(
+                dateToConvert.toInstant(), ZoneId.systemDefault());
+    }
 }

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -51,12 +53,12 @@ public class User extends Model<User> {
     /**
      * 用户创建时间
      */
-    private Date created;
+    private LocalDateTime created;
 
     /**
      * 最后登陆时间
      */
-    private Date logged;
+    private LocalDateTime logged;
 
     @TableField(exist = false)
     private List<Integer> roleIds;

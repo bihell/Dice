@@ -1,97 +1,18 @@
 package com.bihell.dice.utils;
 
 import com.bihell.dice.exception.TipException;
-import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.lang.NonNull;
-import org.springframework.util.Assert;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
- * Date utilities.
- *
- * @author johnniang
- * @date 3/18/19
+ * @author haseochen
  */
 public class DateUtil {
-
-    private DateUtil() {
-    }
-
-    /**
-     * Gets current date.
-     *
-     * @return current date
-     */
-    @NonNull
-    public static Date now() {
-        return new Date();
-    }
-
-    /**
-     * Converts from date into a calendar instance.
-     *
-     * @param date date instance must not be null
-     * @return calendar instance
-     */
-    @NonNull
-    public static Calendar convertTo(@NonNull Date date) {
-        Assert.notNull(date, "Date must not be null");
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
-    }
-
-    /**
-     * Adds date.
-     *
-     * @param date     current date must not be null
-     * @param time     time must not be less than 1
-     * @param timeUnit time unit must not be null
-     * @return added date
-     */
-    public static Date add(@NonNull Date date, long time, @NonNull TimeUnit timeUnit) {
-        Assert.notNull(date, "Date must not be null");
-        Assert.isTrue(time >= 0, "Addition time must not be less than 1");
-        Assert.notNull(timeUnit, "Time unit must not be null");
-
-        Date result;
-
-        int timeIntValue;
-
-        if (time > Integer.MAX_VALUE) {
-            timeIntValue = Integer.MAX_VALUE;
-        } else {
-            timeIntValue = Long.valueOf(time).intValue();
-        }
-
-        // Calc the expiry time
-        switch (timeUnit) {
-            case DAYS:
-                result = DateUtils.addDays(date, timeIntValue);
-                break;
-            case HOURS:
-                result = DateUtils.addHours(date, timeIntValue);
-                break;
-            case MINUTES:
-                result = DateUtils.addMinutes(date, timeIntValue);
-                break;
-            case SECONDS:
-                result = DateUtils.addSeconds(date, timeIntValue);
-                break;
-            case MILLISECONDS:
-                result = DateUtils.addMilliseconds(date, timeIntValue);
-                break;
-            default:
-                result = date;
-        }
-        return result;
-    }
 
     /**
      * 日期转化
@@ -104,8 +25,78 @@ public class DateUtil {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             return formatter.parse(dateInString);
         } catch (Exception e) {
-            throw new TipException("日期转换错误："+e);
+            throw new TipException("日期转换错误：" + e);
         }
     }
 
+    public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public static LocalDate convertToLocalDateViaMilisecond(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public static LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+
+
+    public static LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    public static LocalDateTime convertToLocalDateTimeViaMilisecond(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    public static LocalDateTime convertToLocalDateTimeViaSqlTimestamp(Date dateToConvert) {
+        return new java.sql.Timestamp(
+                dateToConvert.getTime()).toLocalDateTime();
+    }
+
+    public static LocalDateTime convertToLocalDateTimeVisLong(Long timeStamp) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timeStamp), ZoneId.systemDefault());
+    }
+
+    public static Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
+    }
+
+    public static Date convertToDateViaInstant(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
+
+    public static Date convertToDateViaSqlTimestamp(LocalDateTime dateToConvert) {
+        return java.sql.Timestamp.valueOf(dateToConvert);
+    }
+
+    public static Date convertToDateViaInstant(LocalDateTime dateToConvert) {
+        return java.util.Date
+                .from(dateToConvert.atZone(ZoneId.systemDefault())
+                        .toInstant());
+    }
+
+    /**
+     * Java 9
+     */
+//    public LocalDate convertToLocalDate(Date dateToConvert) {
+//    return LocalDate.ofInstant(
+//                      dateToConvert.toInstant(), ZoneId.systemDefault());
+//    }
+//
+//    public LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+//        return LocalDateTime.ofInstant(
+//                dateToConvert.toInstant(), ZoneId.systemDefault());
+//    }
 }

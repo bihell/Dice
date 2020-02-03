@@ -2,6 +2,9 @@ package com.bihell.dice.model.params;
 
 import com.bihell.dice.model.blog.Article;
 
+import static com.bihell.dice.utils.DateUtil.convertToLocalDateTimeVisLong;
+
+
 /**
  * @author haseochen
  */
@@ -13,15 +16,15 @@ public class ArticleParam extends Article {
      * @param createTime
      */
     public void setCreateTime(Long createTime) {
-        super.setCreateTime(new java.util.Date(createTime));
+        super.setCreateTime(convertToLocalDateTimeVisLong(createTime));
     }
 
     /**
      * 修改时间
      *
-         * @param modifyTime
+     * @param modifyTime
      */
     public void setModifyTime(Long modifyTime) {
-        super.setModifyTime(new java.util.Date(modifyTime));
+        super.setUpdateTime(convertToLocalDateTimeVisLong(modifyTime));
     }
 }

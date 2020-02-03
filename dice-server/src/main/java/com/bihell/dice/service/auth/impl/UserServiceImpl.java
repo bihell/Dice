@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -87,7 +88,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // Log it then login successful
         log.info("用户登录: {}", user.getUsername());
-        user.setLogged(new Date());
+        user.setLogged(LocalDateTime.now());
         user.updateById();
 
         // Generate new token

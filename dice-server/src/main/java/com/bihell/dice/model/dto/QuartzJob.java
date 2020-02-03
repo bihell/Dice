@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
@@ -21,8 +22,8 @@ public class QuartzJob implements Serializable {
     private String cronExpression;
     private boolean concurrent;
     private String jobStatus;
-    private Date nextTime;
-    private Date previousTime;
+    private LocalDateTime nextTime;
+    private LocalDateTime previousTime;
     private Integer status;
     private Map<String, Object> dataMap;
 }

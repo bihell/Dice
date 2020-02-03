@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -27,12 +28,12 @@ public class Media extends Model<Media> {
     /**
      * 创建时间
      */
-    private Date created;
+    private LocalDateTime created;
 
     /**
      * 修改时间
      */
-    private Date modified;
+    private LocalDateTime modified;
 
     /**
      * 文件名

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,7 +95,7 @@ public class OptionServiceImpl implements OptionService {
         SysOption sysOption = new SysOption().selectOne(new QueryWrapper<SysOption>().lambda().eq(SysOption::getOptionKey, key));
         if (null != sysOption) {
             sysOption.setOptionValue(value);
-            sysOption.setModified(new Date());
+            sysOption.setModified(LocalDateTime.now());
             sysOption.update(new UpdateWrapper<SysOption>().lambda().eq(SysOption::getId, sysOption.getId()));
         } else {
             record.setOptionValue(value);

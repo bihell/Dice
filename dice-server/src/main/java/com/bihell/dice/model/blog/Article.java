@@ -15,8 +15,8 @@ import java.util.Date;
  * @author bihell
  * @since 2017/7/8 9:29
  */
-@Setter
-@Getter
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Accessors(chain = true)
 public class Article extends BaseEntity<Article> {
 

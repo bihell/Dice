@@ -6,6 +6,7 @@ import com.bihell.dice.model.BaseEntity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -35,7 +36,7 @@ public class Task extends BaseEntity<Task> {
 
     private String data;
 
-    private Date execAt;
+    private LocalDateTime execAt;
 
     private String execResult;
 

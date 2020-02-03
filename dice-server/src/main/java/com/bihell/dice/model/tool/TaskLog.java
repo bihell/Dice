@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -25,7 +26,7 @@ public class TaskLog extends Model<TaskLog> {
     private Long id;
     private Long idTask;
     private String name;
-    private Date execAt;
+    private LocalDateTime execAt;
     private int execSuccess;
     private String jobException;
 }

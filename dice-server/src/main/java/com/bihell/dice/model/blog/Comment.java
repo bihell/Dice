@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -57,7 +58,7 @@ public class Comment extends Model<Comment> {
     /**
      * 评论时间
      */
-    private Date created;
+    private LocalDateTime created;
 
     /**
      * 赞

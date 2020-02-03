@@ -11,7 +11,7 @@
     <a alt="vue"><img src="https://img.shields.io/badge/vue-2.6.11-orange.svg"></a>
     <a alt="nuxt"><img src="https://img.shields.io/badge/nuxt-2.11.0-yellowgreen.svg"></a>
     <a alt="docker"><img src="https://img.shields.io/badge/docker-19.03.5--ce-ff69b4.svg"></a>
-    <a alt="docker-compose"><img src="https://img.shields.io/badge/docker-compose-1.25.2-lightgrey.svg"></a>
+    <a alt="docker-compose"><img src="https://img.shields.io/badge/docker--compose-1.25.2-lightgrey.svg"></a>
 </p>
 
 * 基于`node` `java` `spring-boot` `vue` `nuxt` 开发的个人管理系统，目前已经实现「博客」、「权限管理」、「媒体库」、「代码段」、「定时任务」等功能

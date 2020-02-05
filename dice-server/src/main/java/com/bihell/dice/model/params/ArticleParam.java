@@ -12,19 +12,15 @@ public class ArticleParam extends Article {
 
     /**
      * 创建时间
-     *
-     * @param createTime
-     */
+     **/
     public void setCreateTime(Long createTime) {
         super.setCreateTime(convertToLocalDateTimeVisLong(createTime));
     }
 
     /**
      * 修改时间
-     *
-     * @param modifyTime
-     */
-    public void setModifyTime(Long modifyTime) {
-        super.setUpdateTime(convertToLocalDateTimeVisLong(modifyTime));
+     **/
+    public void setUpdateTime(Long updateTime) {
+        super.setUpdateTime(convertToLocalDateTimeVisLong(updateTime));
     }
 }

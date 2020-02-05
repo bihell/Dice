@@ -33,7 +33,7 @@
       </el-table-column>
       <el-table-column label="修改日期" width="160" show-overflow-tooltip>
         <template slot-scope="{row}">
-          <span style="margin-left: 10px">{{ row.modifyTime }}</span>
+          <span style="margin-left: 10px">{{ row.updateTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -113,7 +113,7 @@ export default {
           id: data.id,
           title: data.title,
           publish: this.$dayjs(data.createTime).format('YYYY-MM-DD HH:mm'),
-          modifyTime: this.$dayjs(data.modifyTime).format('YYYY-MM-DD HH:mm'),
+          updateTime: this.$dayjs(data.updateTime).format('YYYY-MM-DD HH:mm'),
           status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
         }
         this.pageDetail.push(page)

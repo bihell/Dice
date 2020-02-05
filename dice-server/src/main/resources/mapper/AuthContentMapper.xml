@@ -13,7 +13,7 @@
         <result column="creator" property="creator" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="modifier" property="modifier" jdbcType="INTEGER"/>
-        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
     </resultMap>
 

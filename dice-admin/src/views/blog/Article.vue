@@ -93,7 +93,7 @@
               </el-form-item>
               <el-form-item label="修改日期">
                 <el-date-picker
-                  v-model="article.modifyTime"
+                  v-model="article.updateTime"
                   type="datetime"
                   placeholder="修改日期"
                   size="small"
@@ -205,7 +205,7 @@ export default {
         content: '',
         status: '',
         createTime: '',
-        modifyTime: '',
+        updateTime: '',
         priority: 0,
         allowComment: true
       },
@@ -256,7 +256,7 @@ export default {
           content: '',
           status: this.$static.STATUS_PUBLISH,
           createTime: Date.now(),
-          modifyTime: Date.now()
+          updateTime: Date.now()
         }
         this.initArticle(data)
       }
@@ -269,7 +269,7 @@ export default {
       this.article.content = data.content
       this.article.status = data.status
       this.article.createTime = new Date(data.createTime).getTime()
-      this.article.modifyTime = Date.now()
+      this.article.updateTime = Date.now()
       this.selectTags = this.$util.stringToTags(data.tags)
     },
     getTags() {

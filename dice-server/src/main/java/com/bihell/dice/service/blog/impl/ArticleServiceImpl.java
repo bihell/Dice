@@ -238,15 +238,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         for (Article article : articles) {
             // 清空文章内容
             article.setContent("");
-            String dateStr = String.valueOf( article.getCreateTime().getDayOfYear());
-            if (dateStr.equals(current)) {
+            String year = String.valueOf(article.getCreateTime().getYear());
+            if (year.equals(current)) {
                 Archive arc = archives.get(archives.size() - 1);
                 arc.getArticles().add(article);
                 arc.setCount(arc.getArticles().size());
             } else {
-                current = dateStr;
+                current = year;
                 Archive arc = new Archive();
-                arc.setDateStr(dateStr);
+                arc.setDateStr(year);
                 arc.setCount(1);
                 List<Article> arts = new ArrayList<>();
                 arts.add(article);

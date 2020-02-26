@@ -35,3 +35,4 @@ logs
 *.iml
 
 package-lock.json
+bigdata

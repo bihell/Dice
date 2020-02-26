@@ -10,6 +10,7 @@ COPY ./dice-docker/dice-openresty/lua/http.lua /usr/local/openresty/lualib/resty
 COPY ./dice-docker/dice-openresty/lua/http_headers.lua /usr/local/openresty/lualib/resty/http_headers.lua
 COPY ./dice-admin/dist /usr/local/openresty/nginx/html/dice-admin
 COPY ./dice-docker/dice-openresty/data /data
+COPY ../BigData/docs/.vuepress/dist /usr/local/openresty/nginx/html/bigdata
 
 EXPOSE 80
 

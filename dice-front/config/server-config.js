@@ -9,8 +9,8 @@ const devProxy = {
 const prodUrl = ''
 const prodProxy = {
   protocol: 'http',
-  host: 'dice-openresty',
-  port: 80
+  host: 'dice-server',
+  port: 9091
 }
 
 const config = {

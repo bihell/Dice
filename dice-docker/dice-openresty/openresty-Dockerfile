@@ -9,7 +9,7 @@ COPY ./dice-auth/lua/func.lua /usr/local/openresty/nginx/lua/func.lua
 COPY ./dice-docker/dice-openresty/lua/http.lua /usr/local/openresty/lualib/resty/http.lua
 COPY ./dice-docker/dice-openresty/lua/http_headers.lua /usr/local/openresty/lualib/resty/http_headers.lua
 COPY ./dice-admin/dist /usr/local/openresty/nginx/html/dice-admin
-# 以下三行复制语句请删除
+
 COPY ./dice-docker/dice-openresty/data /data
 COPY ./dice-docker/dice-openresty/bigdata /usr/local/openresty/nginx/html/bigdata
 COPY ./dice-docker/dice-openresty/conf.d/bigdata.conf /etc/nginx/conf.d/bigdata.conf

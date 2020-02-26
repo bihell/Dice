@@ -27,7 +27,7 @@
 
 ## 开发&部署
 
-请查看开发部署文档：[gitee](https://bihell.gitee.io/big-data/project/dice.html) [github](https://bihell.github.io/big-data/project/dice.html)
+[点此查看开发&部署文档](https://bigdata.bihell.com/project/dice.html)
 
 ## 部分界面
 

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="tool-container" style="justify-content: flex-end">
+    <div class="filter-wrap mb-2" style="justify-content: flex-end">
       <el-button
         v-permission="'/blog/page/new'"
         type="primary"
@@ -135,49 +135,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.el-table ::-webkit-scrollbar {
-  display: block;
-  height: 10px;
-}
-
-.el-table ::-webkit-scrollbar-thumb {
-  background-color: #324157;
-}
-
-.el-table ::-webkit-scrollbar-thumb:active {
-  background-color: #00aff0;
-}
-
-@media screen and (min-width: 600px) {
-  .el-table ::-webkit-scrollbar {
-    display: block;
-    height: 10px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .el-table ::-webkit-scrollbar {
-    display: none;
-  }
-}
-</style>
-
-<style scoped>
-.tool-container {
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  background: #fff;
-}
-
-.el-table {
-  border: 1px solid #e6ebf5;
-}
-
-.admin-page {
-  margin-top: 30px;
-  text-align: center;
-}
-</style>

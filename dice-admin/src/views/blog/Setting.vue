@@ -209,11 +209,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-.tip {
-  font-size: 14px;
-  color: #5e6d82;
-  line-height: 1.5em;
-}
-</style>

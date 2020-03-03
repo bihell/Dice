@@ -73,19 +73,12 @@
   }
 }
 
+// fix date-picker ui bug in filter-item
+.el-range-editor.el-input__inner {
+  display: inline-flex !important;
+}
+
 // to fix el-date-picker css style
 .el-range-separator {
   box-sizing: content-box;
-}
-
-// 统一transfer样式
-.el-transfer-panel {
-  width: 300px;
-  height: 500px;
-  .el-transfer-panel__body {
-    height: 443px;
-    .el-transfer-panel__list.is-filterable {
-      height: 396px;
-    }
-  }
 }

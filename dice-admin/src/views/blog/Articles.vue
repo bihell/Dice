@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="tool-container">
+    <div class="filter-wrap mb-2">
       <el-row style="width: 100%">
         <el-col :xs="24" :sm="24" :md="12" :lg="4">
           <span>
@@ -235,40 +235,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.el-table ::-webkit-scrollbar {
-  display: block;
-  height: 10px;
-}
-
-.el-table ::-webkit-scrollbar-thumb {
-  background-color: #324157;
-}
-
-.el-table ::-webkit-scrollbar-thumb:active {
-  background-color: #00aff0;
-}
-
-@media screen and (min-width: 600px) {
-  .el-table ::-webkit-scrollbar {
-    display: block;
-    height: 10px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .el-table ::-webkit-scrollbar {
-    display: none;
-  }
-}
-</style>
-
-<style scoped>
-.tool-container {
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  background: #fff;
-}
-</style>

@@ -75,10 +75,6 @@ export default {
 </script>
 
 <style scoped>
-.el-table {
-  border: 1px solid #e6ebf5;
-}
-
 .media-list .block {
   padding: 12px;
   text-align: center;

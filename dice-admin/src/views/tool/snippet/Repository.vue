@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
-    <div class="tool-container">
-      <div>
+    <div class="filter-wrap mb-2">
+      <div style="display: flex">
         <el-input
           v-model="querySnippet.title"
           placeholder="搜索代码段标题"
           clearable
-          style="max-width: 400px;"
+          style="width: 400px;"
           @keyup.enter.native="handleSearch"
         />
         <el-input
           v-model="querySnippet.snippetFileContent"
           placeholder="搜索代码段内容"
           clearable
-          style="max-width: 400px;margin-left: 5px"
+          style="width: 400px;margin-left: 5px"
           @keyup.enter.native="handleSearch"
         />
         <el-button
@@ -155,11 +155,6 @@ export default {
   @import "~bulma-scss/bulma.scss";
   .card-description {
     padding: 1rem 0.75em;
-  }
-  .tool-container {
-    padding-bottom: 10px;
-    justify-content: space-between;
-    background: #fff;
   }
   .menu-text {
     margin: 1em;

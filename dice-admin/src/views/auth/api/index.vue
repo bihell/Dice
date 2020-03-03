@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="filter-wrap mb-3">
+    <div class="filter-wrap mb-2">
       <div>
         <el-button v-permission="'/auth/api/add'" type="primary" icon="el-icon-edit" size="small" @click="handleCreate">
           新增
@@ -51,11 +51,3 @@
 
 <script type="script" lang="js" src="./api.js">
 </script>
-
-<style lang="scss" scoped>
-  .filter-wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-</style>

@@ -265,13 +265,6 @@ export default {
   margin-left: 5px;
   display: inline-block;
 }
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
 
 .clearfix:before,
 .clearfix:after {

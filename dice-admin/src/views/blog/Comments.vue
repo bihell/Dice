@@ -189,10 +189,6 @@ export default {
 </script>
 
 <style scoped>
-.el-table {
-  border: 1px solid #e6ebf5;
-}
-
 .comment-dialog .comment-row-detail {
   width: 90%;
   margin: 15px auto !important;

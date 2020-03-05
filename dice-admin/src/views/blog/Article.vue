@@ -57,8 +57,8 @@
               <el-form-item label="状态">
                 <el-switch
                   v-model="article.status"
-                  active-value="publish"
-                  inactive-value="draft"
+                  :active-value="postStatus.PUBLISHED.value"
+                  :inactive-value="postStatus.DRAFT.value"
                   active-text="公开"
                   inactive-text="隐藏"
                 />
@@ -184,7 +184,7 @@ import Upload from '../../components/Upload/Upload'
 import MediaItem from '../../components/Upload/MediaItem'
 import { pageMedia } from '@/api/media'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { saveArticle, getArticle, getAllTags, getAllCategories } from '@/api/blog'
+import * as blogApi from '@/api/blog'
 
 export default {
   components: {
@@ -195,6 +195,7 @@ export default {
   },
   data: function() {
     return {
+      postStatus: blogApi.postStatus(),
       isMobile: false,
       mediaDialog: false,
       article: {
@@ -243,7 +244,7 @@ export default {
       const id = this.$route.params.id
       // 如果有id则表示编辑文章,获取文章信息
       if (id) {
-        getArticle(id).then(response => {
+        blogApi.getArticle(id).then(response => {
           this.initArticle(response.data)
         })
       } else {
@@ -254,7 +255,7 @@ export default {
           tags: '',
           category: '',
           content: '',
-          status: this.$static.STATUS_PUBLISH,
+          status: blogApi.postStatus().PUBLISHED.value,
           createTime: Date.now(),
           updateTime: Date.now()
         }
@@ -273,7 +274,7 @@ export default {
       this.selectTags = this.$util.stringToTags(data.tags)
     },
     getTags() {
-      getAllTags().then(response => {
+      blogApi.getAllTags().then(response => {
         for (const key in response.data) {
           const tag = {
             value: response.data[key].name,
@@ -284,7 +285,7 @@ export default {
       })
     },
     getCategories() {
-      getAllCategories().then(response => {
+      blogApi.getAllCategories().then(response => {
         for (const key in response.data) {
           const category = {
             value: response.data[key].name,
@@ -299,7 +300,7 @@ export default {
         if (valid) {
           const params = this.article
           params.tags = this.$util.tagsToString(this.selectTags)
-          saveArticle(params).then(response => {
+          blogApi.saveArticle(params).then(response => {
             success(response.data)
           })
         }

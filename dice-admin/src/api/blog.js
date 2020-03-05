@@ -195,3 +195,32 @@ export function deletePage(id) {
     method: 'delete'
   })
 }
+
+export function postStatus() {
+  return ({
+    PUBLISHED: {
+      value: 'PUBLISHED',
+      color: 'green',
+      status: 'success',
+      text: '已发布'
+    },
+    DRAFT: {
+      value: 'DRAFT',
+      color: 'warning',
+      status: 'warning',
+      text: '草稿'
+    },
+    RECYCLE: {
+      value: 'RECYCLE',
+      color: 'danger',
+      status: 'error',
+      text: '回收站'
+    },
+    INTIMATE: {
+      value: 'INTIMATE',
+      color: 'blue',
+      status: 'success',
+      text: '私密'
+    }
+  })
+}

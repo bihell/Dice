@@ -36,8 +36,8 @@ public class ArticleController extends BaseController {
      */
     @GetMapping
     public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, Article query) {
-        IPage<Article> articles = articleService.getAdminArticles(pageNum, pageSize, query);
+                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, Article articleParam) {
+        IPage<Article> articles = articleService.getAdminArticles(pageNum, pageSize, articleParam);
         return RestResponse.ok(new Pagination<Article>(articles));
     }
 
@@ -90,6 +90,6 @@ public class ArticleController extends BaseController {
     public RestResponse count() {
         return RestResponse.ok(articleService.count(new QueryWrapper<Article>().lambda()
                 .eq(Article::getType, Types.POST)
-                .ne(Article::getStatus, Types.DELETE)));
+        ));
     }
 }

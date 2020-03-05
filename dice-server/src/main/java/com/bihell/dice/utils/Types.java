@@ -8,19 +8,6 @@ package com.bihell.dice.utils;
  */
 public interface Types {
     /**
-     * 文章状态:公开
-     */
-    String PUBLISH = "publish";
-    /**
-     * 文章状态:草稿
-     */
-    String DRAFT = "draft";
-    /**
-     * 文章状态:删除
-     */
-    String DELETE = "delete";
-
-    /**
      * 属性分类:归档
      */
     String CATEGORY = "category";

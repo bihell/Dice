@@ -39,9 +39,18 @@
       <el-table-column
         prop="status"
         label="状态"
-        width="100"
+        width="79"
         show-overflow-tooltip
-      />
+      >
+        <template slot-scope="{row}">
+          <el-tag
+            :type="postStatus[row.status].color"
+            disable-transitions
+            effect="plain"
+          >{{ postStatus[row.status].text }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="{row}">
           <el-button
@@ -68,7 +77,7 @@
 
 <script type="text/ecmascript-6">
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getPages, deletePage } from '@/api/blog'
+import * as blogApi from '@/api/blog'
 
 export default {
   components: {
@@ -76,6 +85,7 @@ export default {
   },
   data: function() {
     return {
+      postStatus: blogApi.postStatus(),
       pageDetail: [],
       listQuery: {
         total: 0,
@@ -114,19 +124,19 @@ export default {
           title: data.title,
           publish: this.$dayjs(data.createTime).format('YYYY-MM-DD HH:mm'),
           updateTime: this.$dayjs(data.updateTime).format('YYYY-MM-DD HH:mm'),
-          status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏'
+          status: data.status
         }
         this.pageDetail.push(page)
       }
     },
     deletePage(id) {
-      deletePage(id).then(() => {
+      blogApi.deletePage(id).then(() => {
         this.$util.message.success('删除成功!')
         this.init()
       })
     },
     init() {
-      getPages(this.currentPage, this.limit).then(response => {
+      blogApi.getPages(this.currentPage, this.limit).then(response => {
         this.initPageDatas(response.data.list)
         this.listQuery.total = response.data.total
         this.listQuery.pageSize = response.data.pageSize

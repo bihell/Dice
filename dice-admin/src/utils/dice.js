@@ -7,8 +7,6 @@ import serverConfig from './server-config'
  */
 const STATIC = {
   DEFAULT_CATEGORY: '默认分类',
-  STATUS_PUBLISH: 'publish',
-  STATUS_DRAFT: 'draft',
   META_CATEGORY: 'category',
   META_TAG: 'tag',
   META_SNIPPET_TAG: 'snippet_tag',

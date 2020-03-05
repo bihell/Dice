@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bihell.dice.enums.PostStatusEnum;
 import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.Archive;
 import com.bihell.dice.exception.TipException;
@@ -61,7 +62,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         Page<Article> page = new Page<>(current, limit);
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
-                .eq(Article::getStatus, Types.PUBLISH)
+                .eq(Article::getStatus, PostStatusEnum.PUBLISHED)
                 .eq(Article::getType, Types.POST)
                 .orderByDesc(Article::getPriority,Article::getCreateTime);
         IPage<Article> result = articleMapper.selectPage(page, wrapper);
@@ -85,7 +86,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public Article getFrontArticle(Integer id) {
         Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
                 .eq(Article::getId, id)
-                .eq(Article::getStatus, Types.PUBLISH)
+                .eq(Article::getStatus, PostStatusEnum.PUBLISHED)
                 .eq(Article::getType, Types.POST));
         String content = DiceUtil.contentTransform(article.getContent(), false, true);
         article.setContent(content);
@@ -106,7 +107,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
                 .eq(Article::getType, Types.POST)
-                .ne(Article::getStatus, Types.DELETE)
                 .eq(!StringUtils.isEmpty(query.getStatus()), Article::getStatus, query.getStatus())
                 .eq(!StringUtils.isEmpty(query.getPriority()), Article::getPriority, query.getPriority())
                 .like(!StringUtils.isEmpty(query.getTitle()), Article::getTitle, query.getTitle())
@@ -230,7 +230,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     //@Cacheable(value = ARTICLE_CACHE_NAME, key = "'archives'")
     public List<Archive> getArchives() {
         List<Article> articles = new Article().selectList(new QueryWrapper<Article>().lambda()
-                .eq(Article::getStatus, Types.PUBLISH)
+                .eq(Article::getStatus, PostStatusEnum.PUBLISHED)
                 .eq(Article::getType, Types.POST)
                 .orderByDesc(Article::getCreateTime));
         List<Archive> archives = new ArrayList<>();
@@ -268,7 +268,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public Article getFrontPage(Integer id) {
         Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
                 .eq(Article::getId, id)
-                .eq(Article::getStatus, Types.PUBLISH)
+                .eq(Article::getStatus, PostStatusEnum.PUBLISHED)
                 .eq(Article::getType, Types.PAGE));
         String content = DiceUtil.contentTransform(article.getContent(), false, true);
         article.setContent(content);
@@ -289,8 +289,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
-                .eq(Article::getType, Types.PAGE)
-                .ne(Article::getStatus, Types.DELETE);
+                .eq(Article::getType, Types.PAGE);
 
         return articleMapper.selectPage(page, wrapper);
     }
@@ -401,7 +400,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.selectList(new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
                 .eq(Article::getType, Types.PAGE)
-                .ne(Article::getStatus, Types.DELETE)
                 .orderByDesc(Article::getPriority, Article::getId));
     }
 }

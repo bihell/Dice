@@ -17,9 +17,9 @@ public class MetaSql {
                         "from dice.meta t1\n" +
                         "left join dice.middle t2 on t2.m_id = t1.id ");
         if (null != snippetFileContent && !StringUtils.isEmpty(snippetFileContent)) {
-            sql.append(" join (select id,title,type,status from dice.article where id in (select snippet_id from dice.snippet_file where content like CONCAT('%',#{snippetFileContent},'%'))) t3 on t3.id = t2.a_id ");
+            sql.append(" join (select id,title,type,status from dice.article where deleted = 0 and id in (select snippet_id from dice.snippet_file where content like CONCAT('%',#{snippetFileContent},'%'))) t3 on t3.id = t2.a_id ");
         } else {
-            sql.append(" left join dice.article t3 on t3.id = t2.a_id");
+            sql.append(" left join dice.article t3 on t3.id = t2.a_id and t3.deleted = 0");
         }
         switch (type) {
             case Types.SNIPPET_TAG:
@@ -30,7 +30,6 @@ public class MetaSql {
                 break;
             default:
         }
-        sql.append(" and t3.status != '" + Types.DELETE + "'");
         sql.append(" where 1=1 ");
         sql.append(" and t1.type = #{type} ");
         if (null != title && !StringUtils.isEmpty(title)) {

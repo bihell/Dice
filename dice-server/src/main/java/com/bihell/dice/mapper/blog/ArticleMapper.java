@@ -1,6 +1,7 @@
 package com.bihell.dice.mapper.blog;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.bihell.dice.enums.PostStatusEnum;
 import com.bihell.dice.model.blog.Article;
 import com.bihell.dice.model.dto.ArticleInfoDto;
 import com.bihell.dice.utils.Types;
@@ -35,7 +36,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     @Select("SELECT count(*) FROM dice.article WHERE id " +
             "IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) " +
-            "AND dice.article.type = '" + Types.POST + "' AND dice.article.status != '" + Types.DELETE + "'")
+            "AND dice.article.type = '" + Types.POST + " AND dice.article.deleted=0")
     Integer selectCountByMeta(@Param("metaId") Integer metaId);
 
     /**
@@ -46,7 +47,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     @Select("SELECT * FROM dice.article WHERE id " +
             "IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) " +
-            "AND dice.article.status = '" + Types.PUBLISH + "' AND dice.article.type = '" + Types.POST + "' order by create_time desc")
+            "AND dice.article.status = '" + PostStatusEnum.Constants.PUBLISHED_VALUE + "' AND dice.article.type = '" + Types.POST + "' order by create_time desc")
     List<ArticleInfoDto> selectPublishByMeta(@Param("metaId") Integer metaId);
 
     /**
@@ -67,6 +68,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     @Select("SELECT count(*) FROM dice.article WHERE id " +
             "IN (SELECT a_id FROM dice.middle WHERE m_id = #{metaId}) " +
-            "AND dice.article.status = '" + Types.PUBLISH + "' AND dice.article.type = '" + Types.POST + "'")
+            "AND dice.article.status = '" + PostStatusEnum.Constants.PUBLISHED_VALUE + "' AND dice.article.type = '" + Types.POST + "'")
     Integer selectPublishCountByMeta(@Param("metaId") Integer metaId);
 }

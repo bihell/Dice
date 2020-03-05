@@ -6,6 +6,7 @@ import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.blog.ArticleMapper;
 import com.bihell.dice.mapper.tool.SnippetFileMapper;
 import com.bihell.dice.model.blog.Article;
+import com.bihell.dice.enums.PostStatusEnum;
 import com.bihell.dice.model.tool.SnippetFile;
 import com.bihell.dice.model.dto.ArticleInfoDto;
 import com.bihell.dice.model.dto.Snippet;
@@ -62,7 +63,7 @@ public class SnippetServiceImpl implements SnippetService {
         } else {
             article.setTags(snippet.getLabel());
         }
-        article.setStatus(Types.PUBLISH);
+        article.setStatus(PostStatusEnum.PUBLISHED);
         if (null != article.getId()) {
             // 更新代码段
             article.updateById();
@@ -121,17 +122,14 @@ public class SnippetServiceImpl implements SnippetService {
             throw new TipException("没有id为" + snippetId + "的代码段");
         }
 
-        int rows = articleMapper.update(null, new UpdateWrapper<Article>().lambda()
-                .eq(Article::getId, snippetId)
-                .set(Article::getStatus, Types.DELETE));
-
-        if (rows > 0) {
+        if (article.deleteById()) {
             log.info("删除代码段: {}", article);
 
             // 删除代码段文件
             int commentsResult = snippetFilesMapper.delete(new QueryWrapper<SnippetFile>().lambda().eq(SnippetFile::getSnippetId, snippetId));
             log.info("删除对应的代码段,数量: {}", commentsResult);
 
+            // todo 这里删除代码段标签有问题待修改
             // 传空的属性，则移除该代码段关联的属性
             metasService.saveOrRemoveMetas("", Types.SNIPPET_TAG, article.getId());
             return true;

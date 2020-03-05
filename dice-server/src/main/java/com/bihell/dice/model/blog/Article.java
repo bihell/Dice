@@ -1,13 +1,10 @@
 package com.bihell.dice.model.blog;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.bihell.dice.model.BaseEntity;
-import com.bihell.dice.model.auth.AuthApi;
+import com.bihell.dice.enums.PostStatusEnum;
 import lombok.*;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * 文章 Model
@@ -28,7 +25,7 @@ public class Article extends BaseEntity<Article> {
     private String tags;
     private String category;
     private Integer priority;
-    private String status;
+    private PostStatusEnum status;
     private String type;
     private Boolean allowComment;
     private Integer commentCount;

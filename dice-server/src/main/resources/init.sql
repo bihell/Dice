@@ -33,7 +33,7 @@ create table article
     hits          int        default 0                 not null comment '点击量',
     tags          varchar(255)                         null comment '标签列表',
     category      varchar(255)                         null comment '文章分类',
-    status        varchar(32)                          null comment '内容状态',
+    status        smallint                             null comment '内容状态',
     type          varchar(32)                          null comment '内容类别',
     allow_comment tinyint(1) default 1                 not null comment '是否允许评论',
     comment_count int        default 0                 not null comment '评论数量',
@@ -44,7 +44,7 @@ create table article
     modifier      int                                  null comment '修改人',
     deleted       int(1)     default 0                 null comment '逻辑删除标识(0.未删除,1.已删除)'
 )
-    charset = UTF8MB4;
+charset = UTF8MB4;
 
 CREATE TABLE comment
 (

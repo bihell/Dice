@@ -2,67 +2,51 @@
   <div class="app-container">
     <div class="filter-wrap mb-2">
       <el-row style="width: 100%">
-        <el-col :xs="24" :sm="24" :md="12" :lg="4">
-          <span>
-            状态：
-          </span>
-          <el-radio-group v-model="listQuery.status" size="mini" @change="init">
-            <el-radio-button label="">全部</el-radio-button>
-            <el-radio-button
-              :label="this.$static.STATUS_PUBLISH"
-            >公开
-            </el-radio-button>
-            <el-radio-button
-              :label="this.$static.STATUS_DRAFT"
-            >隐藏
-            </el-radio-button>
-          </el-radio-group>
+        <el-col :xs="24" :sm="24" :md="12" :lg="3">
+          <el-select v-model="queryParam.status" placeholder="文章状态" @change="handleFilter">
+            <el-option label="不限制" value="" />
+            <el-option
+              v-for="status in Object.keys(postStatus)"
+              :key="status"
+              :label="postStatus[status].text"
+              :value="postStatus[status].value"
+            />
+          </el-select>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="7">
-          <span>
-            类型：
-          </span>
-          <el-radio-group
-            v-model="listQuery.priority"
-            size="mini"
-            @change="init"
-          >
-            <el-radio-button label="">全部</el-radio-button>
-            <el-radio-button label="0">普通
-            </el-radio-button>
-            <el-radio-button label="1">置顶
-            </el-radio-button>
-          </el-radio-group>
+        <el-col :xs="24" :sm="24" :md="12" :lg="3">
+          <el-select v-model="queryParam.priority" placeholder="是否置顶" style="margin-left: 10px" @change="handleFilter">
+            <el-option label="不限制" value="" />
+            <el-option label="普通" value="0" />
+            <el-option label="置顶" value="1" />
+          </el-select>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="5">
+        <el-col :xs="24" :sm="24" :md="12" :lg="7" style="margin-left: 10px">
           <el-input
-            v-model.trim="listQuery.title"
-            size="small"
+            v-model.trim="queryParam.title"
             placeholder="搜索文章标题"
             clearable
-            @keyup.enter.native="init"
+            class="mr-3"
+            @keyup.enter.native="handleFilter"
           />
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="5" style="margin-left: 10px">
+        <el-col :xs="24" :sm="24" :md="12" :lg="7" style="margin-left: 10px">
           <el-input
-            v-model.trim="listQuery.content"
-            size="small"
+            v-model.trim="queryParam.content"
             placeholder="搜索文章内容"
             clearable
-            @keyup.enter.native="init"
+            @keyup.enter.native="handleFilter"
           />
         </el-col>
         <el-col :xs="24" :sm="24" :md="12" :lg="1" style="margin-left: 10px">
-          <el-button type="primary" icon="el-icon-search" size="small" @click="init">
+          <el-button type="primary" icon="el-icon-search" @click="handleFilter">
             搜索
           </el-button>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="1" style="margin-left: 20px">
+        <el-col :xs="24" :sm="24" :md="12" :lg="1" style="margin-left: 40px">
           <el-button
             v-permission="'/blog/article/new'"
             type="primary"
             icon="el-icon-document-add"
-            size="small"
             @click="handleNew"
           >新文章
           </el-button>
@@ -97,15 +81,15 @@
       <el-table-column
         prop="status"
         label="状态"
-        width="68"
+        width="79"
         show-overflow-tooltip
       >
         <template slot-scope="{row}">
           <el-tag
-            :type="row.status === '公开' ? 'success' : 'warning'"
+            :type="postStatus[row.status].color"
             disable-transitions
             effect="plain"
-          >{{ row.status }}
+          >{{ postStatus[row.status].text }}
           </el-tag>
         </template>
       </el-table-column>
@@ -153,7 +137,13 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="init" />
+    <pagination
+      v-show="queryParam.total>0"
+      :total="queryParam.total"
+      :page.sync="queryParam.pageNum"
+      :limit.sync="queryParam.pageSize"
+      @pagination="handleFilter"
+    />
 
   </div>
 </template>
@@ -161,7 +151,7 @@
 <script type="text/ecmascript-6">
 
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getArticles, deleteArticle } from '@/api/blog'
+import * as blogApi from '@/api/blog'
 
 export default {
   components: {
@@ -169,21 +159,22 @@ export default {
   },
   data: function() {
     return {
+      postStatus: blogApi.postStatus(),
       articleDetail: [],
-      listQuery: {
+      queryParam: {
         total: 0,
         pageSize: this.$static.DEFAULT_PAGE_SIZE,
         pageNum: 1,
-        status: '',
+        status: undefined,
         title: '',
         content: '',
-        priority: ''
+        priority: undefined
       }
     }
   },
   mounted() {
-    this.listQuery.pageNum = Number(this.$route.query.page) || 1
-    this.init()
+    this.queryParam.pageNum = Number(this.$route.query.page) || 1
+    this.handleFilter()
   },
   methods: {
     handleNew() {
@@ -213,23 +204,23 @@ export default {
           publish: this.$dayjs(data.createTime).format('YYYY-MM-DD HH:mm'),
           updateTime: this.$dayjs(data.updateTime).format('YYYY-MM-DD HH:mm'),
           category: data.category || this.$static.DEFAULT_CATEGORY,
-          status: this.$static.STATUS_PUBLISH === data.status ? '公开' : '隐藏',
+          status: data.status,
           priority: data.priority === 0 ? '普通' : '置顶'
         }
         this.articleDetail.push(article)
       }
     },
     deleteArticle(id) {
-      deleteArticle(id).then(() => {
+      blogApi.deleteArticle(id).then(() => {
         this.$util.message.success('删除成功!')
-        this.init()
+        this.handleFilter()
       })
     },
-    init() {
-      getArticles(this.listQuery).then(response => {
+    handleFilter() {
+      blogApi.getArticles(this.queryParam).then(response => {
         this.initArticleDatas(response.data.list)
-        this.listQuery.total = response.data.total
-        this.listQuery.pageSize = response.data.pageSize
+        this.queryParam.total = response.data.total
+        this.queryParam.pageSize = response.data.pageSize
       })
     }
   }

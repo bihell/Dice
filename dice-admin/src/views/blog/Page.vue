@@ -19,10 +19,10 @@
               <el-form-item>
                 <el-switch
                   v-model="page.status"
-                  active-value="publish"
-                  inactive-value="draft"
-                  active-text="公开"
-                  inactive-text="隐藏"
+                  :active-value="postStatus.PUBLISHED.value"
+                  :inactive-value="postStatus.DRAFT.value"
+                  active-text="发布"
+                  inactive-text="草稿"
                 />
               </el-form-item>
               <el-form-item label="排序权重">
@@ -69,7 +69,7 @@
 
 <script>
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor'
-import { getPage, savePage } from '@/api/blog'
+import * as blogApi from '@/api/blog'
 
 export default {
   components: {
@@ -77,11 +77,12 @@ export default {
   },
   data: function() {
     return {
+      postStatus: blogApi.postStatus(),
       page: {
         id: '',
         title: '',
         content: '',
-        status: this.$static.STATUS_PUBLISH,
+        status: blogApi.postStatus().PUBLISHED.text,
         allowComment: false,
         priority: 0
       },
@@ -102,7 +103,7 @@ export default {
     getPage() {
       const id = this.$route.params.id
       if (id) {
-        getPage(id).then(response => {
+        blogApi.getPage(id).then(response => {
           this.page.id = response.data.id
           this.page.title = response.data.title
           this.page.content = response.data.content
@@ -114,7 +115,7 @@ export default {
         this.page.id = ''
         this.page.title = ''
         this.page.content = ''
-        this.page.status = this.$static.STATUS_PUBLISH
+        this.page.status = blogApi.postStatus().PUBLISHED.value
         this.page.priority = 0
         this.page.allowComment = false
       }
@@ -122,7 +123,7 @@ export default {
     onPublish() {
       this.$refs['pageForm'].validate(valid => {
         if (valid) {
-          savePage(this.page).then(() => {
+          blogApi.savePage(this.page).then(() => {
             this.$router.push('/blog/page')
             this.$util.message.success('发布页面成功!')
           })
@@ -132,7 +133,7 @@ export default {
     onSave() {
       this.$refs['pageForm'].validate(valid => {
         if (valid) {
-          savePage(this.page).then(() => {
+          blogApi.savePage(this.page).then(() => {
             this.$util.message.success('保存页面成功!')
           })
         }

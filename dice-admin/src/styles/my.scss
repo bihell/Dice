@@ -36,3 +36,18 @@
   align-items: center;
 }
 
+.radius-count {
+  display: inline-block;
+  min-width: 10px;
+  line-height: 12px;
+  padding: 4px 7px;
+  margin-right: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #f36a5a;
+  border-radius: 10px;
+}

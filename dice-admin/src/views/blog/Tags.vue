@@ -12,7 +12,7 @@
                 tag.name
               }}</span>
               <span style="float: right;clear: both">
-                <span class="meta-count">{{ tag.count }}</span>
+                <span class="radius-count">{{ tag.count }}</span>
                 <el-button
                   v-permission="'/blog/tag/delete'"
                   size="small"
@@ -47,7 +47,7 @@
                 @click="clickCategory(category.id, category.name)"
               >{{ category.name }}</span>
               <span style="float: right;clear: both">
-                <span class="meta-count">{{ category.count }}</span>
+                <span class="radius-count">{{ category.count }}</span>
                 <el-button
                   v-permission="'/blog/tag/delete'"
                   size="small"
@@ -242,22 +242,6 @@ export default {
 
 .meta-list .meta:active {
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-
-.meta-list .meta-count {
-  display: inline-block;
-  min-width: 10px;
-  line-height: 12px;
-  padding: 4px 7px;
-  margin-right: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  background-color: #f36a5a;
-  border-radius: 10px;
 }
 
 .meta-input {

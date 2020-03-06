@@ -108,6 +108,16 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column
+        label="评论"
+        prop="commentCount"
+        show-overflow-tooltip
+        width="62"
+      >
+        <template slot-scope="{row}">
+          <span class="radius-count">{{ row.commentCount }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="发布日期" width="150" show-overflow-tooltip align="center">
         <template slot-scope="{row}">
           <span style="margin-left: 10px">{{ row.publish }}</span>
@@ -205,7 +215,8 @@ export default {
           updateTime: this.$dayjs(data.updateTime).format('YYYY-MM-DD HH:mm'),
           category: data.category || this.$static.DEFAULT_CATEGORY,
           status: data.status,
-          priority: data.priority === 0 ? '普通' : '置顶'
+          priority: data.priority === 0 ? '普通' : '置顶',
+          commentCount: data.commentCount
         }
         this.articleDetail.push(article)
       }

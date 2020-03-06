@@ -20,6 +20,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
             setFieldValByName("createTime", LocalDateTime.now(), metaObject);
 
         }
+        Object val = getFieldValByName("updateTime", metaObject);
+        if (val == null) {
+            setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+        }
     }
 
     @Override

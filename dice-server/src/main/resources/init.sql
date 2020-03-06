@@ -28,21 +28,21 @@ create table article
 (
     id            int auto_increment
         primary key,
-    title         varchar(255)                         not null comment '内容标题',
-    content       mediumtext                           null comment '内容',
-    hits          int        default 0                 not null comment '点击量',
-    tags          varchar(255)                         null comment '标签列表',
-    category      varchar(255)                         null comment '文章分类',
-    status        smallint                             null comment '内容状态',
-    type          varchar(32)                          null comment '内容类别',
-    allow_comment tinyint(1) default 1                 not null comment '是否允许评论',
-    comment_count int        default 0                 not null comment '评论数量',
-    priority      int        default 0                 null comment '文章优先级',
-    create_time   timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
-    update_time   timestamp  default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
-    creator       int                                  null comment '创建人',
-    modifier      int                                  null comment '修改人',
-    deleted       int(1)     default 0                 null comment '逻辑删除标识(0.未删除,1.已删除)'
+    title         varchar(255)         not null comment '内容标题',
+    content       mediumtext           null comment '内容',
+    hits          int        default 0 not null comment '点击量',
+    tags          varchar(255)         null comment '标签列表',
+    category      varchar(255)         null comment '文章分类',
+    status        smallint             null comment '内容状态',
+    type          varchar(32)          null comment '内容类别',
+    allow_comment tinyint(1) default 1 not null comment '是否允许评论',
+    comment_count int        default 0 not null comment '评论数量',
+    priority      int        default 0 null comment '文章优先级',
+    create_time   timestamp            not null comment '创建时间',
+    update_time   timestamp            not null on update CURRENT_TIMESTAMP comment '更新时间',
+    creator       int                  null comment '创建人',
+    modifier      int                  null comment '修改人',
+    deleted       int        default 0 null comment '逻辑删除标识(0.未删除,1.已删除)'
 )
 charset = UTF8MB4;
 

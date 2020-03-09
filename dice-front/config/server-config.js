@@ -14,7 +14,7 @@ const prodProxy = {
 }
 
 const config = {
-  isProd: isProd,
+  isProd,
   api: isProd ? prodUrl : devUrl,
   baseProxy: isProd ? prodProxy : devProxy
 }

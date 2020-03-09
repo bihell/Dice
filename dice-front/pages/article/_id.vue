@@ -41,12 +41,12 @@ import Comment from '~/components/Comment.vue'
 import BigImg from '~/components/BigImg.vue'
 
 export default {
-  head () {
-    return { title: `${this.article.title}` }
-  },
   components: {
     Comment,
     BigImg
+  },
+  fetch ({ store, params }) {
+    return store.dispatch('getArticle', params.id)
   },
   data () {
     return {
@@ -58,9 +58,6 @@ export default {
     article () {
       return this.$store.state.article.detail
     }
-  },
-  fetch ({ store, params }) {
-    return store.dispatch('getArticle', params.id)
   },
   mounted () {
     this.tocInit()
@@ -91,13 +88,16 @@ export default {
       tocbot.init({
         tocSelector: '.markdown-toc',
         contentSelector: '.markdown-body',
-        headingSelector: headingSelector
+        headingSelector
       })
       // 延时显示，防止闪烁
       setTimeout(function() {
         document.getElementsByClassName('markdown-toc')[0].style.opacity = 1
       }, 500)
     }
+  },
+  head () {
+    return { title: `${this.article.title}` }
   }
 }
 </script>

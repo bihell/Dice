@@ -115,7 +115,9 @@
         width="62"
       >
         <template slot-scope="{row}">
-          <span class="radius-count">{{ row.commentCount }}</span>
+          <div style="display:flex;justify-content: center;">
+            <span class="radius-count" style="cursor: pointer;" @click="handleShowPostComments(row.id)">{{ row.commentCount }}</span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="发布日期" width="150" show-overflow-tooltip align="center">
@@ -155,6 +157,11 @@
       @pagination="handleFilter"
     />
 
+    <CommentDrawer
+      :visible="postCommentVisible"
+    >
+    </CommentDrawer>
+
   </div>
 </template>
 
@@ -162,15 +169,18 @@
 
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import * as blogApi from '@/api/blog'
+import CommentDrawer from '@/components/Components/CommentDrawer'
 
 export default {
   components: {
-    Pagination
+    Pagination,
+    CommentDrawer
   },
   data: function() {
     return {
       postStatus: blogApi.postStatus(),
       articleDetail: [],
+      postCommentVisible: false,
       queryParam: {
         total: 0,
         pageSize: this.$static.DEFAULT_PAGE_SIZE,
@@ -203,7 +213,7 @@ export default {
       }).catch(() => {
       })
     },
-    initArticleDatas(articles) {
+    initArticleData(articles) {
       this.articleDetail = []
       for (const key in articles) {
         const data = articles[key]
@@ -229,10 +239,14 @@ export default {
     },
     handleFilter() {
       blogApi.getArticles(this.queryParam).then(response => {
-        this.initArticleDatas(response.data.list)
+        this.initArticleData(response.data.list)
         this.queryParam.total = response.data.total
         this.queryParam.pageSize = response.data.pageSize
       })
+    },
+    handleShowPostComments(postId) {
+      // todo
+      // this.postCommentVisible = true
     }
   }
 }

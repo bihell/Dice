@@ -108,6 +108,18 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column
+        label="评论"
+        prop="commentCount"
+        show-overflow-tooltip
+        width="62"
+      >
+        <template slot-scope="{row}">
+          <div style="display:flex;justify-content: center;">
+            <span class="radius-count" style="cursor: pointer;" @click="handleShowPostComments(row.id)">{{ row.commentCount }}</span>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="发布日期" width="150" show-overflow-tooltip align="center">
         <template slot-scope="{row}">
           <span style="margin-left: 10px">{{ row.publish }}</span>
@@ -145,6 +157,11 @@
       @pagination="handleFilter"
     />
 
+    <CommentDrawer
+      :visible="postCommentVisible"
+    >
+    </CommentDrawer>
+
   </div>
 </template>
 
@@ -152,15 +169,18 @@
 
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import * as blogApi from '@/api/blog'
+import CommentDrawer from '@/components/Comment/CommentDrawer'
 
 export default {
   components: {
-    Pagination
+    Pagination,
+    CommentDrawer
   },
   data: function() {
     return {
       postStatus: blogApi.postStatus(),
       articleDetail: [],
+      postCommentVisible: false,
       queryParam: {
         total: 0,
         pageSize: this.$static.DEFAULT_PAGE_SIZE,
@@ -193,7 +213,7 @@ export default {
       }).catch(() => {
       })
     },
-    initArticleDatas(articles) {
+    initArticleData(articles) {
       this.articleDetail = []
       for (const key in articles) {
         const data = articles[key]
@@ -205,7 +225,8 @@ export default {
           updateTime: this.$dayjs(data.updateTime).format('YYYY-MM-DD HH:mm'),
           category: data.category || this.$static.DEFAULT_CATEGORY,
           status: data.status,
-          priority: data.priority === 0 ? '普通' : '置顶'
+          priority: data.priority === 0 ? '普通' : '置顶',
+          commentCount: data.commentCount
         }
         this.articleDetail.push(article)
       }
@@ -218,10 +239,14 @@ export default {
     },
     handleFilter() {
       blogApi.getArticles(this.queryParam).then(response => {
-        this.initArticleDatas(response.data.list)
+        this.initArticleData(response.data.list)
         this.queryParam.total = response.data.total
         this.queryParam.pageSize = response.data.pageSize
       })
+    },
+    handleShowPostComments(postId) {
+      // todo
+      // this.postCommentVisible = true
     }
   }
 }

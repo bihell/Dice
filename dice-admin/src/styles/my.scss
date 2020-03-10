@@ -36,3 +36,51 @@
   align-items: center;
 }
 
+.radius-count {
+  display: inline-block;
+  min-width: 10px;
+  line-height: 12px;
+  padding: 4px 7px;
+  margin-right: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #f36a5a;
+  border-radius: 10px;
+}
+
+.footer-toolbar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 56px;
+  line-height: 56px;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
+  padding: 0 24px;
+  z-index: 1000;
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+.bottom-control {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  left: 0px;
+  background: rgb(255, 255, 255);
+  border-radius: 0px 0px 4px 4px;
+}
+

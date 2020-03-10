@@ -148,7 +148,7 @@ export default {
       required: true
     }
   },
-  data: function() {
+  data() {
     return {
       commentAgrees: [],
       commentDisagrees: [],
@@ -216,7 +216,7 @@ export default {
     },
     commentEditListen ($event) {
       this.isEdit = true
-      this.commentContent = this.$refs.content.innerText
+      this.commentContent = this.$refs.content.textContent
       if (this.commentContent !== '') {
         this.placeHolder = ''
       }

@@ -39,10 +39,10 @@
 
 <script type="text/ecmascript-6">
 export default {
-  head () {
-    return { title: `标签` }
+  fetch ({ store }) {
+    return store.dispatch('getTags')
   },
-  data: function() {
+  data() {
     return {
       articles: [],
       tagTitle: '',
@@ -54,9 +54,6 @@ export default {
     tags () {
       return this.$store.state.tag.data
     }
-  },
-  fetch ({ store }) {
-    return store.dispatch('getTags')
   },
   mounted () {
     this.initTag()
@@ -86,6 +83,9 @@ export default {
         this.show = true
       }
     }
+  },
+  head () {
+    return { title: `标签` }
   }
 }
 </script>

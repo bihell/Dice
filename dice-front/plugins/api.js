@@ -3,7 +3,7 @@ import { get, post } from './http'
 const api = {
   getArticles(page, limit) {
     const params = {
-      page: page,
+      page,
       limit: limit || 5
     }
     return get('/article', params)
@@ -28,26 +28,26 @@ const api = {
   },
   getComment(articleId, page, limit) {
     const params = {
-      articleId: articleId,
-      page: page,
+      articleId,
+      page,
       limit: limit || 5
     }
     return get('comment', params)
   },
   postComment(articleId, pId, content, name, email, website) {
     const params = {
-      articleId: articleId,
-      pId: pId,
-      content: content,
-      name: name,
-      email: email,
-      website: website
+      articleId,
+      pId,
+      content,
+      name,
+      email,
+      website
     }
     return post('/comment', params)
   },
   assessComment(commentId, assess) {
     const params = {
-      assess: assess
+      assess
     }
     return post('/comment/' + commentId + '/assess', params)
   },

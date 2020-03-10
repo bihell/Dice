@@ -17,7 +17,7 @@
           <el-form-item prop="content">
             <markdown-editor
               v-model="article.content"
-              :on-save="onSave"
+              :on-save="handleSaveDraft"
             />
             <!-- 键修饰符，键别名 -->
           </el-form-item>
@@ -157,13 +157,13 @@
         <el-button
           type="primary"
           size="small"
-          @click="onSave"
-        >保存
+          @click="handleSaveDraft"
+        >保存草稿
         </el-button>
         <el-button
           type="primary"
           size="small"
-          @click="onPublish"
+          @click="handlePublishClick"
         >发布
         </el-button>
         <el-button
@@ -183,11 +183,11 @@
       </div>
     </el-drawer>
     <footer-tool-bar>
-      <!--      <el-button-->
-      <!--        type="danger"-->
-      <!--        size="small"-->
-      <!--        @click="handleSaveDraft(false)"-->
-      <!--      >保存草稿</el-button>-->
+      <el-button
+        type="primary"
+        size="small"
+        @click="handleSaveDraft"
+      >保存草稿</el-button>
       <!--      <a-button-->
       <!--        style="margin-left: 8px;"-->
       <!--        @click="handlePreview"-->
@@ -339,19 +339,12 @@ export default {
         }
       })
     },
-    onPublish() {
+    handlePublishClick() {
       const _this = this
+      this.article.status = blogApi.postStatus().PUBLISHED.value
       this.submitArticle('articleForm', function() {
         _this.$util.message.success('发布文章成功!')
         _this.$router.push('/blog/article')
-      })
-    },
-    onSave() {
-      const _this = this
-      this.submitArticle('articleForm', function(data) {
-        _this.$util.message.success('保存文章成功!')
-        _this.$route.params.id = data
-        _this.getArticle()
       })
     },
     init() {
@@ -399,7 +392,15 @@ export default {
           })
       }
     },
-    handleSaveDraft() {},
+    handleSaveDraft() {
+      const _this = this
+      this.article.status = blogApi.postStatus().DRAFT.value
+      this.submitArticle('articleForm', function(data) {
+        _this.$util.message.success('草稿保存成功!')
+        _this.$route.params.id = data
+        _this.getArticle()
+      })
+    },
     handleShowPostSetting() {
       this.postSettingVisible = true
     }

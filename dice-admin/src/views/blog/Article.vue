@@ -7,7 +7,7 @@
       :model="article"
     >
       <el-row :gutter="30">
-        <el-col :xs="24" :sm="16" :md="19" :lg="20">
+        <el-col>
           <el-form-item prop="title">
             <el-input
               v-model="article.title"
@@ -21,127 +21,6 @@
             />
             <!-- 键修饰符，键别名 -->
           </el-form-item>
-        </el-col>
-        <el-col :xs="24" :sm="8" :md="5" :lg="4">
-          <div class="panel">
-            <div class="panel-content">
-              <el-form-item label="标签">
-                <el-select
-                  v-model="selectTags"
-                  multiple
-                  filterable
-                  placeholder="请选择文章标签"
-                >
-                  <el-option
-                    v-for="tag in tags"
-                    :key="tag.value"
-                    :label="tag.label"
-                    :value="tag.value"
-                  />
-                </el-select>
-              </el-form-item>
-              <el-form-item label="分类">
-                <el-select
-                  v-model="article.category"
-                  filterable
-                  placeholder="请选择文章分类"
-                >
-                  <el-option
-                    v-for="category in categories"
-                    :key="category.value"
-                    :label="category.label"
-                    :value="category.value"
-                  />
-                </el-select>
-              </el-form-item>
-              <el-form-item label="状态">
-                <el-switch
-                  v-model="article.status"
-                  :active-value="postStatus.PUBLISHED.value"
-                  :inactive-value="postStatus.DRAFT.value"
-                  active-text="公开"
-                  inactive-text="隐藏"
-                />
-              </el-form-item>
-              <el-form-item>
-                <el-switch
-                  v-model="article.priority"
-                  active-value="1"
-                  inactive-value="0"
-                  active-text="置顶"
-                  inactive-text="普通"
-                >
-                </el-switch>
-              </el-form-item>
-              <el-form-item>
-                <el-switch
-                  v-model="article.allowComment"
-                  active-text="开启评论"
-                  inactive-text="关闭"
-                >
-                </el-switch>
-              </el-form-item>
-              <el-form-item label="创建日期">
-                <el-date-picker
-                  v-model="article.createTime"
-                  type="datetime"
-                  placeholder="创建日期"
-                  size="small"
-                  :editable="flagFalse"
-                  value-format="timestamp"
-                />
-              </el-form-item>
-              <el-form-item label="修改日期">
-                <el-date-picker
-                  v-model="article.updateTime"
-                  type="datetime"
-                  placeholder="修改日期"
-                  size="small"
-                  :editable="flagFalse"
-                  value-format="timestamp"
-                />
-              </el-form-item>
-              <el-form-item>
-                <el-button
-                  size="small"
-                  @click="showMediaDialog"
-                >媒体库
-                </el-button>
-              </el-form-item>
-              <el-form-item>
-                <el-button-group>
-                  <el-row>
-                    <el-button
-                      type="primary"
-                      size="small"
-                      @click="onSave"
-                    >保存
-                    </el-button>
-                    <el-button
-                      type="primary"
-                      size="small"
-                      @click="onPublish"
-                    >发布
-                    </el-button>
-                    <el-button
-                      v-if="article.id !== ''"
-                      type="primary"
-                      size="small"
-                    >
-                      <a
-                        :href="
-                          this.$serverConfig.frontUrl +
-                            'article/' +
-                            article.id "
-                        target="_blank"
-                        style="color: #FFFFFF;"
-                      >查看</a>
-                    </el-button>
-                  </el-row>
-                </el-button-group>
-              </el-form-item>
-            </div>
-          </div>
         </el-col>
       </el-row>
     </el-form>
@@ -175,6 +54,157 @@
         <pagination v-show="mediaDialogData.total>0" :total="mediaDialogData.total" :page.sync="mediaDialogData.pageNum" :limit.sync="mediaDialogData.pageSize" @pagination="showMediaDialog" />
       </div>
     </el-dialog>
+    <el-drawer
+      :visible.sync="postSettingVisible"
+      :with-header="false"
+      size="20%"
+    >
+      <el-form
+        label-position="top"
+        :rules="rules"
+        :model="article"
+        style="margin-left: 16px;margin-right: 16px"
+      >
+        <el-form-item label="标签">
+          <el-select
+            v-model="selectTags"
+            multiple
+            filterable
+            placeholder="请选择文章标签"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="tag in tags"
+              :key="tag.value"
+              :label="tag.label"
+              :value="tag.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="分类">
+          <el-select
+            v-model="article.category"
+            style="width: 100%"
+            filterable
+            placeholder="请选择文章分类"
+          >
+            <el-option
+              v-for="category in categories"
+              :key="category.value"
+              :label="category.label"
+              :value="category.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-switch
+            v-model="article.status"
+            :active-value="postStatus.PUBLISHED.value"
+            :inactive-value="postStatus.DRAFT.value"
+            active-text="公开"
+            inactive-text="隐藏"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-switch
+            v-model="article.priority"
+            active-value="1"
+            inactive-value="0"
+            active-text="置顶"
+            inactive-text="普通"
+          >
+          </el-switch>
+        </el-form-item>
+        <el-form-item>
+          <el-switch
+            v-model="article.allowComment"
+            active-text="开启评论"
+            inactive-text="关闭"
+          >
+          </el-switch>
+        </el-form-item>
+        <el-form-item label="创建日期">
+          <el-date-picker
+            v-model="article.createTime"
+            style="width: 100%"
+            type="datetime"
+            placeholder="创建日期"
+            size="small"
+            :editable="flagFalse"
+            value-format="timestamp"
+          />
+        </el-form-item>
+        <el-form-item label="修改日期">
+          <el-date-picker
+            v-model="article.updateTime"
+            style="width: 100%"
+            type="datetime"
+            placeholder="修改日期"
+            size="small"
+            :editable="flagFalse"
+            value-format="timestamp"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            size="small"
+            @click="showMediaDialog"
+          >媒体库
+          </el-button>
+        </el-form-item>
+      </el-form>
+      <div class="bottom-control">
+        <el-button
+          type="primary"
+          size="small"
+          @click="onSave"
+        >保存
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
+          @click="onPublish"
+        >发布
+        </el-button>
+        <el-button
+          v-if="article.id !== ''"
+          type="primary"
+          size="small"
+        >
+          <a
+            :href="
+              this.$serverConfig.frontUrl +
+                'article/' +
+                article.id "
+            target="_blank"
+            style="color: #FFFFFF;"
+          >查看</a>
+        </el-button>
+      </div>
+    </el-drawer>
+    <footer-tool-bar>
+      <!--      <el-button-->
+      <!--        type="danger"-->
+      <!--        size="small"-->
+      <!--        @click="handleSaveDraft(false)"-->
+      <!--      >保存草稿</el-button>-->
+      <!--      <a-button-->
+      <!--        style="margin-left: 8px;"-->
+      <!--        @click="handlePreview"-->
+      <!--      >预览</a-button>-->
+      <el-button
+        type="primary"
+        size="small"
+        style="margin-left: 8px;"
+        @click="handleShowPostSetting"
+      >发布</el-button>
+      <!--      <el-button-->
+      <!--        type="dashed"-->
+      <!--        size="small"-->
+      <!--        style="margin-left: 8px;"-->
+      <!--        @click="()=>this.attachmentDrawerVisible = true"-->
+      <!--      >附件库</el-button>-->
+    </footer-tool-bar>
   </div>
 </template>
 
@@ -184,6 +214,7 @@ import Upload from '../../components/Upload/Upload'
 import MediaItem from '../../components/Upload/MediaItem'
 import { pageMedia } from '@/api/media'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import FooterToolBar from '@/components/FooterToolbar'
 import * as blogApi from '@/api/blog'
 
 export default {
@@ -191,13 +222,15 @@ export default {
     MarkdownEditor,
     MediaItem,
     Upload,
-    Pagination
+    Pagination,
+    FooterToolBar
   },
   data: function() {
     return {
       postStatus: blogApi.postStatus(),
       isMobile: false,
       mediaDialog: false,
+      postSettingVisible: false,
       article: {
         id: '',
         title: '',
@@ -365,6 +398,10 @@ export default {
             }
           })
       }
+    },
+    handleSaveDraft() {},
+    handleShowPostSetting() {
+      this.postSettingVisible = true
     }
   }
 }

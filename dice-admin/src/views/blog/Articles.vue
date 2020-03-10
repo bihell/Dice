@@ -169,7 +169,7 @@
 
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import * as blogApi from '@/api/blog'
-import CommentDrawer from '@/components/Components/CommentDrawer'
+import CommentDrawer from '@/components/Comment/CommentDrawer'
 
 export default {
   components: {

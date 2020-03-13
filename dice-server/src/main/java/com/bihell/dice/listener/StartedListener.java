@@ -5,6 +5,8 @@ import com.bihell.dice.service.blog.OptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ansi.AnsiColor;
+import org.springframework.boot.ansi.AnsiOutput;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +38,9 @@ public class StartedListener implements ApplicationListener<ApplicationStartedEv
         String baseUrl = optionService.getBaseUrl();
 
         if (!diceProperties.isDocDisabled()) {
-            log.info("Swagger URL {}/swagger-ui.html", baseUrl);
+            log.info(AnsiOutput.toString(AnsiColor.BRIGHT_BLUE, "Dice api doc was enabled at ",baseUrl,"/swagger-ui.html"));
         }
+        log.info(AnsiOutput.toString(AnsiColor.BRIGHT_YELLOW, "Dice has started successfully!"));
     }
 
 }

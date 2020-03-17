@@ -96,29 +96,20 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-switch
-            v-model="article.status"
-            :active-value="postStatus.PUBLISHED.value"
-            :inactive-value="postStatus.DRAFT.value"
-            active-text="公开"
-            inactive-text="隐藏"
-          />
-        </el-form-item>
-        <el-form-item>
+        <el-form-item label="是否置顶：">
           <el-switch
             v-model="article.priority"
             active-value="1"
             inactive-value="0"
-            active-text="置顶"
-            inactive-text="普通"
+            active-text="是"
+            inactive-text="否"
           >
           </el-switch>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="开启评论：">
           <el-switch
             v-model="article.allowComment"
-            active-text="开启评论"
+            active-text="开启"
             inactive-text="关闭"
           >
           </el-switch>
@@ -144,13 +135,6 @@
             :editable="flagFalse"
             value-format="timestamp"
           />
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            size="small"
-            @click="showMediaDialog"
-          >媒体库
-          </el-button>
         </el-form-item>
       </el-form>
       <div class="bottom-control">
@@ -184,7 +168,7 @@
     </el-drawer>
     <footer-tool-bar>
       <el-button
-        type="primary"
+        type="warning"
         size="small"
         @click="handleSaveDraft"
       >保存草稿</el-button>
@@ -198,12 +182,13 @@
         style="margin-left: 8px;"
         @click="handleShowPostSetting"
       >发布</el-button>
-      <!--      <el-button-->
-      <!--        type="dashed"-->
-      <!--        size="small"-->
-      <!--        style="margin-left: 8px;"-->
-      <!--        @click="()=>this.attachmentDrawerVisible = true"-->
-      <!--      >附件库</el-button>-->
+      <el-button
+        type="primary"
+        size="small"
+        style="margin-left: 8px;"
+        @click="showMediaDialog"
+      >媒体库
+      </el-button>
     </footer-tool-bar>
   </div>
 </template>
@@ -237,7 +222,7 @@ export default {
         tags: '',
         category: '',
         content: '',
-        status: '',
+        status: blogApi.postStatus().PUBLISHED.value,
         createTime: '',
         updateTime: '',
         priority: 0,
@@ -288,7 +273,7 @@ export default {
           tags: '',
           category: '',
           content: '',
-          status: blogApi.postStatus().PUBLISHED.value,
+          status: '',
           createTime: Date.now(),
           updateTime: Date.now()
         }
@@ -341,7 +326,6 @@ export default {
     },
     handlePublishClick() {
       const _this = this
-      this.article.status = blogApi.postStatus().PUBLISHED.value
       this.submitArticle('articleForm', function() {
         _this.$util.message.success('发布文章成功!')
         _this.$router.push('/blog/article')
@@ -402,6 +386,7 @@ export default {
       })
     },
     handleShowPostSetting() {
+      this.article.status = blogApi.postStatus().PUBLISHED.value
       this.postSettingVisible = true
     }
   }

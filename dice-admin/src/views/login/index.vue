@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { validUsername, validPassword } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 
 export default {
@@ -74,7 +74,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入用户名'))
+      } else {
+        callback()
+      }
+    }
+    const validatePassword = (rule, value, callback) => {
+      if (!validPassword(value)) {
+        callback(new Error('请输入密码'))
       } else {
         callback()
       }
@@ -85,7 +92,8 @@ export default {
         password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
       capsTooltip: false,

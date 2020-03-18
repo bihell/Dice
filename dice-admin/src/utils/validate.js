@@ -15,10 +15,15 @@ export function isExternal(path) {
  * @returns {Boolean}
  */
 export function validUsername(str) {
-  // todo 修改登录验证
-  // const valid_map = ['admin', 'editor', 'dice', 'tpxcer']
-  // return valid_map.indexOf(str.trim()) >= 0
-  return true
+  return str !== ''
+}
+
+/**
+ * @param {string} str
+ * @returns {Boolean}
+ */
+export function validPassword(str) {
+  return str !== ''
 }
 
 /**

@@ -17,6 +17,6 @@ public class MediaServiceTests extends BaseTests {
 
     @Test
     public void pageAdminMedias() {
-        System.out.println(mediaService.pageAdminMedias(1, 20));
+//        System.out.println(mediaService.getMediaList(1, 20));
     }
 }

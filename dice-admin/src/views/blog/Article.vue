@@ -30,34 +30,14 @@
       :fullscreen="isMobile"
       append-to-body
       center
-      width="80%"
+      width="79%"
     >
-      <upload :after-upload="afterUpload" />
-      <div class="media-list">
-        <el-row>
-          <el-col
-            v-for="media in mediaDialogData.mediaDatas"
-            :key="media.id"
-            style="padding: 6px"
-            :xs="24"
-            :sm="12"
-            :md="12"
-            :lg="6"
-            :xl="4"
-          >
-            <media-item
-              :media="media"
-              :after-delete="afterDeleteMedia"
-            />
-          </el-col>
-        </el-row>
-        <pagination v-show="mediaDialogData.total>0" :total="mediaDialogData.total" :page.sync="mediaDialogData.pageNum" :limit.sync="mediaDialogData.pageSize" @pagination="showMediaDialog" />
-      </div>
+      <upload ref="upload" />
     </el-dialog>
     <el-drawer
       :visible.sync="postSettingVisible"
-      :with-header="false"
       size="20%"
+      title="文章设置"
     >
       <el-form
         label-position="top"
@@ -196,18 +176,13 @@
 <script>
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor'
 import Upload from '../../components/Upload/Upload'
-import MediaItem from '../../components/Upload/MediaItem'
-import { pageMedia } from '@/api/media'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import FooterToolBar from '@/components/FooterToolbar'
 import * as blogApi from '@/api/blog'
 
 export default {
   components: {
     MarkdownEditor,
-    MediaItem,
     Upload,
-    Pagination,
     FooterToolBar
   },
   data: function() {
@@ -239,13 +214,7 @@ export default {
       selectTags: [],
       tags: [],
       categories: [],
-      flagFalse: false,
-      mediaDialogData: {
-        mediaDatas: [],
-        total: 0,
-        pageSize: this.$static.DEFAULT_PAGE_SIZE,
-        pageNum: 1
-      }
+      flagFalse: false
     }
   },
   watch: {
@@ -339,42 +308,6 @@ export default {
     showMediaDialog() {
       this.isMobile = document.body.clientWidth < 768
       this.mediaDialog = true
-      pageMedia(this.mediaDialogData.pageSize, this.mediaDialogData.pageNum).then(response => {
-        this.mediaDialogData.mediaDatas = response.data.list
-        this.mediaDialogData.total = response.data.total
-        this.mediaDialogData.pageSize = response.data.pageSize
-        this.mediaDialogData.pageNum = response.data.pageNum
-        for (const media of this.mediaDialogData.mediaDatas) {
-          if (media.thumbUrl && media.thumbUrl !== '') {
-            media.showUrl = this.$util.getServerMediaUrl(media.thumbUrl)
-          } else {
-            media.showUrl = this.$util.getServerMediaUrl(media.url)
-          }
-        }
-      })
-    },
-    afterDeleteMedia(data) {
-      if (data.success) {
-        this.showMediaDialog(1)
-      }
-    },
-    afterUpload(response) {
-      if (response.success) {
-        pageMedia(this.mediaDialogData.pageSize, this.mediaDialogData.pageNum)
-          .then(response => {
-            this.mediaDialogData.mediaDatas = response.data.list
-            this.mediaDialogData.total = response.data.total
-            this.mediaDialogData.pageSize = response.data.pageSize
-            this.mediaDialogData.pageNum = response.data.pageNum
-            for (const media of this.mediaDialogData.mediaDatas) {
-              if (media.thumbUrl && media.thumbUrl !== '') {
-                media.showUrl = this.$util.getServerMediaUrl(media.thumbUrl)
-              } else {
-                media.showUrl = this.$util.getServerMediaUrl(media.url)
-              }
-            }
-          })
-      }
     },
     handleSaveDraft() {
       const _this = this

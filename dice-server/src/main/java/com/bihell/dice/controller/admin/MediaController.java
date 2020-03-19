@@ -1,10 +1,10 @@
 package com.bihell.dice.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.model.tool.Media;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.service.tool.MediaService;
-import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.RestResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,14 +28,11 @@ public class MediaController {
     /**
      * 分页获取媒体资源
      *
-     * @param pageNum  第几页
-     * @param pageSize 每页数量
      * @return {@see Page<Media>}
      */
     @GetMapping
-    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize) {
-        IPage<Media> medias = mediaService.pageAdminMedias(pageNum, pageSize);
+    public RestResponse index(QueryParam queryParam) {
+        IPage<Media> medias = mediaService.getMediaList(queryParam);
         return RestResponse.ok(new Pagination<Media>(medias));
     }
 

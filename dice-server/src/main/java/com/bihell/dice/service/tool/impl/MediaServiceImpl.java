@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.exception.NotFoundException;
 import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.tool.MediaMapper;
+import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.model.tool.Media;
 import com.bihell.dice.service.tool.MediaService;
 import com.bihell.dice.utils.DiceConsts;
@@ -38,14 +39,13 @@ public class MediaServiceImpl implements MediaService {
     /**
      * 分页获取媒体
      *
-     * @param page  第几页
-     * @param limit 每页数量
      * @return Page<Media>
      */
     @Override
-    public IPage<Media> pageAdminMedias(Integer page, Integer limit) {
-        Page<Media> mediaPage = new Page<>(page, limit);
+    public IPage<Media> getMediaList(QueryParam queryParam) {
+        Page<Media> mediaPage = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<Media> wrapper = new QueryWrapper<Media>().lambda()
+                .like(Media::getName,queryParam.getCriteria())
                 .orderByDesc(Media::getId);
         return mediaMapper.selectPage(mediaPage, wrapper);
     }

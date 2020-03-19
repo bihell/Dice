@@ -1,6 +1,7 @@
 package com.bihell.dice.service.tool;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.model.tool.Media;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,11 +13,9 @@ public interface MediaService {
     /**
      * 分页获取媒体
      *
-     * @param page  第几页
-     * @param limit 每页数量
      * @return Page<Media>
      */
-    IPage<Media> pageAdminMedias(Integer page, Integer limit);
+    IPage<Media> getMediaList(QueryParam queryParam);
 
     /**
      * 获取媒体详情

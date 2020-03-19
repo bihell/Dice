@@ -1,24 +1,37 @@
 <template>
   <div class="upload-component">
-    <el-button
-      v-permission="'/tool/media/upload'"
-      type="primary"
-      icon="el-icon-upload"
-      size="small"
-      @click="uploadVisible = !uploadVisible"
-    >
-      <span v-if="uploadVisible">隐藏</span>
-      <span v-else>上传</span>
-    </el-button>
-    <el-button
-      v-show="uploadVisible"
-      v-waves
-      size="small"
-      type="info"
-      @click="clearUploadFile"
-    >
-      清空上传列表
-    </el-button>
+    <el-row>
+      <el-col :lg="7">
+        <el-input
+          v-model.trim="queryList.criteria"
+          placeholder="搜索媒体"
+          clearable
+          @clear="init"
+          @keyup.enter.native="init"
+        />
+      </el-col>
+      <el-col :lg="1" style="margin-left: 10px">
+        <el-button type="primary" icon="el-icon-search" @click="init">
+          搜索
+        </el-button>
+      </el-col>
+      <el-col :lg="1" style="margin-left: 50px">
+        <el-button v-permission="'/tool/media/upload'" type="primary" icon="el-icon-upload" @click="uploadVisible = !uploadVisible">
+          <span v-if="uploadVisible">隐藏</span>
+          <span v-else>上传</span>
+        </el-button>
+      </el-col>
+      <el-col :lg="1" style="margin-left: 45px">
+        <el-button
+          v-show="uploadVisible"
+          v-waves
+          type="info"
+          @click="clearUploadFile"
+        >
+          清空上传列表
+        </el-button>
+      </el-col>
+    </el-row>
     <transition name="flow">
       <el-upload
         v-show="uploadVisible"
@@ -48,33 +61,65 @@
         </div>
       </el-upload>
     </transition>
+    <div class="media-list">
+      <el-row>
+        <el-col
+          v-for="media in mediaList"
+          :key="media.id"
+          style="padding: 6px"
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="6"
+          :xl="4"
+        >
+          <media-item
+            :media="media"
+            :after-delete="afterDeleteMedia"
+          />
+        </el-col>
+      </el-row>
+      <pagination v-show="queryList.total>0" :total="queryList.total" :page.sync="queryList.pageNum" :limit.sync="queryList.pageSize" @pagination="init" />
+    </div>
   </div>
 </template>
 
 <script>
-import serverConfig from '../../utils/server-config'
+import serverConfig from '@/utils/server-config'
 import waves from '@/directive/waves' // waves directive
 import store from '@/store'
+import { getMediaList } from '@/api/media'
+import MediaItem from '@/components/Upload/MediaItem'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
   name: 'Upload',
-  directives: { waves },
-  props: {
-    afterUpload: {
-      type: Function,
-      default: function() {}
-    }
+  components: {
+    MediaItem,
+    Pagination
   },
+  directives: { waves },
   data: function() {
     return {
-      uploadVisible: false,
+      mediaList: [],
+      queryList: {
+        total: 0,
+        pageSize: this.$static.DEFAULT_PAGE_SIZE,
+        pageNum: 1,
+        criteria: ''
+      },
       uploadAction: serverConfig.api + 'v1/api/admin/media/upload',
+      uploadVisible: false,
+      mediaName: '',
       uploadData: {
         name: '',
         path: ''
       },
       header: { Authorization: store.getters.token.access_token }
     }
+  },
+  mounted() {
+    this.init()
   },
   methods: {
     clearUploadFile() {
@@ -118,6 +163,31 @@ export default {
     errorUpload(err, file) {
       this.$util.message.error('网络异常,上传' + file.name + '失败!')
       console.log(err)
+    },
+    init() {
+      getMediaList(this.queryList).then(response => {
+        this.mediaList = response.data.list
+        this.queryList.total = response.data.total
+        this.queryList.pageSize = response.data.pageSize
+        this.queryList.pageNum = response.data.pageNum
+        for (const media of this.mediaList) {
+          if (media.thumbUrl && media.thumbUrl !== '') {
+            media.showUrl = this.$util.getServerMediaUrl(media.thumbUrl)
+          } else {
+            media.showUrl = this.$util.getServerMediaUrl(media.url)
+          }
+        }
+      })
+    },
+    afterUpload(response) {
+      if (response.success) {
+        this.init()
+      }
+    },
+    afterDeleteMedia(data) {
+      if (data.success) {
+        this.init()
+      }
     }
   }
 }

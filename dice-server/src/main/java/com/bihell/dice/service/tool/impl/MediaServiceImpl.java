@@ -119,7 +119,7 @@ public class MediaServiceImpl implements MediaService {
                 Path thumbnailPath = uploadPath.resolve(thumbnailUrl);
                 log.info("Compress media thumbnail: [{}]", thumbnailPath);
 
-                DiceUtil.compressImage(mediaPath.toFile(), thumbnailPath.toFile(), 0.5f);
+                DiceUtil.compressImage(mediaPath.toFile(), thumbnailPath.toFile(), 0.5f,suffix);
                 media.setThumbUrl(thumbnailUrl.toString());
             }
 

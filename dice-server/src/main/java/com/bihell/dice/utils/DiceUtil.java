@@ -308,7 +308,7 @@ public class DiceUtil {
      * @param target       目标文件
      * @param imageQuality 压缩图片质量
      */
-    public static void compressImage(File source, File target, float imageQuality) {
+    public static void compressImage(File source, File target, float imageQuality,String suffix) {
         InputStream inputStream = null;
         OutputStream outputStream = null;
         ImageWriter imageWriter = null;
@@ -320,7 +320,7 @@ public class DiceUtil {
             BufferedImage bufferedImage = ImageIO.read(inputStream);
 
             // Get image writers
-            Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName("jpg");
+            Iterator<ImageWriter> imageWriters = ImageIO.getImageWritersByFormatName(suffix);
 
             if (!imageWriters.hasNext()) {
                 throw new IllegalStateException("Writers Not Found!!");

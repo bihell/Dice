@@ -1,1 +1,1 @@
-nginx -s stop -p `pwd`
+openresty -s stop -p `pwd`

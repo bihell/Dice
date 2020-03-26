@@ -46,6 +46,7 @@ public class MediaServiceImpl implements MediaService {
         Page<Media> mediaPage = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<Media> wrapper = new QueryWrapper<Media>().lambda()
                 .like(Media::getName,queryParam.getCriteria())
+                .eq(!StringUtils.isEmpty(queryParam.getMediaType()),Media::getSuffix,queryParam.getMediaType())
                 .orderByDesc(Media::getId);
         return mediaMapper.selectPage(mediaPage, wrapper);
     }

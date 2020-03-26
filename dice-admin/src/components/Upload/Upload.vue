@@ -10,6 +10,17 @@
           @keyup.enter.native="init"
         />
       </el-col>
+      <el-col :lg="2">
+        <el-select v-model="queryList.mediaType" placeholder="文件类型" style="margin-left: 10px" @change="init">
+          <el-option label="不限制" value="" />
+          <el-option
+            v-for="(item, index) in mediaTypes"
+            :key="index"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </el-col>
       <el-col :lg="1" style="margin-left: 10px">
         <el-button type="primary" icon="el-icon-search" @click="init">
           搜索
@@ -88,7 +99,7 @@
 import serverConfig from '@/utils/server-config'
 import waves from '@/directive/waves' // waves directive
 import store from '@/store'
-import { getMediaList } from '@/api/media'
+import { getMediaList, getMediaTypes } from '@/api/media'
 import MediaItem from '@/components/Upload/MediaItem'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
@@ -101,12 +112,14 @@ export default {
   directives: { waves },
   data: function() {
     return {
+      mediaTypes: [],
       mediaList: [],
       queryList: {
         total: 0,
         pageSize: this.$static.DEFAULT_PAGE_SIZE,
         pageNum: 1,
-        criteria: ''
+        criteria: '',
+        mediaType: undefined
       },
       uploadAction: serverConfig.api + 'v1/api/admin/media/upload',
       uploadVisible: false,
@@ -165,6 +178,9 @@ export default {
       console.log(err)
     },
     init() {
+      getMediaTypes().then(res => {
+        this.mediaTypes = res.data
+      })
       getMediaList(this.queryList).then(response => {
         this.mediaList = response.data.list
         this.queryList.total = response.data.total

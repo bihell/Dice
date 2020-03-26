@@ -8,6 +8,13 @@ export function getMediaList(params) {
   })
 }
 
+export function getMediaTypes(params) {
+  return request({
+    url: '/admin/media/media_types',
+    method: 'get'
+  })
+}
+
 export function deleteMedia(id) {
   return request(
     {

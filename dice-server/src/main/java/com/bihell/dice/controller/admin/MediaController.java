@@ -1,11 +1,14 @@
 package com.bihell.dice.controller.admin;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bihell.dice.mapper.tool.MediaMapper;
 import com.bihell.dice.model.params.QueryParam;
 import com.bihell.dice.model.tool.Media;
 import com.bihell.dice.model.dto.Pagination;
 import com.bihell.dice.service.tool.MediaService;
 import com.bihell.dice.utils.RestResponse;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author haseochen
@@ -24,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MediaController {
 
     private final MediaService mediaService;
+    private final MediaMapper mediaMapper;
 
     /**
      * 分页获取媒体资源
@@ -34,6 +40,14 @@ public class MediaController {
     public RestResponse index(QueryParam queryParam) {
         IPage<Media> medias = mediaService.getMediaList(queryParam);
         return RestResponse.ok(new Pagination<Media>(medias));
+    }
+
+    @GetMapping("media_types")
+    @ApiOperation("Lists all of media types")
+    public RestResponse listMediaTypes() {
+        return RestResponse.ok(mediaMapper.selectList(new QueryWrapper<Media>()
+                .lambda().select(Media::getSuffix).groupBy(Media::getSuffix))
+                .stream().map(Media::getSuffix).collect(Collectors.toList()));
     }
 
     /**

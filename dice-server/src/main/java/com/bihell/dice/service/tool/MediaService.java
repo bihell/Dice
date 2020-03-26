@@ -10,10 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface MediaService {
 
+
     /**
-     * 分页获取媒体
-     *
-     * @return Page<Media>
+     * 获取媒体清单
+     * @param queryParam
+     * @return IPage<Media>
      */
     IPage<Media> getMediaList(QueryParam queryParam);
 

@@ -37,4 +37,9 @@ public class QueryParam {
     private Integer roleType;
 
     private Integer userType;
+
+    /**
+     * 媒体文件类型
+     */
+    private String mediaType;
 }

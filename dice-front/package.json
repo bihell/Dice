@@ -14,12 +14,12 @@
   },
   "dependencies": {
     "cross-env": "7.0.2",
-    "@nuxtjs/feed": "^1.1.0",
-    "@nuxtjs/sitemap": "^2.0.1",
+    "@nuxtjs/feed": "1.1.0",
+    "@nuxtjs/sitemap": "2.0.1",
     "axios": "0.19.2",
-    "gravatar": "^1.8.0",
+    "gravatar": "1.8.0",
     "highlight.js": "^9.16.2",
-    "nuxt": "^2.10.2",
+    "nuxt": "2.12.1",
     "tocbot": "^4.10.0",
     "underscore": "^1.9.1"
   },

@@ -1,5 +1,6 @@
 package com.bihell.dice.interceptor;
 
+import com.bihell.dice.config.DiceProperties;
 import com.bihell.dice.security.SecurityUtil;
 import com.bihell.dice.security.UserDetail;
 import com.bihell.dice.security.authentication.AuthenticationImpl;
@@ -50,6 +51,8 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     private final RedisService redisService;
 
+    private final DiceProperties diceProperties;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url = request.getRequestURI();
@@ -57,7 +60,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 
         log.info("用户访问地址: {}, Http类型: {}, ip地址: {}", url, request.getMethod(), ip);
 
-        if (url.contains(AUTH_URIS)) {
+        if (url.contains(AUTH_URIS) && diceProperties.isAuthEnabled() ) {
             boolean auth = true;
             //登录拦截忽略url
             for (String param : IGNORE_URIS) {

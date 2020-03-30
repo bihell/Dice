@@ -1,7 +1,7 @@
 <template>
   <div v-if="isExternal" :style="{fontSize: mdiSize}" class="svg-external-icon svg-icon" v-on="$listeners" />
   <svg v-else :class="svgClass" aria-hidden="true" :style="{fontSize: mdiSize}" v-on="$listeners">
-    <use :href="iconName" />
+    <use :xlink:href="iconName" />
   </svg>
 </template>
 

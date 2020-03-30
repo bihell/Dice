@@ -15,4 +15,8 @@ public class DiceProperties {
      * Doc api disabled. (Default is true)
      */
     private boolean docDisabled = true;
+    /**
+     * Authentication enabled
+     */
+    private boolean authEnabled = true;
 }

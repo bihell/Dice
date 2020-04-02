@@ -5,6 +5,7 @@
   >
     <el-image
       :src="media.showUrl"
+      style="cursor:pointer"
       fit="cover"
       @click="showDetailDialog(media.id)"
     />

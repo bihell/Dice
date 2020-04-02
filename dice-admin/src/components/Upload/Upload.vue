@@ -147,21 +147,11 @@ export default {
       }
 
       const size = file.size / (1024 * 1024)
-      if (size > 10) {
-        this.$util.message.error(fileName + '大于10m')
+      if (size > 100) {
+        this.$util.message.error(fileName + '大于100m')
         return false
       }
 
-      if (
-        extension.toLowerCase() !== 'jpg' &&
-        extension.toLowerCase() !== 'png' &&
-        extension.toLowerCase() !== 'gif' &&
-        extension.toLowerCase() !== 'jpeg' &&
-        extension.toLowerCase() !== 'svg'
-      ) {
-        this.$util.message.error(fileName + '不为图片格式')
-        return false
-      }
       this.uploadData.name = file.name
       this.uploadData.path = this.$dayjs(new Date()).format('YYYY/MM')
     },

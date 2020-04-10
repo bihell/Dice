@@ -36,3 +36,4 @@ logs
 
 package-lock.json
 bigdata
+dice-docker/dice-openresty/data

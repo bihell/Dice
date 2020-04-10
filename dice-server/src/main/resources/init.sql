@@ -327,40 +327,35 @@ create table auth_rel_role_item
 create index IDX_ROLE_ITEM
     on auth_rel_role_item (role_id, item_id);
 
-create table task
-(
-    id          bigint auto_increment primary key,
-    concurrent  tinyint      null comment '是否允许并发',
-    cron        varchar(50)   comment '定时规则',
-    data        text         null comment '执行参数',
-    exec_at     datetime     null comment '执行时间',
-    exec_result text         null comment '执行结果',
-    job_class   varchar(255)  comment '执行类',
-    job_group   varchar(50)  null comment '任务组名',
-    name        varchar(50)  comment '任务名',
-    note        varchar(255) null comment '任务说明',
-    status       int                                    null comment '状态（0无效1有效）',
-    deleted INT(1) DEFAULT 0 COMMENT '逻辑删除标识(0.未删除,1.已删除)',
-    creator      int                                    comment '创建人',
-    create_time  timestamp    default CURRENT_TIMESTAMP comment '创建时间/注册时间',
-    modifier     int                                    comment '最后更新人',
-    update_time  timestamp    default CURRENT_TIMESTAMP comment '最后更新时间'
-)
-    comment '定时任务';
+CREATE TABLE `task` (
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `concurrent` tinyint DEFAULT NULL COMMENT '是否允许并发',
+    `cron` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '定时规则',
+    `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '执行参数',
+    `exec_at` datetime DEFAULT NULL COMMENT '执行时间',
+    `exec_result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '执行结果',
+    `job_class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '执行类',
+    `job_group` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务组名',
+    `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务名',
+    `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务说明',
+    `status` int DEFAULT NULL COMMENT '状态（0无效1有效）',
+    `creator` int DEFAULT NULL COMMENT '创建人',
+    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间/注册时间',
+    `modifier` int DEFAULT NULL COMMENT '最后更新人',
+    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    `deleted` int DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
+    PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='定时任务';
 
-
-create table task_log
-(
-    id            bigint auto_increment
-        primary key,
-    exec_at       datetime     null comment '执行时间',
-    exec_success  int          null comment '执行结果（成功:1、失败:0)',
-    id_task       bigint       null,
-    job_exception varchar(500) null comment '抛出异常',
-    name          varchar(50)  null comment '任务名'
-)
-    comment '定时任务日志';
-
+CREATE TABLE `task_log` (
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `exec_at` datetime DEFAULT NULL COMMENT '执行时间',
+    `exec_success` int DEFAULT NULL COMMENT '执行结果（成功:1、失败:0)',
+    `id_task` bigint DEFAULT NULL,
+    `job_exception` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '抛出异常',
+    `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务名',
+    PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='定时任务日志';
 
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (1, 'dice', '3e6693e83d186225b85b09e71c974d2d', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-01-08 16:13:10');
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (2, 'demo', '3e6693e83d186225b85b09e71c974d2d', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-01-07 21:10:34');
@@ -380,7 +375,7 @@ public static void main(String[] args){
 }
 ```
 
-> 想要了解更多详细信息，可以查看[文档](https://github.com/bihell/Dice/blob/master/README.md)。', 1, 0, 'First', 'New', 'publish', 'post');
+> 想要了解更多详细信息，可以查看[文档](https://github.com/bihell/Dice/blob/master/README.md)。', 1, 0, 'First', 'New', '1', 'post');
 
 INSERT INTO article (title, create_time, update_time, content, creator, tags, category, status, type)
 VALUES ('关于', now(), now(), '# About me
@@ -391,7 +386,7 @@ VALUES ('关于', now(), now(), '# About me
 * [哔哩哔哩](https://space.bilibili.com/88900889/video)
 
 ### 也可以设置别的页面
-* 比如友链页面', 1, NULL, NULL, 'publish', 'page');
+* 比如友链页面', 1, NULL, NULL, '1', 'page');
 
 INSERT INTO comment (article_id, content, name, email, website, agree, disagree, ip, agent)
 VALUES ('1', '## 测试评论

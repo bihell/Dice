@@ -81,6 +81,7 @@ services:
       dockerfile: ./dice-docker/dice-front-Dockerfile
     environment:
       TZ: Asia/Shanghai
+    entrypoint: /app/entrypoint.sh -d dice-server:9091 -c 'npm run start';
     expose:
     - "3000"
     depends_on:

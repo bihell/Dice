@@ -1,4 +1,4 @@
-FROM node:12.6.0-alpine
+FROM node:13.12.0
 
 LABEL MAINTAINER="tpxcer@outlook.com"
 
@@ -10,10 +10,13 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY ./dice-front .
-RUN npm install
+COPY ./dice-docker/dice-util/entrypoint.sh .
 
+RUN npm install
 RUN npm run build
+RUN apt-get update
+RUN apt-get -y install netcat
 
 EXPOSE 3000
 
-CMD ["npm","run","start"]
+# CMD ["npm","run","start"]

@@ -11,6 +11,7 @@ WORKDIR /app
 
 COPY ./dice-front .
 COPY ./dice-docker/dice-util/entrypoint.sh .
+COPY ./dice-docker/dice-front/sources.list /etc/apt/sources.list
 
 RUN npm install
 RUN npm run build

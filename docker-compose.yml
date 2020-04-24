@@ -78,7 +78,7 @@ services:
     container_name: dice-front
     build:
       context: ./
-      dockerfile: ./dice-docker/dice-front-Dockerfile
+      dockerfile: ./dice-docker/dice-front/dice-front-Dockerfile
     environment:
       TZ: Asia/Shanghai
     entrypoint: /app/entrypoint.sh -d dice-server:9091 -c 'npm run start';

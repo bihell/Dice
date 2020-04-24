@@ -8,8 +8,11 @@ const api = {
     }
     return get('/article', params)
   },
-  getArticle(id) {
-    return get('/article/' + id)
+  getArticle(id, token) {
+    const params = {
+      token
+    }
+    return get('/article/' + id, params)
   },
   getCategories() {
     return get('/category')

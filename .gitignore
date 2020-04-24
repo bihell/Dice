@@ -34,6 +34,5 @@ mysql
 logs
 *.iml
 
-package-lock.json
 bigdata
 dice-docker/dice-openresty/data

@@ -152,10 +152,10 @@
         size="small"
         @click="handleSaveDraft"
       >保存草稿</el-button>
-      <!--      <a-button-->
-      <!--        style="margin-left: 8px;"-->
-      <!--        @click="handlePreview"-->
-      <!--      >预览</a-button>-->
+      <el-button
+        style="margin-left: 8px;"
+        @click="handlePreview"
+      >预览</el-button>
       <el-button
         type="primary"
         size="small"
@@ -270,6 +270,10 @@ export default {
           this.tags.push(tag)
         }
       })
+    },
+    handlePreview() {
+      this.handleSaveDraft()
+      window.open(this.$serverConfig.frontUrl + 'article/' + this.$route.params.id + '?token=' + this.$store.state.user.token.access_token, '_blank')
     },
     getCategories() {
       blogApi.getAllCategories().then(response => {

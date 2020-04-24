@@ -30,7 +30,7 @@ public interface ArticleService extends IService<Article> {
      * @param id 文章id
      * @return Article
      */
-    Article getFrontArticle(Integer id);
+    Article getFrontArticle(Integer id,String token);
 
     /**
      * 分页查询后端文章

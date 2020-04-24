@@ -25,7 +25,7 @@ public class ArticleServiceTests {
 
     @Test
     public void getFrontArticle() {
-        System.out.println(articleService.getFrontArticle(1));
+        System.out.println(articleService.getFrontArticle(1,"aa"));
     }
 
     @Test

@@ -45,8 +45,8 @@ export default {
     Comment,
     BigImg
   },
-  fetch ({ store, params }) {
-    return store.dispatch('getArticle', params.id)
+  fetch ({ query,store, params }) {
+    return store.dispatch('getArticle', {id:params.id,token:query.token})
   },
   data () {
     return {

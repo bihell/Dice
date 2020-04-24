@@ -220,7 +220,7 @@ export default {
         const article = {
           id: data.id,
           title: data.title,
-          frontUrl: this.$serverConfig.frontUrl + 'article/' + data.id,
+          frontUrl: this.$serverConfig.frontUrl + 'article/' + data.id + '?token=' + this.$store.state.user.token.access_token,
           publish: this.$dayjs(data.createTime).format('YYYY-MM-DD HH:mm'),
           updateTime: this.$dayjs(data.updateTime).format('YYYY-MM-DD HH:mm'),
           category: data.category || this.$static.DEFAULT_CATEGORY,

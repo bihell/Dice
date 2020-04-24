@@ -12,8 +12,10 @@ import com.bihell.dice.exception.TipException;
 import com.bihell.dice.mapper.blog.ArticleMapper;
 import com.bihell.dice.mapper.blog.CommentMapper;
 import com.bihell.dice.model.blog.Comment;
+import com.bihell.dice.security.SecurityUtil;
 import com.bihell.dice.service.blog.ArticleService;
 import com.bihell.dice.service.blog.MetaService;
+import com.bihell.dice.service.system.RedisService;
 import com.bihell.dice.utils.DiceConsts;
 import com.bihell.dice.utils.DiceUtil;
 import com.bihell.dice.utils.Types;
@@ -49,6 +51,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     private final CommentMapper commentsMapper;
 
+    private final RedisService redisService;
+
     /**
      * 分页查询前端文章
      *
@@ -64,7 +68,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .eq(Article::getStatus, PostStatusEnum.PUBLISHED)
                 .eq(Article::getType, Types.POST)
-                .orderByDesc(Article::getPriority,Article::getCreateTime);
+                .orderByDesc(Article::getPriority, Article::getCreateTime);
         IPage<Article> result = articleMapper.selectPage(page, wrapper);
 
         result.getRecords().forEach(article -> {
@@ -82,15 +86,30 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @return Article
      */
     @Override
-    @Cacheable(value = ARTICLE_CACHE_NAME, key = "'front_article['+#id+']'")
-    public Article getFrontArticle(Integer id) {
-        Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
-                .eq(Article::getId, id)
-                .eq(Article::getStatus, PostStatusEnum.PUBLISHED)
-                .eq(Article::getType, Types.POST));
-        String content = DiceUtil.contentTransform(article.getContent(), false, true);
-        article.setContent(content);
-        return article;
+    @Cacheable(value = ARTICLE_CACHE_NAME, key = "'front_article['+#id+']['+#token+']'")
+    public Article getFrontArticle(Integer id, String token) {
+        if (StringUtils.isEmpty(token)) {
+            Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
+                    .eq(Article::getId, id)
+                    .eq(Article::getStatus, PostStatusEnum.PUBLISHED)
+                    .eq(Article::getType, Types.POST));
+            if (article != null) {
+                String content = DiceUtil.contentTransform(article.getContent(), false, true);
+                article.setContent(content);
+            }
+            return article;
+        } else {
+            Integer userId = (Integer) redisService.get(SecurityUtil.buildTokenAccessKey(token));
+            Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
+                    .eq(Article::getId, id)
+                    .eq(Article::getType, Types.POST)
+                    .eq(Article::getCreator, userId));
+            if (article != null) {
+                String content = DiceUtil.contentTransform(article.getContent(), false, true);
+                article.setContent(content);
+            }
+            return article;
+        }
     }
 
     /**
@@ -113,7 +132,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .like(!StringUtils.isEmpty(query.getTags()), Article::getTags, query.getTags())
                 .like(!StringUtils.isEmpty(query.getCategory()), Article::getCategory, query.getCategory())
                 .like(!StringUtils.isEmpty(query.getContent()), Article::getContent, query.getContent())
-                .orderByDesc(Article::getUpdateTime);
+                .orderByDesc(Article::getCreateTime);
         return articleMapper.selectPage(page, wrapper);
     }
 

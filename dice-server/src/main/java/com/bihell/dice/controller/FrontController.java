@@ -63,8 +63,9 @@ public class FrontController extends BaseController {
      * @return {@see Article}
      */
     @GetMapping("article/{id}")
-    public RestResponse article(@PathVariable Integer id) {
-        Article article = articleService.getFrontArticle(id);
+    public RestResponse article(@PathVariable Integer id,
+                                @RequestParam(required = false,defaultValue = "") String token) {
+        Article article = articleService.getFrontArticle(id,token);
         if (null == article) {
             return this.error404();
         }

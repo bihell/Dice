@@ -7,8 +7,8 @@ export const actions = {
     commit('option/SET_DATA', data)
   },
   // 文章详情
-  async getArticle({ commit }, id) {
-    const { data } = await api.getArticle(id)
+  async getArticle({ commit }, params) {
+    const { data } = await api.getArticle(params.id, params.token)
     commit('article/SET_DETAIL', data)
   },
   // 文章列表

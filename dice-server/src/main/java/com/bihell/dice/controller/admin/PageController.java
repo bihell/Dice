@@ -26,7 +26,6 @@ public class PageController extends BaseController {
 
     private final ArticleService articleService;
     private final ArticleMapper articleMapper;
-    private final LogService logService;
 
     /**
      * 自定义页面列表

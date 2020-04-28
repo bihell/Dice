@@ -88,8 +88,7 @@ public class TaskController extends BaseController {
         // todo 稍后完善分页
         Page<TaskLog> page = new Page<>(1, 20);
         LambdaQueryWrapper<TaskLog> wrapper = new QueryWrapper<TaskLog>().lambda()
-                .eq(TaskLog::getIdTask,taskId);
-        return RestResponse.ok(new Pagination<TaskLog>(taskLogMapper.selectPage(page,wrapper)));
+                .eq(TaskLog::getIdTask, taskId);
+        return RestResponse.ok(new Pagination<TaskLog>(taskLogMapper.selectPage(page, wrapper)));
     }
-
 }

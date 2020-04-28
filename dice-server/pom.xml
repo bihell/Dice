@@ -17,7 +17,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>9</java.version>
         <mybatis-plus-boot.version>3.3.1</mybatis-plus-boot.version>
-        <dynamic-datasource-spring-boot.version>3.0.0</dynamic-datasource-spring-boot.version>
         <flexmark.version>0.34.58</flexmark.version>
     </properties>
 
@@ -52,7 +51,7 @@
         <dependency>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
             <groupId>com.baomidou</groupId>
-            <version>${dynamic-datasource-spring-boot.version}</version>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>

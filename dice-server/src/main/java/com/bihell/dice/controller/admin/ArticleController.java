@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * 后台文章管理 Controller
  *
@@ -60,7 +62,7 @@ public class ArticleController extends BaseController {
      * 新建或修改文章
      */
     @PostMapping
-    public RestResponse saveArticle(@RequestBody ArticleParam articleParam) {
+    public RestResponse saveArticle(@Valid @RequestBody ArticleParam articleParam) {
         articleParam.setCreator(this.user().getId());
         Integer articleId = articleService.saveArticle(articleParam);
         return RestResponse.ok(articleId);

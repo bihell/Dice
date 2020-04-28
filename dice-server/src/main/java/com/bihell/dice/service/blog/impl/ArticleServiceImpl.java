@@ -162,22 +162,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     @CacheEvict(value = ARTICLE_CACHE_NAME, allEntries = true, beforeInvocation = true)
     public Integer saveArticle(Article article) {
-        if (null == article) {
-            throw new TipException("文章对象为空");
-        }
-        if (StringUtils.isEmpty(article.getTitle())) {
-            throw new TipException("文章标题不能为空");
-        }
-        if (article.getTitle().length() > DiceConsts.MAX_TITLE_COUNT) {
-            throw new TipException("文章标题字数不能超过" + DiceConsts.MAX_TITLE_COUNT);
-        }
-
-        if (StringUtils.isEmpty(article.getContent())) {
-            throw new TipException("文章内容不能为空");
-        }
-        if (article.getContent().length() > DiceConsts.MAX_CONTENT_COUNT) {
-            throw new TipException("文章内容字数不能超过" + DiceConsts.MAX_CONTENT_COUNT);
-        }
         if (null == article.getCreator()) {
             throw new TipException("请先登陆后发布文章");
         }

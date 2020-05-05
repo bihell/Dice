@@ -28,6 +28,7 @@
 ## 开发&部署
 
 [开发&部署文档](https://bigdata.bihell.com/project/dice.html)
+
 部署视屏：[西瓜视频](https://www.ixigua.com/i6822907847605486083/) [哔哩哔哩](https://www.bilibili.com/video/BV1EZ4y1s7DF/) [YouTube](https://www.youtube.com/watch?v=yppSdtAk3u0)
 
 ## 部分界面

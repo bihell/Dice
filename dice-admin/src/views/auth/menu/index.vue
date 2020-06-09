@@ -729,7 +729,7 @@ export default {
 	display: none;
 }
 .custom-tree-container {
-  /deep/ .el-tabs__item {
+  ::v-deep .el-tabs__item {
     color: rgba(0,0,0,0.57);
   }
   .m-toolbar {
@@ -745,7 +745,7 @@ export default {
       .badge-item {
         top: 10px;
         padding-right: 6px;
-        /deep/ .el-badge__content {
+        ::v-deep .el-badge__content {
           background: none;
           color: #000;
           border: 0;
@@ -753,7 +753,7 @@ export default {
       }
     }
   }
-  /deep/ .el-tree-node__content {
+  ::v-deep .el-tree-node__content {
     height: 45px;
   }
   .el-tree-node__content:hover .slot-icon-more {
@@ -765,7 +765,7 @@ export default {
   }
 }
 .dialog-custom-title {
-  /deep/ i {
+  ::v-deep i {
     font-style: normal;
     color: #1890ff;
   }

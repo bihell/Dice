@@ -559,7 +559,7 @@ export default {
 
 <style lang="scss" scoped>
   .dialog-custom-title {
-    /deep/ i {
+    ::v-deep i {
       font-style: normal;
       color: #1890ff;
     }

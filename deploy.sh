@@ -33,7 +33,7 @@ judge(){
 }
 
 # 安装 Dice-Admin 依赖
-cd ./dice-admin/ && npm install && npm rebuild node-sass
+cd ./dice-admin/ && npm install
 judge "安装 Dice-Admin 项目依赖"
 
 # 编译 Dice-Admin 项目

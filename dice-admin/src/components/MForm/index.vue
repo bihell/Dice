@@ -190,7 +190,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ .el-select--medium {
+  ::v-deep .el-select--medium {
   width: 100%;
 }
 </style>

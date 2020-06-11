@@ -76,8 +76,6 @@
     "script-loader": "0.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/register": "^7.7.7",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-plugin-unit-jest": "^3.11.0",

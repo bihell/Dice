@@ -27,6 +27,19 @@ const FUNCTIONS = {
     return serverConfig.api
   },
   /**
+   * 获取前端Url
+   * @returns {string}
+   */
+  getServerFrontUrl: () => {
+    return serverConfig.frontUrl
+  },
+  /**
+   * 获取前端文章Url
+   */
+  getServerFrontPostUrl: (id) => {
+    return FUNCTIONS.getServerFrontUrl() + 'article/' + id
+  },
+  /**
    * 获取服务器媒体链接
    * @param url
    * @returns {string}

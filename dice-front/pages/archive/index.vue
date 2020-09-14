@@ -31,16 +31,16 @@
 
 <script>
 export default {
-  head() {
-    return { title: `归档` }
+  fetch({ store }) {
+    return store.dispatch('getArchive')
   },
   computed: {
     archives() {
       return this.$store.state.archive.data
     }
   },
-  fetch({ store }) {
-    return store.dispatch('getArchive')
+  head() {
+    return { title: `归档` }
   }
 }
 </script>

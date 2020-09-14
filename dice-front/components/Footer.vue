@@ -4,7 +4,7 @@
       © 2014 - present | Haseo Chen | Proudly powered by
       <a href="https://github.com/bihell/Dice" target="_blank">Dice</a>
     </p>
-    <div v-highlight v-html="options.blog_footer" class="markdown-body"></div>
+    <div v-highlight class="markdown-body" v-html="options.blog_footer"></div>
   </div>
 </template>
 

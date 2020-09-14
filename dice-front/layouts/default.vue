@@ -23,6 +23,11 @@ export default {
     DiceFooter,
     DiceScrollTop
   },
+  computed: {
+    options() {
+      return this.$store.state.option.data
+    }
+  },
   head() {
     return {
       title: `${this.options.meta_title}` || defaultConfig.meta_title,
@@ -55,11 +60,6 @@ export default {
             defaultConfig.baidu_site_verification
         }
       ]
-    }
-  },
-  computed: {
-    options() {
-      return this.$store.state.option.data
     }
   }
 }

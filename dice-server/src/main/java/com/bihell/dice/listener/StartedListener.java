@@ -4,6 +4,7 @@ import com.bihell.dice.config.DiceProperties;
 import com.bihell.dice.service.blog.OptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiOutput;
@@ -29,7 +30,7 @@ public class StartedListener implements ApplicationListener<ApplicationStartedEv
     private final DiceProperties diceProperties;
 
     @Override
-    public void onApplicationEvent(ApplicationStartedEvent event) {
+    public void onApplicationEvent(@NotNull ApplicationStartedEvent event) {
         // save halo version to database
         this.printStartInfo();
     }

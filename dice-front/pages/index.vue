@@ -62,8 +62,8 @@ export default {
   transition (to, from) {
     return 'move'
   },
-  head () {
-    return { title: `Blog` }
+  fetch ({ store, query }) {
+    return store.dispatch('getArticles', query.page)
   },
   computed: {
     articles () {
@@ -76,8 +76,8 @@ export default {
       return this.$store.state.article.list.currentPage
     }
   },
-  fetch ({ store, query }) {
-    return store.dispatch('getArticles', query.page)
+  head () {
+    return { title: `Blog` }
   }
 }
 </script>

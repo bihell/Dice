@@ -40,21 +40,21 @@
 
 <script type="text/ecmascript-6">
 export default {
-  head () {
-    return { title: `分类` }
+  fetch ({ store }) {
+    return store.dispatch('getCategories')
   },
   computed: {
     categories () {
       return this.$store.state.category.data
     }
   },
-  fetch ({ store }) {
-    return store.dispatch('getCategories')
-  },
   methods: {
     goAnchor (id) {
       this.$util.goAnchor(id)
     }
+  },
+  head () {
+    return { title: `分类` }
   }
 }
 </script>

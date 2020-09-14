@@ -171,32 +171,32 @@ export default {
     }
   },
   computed: {
-    comments () {
+    comments() {
       return this.$store.state.comment.pagination.list
     },
-    total () {
+    total() {
       return this.$store.state.comment.pagination.total
     }
   },
-  mounted () {
+  mounted() {
     this.loadComments()
     this.init()
     this.commentPasteListen()
   },
   methods: {
     // 跳转到某条指定的id位置
-    toSomeAnchorById (id) {
+    toSomeAnchorById(id) {
       this.$util.goAnchor(id, 120, 60)
     },
-    gravatar (email) {
+    gravatar(email) {
       return this.$gravarar.url(email, { s: '36', d: 'retro' })
     },
-    updateUserGravatar () {
+    updateUserGravatar() {
       if (this.user.email) {
         this.user.gravatar = this.gravatar(this.user.email)
       }
     },
-    commentPasteListen () {
+    commentPasteListen() {
       document.addEventListener('copy', e => {
         if (!window.getSelection) return
         const content = window.getSelection().toString()
@@ -204,37 +204,37 @@ export default {
         e.preventDefault()
       })
     },
-    commentClickListen () {
+    commentClickListen() {
       this.isEdit = true
       this.placeHolder = ''
     },
-    commentBlurListen () {
+    commentBlurListen() {
       this.isEdit = false
       if (!this.commentContent || this.commentContent === '') {
         this.placeHolder = defaultPlaceholder
       }
     },
-    commentEditListen ($event) {
+    commentEditListen($event) {
       this.isEdit = true
       this.commentContent = this.$refs.content.textContent
       if (this.commentContent !== '') {
         this.placeHolder = ''
       }
     },
-    closeReply () {
+    closeReply() {
       this.isReply = false
       this.replyComment.id = -1
       this.replyComment.content = ''
       this.replyComment.name = ''
     },
-    replyFor (id, name, content) {
+    replyFor(id, name, content) {
       this.isReply = true
       this.replyComment.id = id
       this.replyComment.content = content
       this.replyComment.name = name
       this.toSomeAnchorById('reply')
     },
-    clearComment () {
+    clearComment() {
       this.commentContent = ''
       this.isEdit = false
       this.isComment = false
@@ -247,13 +247,13 @@ export default {
       this.$refs.content.innerHTML = ''
       this.placeHolder = defaultPlaceholder
     },
-    isAgree (commentId) {
+    isAgree(commentId) {
       return this.commentAgrees.includes(commentId)
     },
-    isDisagree (commentId) {
+    isDisagree(commentId) {
       return this.commentDisagrees.includes(commentId)
     },
-    async assessComment (commentId, assess) {
+    async assessComment(commentId, assess) {
       if (assess === 'agree') {
         if (this.isAgree(commentId)) return
       }
@@ -286,7 +286,7 @@ export default {
         }
       }
     },
-    async submitComment ($event) {
+    async submitComment($event) {
       $event.preventDefault()
       if (this.isComment) {
         alert('请等待发布完成')
@@ -322,14 +322,14 @@ export default {
         alert(res.msg)
       }
     },
-    async loadComments () {
+    async loadComments() {
       await this.$store.dispatch('getComments', {
         articleId: this.articleId,
         page: defaultPage,
         limit: defaultLimit
       })
     },
-    init () {
+    init() {
       if (localStorage) {
         const commentAgrees = localStorage.getItem('COMMENT_AGREE')
         const commentDisagrees = localStorage.getItem('COMMENT_DISAGREE')

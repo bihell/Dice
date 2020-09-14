@@ -375,7 +375,7 @@ public static void main(String[] args){
 }
 ```
 
-> 想要了解更多详细信息，可以查看[文档](https://github.com/bihell/Dice/blob/master/README.md)。', 1, 0, 'First', 'New', '1', 'post');
+> 想要了解更多详细信息，可以查看[文档](https://github.com/bihell/Dice/blob/master/README.md)。', 1, 0, 'First', 'New', '0', 'post');
 
 INSERT INTO article (title, create_time, update_time, content, creator, tags, category, status, type)
 VALUES ('关于', now(), now(), '# About me
@@ -386,7 +386,7 @@ VALUES ('关于', now(), now(), '# About me
 * [哔哩哔哩](https://space.bilibili.com/88900889/video)
 
 ### 也可以设置别的页面
-* 比如友链页面', 1, NULL, NULL, '1', 'page');
+* 比如友链页面', 1, NULL, NULL, '0', 'page');
 
 INSERT INTO comment (article_id, content, name, email, website, agree, disagree, ip, agent)
 VALUES ('1', '## 测试评论

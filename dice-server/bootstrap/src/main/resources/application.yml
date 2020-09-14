@@ -22,6 +22,7 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 50MB
+
 mybatis-plus:
   typeEnumsPackage: com.bihell.dice.enums
   global-config:

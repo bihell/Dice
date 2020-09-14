@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.1.RELEASE</version>
+        <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.bihell</groupId>
@@ -23,6 +23,10 @@
         <flexmark.version>0.34.58</flexmark.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
 
         <dependency>
@@ -50,13 +54,7 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus-boot.version}</version>
         </dependency>
-
-        <dependency>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <groupId>com.baomidou</groupId>
-            <version>3.0.0</version>
-        </dependency>
-
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>

@@ -35,7 +35,9 @@ public interface MetaMapper extends BaseMapper<Meta> {
      * @return  List<MetaDto>
      */
     @SelectProvider(type = MetaSql.class, method = "selectMetaDtos")
-    List<MetaDto> selectMetaDtos(@Param("type") String type, @Param("title") String title, @Param("snippetFileContent") String snippetFileContent);
+    List<MetaDto> selectMetaDtos(@Param("type") String type,
+                                 @Param("title") String title,
+                                 @Param("snippetFileContent") String snippetFileContent);
 
     /**
      * 获取属性以及属性下的已发布文章

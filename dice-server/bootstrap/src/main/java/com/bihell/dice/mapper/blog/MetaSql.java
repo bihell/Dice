@@ -1,6 +1,7 @@
 package com.bihell.dice.mapper.blog;
 
 import com.bihell.dice.utils.Types;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -11,7 +12,7 @@ import org.springframework.util.StringUtils;
 public class MetaSql {
     private static final Logger log = LoggerFactory.getLogger(MetaSql.class);
 
-    public String selectMetaDtos(String type, String title, String snippetFileContent) {
+    public String selectMetaDtos(@Param("type") String type, @Param("title") String title, @Param("snippetFileContent") String snippetFileContent) {
         StringBuilder sql = new StringBuilder(
                 "select t1.id, t1.name, t1.type, count(t3.id) as count\n" +
                         "from dice.meta t1\n" +

@@ -1,0 +1,18 @@
+#datasource
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://dice-mysql:3306/dice?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    host: dice-redis
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: INFO
+  file:
+    name: log/dice.log

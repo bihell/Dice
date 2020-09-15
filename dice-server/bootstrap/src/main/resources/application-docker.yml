@@ -5,14 +5,6 @@ spring:
     password: root
     url: jdbc:mysql://dice-mysql:3306/dice?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    druid:
-#      stat-view-servlet:
-#        loginUsername: admin
-#        loginPassword: 123456
-#    dynamic:
-#      primary: diceMaster
-#      datasource:
-#        diceMaster:
 
   redis:
     host: dice-redis

@@ -20,10 +20,7 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 50MB
-
-# 当前项目maven激活环境，例如：dev/test/uat/prod，对应pom.xml中profile设置值
----
-spring:
+  # 当前项目maven激活环境
   profiles:
     active: @profileActive@
 ################################ spring config end #################################

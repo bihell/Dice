@@ -1,3 +1,4 @@
+################################ spring config start ###############################
 #端口号
 server:
   port: 9091
@@ -11,9 +12,6 @@ spring:
           starttls:
             enable: true
             required: true
-  #默认properties
-  profiles:
-    active: dev
   jackson:
     date-format: yyyy/MM/dd HH:mm:ss
     time-zone: GMT+8
@@ -22,6 +20,13 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 50MB
+
+# 当前项目maven激活环境，例如：dev/test/uat/prod，对应pom.xml中profile设置值
+---
+spring:
+  profiles:
+    active: @profileActive@
+################################ spring config end #################################
 
 mybatis-plus:
   typeEnumsPackage: com.bihell.dice.enums

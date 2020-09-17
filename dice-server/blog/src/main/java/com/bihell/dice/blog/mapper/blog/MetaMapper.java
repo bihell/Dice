@@ -51,9 +51,9 @@ public interface MetaMapper extends BaseMapper<Meta> {
             @Result(column = "name", property = "name"),
             @Result(column = "type", property = "type"),
             @Result(column = "id", property = "count",
-                    one = @One(select = "com.bihell.dice.mapper.blog.ArticleMapper.selectPublishCountByMeta")),
+                    one = @One(select = "com.bihell.dice.blog.mapper.blog.ArticleMapper.selectPublishCountByMeta")),
             @Result(column = "id", property = "articles",
-                    many = @Many(select = "com.bihell.dice.mapper.blog.ArticleMapper.selectPublishByMeta"))
+                    many = @Many(select = "com.bihell.dice.blog.mapper.blog.ArticleMapper.selectPublishByMeta"))
     })
     List<MetaDto> selectPublishMetaDtos(@Param("type") String type);
 }

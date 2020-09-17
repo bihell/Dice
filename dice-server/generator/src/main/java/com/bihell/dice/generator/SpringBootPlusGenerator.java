@@ -10,7 +10,7 @@ import com.bihell.dice.generator.properties.GeneratorProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * spring-boot-plus代码生成器入口类
+ * dice代码生成器入口类
  *
  * @author geekidea
  * @date 2019-10-22

@@ -29,7 +29,7 @@ dice:
       # 数据库连接密码
       password: root
       # 驱动URL
-      driver-name: com.mysql.jdbc.Driver
+      driver-name: com.mysql.cj.jdbc.Driver
       # 驱动URL
       url: jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     # 代码生成配置

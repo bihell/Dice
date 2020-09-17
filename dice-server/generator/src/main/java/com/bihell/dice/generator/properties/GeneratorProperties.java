@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * spring-boot-plus代码生成配置属性
+ * dice代码生成配置属性
  *
  * @author geekidea
  * @date 2020/3/11
@@ -23,7 +23,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @Component
-@ConfigurationProperties(prefix = "spring-boot-plus.generator")
+@ConfigurationProperties(prefix = "dice.generator")
 public class GeneratorProperties {
 
     /**

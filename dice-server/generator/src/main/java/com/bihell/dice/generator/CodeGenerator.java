@@ -44,7 +44,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 /**
- * spring-boot-plus代码生成器
+ * dice代码生成器
  *
  * @author geekidea
  * @date 2018-11-08

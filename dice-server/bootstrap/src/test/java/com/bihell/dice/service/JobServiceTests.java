@@ -1,7 +1,7 @@
 package com.bihell.dice.service;
 
-import com.bihell.dice.model.tool.TaskLog;
-import com.bihell.dice.service.task.JobService;
+import com.bihell.dice.blog.model.tool.TaskLog;
+import com.bihell.dice.blog.service.task.JobService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

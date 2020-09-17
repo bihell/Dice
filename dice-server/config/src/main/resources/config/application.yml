@@ -45,11 +45,24 @@ spring:
     active: @profileActive@
 ################################ spring config end #################################
 
+############################### mybatis-plus start #################################
 mybatis-plus:
+  # 启动时是否检查MyBatis XML文件是否存在
+  check-config-location: true
+  # 支持统配符 * 或者 ; 分割
   typeEnumsPackage: com.bihell.dice.blog.enums
+  # MyBatis原生配置
+  configuration:
+    # 字段名称下划线转驼峰命名
+    map-underscore-to-camel-case: true
   global-config:
+    # 全局默认主键类型
     db-config:
       id-type: auto
+      # 逻辑未删除值(默认为 0)
       logic-not-delete-value: 0
+      # 逻辑已删除值(默认为 1)
       logic-delete-value: 1
+  # mapper xml映射路径
   mapper-locations: classpath:/mapper/*Mapper.xml
+################################ mybatis-plus end ##################################

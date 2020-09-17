@@ -5,6 +5,8 @@
         <module>bootstrap</module>
         <module>config</module>
         <module>blog</module>
+        <module>generator</module>
+        <module>framework</module>
     </modules>
     <groupId>com.bihell</groupId>
     <artifactId>Dice</artifactId>
@@ -23,10 +25,14 @@
     <properties>
         <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
         <java.version>9</java.version>
+        <velocity.version>2.2</velocity.version>
+        <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
+        <commons-pool2.version>2.8.0</commons-pool2.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mybatis-plus-boot.version>3.3.1</mybatis-plus-boot.version>
         <flexmark.version>0.34.58</flexmark.version>
     </properties>
 
@@ -103,6 +109,49 @@
             </dependency>
             <!-- spring-boot end -->
 
+            <!-- mybatis-plus begin -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <!-- mybatis-plus end -->
+
+            <!-- apache commons start -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-net</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>${commons-net.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+            <!-- apache commons end -->
+
             <!-- 项目模块start -->
             <dependency>
                 <groupId>com.bihell</groupId>
@@ -112,6 +161,16 @@
             <dependency>
                 <groupId>com.bihell</groupId>
                 <artifactId>blog</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bihell</groupId>
+                <artifactId>generator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bihell</groupId>
+                <artifactId>framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- 项目模块end -->
@@ -167,7 +226,6 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot.version}</version>
         </dependency>
 
         <!-- mysql连接 -->
@@ -222,7 +280,10 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>

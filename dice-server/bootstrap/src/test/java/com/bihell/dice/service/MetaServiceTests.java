@@ -1,6 +1,6 @@
 package com.bihell.dice.service;
 
-import com.bihell.dice.service.blog.MetaService;
+import com.bihell.dice.blog.service.blog.MetaService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -26,7 +26,7 @@ spring:
 ################################ spring config end #################################
 
 mybatis-plus:
-  typeEnumsPackage: com.bihell.dice.enums
+  typeEnumsPackage: com.bihell.dice.blog.enums
   global-config:
     db-config:
       id-type: auto

@@ -1,6 +1,6 @@
 package com.bihell.dice.service;
 
-import com.bihell.dice.mapper.auth.UserMapper;
+import com.bihell.dice.blog.mapper.auth.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

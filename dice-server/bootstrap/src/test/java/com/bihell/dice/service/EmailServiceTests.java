@@ -1,7 +1,8 @@
 package com.bihell.dice.service;
 
-import com.bihell.dice.model.blog.Comment;
-import com.bihell.dice.service.message.EmailService;
+
+import com.bihell.dice.blog.model.blog.Comment;
+import com.bihell.dice.blog.service.message.EmailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

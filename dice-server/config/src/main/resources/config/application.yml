@@ -1,9 +1,29 @@
-################################ spring config start ###############################
-#端口号
+############################# 访问路径、端口tomcat start #############################
 server:
+  # 项目端口
   port: 9091
+  # 内嵌Tomcat
+  tomcat:
+    # tomcat编码
+    uri-encoding: UTF-8
+    threads:
+      # tomcat线程池大小设置
+      max: 1000
+      # tomcat初始化线程数量
+      min-spare: 30
+  servlet:
+    # HTTP编码
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+############################# 访问路径、端口tomcat end ###############################
+
+################################ spring config start ###############################
 spring:
-  #mail
+  application:
+    # 应用程序名称
+    name: dice
   mail:
     properties:
       mail:
@@ -13,7 +33,7 @@ spring:
             enable: true
             required: true
   jackson:
-    date-format: yyyy/MM/dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   servlet:
     multipart:
@@ -25,11 +45,24 @@ spring:
     active: @profileActive@
 ################################ spring config end #################################
 
+############################### mybatis-plus start #################################
 mybatis-plus:
+  # 启动时是否检查MyBatis XML文件是否存在
+  check-config-location: true
+  # 支持统配符 * 或者 ; 分割
   typeEnumsPackage: com.bihell.dice.blog.enums
+  # MyBatis原生配置
+  configuration:
+    # 字段名称下划线转驼峰命名
+    map-underscore-to-camel-case: true
   global-config:
+    # 全局默认主键类型
     db-config:
       id-type: auto
+      # 逻辑未删除值(默认为 0)
       logic-not-delete-value: 0
+      # 逻辑已删除值(默认为 1)
       logic-delete-value: 1
+  # mapper xml映射路径
   mapper-locations: classpath:/mapper/*Mapper.xml
+################################ mybatis-plus end ##################################

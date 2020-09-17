@@ -11,11 +11,19 @@ server:
       max: 1000
       # tomcat初始化线程数量
       min-spare: 30
+  servlet:
+    # HTTP编码
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 ############################# 访问路径、端口tomcat end ###############################
 
 ################################ spring config start ###############################
 spring:
-  #mail
+  application:
+    # 应用程序名称
+    name: dice
   mail:
     properties:
       mail:
@@ -25,7 +33,7 @@ spring:
             enable: true
             required: true
   jackson:
-    date-format: yyyy/MM/dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   servlet:
     multipart:

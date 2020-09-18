@@ -1,6 +1,6 @@
-package com.bihell.dice.blog.config;
+package com.bihell.dice.config;
 
-import com.bihell.dice.config.DiceProperties;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
+@EnableKnife4j
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SwaggerConfig {
 

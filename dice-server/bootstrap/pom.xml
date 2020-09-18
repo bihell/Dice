@@ -10,8 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>bootstrap</artifactId>
-
+    <name>bootstrap</name>
+    <description>项目启动模块</description>
     <dependencies>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.bihell</groupId>
             <artifactId>config</artifactId>
@@ -19,6 +25,10 @@
         <dependency>
             <groupId>com.bihell</groupId>
             <artifactId>blog</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.bihell</groupId>
+            <artifactId>framework</artifactId>
         </dependency>
     </dependencies>
 

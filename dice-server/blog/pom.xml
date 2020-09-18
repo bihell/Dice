@@ -15,5 +15,9 @@
             <groupId>com.bihell</groupId>
             <artifactId>config</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.bihell</groupId>
+            <artifactId>framework</artifactId>
+        </dependency>
     </dependencies>
 </project>

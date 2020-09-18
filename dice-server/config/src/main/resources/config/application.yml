@@ -66,3 +66,47 @@ mybatis-plus:
   # mapper xml映射路径
   mapper-locations: classpath:/mapper/*Mapper.xml
 ################################ mybatis-plus end ##################################
+
+################################ dice start ########################################
+dice:
+  # 服务器IP地址
+  server-ip: 127.0.0.1
+################################ dice end ##########################################
+
+############################## Spring boot admin start ##############################
+---
+spring:
+  boot:
+    admin:
+      client:
+        # Spring Boot Admin服务地址，参照admin模块application.yml配置
+        url: http://${dice.server-ip}:8000
+        # Spring Boot Admin账号
+        username: admin
+        # Spring Boot Admin密码
+        password: admin
+        # 当前项目实例名称
+        instance:
+          # client名称
+          name: ${spring.application.name}
+          # client ip端口
+          service-base-url: http://${dice.server-ip}:${server.port}
+      monitor:
+        period: 100000
+        status-lifetime: 100000
+        connect-timeout: 100000
+        read-timeout: 100000
+
+# 开启和暴露端点
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+    logfile:
+      #可在线查看日志
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+############################## Spring boot admin end ###############################

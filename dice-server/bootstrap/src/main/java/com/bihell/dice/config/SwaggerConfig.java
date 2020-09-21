@@ -54,7 +54,6 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SwaggerConfig {
 
-    private final DiceProperties diceProperties;
     private final SwaggerProperties swaggerProperties;
 
     /**

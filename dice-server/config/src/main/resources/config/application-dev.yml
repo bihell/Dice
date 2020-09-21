@@ -11,5 +11,4 @@ logging:
     root: info
     com.bihell.dice.mapper: trace
 dice:
-  doc-disabled: false
   auth-enabled: true

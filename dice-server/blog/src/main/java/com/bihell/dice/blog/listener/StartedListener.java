@@ -1,7 +1,7 @@
 package com.bihell.dice.blog.listener;
 
 import com.bihell.dice.blog.service.blog.OptionService;
-import com.bihell.dice.config.DiceProperties;
+import com.bihell.dice.config.properties.SwaggerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +27,7 @@ public class StartedListener implements ApplicationListener<ApplicationStartedEv
 
     private final OptionService optionService;
 
-    private final DiceProperties diceProperties;
+    private final SwaggerProperties swaggerProperties;
 
     @Override
     public void onApplicationEvent(@NotNull ApplicationStartedEvent event) {
@@ -38,7 +38,7 @@ public class StartedListener implements ApplicationListener<ApplicationStartedEv
     private void printStartInfo() {
         String baseUrl = optionService.getBaseUrl();
 
-        if (!diceProperties.isDocDisabled()) {
+        if (swaggerProperties.isEnable()) {
             log.info(AnsiOutput.toString(AnsiColor.BRIGHT_BLUE, "Dice api doc was enabled at ",baseUrl,"/swagger-ui.html"));
         }
         log.info(AnsiOutput.toString(AnsiColor.BRIGHT_YELLOW, "Dice has started successfully!"));

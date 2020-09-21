@@ -33,6 +33,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.14</commons-codec.version>
         <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
+        <knife4j.version>2.0.2</knife4j.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -126,13 +127,11 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
@@ -182,6 +181,11 @@
                 <version>${project.version}</version>
             </dependency>
             <!-- 项目模块end -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

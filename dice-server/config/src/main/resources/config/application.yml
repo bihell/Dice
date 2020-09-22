@@ -85,6 +85,14 @@ mybatis-plus:
 dice:
   # 服务器IP地址
   server-ip: 127.0.0.1
+  # 是否启用验证码 todo
+  enable-verify-code: false
+
+  # 文件上传下载配置
+  # 上传目录（当前用户下） todo
+  upload-folder: .dice
+  # 资源访问路径 todo
+  resource-access-path: /resource/
 ################################ dice end ##########################################
 
 ############################## Spring boot admin start ##############################

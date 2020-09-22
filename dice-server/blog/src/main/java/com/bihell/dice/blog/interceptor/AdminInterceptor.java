@@ -10,7 +10,7 @@ import com.bihell.dice.blog.service.auth.UserService;
 import com.bihell.dice.blog.service.system.RedisService;
 import com.bihell.dice.blog.utils.DiceUtil;
 import com.bihell.dice.blog.utils.RestResponse;
-import com.bihell.dice.config.DiceProperties;
+import com.bihell.dice.config.properties.DiceProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bihell.dice.blog.utils.ErrorCode;
 import lombok.RequiredArgsConstructor;

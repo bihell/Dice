@@ -1,10 +1,10 @@
-package com.bihell.dice.config;
+package com.bihell.dice.config.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Dice configuration properties.
+ * Dice 属性配置信息
  *
  * @author haseochen
  */

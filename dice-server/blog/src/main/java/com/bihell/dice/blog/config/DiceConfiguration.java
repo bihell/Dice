@@ -1,7 +1,7 @@
 package com.bihell.dice.blog.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.bihell.dice.config.DiceProperties;
+import com.bihell.dice.config.properties.DiceProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

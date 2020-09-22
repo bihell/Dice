@@ -47,6 +47,9 @@ spring:
   # 当前项目maven激活环境
   profiles:
     active: @profileActive@
+  output:
+    ansi:
+      enabled: detect
 
 # logback.xml中有详细的日志配置
 logging:

@@ -35,6 +35,9 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  banner:
+    charset: UTF-8
+    location: classpath:config/banner.txt
   servlet:
     multipart:
       enabled: true
@@ -43,6 +46,13 @@ spring:
   # 当前项目maven激活环境
   profiles:
     active: @profileActive@
+
+# logback.xml中有详细的日志配置
+logging:
+  config: classpath:config/logback.xml
+  #  方便Spring Boot Admin页面上实时查看日志
+  file:
+    name: logs/${spring.application.name}.log
 ################################ spring config end #################################
 
 ############################### mybatis-plus start #################################

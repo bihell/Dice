@@ -12,6 +12,7 @@ server:
       # tomcat初始化线程数量
       min-spare: 30
   servlet:
+#    context-path: /
     # HTTP编码
     encoding:
       charset: UTF-8
@@ -119,6 +120,22 @@ management:
     web:
       exposure:
         include: '*'
+
+# 自定义项目信息，Spring Boot Admin展示使用
+info:
+  project-groupId: '@project.parent.groupId@'
+  project-name: ${spring.application.name}
+  project-finalName: '@boot.artifact.name@'
+  project-author: tpxcer
+  project-description: ${spring.application.name} project
+  project-sourceEncoding: '@project.build.sourceEncoding@'
+  project-spring-boot-version: '@spring-boot.version@'
+  project-mybatis-plus-version: '@mybatis-plus-boot-starter.version@'
+  project-version: '@project.version@'
+  project-website: 'https://bihell.com'
+  project-home: http://${dice.server-ip}:${server.port}
+  project-swagger: http://${dice.server-ip}:${server.port}/swagger-ui.html
+  project-knife4j: http://${dice.server-ip}:${server.port}/doc.html
 ############################## Spring boot admin end ###############################
 
 #################################### Swagger start #################################

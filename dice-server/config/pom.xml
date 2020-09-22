@@ -16,8 +16,19 @@
     <build>
         <resources>
             <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>config/application-*.yml</exclude>
+                </excludes>
+            </resource>
+            <resource>
                 <directory>src/main/resources/config</directory>
                 <filtering>true</filtering>
+                <targetPath>config</targetPath>
+                <includes>
+                    <include>application-*.yml</include>
+                </includes>
             </resource>
         </resources>
     </build>

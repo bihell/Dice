@@ -14,9 +14,6 @@ logging:
     org:
       springframework:
         web: INFO
-#  file:
-#    name: log/dice.log
-
 #################################### Swagger start #################################
 ---
 dice:

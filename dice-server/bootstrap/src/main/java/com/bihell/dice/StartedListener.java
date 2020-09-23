@@ -1,4 +1,4 @@
-package com.bihell.dice.blog.listener;
+package com.bihell.dice;
 
 import com.bihell.dice.blog.service.blog.OptionService;
 import com.bihell.dice.config.properties.SwaggerProperties;

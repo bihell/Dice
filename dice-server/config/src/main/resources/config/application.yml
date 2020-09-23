@@ -93,6 +93,29 @@ dice:
   upload-folder: .dice
   # 资源访问路径 todo
   resource-access-path: /resource/
+
+  ############################ CORS start ############################
+  # CORS跨域配置，默认允许跨域
+  cors:
+    # 是否启用跨域，默认启用
+    enable: true
+    # CORS过滤的路径，默认：/**
+    path: /v1/api/**
+    # 允许访问的源
+    allowed-origins: '*'
+    # 允许访问的请求头
+    allowed-headers: '*'
+    # 是否允许发送cookie
+    allow-credentials: true
+    # 允许访问的请求方式
+    allowed-methods: OPTION,GET,POST,PUT,DELETE
+    # 允许响应的头
+    exposed-headers: token
+    # 该响应的有效时间默认为30分钟，在有效时间内，浏览器无须为同一请求再次发起预检请求
+    max-age: 1800
+
+  ############################ CORS end ##############################
+
 ################################ dice end ##########################################
 
 ############################## Spring boot admin start ##############################

@@ -81,10 +81,10 @@ public class DiceProperties {
     private String resourceHandlers;
 
     /**
-     * 跨域配置 todo
+     * 跨域配置
      */
-//    @NestedConfigurationProperty
-//    private DiceCorsProperties cors = new DiceCorsProperties();
+    @NestedConfigurationProperty
+    private DiceCorsProperties cors = new DiceCorsProperties();
 
     /**
      * Swagger路径 todo

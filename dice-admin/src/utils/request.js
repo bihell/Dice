@@ -4,7 +4,8 @@ import store from '@/store'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: '/v1/api/', // url = base url + request url
+  // baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: '/v1/api/',
   withCredentials: true, // send cookies when cross-domain requests
   crossDomain: true,
   timeout: 5000 // request timeout

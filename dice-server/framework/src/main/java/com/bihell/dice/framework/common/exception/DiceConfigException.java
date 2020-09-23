@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * spring-boot-plus配置异常
- *
- * @author geekidea
- * @date 2020/3/21
+ * Dice配置异常
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

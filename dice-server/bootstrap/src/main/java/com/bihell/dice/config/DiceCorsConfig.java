@@ -17,7 +17,7 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Slf4j
 @Configuration
-@ConditionalOnProperty(value = {"spring-boot-plus.cors.enable"}, matchIfMissing = true)
+@ConditionalOnProperty(value = {"dice.enable"}, matchIfMissing = true)
 public class DiceCorsConfig {
 
     /**

@@ -4,9 +4,6 @@ package com.bihell.dice.framework.common.api;
  * <p>
  * REST API 响应码
  * </p>
- *
- * @author geekidea
- * @since 2018-11-08
  */
 public enum ApiCode {
 

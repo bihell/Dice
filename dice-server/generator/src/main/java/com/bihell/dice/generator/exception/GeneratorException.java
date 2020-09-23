@@ -6,9 +6,6 @@ import com.bihell.dice.framework.common.exception.DiceException;
 
 /**
  * 代码生成异常
- *
- * @author geekidea
- * @date 2020/3/12
  */
 public class GeneratorException extends DiceException {
 	private static final long serialVersionUID = 2556853577480934761L;

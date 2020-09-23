@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServletRequest;
  * 1.获取当前浏览器名称
  * 2.判断当前用户的浏览器
  * </code>
- *
- * @author geekidea
- * @since 2018-11-08
  */
 public final class BrowserUtil {
     public static final String IE = "msie";

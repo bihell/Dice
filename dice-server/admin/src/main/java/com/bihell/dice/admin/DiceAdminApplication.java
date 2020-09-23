@@ -11,9 +11,6 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * Spring Boot Admin 启动类
- *
- * @author geekidea
- * @date 2020/3/20
  **/
 @Slf4j
 @Configuration

@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * dice代码生成器入口类
- *
- * @author geekidea
- * @date 2019-10-22
  **/
 @Component
 public class SpringBootPlusGenerator {
@@ -30,7 +27,7 @@ public class SpringBootPlusGenerator {
                 .setMavenModuleName("example")
                 .setParentPackage("com.example")
                 .setModuleName("foobar")
-                .setAuthor("geekidea")
+                .setAuthor("tpxcer")
                 .setFileOverride(true);
 
         // 设置表信息

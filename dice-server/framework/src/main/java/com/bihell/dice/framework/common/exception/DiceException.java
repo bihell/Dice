@@ -6,8 +6,6 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 自定义异常
- * @author geekidea
- * @date 2018-11-08
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

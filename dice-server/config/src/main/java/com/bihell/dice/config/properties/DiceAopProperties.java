@@ -121,9 +121,6 @@ public class DiceAopProperties {
 
     /**
      * 日志打印类型
-     *
-     * @author geekidea
-     * @date 2020/3/19
      **/
     public enum LogPrintType {
 
@@ -148,9 +145,6 @@ public class DiceAopProperties {
 
     /**
      * 请求ID生成类型
-     *
-     * @author geekidea
-     * @date 2020/3/25
      **/
     public enum RequestIdType {
         /**

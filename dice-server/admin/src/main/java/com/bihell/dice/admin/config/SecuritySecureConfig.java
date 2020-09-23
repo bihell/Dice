@@ -17,9 +17,6 @@ import java.util.UUID;
 /**
  * Spring Boot Admin Security配置
  * https://codecentric.github.io/spring-boot-admin/current/#_securing_spring_boot_admin_server
- *
- * @author geekidea
- * @date 2020/3/20
  */
 @Configuration(proxyBeanMethods = false)
 public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {

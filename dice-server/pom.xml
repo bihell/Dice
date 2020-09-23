@@ -24,6 +24,8 @@
     </developers>
 
     <properties>
+        <boot.artifact.name>bootstrap-${project.version}</boot.artifact.name>
+        <admin.artifact.name>admin-${project.version}</admin.artifact.name>
         <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
         <java.version>9</java.version>
         <velocity.version>2.2</velocity.version>

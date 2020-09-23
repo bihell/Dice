@@ -31,15 +31,6 @@ public class WebConfig {
             @Autowired
             private AdminInterceptor adminInterceptor;
 
-            //跨域请求配置
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/v1/api/**")
-                        .allowCredentials(true)
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
-            }
-
             //拦截器
             @Override
             public void addInterceptors(InterceptorRegistry registry) {

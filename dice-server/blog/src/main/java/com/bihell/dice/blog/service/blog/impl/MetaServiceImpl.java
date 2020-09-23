@@ -1,9 +1,9 @@
 package com.bihell.dice.blog.service.blog.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.bihell.dice.blog.mapper.blog.ArticleMapper;
-import com.bihell.dice.blog.mapper.blog.MetaMapper;
-import com.bihell.dice.blog.mapper.blog.MiddleMapper;
+import com.bihell.dice.blog.mapper.blogs.ArticleMapper;
+import com.bihell.dice.blog.mapper.blogs.MetaMapper;
+import com.bihell.dice.blog.mapper.blogs.MiddleMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.blog.Meta;
 import com.bihell.dice.blog.model.blog.Middle;

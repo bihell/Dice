@@ -2,7 +2,7 @@ package com.bihell.dice.blog.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.blog.controller.BaseController;
-import com.bihell.dice.blog.mapper.blog.ArticleMapper;
+import com.bihell.dice.blog.mapper.blogs.ArticleMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.dto.Pagination;
 import com.bihell.dice.blog.service.blog.ArticleService;

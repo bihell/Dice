@@ -36,11 +36,6 @@ public interface CommonConstant {
     String PAGE_SIZE_NAME = "pageSize";
 
     /**
-     * 登录用户 todo
-     */
-    String LOGIN_SYS_USER = "loginSysUser";
-
-    /**
      * 登录token todo
      */
     String JWT_DEFAULT_TOKEN_NAME = "token";
@@ -70,18 +65,6 @@ public interface CommonConstant {
      * JWT 默认过期时间，3600L，单位秒 todo
      */
     Long JWT_DEFAULT_EXPIRE_SECOND = 3600L;
-
-    /**
-     * 默认头像 todo
-     */
-    String DEFAULT_HEAD_URL = "";
-
-    /**
-     * 管理员角色名称 todo
-     */
-    String ADMIN_ROLE_NAME = "管理员";
-
-    String ADMIN_LOGIN = "adminLogin";
 
     /**
      * 验证码token todo

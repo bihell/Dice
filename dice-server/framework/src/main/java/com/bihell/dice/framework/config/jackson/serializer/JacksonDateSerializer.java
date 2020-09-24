@@ -11,11 +11,8 @@ import java.util.Date;
 
 /**
  * <p>
- * Jackson Date反序列化器
+ * Jackson Date反序列化器 todo
  * </p>
- *
- * @author geekidea
- * @date 2018-11-08
  */
 public class JacksonDateSerializer extends JsonSerializer<Date> {
     @Override

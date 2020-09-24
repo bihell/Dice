@@ -41,6 +41,7 @@
         <shiro.version>1.5.1</shiro.version>
         <jwt.version>3.10.1</jwt.version>
         <ini4j.version>0.5.4</ini4j.version>
+        <commons-text.version>1.8</commons-text.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -165,6 +166,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons-pool2.version}</version>
+            </dependency>
+            <!-- XSS -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${commons-text.version}</version>
             </dependency>
             <!-- apache commons end -->
 
@@ -328,6 +335,10 @@
         <dependency>
             <groupId>org.ini4j</groupId>
             <artifactId>ini4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
         </dependency>
     </dependencies>
 

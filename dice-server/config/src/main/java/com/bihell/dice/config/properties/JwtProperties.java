@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  **/
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring-boot-plus.jwt")
+@ConfigurationProperties(prefix = "dice.jwt")
 public class JwtProperties {
 
     /**

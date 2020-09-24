@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 @Api(value = "验证码API", tags = {"验证码"})
 @Module("blog")
 @RequestMapping("/verificationCode")
-@ConditionalOnProperty(value = {"spring-boot-plus.enable-verify-code"}, matchIfMissing = true)
+@ConditionalOnProperty(value = {"dice.enable-verify-code"}, matchIfMissing = true)
 public class VerificationCodeController {
 
     @Autowired

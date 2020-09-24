@@ -22,10 +22,7 @@ import java.time.Duration;
 import java.util.Date;
 
 /**
- * Shiro登录服务
- *
- * @author geekidea
- * @date 2020/3/24
+ * Shiro登录服务 todo
  **/
 @Slf4j
 @Service

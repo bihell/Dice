@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAsync
 @EnableCaching
 @EnableTransactionManagement
-@MapperScan("com.bihell.dice.*.mapper")
+@MapperScan("com.bihell.dice.**.mapper")
 @EnableScheduling
 @EnableConfigurationProperties
 @ServletComponentScan

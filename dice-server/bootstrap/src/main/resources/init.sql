@@ -357,6 +357,47 @@ CREATE TABLE `task_log` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='定时任务日志';
 
+create table sys_operation_log
+(
+    id                bigint auto_increment comment '主键'
+        primary key,
+    request_id        varchar(32)                        null comment '请求ID',
+    user_id           bigint                             null comment '用户ID',
+    user_name         varchar(32)                        null comment '用户名称',
+    name              varchar(200)                       null comment '日志名称',
+    ip                varchar(15)                        null comment 'IP',
+    area              varchar(45)                        null comment '区域',
+    operator          varchar(6)                         null comment '运营商',
+    path              varchar(500)                       null comment '全路径',
+    module            varchar(100)                       null comment '模块名称',
+    class_name        varchar(100)                       null comment '类名',
+    method_name       varchar(100)                       null comment '方法名称',
+    request_method    varchar(10)                        null comment '请求方式，GET/POST',
+    content_type      varchar(100)                       null comment '内容类型',
+    request_body      tinyint(1)                         null comment '是否是JSON请求映射参数',
+    param             text                               null comment '请求参数',
+    token             varchar(32)                        null comment 'tokenMd5值',
+    type              int                                null comment '0:其它,1:新增,2:修改,3:删除,4:详情查询,5:所有列表,6:分页列表,7:其它查询,8:上传文件',
+    success           tinyint(1)                         null comment '0:失败,1:成功',
+    code              int                                null comment '响应结果状态码',
+    message           varchar(100)                       null comment '响应结果消息',
+    exception_name    varchar(200)                       null comment '异常类名称',
+    exception_message varchar(300)                       null comment '异常信息',
+    browser_name      varchar(100)                       null comment '浏览器名称',
+    browser_version   varchar(100)                       null comment '浏览器版本',
+    engine_name       varchar(100)                       null comment '浏览器引擎名称',
+    engine_version    varchar(100)                       null comment '浏览器引擎版本',
+    os_name           varchar(100)                       null comment '系统名称',
+    platform_name     varchar(100)                       null comment '平台名称',
+    mobile            tinyint(1)                         null comment '是否是手机,0:否,1:是',
+    device_name       varchar(100)                       null comment '移动端设备名称',
+    device_model      varchar(100)                       null comment '移动端设备型号',
+    remark            varchar(200)                       null comment '备注',
+    create_time       datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time       datetime                           null comment '修改时间'
+)
+    comment '系统操作日志';
+
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (1, 'dice', '3e6693e83d186225b85b09e71c974d2d', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-01-08 16:13:10');
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (2, 'demo', '3e6693e83d186225b85b09e71c974d2d', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-01-07 21:10:34');
 

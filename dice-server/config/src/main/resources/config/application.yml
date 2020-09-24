@@ -12,7 +12,7 @@ server:
       # tomcat初始化线程数量
       min-spare: 30
   servlet:
-#    context-path: /
+    context-path: /
     # HTTP编码
     encoding:
       charset: UTF-8

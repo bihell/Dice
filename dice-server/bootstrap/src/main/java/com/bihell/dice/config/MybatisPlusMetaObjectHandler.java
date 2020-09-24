@@ -1,4 +1,4 @@
-package com.bihell.dice.blog.config;
+package com.bihell.dice.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @author haseochen
  */
 @Component
-public class MyMetaObjectHandler implements MetaObjectHandler {
+public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         boolean hasSetter = metaObject.hasSetter("createTime");

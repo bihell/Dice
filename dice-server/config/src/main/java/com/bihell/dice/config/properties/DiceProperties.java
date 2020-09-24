@@ -3,6 +3,7 @@ package com.bihell.dice.config.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @author haseochen
  */
 @Data
+@Component
 @ConfigurationProperties("dice")
 public class DiceProperties {
     /**

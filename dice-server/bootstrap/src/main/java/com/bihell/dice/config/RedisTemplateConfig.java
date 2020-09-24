@@ -1,4 +1,4 @@
-package com.bihell.dice.blog.config;
+package com.bihell.dice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

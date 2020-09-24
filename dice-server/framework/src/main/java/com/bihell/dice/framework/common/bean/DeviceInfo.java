@@ -1,4 +1,4 @@
-package com.bihell.dice.framework.bean;
+package com.bihell.dice.framework.common.bean;
 
 import lombok.Data;
 

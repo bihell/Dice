@@ -3,8 +3,8 @@ package com.bihell.dice.framework.util;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.bihell.dice.config.constant.CommonConstant;
-import com.bihell.dice.framework.bean.ClientInfo;
-import com.bihell.dice.framework.bean.DeviceInfo;
+import com.bihell.dice.framework.common.bean.ClientInfo;
+import com.bihell.dice.framework.common.bean.DeviceInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;

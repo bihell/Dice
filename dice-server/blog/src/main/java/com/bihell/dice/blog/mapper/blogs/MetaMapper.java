@@ -40,7 +40,7 @@ public interface MetaMapper extends BaseMapper<Meta> {
                                  @Param("snippetFileContent") String snippetFileContent);
 
     /**
-     * 获取属性以及属性下的已发布文章
+     * 获取属性以及属性下的已发布文章 todo 修改 @One xxx这种方式
      *
      * @param type 属性类型
      * @return List<MetaDto>
@@ -51,9 +51,9 @@ public interface MetaMapper extends BaseMapper<Meta> {
             @Result(column = "name", property = "name"),
             @Result(column = "type", property = "type"),
             @Result(column = "id", property = "count",
-                    one = @One(select = "com.bihell.dice.blog.mapper.blog.ArticleMapper.selectPublishCountByMeta")),
+                    one = @One(select = "com.bihell.dice.blog.mapper.blogs.ArticleMapper.selectPublishCountByMeta")),
             @Result(column = "id", property = "articles",
-                    many = @Many(select = "com.bihell.dice.blog.mapper.blog.ArticleMapper.selectPublishByMeta"))
+                    many = @Many(select = "com.bihell.dice.blog.mapper.blogs.ArticleMapper.selectPublishByMeta"))
     })
     List<MetaDto> selectPublishMetaDtos(@Param("type") String type);
 }

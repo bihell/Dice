@@ -1,6 +1,6 @@
 package com.bihell.dice.framework.shiro.vo;
 
-import com.bihell.dice.framework.bean.ClientInfo;
+import com.bihell.dice.framework.common.bean.ClientInfo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

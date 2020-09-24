@@ -2,7 +2,7 @@ package com.bihell.dice.framework.shiro.cache.impl;
 
 import com.bihell.dice.config.constant.CommonRedisKey;
 import com.bihell.dice.config.properties.JwtProperties;
-import com.bihell.dice.framework.bean.ClientInfo;
+import com.bihell.dice.framework.common.bean.ClientInfo;
 import com.bihell.dice.framework.shiro.cache.LoginRedisService;
 import com.bihell.dice.framework.shiro.convert.LoginSysUserVoConvert;
 import com.bihell.dice.framework.shiro.convert.ShiroMapstructConvert;

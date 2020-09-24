@@ -1,6 +1,6 @@
 package com.bihell.dice.framework.log.aop;
 
-import com.bihell.dice.framework.bean.ClientInfo;
+import com.bihell.dice.framework.common.bean.ClientInfo;
 import com.bihell.dice.framework.common.api.ApiCode;
 import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.common.exception.DiceException;

@@ -28,14 +28,14 @@ public class DiceProperties {
     /**
      * 拦截器配置 todo
      */
-//    @NestedConfigurationProperty
-//    private DiceInterceptorProperties interceptor;
+    @NestedConfigurationProperty
+    private DiceInterceptorProperties interceptor;
 
     /**
      * 过滤器配置 todo
      */
-//    @NestedConfigurationProperty
-//    private DiceFilterProperties filter;
+    @NestedConfigurationProperty
+    private DiceFilterProperties filter;
 
     /**
      * 上传目录 todo
@@ -64,14 +64,14 @@ public class DiceProperties {
     /**
      * JWT配置 todo
      */
-//    @NestedConfigurationProperty
-//    private JwtProperties jwt;
+    @NestedConfigurationProperty
+    private JwtProperties jwt;
 
     /**
      * Shiro配置 todo
      */
-//    @NestedConfigurationProperty
-//    private ShiroProperties shiro = new ShiroProperties();
+    @NestedConfigurationProperty
+    private ShiroProperties shiro = new ShiroProperties();
 
     /**
      * 项目静态资源访问配置 todo

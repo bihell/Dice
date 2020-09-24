@@ -38,6 +38,9 @@
         <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
         <knife4j.version>2.0.2</knife4j.version>
         <hutool.version>5.2.4</hutool.version>
+        <shiro.version>1.5.1</shiro.version>
+        <jwt.version>3.10.1</jwt.version>
+
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

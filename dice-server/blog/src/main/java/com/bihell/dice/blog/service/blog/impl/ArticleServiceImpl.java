@@ -229,7 +229,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @return List<Archive>
      */
     @Override
-    // todo  这里用了 redis 之后缓存序列化有问题，暂时注释掉
+    // todo  这里用了 redis 之后缓存序列化有问题
     //@Cacheable(value = ARTICLE_CACHE_NAME, key = "'archives'")
     public List<Archive> getArchives() {
         List<Article> articles = new Article().selectList(new QueryWrapper<Article>().lambda()

@@ -35,7 +35,7 @@
 //    /**
 //     * 枚举包路径
 //     */
-//    @Value("${spring-boot-plus.enum-packages}")
+//    @Value("${dice.enum-packages}")
 //    private List<String> enumPackages;
 //
 //    @GetMapping("/enum")

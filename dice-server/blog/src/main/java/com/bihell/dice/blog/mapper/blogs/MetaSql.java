@@ -1,4 +1,4 @@
-package com.bihell.dice.blog.mapper.blog;
+package com.bihell.dice.blog.mapper.blogs;
 
 import com.bihell.dice.blog.utils.Types;
 import org.apache.ibatis.annotations.Param;

@@ -15,7 +15,7 @@ dice:
         # 主键列名称
         pk-id-name: id
     # 开发人员名称
-    author: geekidea
+    author: tpxcer
     # 是否覆盖已有文件
     file-override: true
     # 生成文件的输出目录,如果为空: 表示当前项目根目录

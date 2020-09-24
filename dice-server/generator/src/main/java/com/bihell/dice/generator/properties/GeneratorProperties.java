@@ -16,9 +16,6 @@ import java.util.List;
 
 /**
  * dice代码生成配置属性
- *
- * @author geekidea
- * @date 2020/3/11
  **/
 @Data
 @Accessors(chain = true)

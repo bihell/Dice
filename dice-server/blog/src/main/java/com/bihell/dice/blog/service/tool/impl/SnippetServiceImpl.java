@@ -1,7 +1,7 @@
 package com.bihell.dice.blog.service.tool.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.bihell.dice.blog.mapper.blog.ArticleMapper;
+import com.bihell.dice.blog.mapper.blogs.ArticleMapper;
 import com.bihell.dice.blog.mapper.tool.SnippetFileMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.dto.ArticleInfoDto;

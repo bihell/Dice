@@ -6,9 +6,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * WebMvc配置
- *
- * @author geekidea
- * @date 2020/3/19
  */
 @Configuration
 public class AdminWebMvcConfig implements WebMvcConfigurer {

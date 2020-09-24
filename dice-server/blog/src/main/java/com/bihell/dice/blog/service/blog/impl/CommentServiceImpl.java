@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bihell.dice.blog.mapper.blog.CommentMapper;
+import com.bihell.dice.blog.mapper.blogs.CommentMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.CommentDto;

@@ -1,4 +1,4 @@
-package com.bihell.dice.blog.mapper.blog;
+package com.bihell.dice.blog.mapper.blogs;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.blog.model.blog.Comment;

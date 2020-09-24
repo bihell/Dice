@@ -1,19 +1,3 @@
-/*
- * Copyright 2019-2029 geekidea(https://github.com/geekidea)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.bihell.dice.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -24,8 +8,8 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.bihell.dice.generator.config.*;
-import com.bihell.dice.generator.config.query.SpringBootPlusMySqlQuery;
-import com.bihell.dice.generator.config.query.SpringBootPlusSqlServerQuery;
+import com.bihell.dice.generator.config.query.DiceMySqlQuery;
+import com.bihell.dice.generator.config.query.DiceSqlServerQuery;
 import com.bihell.dice.generator.constant.GeneratorConstant;
 import com.bihell.dice.generator.exception.GeneratorException;
 import com.bihell.dice.generator.properties.GeneratorProperties;
@@ -45,9 +29,6 @@ import java.util.regex.Matcher;
 
 /**
  * dice代码生成器
- *
- * @author geekidea
- * @date 2018-11-08
  */
 @Slf4j
 @Data
@@ -167,10 +148,10 @@ public class CodeGenerator {
         DbType dbType = dataSourceConfig.getDbType();
         if (DbType.MYSQL == dbType) {
             // 设置MySQL元数据自定义查询
-            dataSourceConfig.setDbQuery(new SpringBootPlusMySqlQuery());
+            dataSourceConfig.setDbQuery(new DiceMySqlQuery());
         } else if (DbType.SQL_SERVER2005 == dbType || DbType.SQL_SERVER == dbType) {
             // 设置SQLServer元数据自定义查询
-            dataSourceConfig.setDbQuery(new SpringBootPlusSqlServerQuery());
+            dataSourceConfig.setDbQuery(new DiceSqlServerQuery());
         }
 
         // 设置数据源

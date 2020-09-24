@@ -17,9 +17,6 @@ import java.util.Map;
  * <p>
  * REST API 返回结果
  * </p>
- *
- * @author geekidea
- * @since 2018-11-08
  */
 @Data
 @Accessors(chain = true)

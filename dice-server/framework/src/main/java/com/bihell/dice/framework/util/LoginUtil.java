@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * 获取登录信息工具类 todo
+ * 获取登录信息工具类
  */
 @Slf4j
 @Component
@@ -25,14 +25,15 @@ public class LoginUtil {
 
 
     /**
-     * 获取当前登录用户对象
+     * 获取当前登录用户对象 todo
      *
      * @return
      */
     public static LoginSysUserRedisVo getLoginSysUserRedisVo() {
         // 获取当前登录用户
         String token = JwtTokenUtil.getToken();
-        String username = JwtUtil.getUsername(token);
+        String username="";
+//        String username = JwtUtil.getUsername(token);
         if (StringUtils.isBlank(username)) {
             return null;
         }

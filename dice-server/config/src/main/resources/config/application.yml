@@ -78,7 +78,7 @@ mybatis-plus:
       # 逻辑已删除值(默认为 1)
       logic-delete-value: 1
   # mapper xml映射路径
-  mapper-locations: classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
 ################################ mybatis-plus end ##################################
 
 ################################ dice start ########################################

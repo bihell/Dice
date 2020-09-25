@@ -4,7 +4,7 @@ services:
     container_name: dice-openresty
     build:
       context: ./
-      dockerfile: ./dice-docker/dice-openresty/openresty-Dockerfile
+      dockerfile: ./dice-docker/dice-openresty/openresty-qa
     environment:
       TZ: Asia/Shanghai
     ports:
@@ -34,6 +34,9 @@ services:
     volumes:
     - ~/.dice/mysql/mysql_data:/var/lib/mysql
     restart: always
+    command:
+    - --character-set-server=utf8mb4
+    - --default-authentication-plugin=mysql_native_password
     networks:
       dice-net:
         ipv4_address: 172.28.1.2

@@ -13,4 +13,4 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker-compose config
+  - docker-compose -f dice-prod.yml config

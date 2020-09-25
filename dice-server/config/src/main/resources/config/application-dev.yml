@@ -1,4 +1,7 @@
-#datasource
+spring-boot-plus:
+  # 当前环境服务IP地址
+  server-ip: 127.0.0.1
+
 spring:
   datasource:
     username: root
@@ -6,9 +9,10 @@ spring:
     url: jdbc:mysql://localhost:3306/dice?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-logging:
-  level:
-    root: info
-    com.bihell.dice.mapper: trace
 dice:
   auth-enabled: true
+
+# 打印SQL语句和结果集，本地开发环境可开启，线上注释掉
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

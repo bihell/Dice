@@ -20,14 +20,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAsync
 @EnableCaching
 @EnableTransactionManagement
-@MapperScan("com.bihell.dice.*.mapper")
+@MapperScan("com.bihell.dice.**.mapper")
 @EnableScheduling
 @EnableConfigurationProperties
 @ServletComponentScan
 @SpringBootApplication(scanBasePackages = {"com.bihell.dice"})
-public class Application {
+public class DiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(DiceApplication.class, args);
     }
 }

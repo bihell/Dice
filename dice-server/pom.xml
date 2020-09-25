@@ -8,6 +8,7 @@
         <module>generator</module>
         <module>framework</module>
         <module>admin</module>
+        <module>system</module>
     </modules>
     <groupId>com.bihell</groupId>
     <artifactId>Dice</artifactId>

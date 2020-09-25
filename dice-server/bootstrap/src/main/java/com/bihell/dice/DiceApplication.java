@@ -25,9 +25,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableConfigurationProperties
 @ServletComponentScan
 @SpringBootApplication(scanBasePackages = {"com.bihell.dice"})
-public class Application {
+public class DiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(DiceApplication.class, args);
     }
 }

@@ -398,6 +398,25 @@ create table sys_operation_log
 )
     comment '系统操作日志';
 
+create table ip_address
+(
+    id           bigint auto_increment
+        primary key,
+    ip_start     varchar(15) not null,
+    ip_end       varchar(15) not null,
+    area         varchar(45) null comment '区域',
+    operator     varchar(6)  null comment '运营商',
+    ip_start_num bigint      not null,
+    ip_end_num   bigint      not null
+)
+    comment 'IP地址';
+
+create index ip_address_ip_end_num_index
+    on ip_address (ip_end_num);
+
+create index ip_address_ip_start_num_index
+    on ip_address (ip_start_num);
+
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (1, 'dice', '3e6693e83d186225b85b09e71c974d2d', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-01-08 16:13:10');
 INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (2, 'demo', '3e6693e83d186225b85b09e71c974d2d', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-01-07 21:10:34');
 

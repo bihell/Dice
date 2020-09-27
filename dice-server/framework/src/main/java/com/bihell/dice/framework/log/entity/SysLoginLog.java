@@ -91,10 +91,10 @@ public class SysLoginLog extends BaseEntity {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("修改时间")
-    private Date updateTime;
+//    @ApiModelProperty("创建时间")
+//    private Date createTime;
+//
+//    @ApiModelProperty("修改时间")
+//    private Date updateTime;
 
 }

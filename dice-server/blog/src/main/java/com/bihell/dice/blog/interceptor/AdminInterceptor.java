@@ -1,18 +1,18 @@
 package com.bihell.dice.blog.interceptor;
 
-import com.bihell.dice.blog.model.auth.User;
-import com.bihell.dice.blog.security.SecurityUtil;
-import com.bihell.dice.blog.security.UserDetail;
-import com.bihell.dice.blog.security.authentication.AuthenticationImpl;
-import com.bihell.dice.blog.security.context.SecurityContextHolder;
-import com.bihell.dice.blog.security.context.SecurityContextImpl;
-import com.bihell.dice.blog.service.auth.UserService;
-import com.bihell.dice.blog.service.system.RedisService;
-import com.bihell.dice.blog.utils.DiceUtil;
-import com.bihell.dice.blog.utils.RestResponse;
+import com.bihell.dice.framework.common.exception.ErrorCode;
+import com.bihell.dice.system.util.SecurityUtil;
+import com.bihell.dice.system.entity.UserDetail;
+import com.bihell.dice.system.service.impl.AuthenticationImpl;
+import com.bihell.dice.system.service.SecurityContextHolder;
+import com.bihell.dice.system.service.impl.SecurityContextImpl;
+import com.bihell.dice.framework.common.service.RedisService;
+import com.bihell.dice.framework.util.DiceUtil;
+import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.config.properties.DiceProperties;
+import com.bihell.dice.system.entity.User;
+import com.bihell.dice.system.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.bihell.dice.blog.utils.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-import static com.bihell.dice.blog.utils.DiceConsts.ADMIN_TOKEN_QUERY_NAME;
+import static com.bihell.dice.config.constant.DiceConsts.ADMIN_TOKEN_QUERY_NAME;
 
 /**
  * 管理后台 拦截器

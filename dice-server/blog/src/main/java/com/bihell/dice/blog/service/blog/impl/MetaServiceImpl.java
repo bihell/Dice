@@ -8,7 +8,7 @@ import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.blog.Meta;
 import com.bihell.dice.blog.model.blog.Middle;
 import com.bihell.dice.blog.model.dto.MetaDto;
-import com.bihell.dice.blog.exception.TipException;
+import com.bihell.dice.framework.common.exception.TipException;
 import com.bihell.dice.blog.service.blog.MetaService;
 import com.bihell.dice.blog.utils.Types;
 import lombok.RequiredArgsConstructor;

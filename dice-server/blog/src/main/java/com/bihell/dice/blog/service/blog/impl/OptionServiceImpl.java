@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.bihell.dice.blog.model.blog.SysOption;
 import com.bihell.dice.blog.service.blog.OptionService;
-import com.bihell.dice.blog.utils.DiceUtil;
+import com.bihell.dice.framework.util.DiceUtil;
 import com.bihell.dice.blog.utils.OptionKeys;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CacheEvict;

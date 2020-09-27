@@ -7,7 +7,7 @@ import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.dto.ArticleInfoDto;
 import com.bihell.dice.blog.model.dto.Snippet;
 import com.bihell.dice.blog.model.tool.SnippetFile;
-import com.bihell.dice.blog.exception.TipException;
+import com.bihell.dice.framework.common.exception.TipException;
 import com.bihell.dice.blog.enums.PostStatusEnum;
 import com.bihell.dice.blog.service.blog.MetaService;
 import com.bihell.dice.blog.service.tool.SnippetService;

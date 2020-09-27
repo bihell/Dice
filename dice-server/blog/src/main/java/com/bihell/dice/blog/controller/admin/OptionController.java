@@ -1,8 +1,8 @@
 package com.bihell.dice.blog.controller.admin;
 
-import com.bihell.dice.blog.controller.BaseController;
+import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.service.blog.OptionService;
-import com.bihell.dice.blog.utils.RestResponse;
+import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

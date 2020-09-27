@@ -1,6 +1,6 @@
 package com.bihell.dice.blog.utils;
 
-import com.bihell.dice.blog.exception.TipException;
+import com.bihell.dice.framework.common.exception.TipException;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;

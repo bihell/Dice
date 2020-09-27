@@ -1,12 +1,11 @@
 package com.bihell.dice.blog.config;
 
 import com.bihell.dice.blog.interceptor.AdminInterceptor;
-import com.bihell.dice.blog.utils.DiceConsts;
+import com.bihell.dice.config.constant.DiceConsts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

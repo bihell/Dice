@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bihell.dice.system.mapper.AuthApiMapper">
+
+    <resultMap id="ResultMap" type="com.bihell.dice.system.entity.AuthApi">
+        <id column="api_id" property="id" jdbcType="INTEGER"/>
+        <result column="api_type" property="apiType" jdbcType="VARCHAR"/>
+        <result column="api_path" property="apiPath" jdbcType="VARCHAR"/>
+        <result column="project_type" property="projectType" jdbcType="VARCHAR"/>
+
+        <result column="deleted" property="deleted" jdbcType="INTEGER"/>
+        <result column="creator" property="creator" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modifier" property="modifier" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="queryByParam" resultMap="ResultMap">
+        SELECT t.*
+        FROM auth_api t
+        <where>
+            t.deleted = 0
+            <if test="queryParam.criteria != null and queryParam.criteria.length()>0">AND (t.api_path like concat("%",#{queryParam.criteria},"%"))</if>
+            <if test="queryParam.projectType != null and queryParam.projectType.length()>0">AND t.project_type = #{queryParam.projectType}</if>
+            <if test="queryParam.roleId != null">AND t.api_id in (select distinct api_id from auth_rel_role_api where role_id=#{queryParam.roleId} and deleted=0)</if>
+            <if test="queryParam.itemId != null">AND t.api_id in (select distinct api_id from auth_rel_item_api where item_id=#{queryParam.itemId} and deleted=0)</if>
+        </where>
+        ORDER BY t.api_id desc
+    </select>
+
+</mapper>

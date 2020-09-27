@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bihell.dice.system.mapper.AuthGroupMapper">
+
+    <resultMap id="ResultMap" type="com.bihell.dice.system.entity.AuthGroup">
+        <id column="group_id" property="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryByParam" parameterType="com.bihell.dice.blog.model.params.QueryParam" resultMap="ResultMap">
+        SELECT t.*
+        FROM auth_group t
+        <where>
+            t.deleted = 0
+            <if test="criteria != null and criteria.length()>0">AND (t.group_name like concat("%",#{criteria},"%"))</if>
+            <if test="projectType != null and projectType.length()>0">AND t.project_type = #{projectType}</if>
+        </where>
+        ORDER BY t.order
+    </select>
+
+</mapper>

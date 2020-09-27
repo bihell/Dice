@@ -1,5 +1,6 @@
 package com.bihell.dice.blog.exception;
 
+import com.bihell.dice.framework.common.exception.TipException;
 import lombok.Getter;
 
 /**

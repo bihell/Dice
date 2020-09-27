@@ -1,9 +1,9 @@
 package com.bihell.dice.blog.controller;
 
 import com.bihell.dice.blog.exception.NotLoginException;
-import com.bihell.dice.blog.exception.TipException;
-import com.bihell.dice.blog.utils.ErrorCode;
-import com.bihell.dice.blog.utils.RestResponse;
+import com.bihell.dice.framework.common.exception.ErrorCode;
+import com.bihell.dice.framework.common.exception.TipException;
+import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;

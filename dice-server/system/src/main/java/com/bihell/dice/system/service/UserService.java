@@ -52,11 +52,6 @@ public interface UserService extends IService<User> {
     AuthToken authenticate(@NonNull LoginParam loginParam);
 
     /**
-     * Clears authentication.
-     */
-    void clearToken();
-
-    /**
      * 获取用户列表
      * @return
      */

@@ -26,23 +26,6 @@ public interface DiceConsts {
     String REFRESH_TOKEN_CACHE_PREFIX = "dice.admin.refresh_token.";
 
     /**
-     * Expired seconds.
-     */
-    long ACCESS_TOKEN_EXPIRED_SECONDS = 24 * 3600;
-
-    long REFRESH_TOKEN_EXPIRED_DAYS = 30;
-
-    /**
-     * Admin token param name.
-     */
-    String ADMIN_TOKEN_QUERY_NAME = "admin_token";
-
-    /**
-     * 登陆用户session key
-     */
-    String USER_SESSION_KEY = "login_user";
-
-    /**
      * md5加密盐值
      */
     String MD5_SLAT = "riopwhjrv123bnopiw234q2ec";

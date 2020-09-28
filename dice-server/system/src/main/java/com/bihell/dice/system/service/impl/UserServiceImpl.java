@@ -24,18 +24,13 @@ import com.bihell.dice.system.mapper.UserMapper;
 import com.bihell.dice.system.param.LoginParam;
 import com.bihell.dice.system.param.QueryParam;
 import com.bihell.dice.system.service.AuthRelRoleUserService;
-import com.bihell.dice.system.service.Authentication;
-import com.bihell.dice.system.service.SecurityContextHolder;
 import com.bihell.dice.system.service.UserService;
-import com.bihell.dice.system.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -43,16 +38,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import static com.bihell.dice.config.constant.DiceConsts.ACCESS_TOKEN_EXPIRED_SECONDS;
-import static com.bihell.dice.config.constant.DiceConsts.REFRESH_TOKEN_EXPIRED_DAYS;
-
 
 /**
  * User Service 层实现类
@@ -137,36 +125,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         AuthToken authToken = new AuthToken();
         authToken.setAccessToken(token);
         return authToken;
-    }
-
-    /**
-     * Clears authentication.
-     */
-    @Override
-    public void clearToken() {
-        // Check if the current is logging in
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null) {
-            throw new TipException("您尚未登录，因此无法注销");
-        }
-
-        // Get current user
-        User user = authentication.getDetail().getUser();
-
-        String accessToken = (String) redisService.get(SecurityUtil.buildAccessTokenKey(user));
-        if (accessToken != null) {
-            redisService.remove(SecurityUtil.buildTokenAccessKey(accessToken));
-            redisService.remove(SecurityUtil.buildAccessTokenKey(user));
-        }
-
-        String refreshToken = (String) redisService.get(SecurityUtil.buildRefreshTokenKey(user));
-        if (accessToken != null) {
-            redisService.remove(SecurityUtil.buildTokenRefreshKey(refreshToken));
-            redisService.remove(SecurityUtil.buildRefreshTokenKey(user));
-        }
-
-        log.info("You have been logged out, looking forward to your next visit!");
     }
 
     /**
@@ -263,33 +221,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setEmail(email);
 
         return user.updateById();
-    }
-
-    /**
-     * Builds authentication token.
-     *
-     * @param user user info must not be null
-     * @return authentication token
-     */
-    @NonNull
-    private AuthToken buildAuthToken(@NonNull User user) {
-        Assert.notNull(user, "User must not be null");
-
-        // Generate new token
-        AuthToken token = new AuthToken();
-
-        token.setAccessToken(DiceUtil.randomUUIDWithoutDash());
-        token.setExpiredIn(ACCESS_TOKEN_EXPIRED_SECONDS);
-        token.setRefreshToken(DiceUtil.randomUUIDWithoutDash());
-
-        // Cache those tokens, just for clearing
-        redisService.set(SecurityUtil.buildAccessTokenKey(user), token.getAccessToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
-        redisService.set(SecurityUtil.buildRefreshTokenKey(user), token.getRefreshToken(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
-
-        // Cache those tokens with user id
-        redisService.set(SecurityUtil.buildTokenAccessKey(token.getAccessToken()), user.getId(), ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
-        redisService.set(SecurityUtil.buildTokenRefreshKey(token.getRefreshToken()), user.getId(), REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.DAYS);
-
-        return token;
     }
 }

@@ -32,7 +32,7 @@ import java.util.Map;
  * @since 2017/7/15 18:29
  */
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/blog/nuxt")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FrontController extends BaseController {
 
@@ -114,7 +114,7 @@ public class FrontController extends BaseController {
      *
      * @return {@see List<MetaDto>}
      */
-    @GetMapping("/category")
+    @GetMapping("category")
     public RestResponse category() {
         List<MetaDto> metaDtos = metaService.getPublishMetaDtos(Types.CATEGORY);
         return RestResponse.ok(metaDtos);

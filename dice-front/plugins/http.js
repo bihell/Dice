@@ -3,7 +3,7 @@ import qs from 'qs'
 import serverConfig from '../config/server-config'
 
 const Axios = axios.create({
-  baseURL: serverConfig.api + '/v1/api/', // 本地做反向代理
+  baseURL: serverConfig.api + '/blog/nuxt/', // 本地做反向代理
   timeout: 5000,
   responseType: 'json',
   withCredentials: true, // 是否允许带cookie这些

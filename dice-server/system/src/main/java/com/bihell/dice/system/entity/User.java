@@ -2,8 +2,8 @@ package com.bihell.dice.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -28,7 +28,7 @@ public class User extends Model<User> {
 
 
     @TableId
-    private Integer id;
+    private Long id;
 
     /**
      * 账号
@@ -62,5 +62,8 @@ public class User extends Model<User> {
 
     @TableField(exist = false)
     private List<Integer> roleIds;
+
+    @ApiModelProperty("盐值")
+    private String salt;
 
 }

@@ -7,7 +7,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 
 /**
- * JWT证书匹配 todo
+ * JWT证书匹配
  **/
 @Slf4j
 public class JwtCredentialsMatcher implements CredentialsMatcher {

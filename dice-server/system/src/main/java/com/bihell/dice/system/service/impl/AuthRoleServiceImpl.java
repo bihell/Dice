@@ -91,7 +91,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
         if (!CollectionUtils.isEmpty(authRole.getUserIds())) {
             List<AuthRelRoleUser> authRelRoleUserList = authRole.getUserIds().stream()
                     .filter(Objects::nonNull)
-                    .map(i->new AuthRelRoleUser().setRoleId(authRole.getId()).setUserId(i))
+                    .map(i->new AuthRelRoleUser().setRoleId(authRole.getId()).setUserId(Long.valueOf(i)))
                     .collect(Collectors.toList());
             authRelRoleUserService.saveBatch(authRelRoleUserList);
         }

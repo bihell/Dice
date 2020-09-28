@@ -33,7 +33,7 @@ public class BaseEntity<T extends Model<?>> extends Model<T> implements Serializ
     /**
      * 创建人
      */
-    private Integer creator;
+    private Long creator;
 
     /**
      * 最后修改人

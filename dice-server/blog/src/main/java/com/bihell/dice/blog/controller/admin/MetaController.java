@@ -1,6 +1,5 @@
 package com.bihell.dice.blog.controller.admin;
 
-import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.service.blog.MetaService;
 import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/api/admin/meta")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class MetaController extends BaseController {
+public class MetaController {
 
     private final MetaService metaService;
 

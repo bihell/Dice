@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.framework.core.pagination.Pagination;
+import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.system.entity.*;
 import com.bihell.dice.system.mapper.*;
 import com.bihell.dice.system.param.LoginParam;
@@ -27,7 +28,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/v1/api/admin/auth")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class AuthController extends BaseController {
+public class AuthController {
 
     private final UserService userService;
     private final AuthItemMapper authItemMapper;
@@ -66,13 +67,13 @@ public class AuthController extends BaseController {
     }
 
     /**
-     * 获取用户名
+     * 获取用户名 todo 待优化
      *
      * @return {@see String}
      */
     @GetMapping("user_info")
     public RestResponse getUser() {
-        User user = this.user();
+        User user = userMapper.selectById(LoginUtil.getUserId());
         return RestResponse.ok(user);
     }
 

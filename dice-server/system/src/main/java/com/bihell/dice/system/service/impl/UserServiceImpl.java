@@ -5,9 +5,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bihell.dice.config.properties.DiceProperties;
+import com.bihell.dice.config.properties.JwtProperties;
 import com.bihell.dice.framework.common.exception.TipException;
 import com.bihell.dice.framework.common.service.RedisService;
+import com.bihell.dice.framework.shiro.cache.LoginRedisService;
+import com.bihell.dice.framework.shiro.jwt.JwtToken;
+import com.bihell.dice.framework.shiro.util.JwtUtil;
+import com.bihell.dice.framework.shiro.util.SaltUtil;
+import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
 import com.bihell.dice.framework.util.DiceUtil;
+import com.bihell.dice.system.convert.SysUserConvert;
 import com.bihell.dice.system.entity.AuthRelRoleUser;
 import com.bihell.dice.system.entity.AuthToken;
 import com.bihell.dice.system.entity.User;
@@ -22,17 +30,23 @@ import com.bihell.dice.system.service.UserService;
 import com.bihell.dice.system.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -56,6 +70,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final UserMapper userMapper;
     private final AuthRelRoleUserMapper authRelRoleUserMapper;
     private final AuthRelRoleUserService authRelRoleUserService;
+    private final JwtProperties jwtProperties;
+    private final DiceProperties diceProperties;
+    private final LoginRedisService loginRedisService;
 
     /**
      * Authenticates.
@@ -70,7 +87,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         String username = loginParam.getUsername();
 
-        User user = new User().selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username).or().eq(User::getEmail, username));
+        User user = new User().selectOne(new QueryWrapper<User>().lambda()
+                .eq(User::getUsername, username)
+                .or()
+                .eq(User::getEmail, username));
         if (null == user) {
             throw new TipException("用户名或者密码错误");
         }
@@ -79,19 +99,44 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new TipException("用户名或者密码错误");
         }
 
-        // todo 这里清空 Token 之后还能获得用户信，后续另外处理
-//        if (SecurityContextHolder.getContext().isAuthenticated()) {
-//            // If the user has been logged in
-//            throw new TipException("您已登录，请不要重复登录");
-//        }
 
         // Log it then login successful
         log.info("用户登录: {}", user.getUsername());
         user.setLogged(LocalDateTime.now());
         user.updateById();
 
-        // Generate new token
-        return buildAuthToken(user);
+        // 将系统用户对象转换成登录用户对象
+        LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(user);
+
+        // 获取数据库中保存的盐值
+        String newSalt = SaltUtil.getSalt(user.getSalt(), jwtProperties);
+
+        // 生成token字符串并返回
+        Long expireSecond = jwtProperties.getExpireSecond();
+        String token = JwtUtil.generateToken(username, newSalt, Duration.ofSeconds(expireSecond));
+        log.debug("token:{}", token);
+
+        // 创建AuthenticationToken
+        JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
+
+        boolean enableShiro = diceProperties.getShiro().isEnable();
+        if (enableShiro) {
+            // 从SecurityUtils里边创建一个 subject
+            Subject subject = SecurityUtils.getSubject();
+            // 执行认证登录
+            subject.login(jwtToken);
+        } else {
+            log.warn("未启用Shiro");
+        }
+
+        // 缓存登录信息到Redis
+        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo);
+        log.debug("登录成功,username:{}", username);
+
+        // todo 后续修改，同时返回用户信息
+        AuthToken authToken = new AuthToken();
+        authToken.setAccessToken(token);
+        return authToken;
     }
 
     /**

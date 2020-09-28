@@ -1,6 +1,7 @@
 package com.bihell.dice.blog.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.mapper.blogs.ArticleMapper;
 import com.bihell.dice.blog.model.blog.Article;
@@ -63,7 +64,7 @@ public class PageController extends BaseController {
      */
     @PostMapping
     public RestResponse savePage(@RequestBody Article page) {
-        page.setCreator(this.user().getId());
+        page.setCreator(LoginUtil.getUserId());
         articleService.savePage(page);
         return RestResponse.ok("保存文章成功");
     }

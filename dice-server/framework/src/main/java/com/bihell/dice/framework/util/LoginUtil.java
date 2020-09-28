@@ -32,8 +32,7 @@ public class LoginUtil {
     public static LoginSysUserRedisVo getLoginSysUserRedisVo() {
         // 获取当前登录用户
         String token = JwtTokenUtil.getToken();
-        String username="";
-//        String username = JwtUtil.getUsername(token);
+        String username = JwtUtil.getUsername(token);
         if (StringUtils.isBlank(username)) {
             return null;
         }

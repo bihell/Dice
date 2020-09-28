@@ -17,9 +17,9 @@ import lombok.experimental.Accessors;
 public class AuthRelRoleUser extends BaseEntity<AuthRelRoleUser> {
 
     @TableId
-    private Integer id;
+    private Long id;
 
-    private Integer userId;
+    private Long userId;
 
     private Integer roleId;
 

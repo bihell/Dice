@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * JwtToken Redis缓存对象 tod
+ * JwtToken Redis缓存对象
  **/
 @Data
 @Accessors(chain = true)

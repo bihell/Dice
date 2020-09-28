@@ -87,6 +87,8 @@ dice:
   server-ip: 127.0.0.1
   # 是否启用验证码 todo
   enable-verify-code: false
+  # Swagger路径
+  swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v2/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
 
   # AOP配置
   aop:
@@ -120,9 +122,9 @@ dice:
       # 是否启用
       enable: true
       # 登录地址
-      login-path: /login
+      login-path: /v1/api/admin/auth/login
       # 登出地址
-      logout-path: /logout
+      logout-path: /v1/api/admin/auth/logout
 
   # 文件上传下载配置
   # 上传目录（当前用户下） todo
@@ -130,13 +132,45 @@ dice:
   # 资源访问路径 todo
   resource-access-path: /resource/
 
+  ######################## Spring Shiro start ########################
+  shiro:
+    # 是否启用
+    enable: true
+    # 权限配置
+    anon:
+      # 排除登录登出
+      - /v1/api/admin/auth/login,/v1/api/admin/auth/logout
+      # 排除静态资源
+      - /static/**,/templates/**
+      # 排除Swagger
+      - ${dice.swagger-paths}
+      # 排除actuator
+      - /actuator/**
+      # 排除首页
+      - /,/index.html
+      # 排除测试路径
+      - /hello/world,/fooBar/**,/exampleOrder/**
+      # 排除上传的文件
+      - /media/**
+      # 排除博客nuxt前端
+      - /blog/nuxt/**
+    # 多行字符串权限配置
+    filter-chain-definitions: |
+      /resource/**=anon
+      /upload/**=anon
+      /verificationCode/**=anon
+      /enum=anon
+      /getSysUserInfo=anon
+
+  ######################## Spring Shiro end ##########################
+
   ############################ CORS start ############################
   # CORS跨域配置，默认允许跨域
   cors:
     # 是否启用跨域，默认启用
     enable: true
     # CORS过滤的路径，默认：/**
-    path: /v1/api/**
+    path: /**
     # 允许访问的源
     allowed-origins: '*'
     # 允许访问的请求头
@@ -146,11 +180,35 @@ dice:
     # 允许访问的请求方式
     allowed-methods: OPTION,GET,POST,PUT,DELETE
     # 允许响应的头
-    exposed-headers: token
+    exposed-headers: Authorization
     # 该响应的有效时间默认为30分钟，在有效时间内，浏览器无须为同一请求再次发起预检请求
     max-age: 1800
 
   ############################ CORS end ##############################
+
+  ############################ JWT start #############################
+  jwt:
+    # token请求头名称
+    token-name: Authorization
+    # jwt密钥
+    secret: 666666
+    # 发行人
+    issuer: ${spring.application.name}
+    # 观众
+    audience: web
+    # 默认过期时间1小时，单位：秒
+    expire-second: 36000
+    # 是否刷新token
+    refresh-token: true
+    # 刷新token的时间间隔，默认10分钟，单位：秒
+    refresh-token-countdown: 600
+    # redis校验jwt token是否存在,可选
+    redis-check: true
+    # true: 同一个账号只能是最后一次登录token有效，false：同一个账号可多次登录
+    single-login: true
+    # 盐值校验，如果不加自定义盐值，则使用secret校验
+    salt-check: true
+  ############################ JWT end ###############################
 
 ################################ dice end ##########################################
 

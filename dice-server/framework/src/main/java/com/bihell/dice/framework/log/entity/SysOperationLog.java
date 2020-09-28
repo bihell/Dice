@@ -11,7 +11,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * 系统操作日志
@@ -124,10 +123,10 @@ public class SysOperationLog extends BaseEntity {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("修改时间")
-    private Date updateTime;
+//    @ApiModelProperty("创建时间")
+//    private Date createTime;
+//
+//    @ApiModelProperty("修改时间")
+//    private Date updateTime;
 
 }

@@ -6,16 +6,17 @@ import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.Archive;
 import com.bihell.dice.blog.model.dto.CommentDto;
 import com.bihell.dice.blog.model.dto.MetaDto;
-import com.bihell.dice.blog.model.dto.Pagination;
+import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.blog.service.blog.ArticleService;
 import com.bihell.dice.blog.service.blog.CommentService;
 import com.bihell.dice.blog.service.blog.MetaService;
 import com.bihell.dice.blog.service.blog.OptionService;
 import com.bihell.dice.blog.service.message.EmailService;
-import com.bihell.dice.blog.utils.DiceConsts;
-import com.bihell.dice.blog.utils.DiceUtil;
-import com.bihell.dice.blog.utils.RestResponse;
+import com.bihell.dice.config.constant.DiceConsts;
+import com.bihell.dice.framework.util.DiceUtil;
+import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.blog.utils.Types;
+import com.bihell.dice.system.controller.BaseController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -31,7 +32,7 @@ import java.util.Map;
  * @since 2017/7/15 18:29
  */
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/blog/nuxt")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FrontController extends BaseController {
 
@@ -113,7 +114,7 @@ public class FrontController extends BaseController {
      *
      * @return {@see List<MetaDto>}
      */
-    @GetMapping("/category")
+    @GetMapping("category")
     public RestResponse category() {
         List<MetaDto> metaDtos = metaService.getPublishMetaDtos(Types.CATEGORY);
         return RestResponse.ok(metaDtos);

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * 获取登录信息工具类 todo
+ * 获取登录信息工具类
  */
 @Slf4j
 @Component
@@ -25,7 +25,7 @@ public class LoginUtil {
 
 
     /**
-     * 获取当前登录用户对象
+     * 获取当前登录用户对象 todo
      *
      * @return
      */

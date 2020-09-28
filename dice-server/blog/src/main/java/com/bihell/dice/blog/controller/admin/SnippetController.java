@@ -1,9 +1,8 @@
 package com.bihell.dice.blog.controller.admin;
 
 import com.bihell.dice.blog.model.dto.Snippet;
-import com.bihell.dice.blog.controller.BaseController;
 import com.bihell.dice.blog.service.tool.SnippetService;
-import com.bihell.dice.blog.utils.RestResponse;
+import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/api/admin/snippet")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class SnippetController extends BaseController {
+public class SnippetController {
 
     private final SnippetService snippetService;
 

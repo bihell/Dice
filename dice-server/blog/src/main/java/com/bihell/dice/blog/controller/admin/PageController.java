@@ -1,13 +1,14 @@
 package com.bihell.dice.blog.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.blog.controller.BaseController;
+import com.bihell.dice.framework.util.LoginUtil;
+import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.mapper.blogs.ArticleMapper;
 import com.bihell.dice.blog.model.blog.Article;
-import com.bihell.dice.blog.model.dto.Pagination;
+import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.blog.service.blog.ArticleService;
-import com.bihell.dice.blog.utils.DiceConsts;
-import com.bihell.dice.blog.utils.RestResponse;
+import com.bihell.dice.config.constant.DiceConsts;
+import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,7 @@ public class PageController extends BaseController {
      */
     @PostMapping
     public RestResponse savePage(@RequestBody Article page) {
-        page.setCreator(this.user().getId());
+        page.setCreator(LoginUtil.getUserId());
         articleService.savePage(page);
         return RestResponse.ok("保存文章成功");
     }

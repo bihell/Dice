@@ -1,7 +1,7 @@
 package com.bihell.dice.blog.model.blog;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.bihell.dice.blog.model.BaseEntity;
+import com.bihell.dice.framework.common.entity.BaseEntity;
 import com.bihell.dice.blog.enums.PostStatusEnum;
 import lombok.*;
 import lombok.experimental.Accessors;

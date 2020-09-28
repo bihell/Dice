@@ -57,7 +57,7 @@ import java.util.*;
 
 /**
  * <p>
- * Controller Aop 抽象类 todo
+ * Controller Aop 抽象类
  * 获取响应结果信息
  * <p>
  * 日志输出类型：print-type
@@ -763,42 +763,37 @@ public abstract class BaseLogAop {
                         .setMethodName(operationLogInfo.getControllerMethodName());
             }
             // 设置请求参数信息
-            if (requestInfo != null) {
-                sysOperationLog.setIp(requestInfo.getIp())
-                        .setPath(requestInfo.getPath())
-                        .setRequestId(requestInfo.getRequestId())
-                        .setRequestMethod(requestInfo.getRequestMethod())
-                        .setContentType(requestInfo.getContentType())
-                        .setRequestBody(requestInfo.getRequestBody())
-                        .setToken(requestInfo.getTokenMd5());
+            sysOperationLog.setIp(requestInfo.getIp())
+                    .setPath(requestInfo.getPath())
+                    .setRequestId(requestInfo.getRequestId())
+                    .setRequestMethod(requestInfo.getRequestMethod())
+                    .setContentType(requestInfo.getContentType())
+                    .setRequestBody(requestInfo.getRequestBody())
+                    .setToken(requestInfo.getTokenMd5());
 
-                // 设置参数字符串
-                sysOperationLog.setParam(Jackson.toJsonStringNonNull(requestInfo.getParam()));
-                // User-Agent
-                ClientInfo clientInfo = ClientInfoUtil.get(requestInfo.getUserAgent());
-                if (clientInfo != null) {
-                    sysOperationLog.setBrowserName(clientInfo.getBrowserName())
-                            .setBrowserVersion(clientInfo.getBrowserversion())
-                            .setEngineName(clientInfo.getEngineName())
-                            .setEngineVersion(clientInfo.getEngineVersion())
-                            .setOsName(clientInfo.getOsName())
-                            .setPlatformName(clientInfo.getPlatformName())
-                            .setMobile(clientInfo.isMobile())
-                            .setDeviceName(clientInfo.getDeviceName())
-                            .setDeviceModel(clientInfo.getDeviceModel());
-                }
-                // 设置IP区域
-                IpAddress ipAddress = ipAddressService.getByIp(requestInfo.getIp());
-                if (ipAddress != null) {
-                    requestInfo.setIpAddress(ipAddress);
-                    sysOperationLog.setArea(ipAddress.getArea()).setOperator(ipAddress.getOperator());
-                }
+            // 设置参数字符串
+            sysOperationLog.setParam(Jackson.toJsonStringNonNull(requestInfo.getParam()));
+            // User-Agent
+            ClientInfo clientInfo = ClientInfoUtil.get(requestInfo.getUserAgent());
+            sysOperationLog.setBrowserName(clientInfo.getBrowserName())
+                    .setBrowserVersion(clientInfo.getBrowserversion())
+                    .setEngineName(clientInfo.getEngineName())
+                    .setEngineVersion(clientInfo.getEngineVersion())
+                    .setOsName(clientInfo.getOsName())
+                    .setPlatformName(clientInfo.getPlatformName())
+                    .setMobile(clientInfo.isMobile())
+                    .setDeviceName(clientInfo.getDeviceName())
+                    .setDeviceModel(clientInfo.getDeviceModel());
+            // 设置IP区域
+            IpAddress ipAddress = ipAddressService.getByIp(requestInfo.getIp());
+            if (ipAddress != null) {
+                requestInfo.setIpAddress(ipAddress);
+                sysOperationLog.setArea(ipAddress.getArea()).setOperator(ipAddress.getOperator());
             }
 
             // 设置响应结果
-            if (result != null && result instanceof ApiResult) {
+            if (result instanceof ApiResult) {
                 ApiResult<?> apiResult = (ApiResult<?>) result;
-                apiResult.getCode();
                 sysOperationLog.setSuccess(apiResult.isSuccess())
                         .setCode(apiResult.getCode())
                         .setMessage(apiResult.getMessage());

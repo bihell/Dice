@@ -17,7 +17,7 @@ import java.time.Duration;
 import java.util.Date;
 
 /**
- * JWT工具类 todo
+ * JWT工具类
  * https://github.com/auth0/java-jwt
  **/
 @Slf4j
@@ -132,11 +132,7 @@ public class JwtUtil {
             return null;
         }
         DecodedJWT decodedJwt = getJwtInfo(token);
-        if (decodedJwt == null) {
-            return null;
-        }
-        String username = decodedJwt.getClaim(CommonConstant.JWT_USERNAME).asString();
-        return username;
+        return decodedJwt.getClaim(CommonConstant.JWT_USERNAME).asString();
     }
 
     /**

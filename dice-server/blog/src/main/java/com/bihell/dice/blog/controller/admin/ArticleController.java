@@ -2,13 +2,14 @@ package com.bihell.dice.blog.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.bihell.dice.blog.controller.BaseController;
+import com.bihell.dice.framework.util.LoginUtil;
+import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.model.blog.Article;
-import com.bihell.dice.blog.model.dto.Pagination;
+import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.blog.model.params.ArticleParam;
 import com.bihell.dice.blog.service.blog.ArticleService;
-import com.bihell.dice.blog.utils.DiceConsts;
-import com.bihell.dice.blog.utils.RestResponse;
+import com.bihell.dice.config.constant.DiceConsts;
+import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.blog.utils.Types;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class ArticleController extends BaseController {
      */
     @PostMapping
     public RestResponse saveArticle(@Valid @RequestBody ArticleParam articleParam) {
-        articleParam.setCreator(this.user().getId());
+        articleParam.setCreator(LoginUtil.getUserId());
         Integer articleId = articleService.saveArticle(articleParam);
         return RestResponse.ok(articleId);
     }

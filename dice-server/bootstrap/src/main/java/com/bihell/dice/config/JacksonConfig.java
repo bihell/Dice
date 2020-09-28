@@ -37,7 +37,7 @@
 //@Configuration
 //public class JacksonConfig implements WebMvcConfigurer {
 //
-//    @Value("${spring-boot-plus.filter.xss.enable}")
+//    @Value("${dice.filter.xss.enable}")
 //    private boolean enableXss;
 //
 //    @Override

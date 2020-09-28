@@ -12,17 +12,21 @@ CREATE TABLE sys_option
 ) ENGINE = InnoDB
   DEFAULT CHARSET = UTF8MB4;
 
-CREATE TABLE user
+create table user
 (
-    id           INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    username     VARCHAR(45)     NOT NULL UNIQUE,
-    password_md5 VARCHAR(45)     NOT NULL,
-    email        VARCHAR(45),
-    screen_name  VARCHAR(45),
-    created      TIMESTAMP       NOT NULL DEFAULT current_timestamp,
-    logged       TIMESTAMP       NOT NULL DEFAULT current_timestamp ON UPDATE current_timestamp
-) ENGINE = InnoDB
-  DEFAULT CHARSET = UTF8MB4;
+    id           int auto_increment
+        primary key,
+    username     varchar(45)                         not null,
+    password_md5 varchar(45)                         not null,
+    email        varchar(45)                         null,
+    screen_name  varchar(45)                         null,
+    created      timestamp default CURRENT_TIMESTAMP not null,
+    logged       timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    salt         varchar(32)                         null comment '盐值',
+    constraint username
+        unique (username)
+)
+    charset = utf8mb4;
 
 create table article
 (
@@ -394,7 +398,8 @@ create table sys_operation_log
     device_model      varchar(100)                       null comment '移动端设备型号',
     remark            varchar(200)                       null comment '备注',
     create_time       datetime default CURRENT_TIMESTAMP null comment '创建时间',
-    update_time       datetime                           null comment '修改时间'
+    update_time       datetime                           null comment '修改时间',
+    deleted           int      default 0                 null comment '逻辑删除，0：未删除，1：已删除'
 )
     comment '系统操作日志';
 

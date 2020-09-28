@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bihell.dice.system.mapper.UserMapper">
+    <resultMap id="ResultMap" type="com.bihell.dice.system.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryByParam" parameterType="com.bihell.dice.blog.model.params.QueryParam" resultMap="ResultMap">
+        select id,username,screen_name from user as t
+        <where>
+            <if test="queryParam.criteria != null and queryParam.criteria.length()>0">and (t.id = #{queryParam.criteria} or t.username like concat("%",#{queryParam.criteria},"%") or t.screen_name like concat("%",#{queryParam.criteria},"%"))</if>
+            <if test="queryParam.roleId != null">and t.id in (select distinct user_id from auth_rel_role_user where deleted=0 and role_id=#{queryParam.roleId})</if>
+        </where>
+        ORDER BY t.id desc
+    </select>
+
+</mapper>

@@ -17,12 +17,6 @@ import java.util.List;
 @ConfigurationProperties("dice")
 public class DiceProperties {
     /**
-     * Authentication enabled
-     */
-    private boolean authEnabled = true;
-
-
-    /**
      * 是否启用验证码 todo
      */
     private boolean enableVerifyCode;

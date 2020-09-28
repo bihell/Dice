@@ -5,7 +5,7 @@ import com.bihell.dice.blog.model.system.LogType;
 import com.bihell.dice.blog.service.message.EmailService;
 import com.bihell.dice.blog.service.system.LogService;
 import com.bihell.dice.blog.service.blog.OptionService;
-import com.bihell.dice.blog.utils.DiceConsts;
+import com.bihell.dice.config.constant.DiceConsts;
 import com.bihell.dice.blog.utils.OptionKeys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

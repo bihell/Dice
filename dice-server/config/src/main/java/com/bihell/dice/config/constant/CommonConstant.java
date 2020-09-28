@@ -36,9 +36,9 @@ public interface CommonConstant {
     String PAGE_SIZE_NAME = "pageSize";
 
     /**
-     * 登录token todo
+     * 登录token
      */
-    String JWT_DEFAULT_TOKEN_NAME = "token";
+    String JWT_DEFAULT_TOKEN_NAME = "Authorization";
 
     /**
      * JWT用户名 todo

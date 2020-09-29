@@ -14,15 +14,15 @@ CREATE TABLE sys_option
 
 create table user
 (
-    id           int auto_increment
+    id          int auto_increment
         primary key,
-    username     varchar(45)                         not null,
-    password_md5 varchar(45)                         not null,
-    email        varchar(45)                         null,
-    screen_name  varchar(45)                         null,
-    created      timestamp default CURRENT_TIMESTAMP not null,
-    logged       timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    salt         varchar(32)                         null comment '盐值',
+    username    varchar(45)                         not null,
+    password    varchar(64)                         not null,
+    email       varchar(45)                         null,
+    screen_name varchar(45)                         null,
+    created     timestamp default CURRENT_TIMESTAMP not null,
+    logged      timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    salt        varchar(32)                         null comment '盐值',
     constraint username
         unique (username)
 )
@@ -422,8 +422,8 @@ create index ip_address_ip_end_num_index
 create index ip_address_ip_start_num_index
     on ip_address (ip_start_num);
 
-INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (1, 'dice', '3e6693e83d186225b85b09e71c974d2d', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-01-08 16:13:10');
-INSERT INTO dice.user (id, username, password_md5, email, screen_name, created, logged) VALUES (2, 'demo', '3e6693e83d186225b85b09e71c974d2d', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-01-07 21:10:34');
+INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-09-29 15:28:07', '66666');
+INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-09-29 15:28:07', '66666');
 
 INSERT INTO dice.task (id, concurrent, cron, data, exec_at, exec_result, job_class, job_group, name, note, status, creator, create_time, modifier, update_time, deleted) VALUES (1, 0, '0/6 * * * * ?', '{
 "appname": "dice",

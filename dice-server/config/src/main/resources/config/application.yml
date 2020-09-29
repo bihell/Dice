@@ -89,6 +89,33 @@ dice:
   enable-verify-code: false
   # Swagger路径
   swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v2/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
+  # Filter配置
+  filter:
+    request:
+      enable: true
+      url-patterns: /*
+      order: 1
+      async: true
+    xss:
+      enable: true
+      url-patterns: /*
+      order: 2
+      async: true
+
+  # 拦截器配置
+  interceptor:
+    permission:
+      enable: false
+      include-paths: /**
+    resource:
+      enable: false
+      include-paths: ${dice.resource-access-patterns}
+    upload:
+      enable: false
+      include-paths: /upload/**
+    download:
+      enable: false
+      include-paths: /download/**
 
   # AOP配置
   aop:
@@ -129,8 +156,17 @@ dice:
   # 文件上传下载配置
   # 上传目录（当前用户下） todo
   upload-folder: .dice
-  # 资源访问路径 todo
+  # 资源访问路径
   resource-access-path: /resource/
+  # 资源访问路径匹配：/resource/**
+  resource-access-patterns: ${dice.resource-access-path}**
+  # 资源访问全路径前缀：
+  resource-access-url: http://${dice.server-ip}:${server.port}${server.servlet.context-path}${dice.resource-access-path}
+  # 全局允许上传的类型
+  allow-upload-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+  # 全局允许下载的类型
+  allow-download-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+
 
   ######################## Spring Shiro start ########################
   shiro:
@@ -183,8 +219,16 @@ dice:
     exposed-headers: Authorization
     # 该响应的有效时间默认为30分钟，在有效时间内，浏览器无须为同一请求再次发起预检请求
     max-age: 1800
-
   ############################ CORS end ##############################
+
+  ########################## Resource start ##########################
+  # 静态资源访问配置
+  resource-handlers: |
+    /static/**=classpath:/static/
+    swagger-ui.html=classpath:/META-INF/resources/
+    /webjars/**=classpath:/META-INF/resources/webjars/
+    doc.html=classpath:/META-INF/resources/
+  ########################## Resource end ############################
 
   ############################ JWT start #############################
   jwt:

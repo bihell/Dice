@@ -273,7 +273,7 @@ export default {
     },
     handlePreview() {
       this.handleSaveDraft()
-      window.open(this.$serverConfig.frontUrl + 'article/' + this.$route.params.id + '?token=' + this.$store.state.user.token.access_token, '_blank')
+      window.open(this.$serverConfig.frontUrl + 'article/' + this.$route.params.id + '?token=' + this.$store.state.user.token, '_blank')
     },
     getCategories() {
       blogApi.getAllCategories().then(response => {

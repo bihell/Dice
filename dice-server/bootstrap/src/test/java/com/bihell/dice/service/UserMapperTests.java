@@ -34,7 +34,7 @@ public class UserMapperTests {
     public void insertByMap() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("username", "test");
-        map.put("passwdMd5", "test");
+        map.put("password", "test");
         userMapper.insertByMap(map);
     }
 

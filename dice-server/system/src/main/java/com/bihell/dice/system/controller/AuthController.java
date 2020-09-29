@@ -7,18 +7,13 @@ import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.system.entity.*;
 import com.bihell.dice.system.mapper.*;
-import com.bihell.dice.system.param.LoginParam;
 import com.bihell.dice.system.param.QueryParam;
 import com.bihell.dice.system.service.*;
 import com.google.common.base.Preconditions;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 /**
  * 后台用户验证 Controller
@@ -42,30 +37,6 @@ public class AuthController {
     private final AuthContentService authContentService;
     private final AuthRoleService authRoleService;
     private final UserMapper userMapper;
-    private final LoginService loginService;
-    /**
-     * 后台登录
-     *
-     * @param loginParam Login param
-     * @return {@see RestResponse.ok()}
-     */
-    @PostMapping("login")
-    @ApiOperation("Login")
-    public RestResponse auth(@RequestBody @Valid LoginParam loginParam) {
-        return RestResponse.ok(userService.authenticate(loginParam));
-    }
-
-    /**
-     * 登出
-     *
-     * @return {@see RestResponse.ok()}
-     */
-    @PostMapping("logout")
-    @ApiOperation("Logs out (Clear session)")
-    public RestResponse logout(HttpServletRequest request) throws Exception {
-        loginService.logout(request);
-        return RestResponse.ok();
-    }
 
     /**
      * 获取用户名 todo 待优化

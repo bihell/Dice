@@ -36,9 +36,9 @@ public class User extends Model<User> {
     private String username;
 
     /**
-     * 用户密码 md5存储
+     * 用户密码
      */
-    private String passwordMd5;
+    private String password;
 
     /**
      * 用户邮箱

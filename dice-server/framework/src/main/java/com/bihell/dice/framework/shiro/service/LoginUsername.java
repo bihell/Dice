@@ -3,7 +3,7 @@ package com.bihell.dice.framework.shiro.service;
 import java.io.Serializable;
 
 /**
- * 获取登录用户名称 todo
+ * 获取登录用户名称
  **/
 public interface LoginUsername extends Serializable {
 

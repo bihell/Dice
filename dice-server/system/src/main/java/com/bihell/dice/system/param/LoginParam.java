@@ -1,27 +1,32 @@
 package com.bihell.dice.system.param;
 
+import com.bihell.dice.framework.shiro.service.LoginUsername;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
- * Login param.
- *
- * @author johnniang
- * @date 3/28/19
- */
+ * 登录参数
+ **/
 @Data
-@ToString
-public class LoginParam {
+@ApiModel("登录参数")
+public class LoginParam implements LoginUsername {
+	private static final long serialVersionUID = 2854217576695117356L;
 
-    @NotBlank(message = "用户名或邮箱不能为空")
-    @Size(max = 255, message = "用户名或邮箱的字符长度不能超过 {max}")
+	@NotBlank(message = "请输入账号")
+    @ApiModelProperty(value = "账号", example = "admin")
     private String username;
 
-    @NotBlank(message = "登陆密码不能为空")
-    @Size(max = 100, message = "用户密码字符长度不能超过 {max}")
+    @NotBlank(message = "请输入密码")
+    @ApiModelProperty(value = "密码", example = "123456")
     private String password;
+
+    @ApiModelProperty("验证码Token")
+    private String verifyToken;
+
+    @ApiModelProperty("验证码")
+    private String code;
 
 }

@@ -128,7 +128,7 @@ export default {
         name: '',
         path: ''
       },
-      header: { Authorization: store.getters.token.access_token }
+      header: { Authorization: store.getters.token }
     }
   },
   mounted() {

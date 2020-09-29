@@ -20,12 +20,12 @@ public interface UserMapper extends BaseMapper<User> {
 
     IPage<User> queryByParam(@Param("pg") Page<User> page, @Param("queryParam") QueryParam queryParam);
 
-    @Insert("INSERT INTO USER(username, password_md5) VALUES(#{username}, #{passwdMd5})")
-    int insert(@Param("username") String username, @Param("passwdMd5") String passwdMd5);
+    @Insert("INSERT INTO USER(username, password) VALUES(#{username}, #{password})")
+    int insert(@Param("username") String username, @Param("password") String password);
 
-    @Insert("INSERT INTO USER(username, password_md5) VALUES(#{username,jdbcType=VARCHAR}, #{passwdMd5,jdbcType=VARCHAR})")
+    @Insert("INSERT INTO USER(username, password) VALUES(#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})")
     int insertByMap(Map<String, Object> map);
 
-    @Insert("INSERT INTO USER(username, password_md5) VALUES(#{username}, #{passwordMd5})")
+    @Insert("INSERT INTO USER(username, password) VALUES(#{username}, #{password})")
     int insertByObject(User user);
 }

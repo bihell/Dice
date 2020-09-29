@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -142,6 +143,10 @@ public class LoginServiceImpl implements LoginService {
         loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo);
         log.debug("登录成功,username:{}", username);
 
+        // 更新最后登陆时间
+        sysUser.setLogged(LocalDateTime.now());
+        sysUser.updateById();
+
         // 缓存登录信息到redis
         String tokenSha256 = DigestUtils.sha256Hex(token);
         redisTemplate.opsForValue().set(tokenSha256, loginSysUserVo, 1, TimeUnit.DAYS);
@@ -179,7 +184,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void logout(HttpServletRequest request) throws Exception {
+    public void logout(HttpServletRequest request) {
         Subject subject = SecurityUtils.getSubject();
         //注销
         subject.logout();

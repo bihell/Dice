@@ -87,6 +87,10 @@ dice:
   server-ip: 127.0.0.1
   # 是否启用验证码 todo
   enable-verify-code: false
+  # 默认新建用户登录初始化密码
+  login-init-salt: 666666
+  login-init-password: admin
+  login-init-head: http://${dice.server-ip}/api/resource/logo.png
   # Swagger路径
   swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v2/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
   # Filter配置

@@ -48,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public IPage<User> getUserList(QueryParam queryParam) {
         Page<User> page = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda()
-                .select(User.class, info -> !"passwordMd5".equals(info.getProperty()))
+                .select(User.class, info -> !"password".equals(info.getProperty()))
                 .like(User::getUsername, queryParam.getCriteria())
                 .orderByDesc(User::getCreated);
 
@@ -94,7 +94,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getUserSingle(Integer id) {
         LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda()
-                .select(User.class, info -> !"passwordMd5".equals(info.getProperty()))
+                .select(User.class, info -> !"password".equals(info.getProperty()))
                 .eq(User::getId, id);
         return userMapper.selectOne(wrapper);
     }

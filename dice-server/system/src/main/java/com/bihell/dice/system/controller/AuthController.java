@@ -10,13 +10,10 @@ import com.bihell.dice.system.mapper.*;
 import com.bihell.dice.system.param.QueryParam;
 import com.bihell.dice.system.service.*;
 import com.google.common.base.Preconditions;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 后台用户验证 Controller
@@ -40,19 +37,6 @@ public class AuthController {
     private final AuthContentService authContentService;
     private final AuthRoleService authRoleService;
     private final UserMapper userMapper;
-    private final LoginService loginService;
-
-    /**
-     * 登出
-     *
-     * @return {@see RestResponse.ok()}
-     */
-    @PostMapping("logout")
-    @ApiOperation("Logs out (Clear session)")
-    public RestResponse logout(HttpServletRequest request) throws Exception {
-        loginService.logout(request);
-        return RestResponse.ok();
-    }
 
     /**
      * 获取用户名 todo 待优化

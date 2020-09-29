@@ -39,7 +39,9 @@ public class StartedListener implements ApplicationListener<ApplicationStartedEv
         String baseUrl = optionService.getBaseUrl();
 
         if (swaggerProperties.isEnable()) {
-            log.info(AnsiOutput.toString(AnsiColor.BRIGHT_BLUE, "Dice api doc was enabled at ",baseUrl,"/swagger-ui.html"));
+            log.info(AnsiOutput.toString(AnsiColor.BRIGHT_BLUE, "Dice api Swagger doc was enabled at ",baseUrl,"/swagger-ui.html"));
+            log.info(AnsiOutput.toString(AnsiColor.BRIGHT_BLUE, "Dice api Knife4j doc was enabled at ",baseUrl,"/doc.html"));
+
         }
         log.info(AnsiOutput.toString(AnsiColor.BRIGHT_YELLOW, "Dice has started successfully!"));
     }

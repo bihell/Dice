@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -41,7 +42,7 @@ public class AuthController {
     private final AuthContentService authContentService;
     private final AuthRoleService authRoleService;
     private final UserMapper userMapper;
-
+    private final LoginService loginService;
     /**
      * 后台登录
      *
@@ -61,8 +62,8 @@ public class AuthController {
      */
     @PostMapping("logout")
     @ApiOperation("Logs out (Clear session)")
-    public RestResponse logout() {
-        userService.clearToken();
+    public RestResponse logout(HttpServletRequest request) throws Exception {
+        loginService.logout(request);
         return RestResponse.ok();
     }
 

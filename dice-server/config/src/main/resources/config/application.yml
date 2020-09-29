@@ -203,7 +203,7 @@ dice:
     # 刷新token的时间间隔，默认10分钟，单位：秒
     refresh-token-countdown: 600
     # redis校验jwt token是否存在,可选
-    redis-check: true
+    redis-check: false
     # true: 同一个账号只能是最后一次登录token有效，false：同一个账号可多次登录
     single-login: true
     # 盐值校验，如果不加自定义盐值，则使用secret校验

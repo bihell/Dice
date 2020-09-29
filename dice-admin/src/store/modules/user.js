@@ -12,11 +12,11 @@ const state = {
 
 const mutations = {
   SET_TOKEN: (state, token) => {
-    Vue.ls.set('Access-Token', token)
+    Vue.ls.set('token', token)
     state.token = token
   },
   CLEAR_TOKEN: state => {
-    Vue.ls.remove('Access-Token')
+    Vue.ls.remove('token')
     state.token = null
   },
   SET_NAME: (state, name) => {
@@ -37,7 +37,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        commit('SET_TOKEN', response.data)
+        commit('SET_TOKEN', response.data.token)
         // setToken('admin-token')
         resolve()
       }).catch(error => {
@@ -47,7 +47,7 @@ const actions = {
   },
 
   setCurrentToken({ commit }) {
-    commit('SET_TOKEN', Vue.ls.get('Access-Token'))
+    commit('SET_TOKEN', Vue.ls.get('token'))
   },
 
   // 获取用户信息

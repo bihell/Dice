@@ -16,8 +16,8 @@ let loadingInstance = null
 function setTokenToHeader(config) {
   // set token
   const token = store.getters.token
-  if (token && token.access_token) {
-    config.headers['Authorization'] = token.access_token
+  if (token) {
+    config.headers['Authorization'] = token
   }
 }
 

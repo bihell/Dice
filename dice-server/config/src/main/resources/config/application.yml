@@ -97,7 +97,7 @@ dice:
       order: 1
       async: true
     xss:
-      enable: true
+      enable: false
       url-patterns: /*
       order: 2
       async: true

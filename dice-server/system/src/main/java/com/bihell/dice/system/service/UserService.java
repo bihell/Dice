@@ -2,11 +2,8 @@ package com.bihell.dice.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bihell.dice.system.entity.AuthToken;
 import com.bihell.dice.system.entity.User;
-import com.bihell.dice.system.param.LoginParam;
 import com.bihell.dice.system.param.QueryParam;
-import org.springframework.lang.NonNull;
 
 /**
  * User Service 接口
@@ -41,15 +38,6 @@ public interface UserService extends IService<User> {
      * @return boolean
      */
     boolean resetUser(String oldUsername, String newUsername, String email);
-
-    /**
-     * Authenticates.
-     *
-     * @param loginParam login param must not be null
-     * @return authentication token
-     */
-    @NonNull
-    AuthToken authenticate(@NonNull LoginParam loginParam);
 
     /**
      * 获取用户列表

@@ -10,7 +10,8 @@ import com.bihell.dice.blog.mapper.blogs.CommentMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.Archive;
-import com.bihell.dice.system.util.SecurityUtil;
+import com.bihell.dice.framework.shiro.cache.LoginRedisService;
+import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.blog.enums.PostStatusEnum;
 import com.bihell.dice.framework.common.exception.TipException;
 import com.bihell.dice.blog.service.blog.ArticleService;
@@ -46,12 +47,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     static final String ARTICLE_CACHE_NAME = "articles";
 
     private final ArticleMapper articleMapper;
-
     private final MetaService metasService;
-
     private final CommentMapper commentsMapper;
-
     private final RedisService redisService;
+    private final LoginRedisService loginRedisService;
 
     /**
      * 分页查询前端文章
@@ -99,7 +98,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             }
             return article;
         } else {
-            Integer userId = (Integer) redisService.get(SecurityUtil.buildTokenAccessKey(token));
+            Long userId = LoginUtil.getUserId(token);
             Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
                     .eq(Article::getId, id)
                     .eq(Article::getType, Types.POST)

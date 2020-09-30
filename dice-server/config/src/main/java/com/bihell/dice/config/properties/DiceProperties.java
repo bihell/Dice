@@ -17,9 +17,29 @@ import java.util.List;
 @ConfigurationProperties("dice")
 public class DiceProperties {
     /**
+     * 项目IP或域名地址
+     */
+    private String serverIp;
+
+    /**
      * 是否启用验证码 todo
      */
     private boolean enableVerifyCode;
+
+    /**
+     * 新建登录用户初始化盐值
+     */
+    private String loginInitSalt;
+
+    /**
+     * 新建登录用户初始化密码
+     */
+    private String loginInitPassword;
+
+    /**
+     * 新建用户初始化头像
+     */
+    private String loginInitHead;
 
     /**
      * 拦截器配置 todo

@@ -59,13 +59,13 @@ public class LoginServiceImpl implements LoginService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public LoginSysUserTokenVo login(LoginParam loginParam) throws Exception {
+    public LoginSysUserTokenVo login(LoginParam loginParam) {
         // 校验验证码
         checkVerifyCode(loginParam.getVerifyToken(), loginParam.getCode());
 
         String username = loginParam.getUsername();
         // 从数据库中获取登录用户信息
-        User sysUser = new User().selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username));
+        User sysUser = new User().selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username).or().eq(User::getEmail, username));
         if (sysUser == null) {
             log.error("登录失败,loginParam:{}", loginParam);
             throw new AuthenticationException("用户名或密码错误");

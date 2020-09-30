@@ -6,7 +6,7 @@ import org.springframework.core.annotation.AliasFor;
 import java.lang.annotation.*;
 
 /**
- * 操作日志注解 todo
+ * 操作日志注解
  * 记录：日志名称，日志类型，日志备注
  **/
 @Target({ElementType.METHOD})

@@ -90,7 +90,7 @@ export default {
     const repeatPasswordValidate = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入确认密码'))
-      } else if (value !== this.formInfo.data.passwordMd5) {
+      } else if (value !== this.formInfo.data.password) {
         callback(new Error('两次输入的密码不一样'))
       } else {
         callback()
@@ -181,7 +181,7 @@ export default {
         },
         {
           type: 'password',
-          prop: 'passwordMd5',
+          prop: 'password',
           label: '密码',
           required: true
         },
@@ -315,7 +315,7 @@ export default {
         ...params
       }
       api.addUser(data).then(res => {
-        if (res.code === 0) {
+        if (res.code === 200) {
           this.dialog2.dialogFormVisible = false
           this.msgTips('success', '成功', '新增成功')
           this.listQuery.pageNum = 1
@@ -335,7 +335,7 @@ export default {
       api.updateUserSingle(data).then(res => {
         if (res.code === 0) {
           this.dialog2.dialogFormVisible = false
-          this.msgTips('success', '成功', '更新成功')
+          this.msgTips('success', '成功', res.msg)
           this.getList()
         } else {
           this.msgTips('error', '失败', res.msg)

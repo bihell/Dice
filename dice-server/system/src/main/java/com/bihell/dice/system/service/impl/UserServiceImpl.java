@@ -108,17 +108,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return user.insert();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateUser(User user) {
+    public boolean updateUser(User user) {
         if (user.selectCount(new QueryWrapper<User>()
                 .ne("id", user.getId())
                 .and(field -> {
                     field.eq("username", user.getUsername()).or().eq("email", user.getEmail());
                 })) < 1) {
-            user.setPassword(DiceUtil.getMd5(user.getPassword()));
-            user.updateById();
+            String salt = SaltUtil.generateSalt();
+            user.setSalt(salt);
+            String password = user.getPassword();
+            user.setPassword(PasswordUtil.encrypt(password, salt));
+            return user.updateById();
         } else {
-            throw new TipException("用户名或邮箱已存在");
+            throw new BusinessException("用户名或邮箱已存在");
         }
     }
 
@@ -128,21 +132,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .select(User.class, info -> !"password".equals(info.getProperty()))
                 .eq(User::getId, id);
         return userMapper.selectOne(wrapper);
-    }
-
-    @Override
-    public boolean resetPassword(String username, String oldPassword, String newPassword) {
-        User user = new User().selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username));
-        if (null == user) {
-            throw new TipException("该用户名不存在");
-        }
-
-        if (!user.getPassword().equals(DiceUtil.getMd5(oldPassword))) {
-            throw new TipException("原密码错误");
-        }
-
-        userMapper.updateById(user);
-        return true;
     }
 
     /**

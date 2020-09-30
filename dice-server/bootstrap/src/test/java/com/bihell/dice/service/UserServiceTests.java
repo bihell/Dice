@@ -14,12 +14,6 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
 
-
-    @Test
-    public void resetPassword(){
-        userService.resetPassword("dice","123456","123456");
-    }
-
     @Test
     public void resetUser(){
         userService.resetUser("dice","dice","tpxcer@outlook.com");

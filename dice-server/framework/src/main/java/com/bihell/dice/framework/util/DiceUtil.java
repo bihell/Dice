@@ -11,7 +11,6 @@ import com.bihell.dice.framework.common.exception.TipException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
-import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -146,17 +145,6 @@ public class DiceUtil {
     public static String getAgent() {
         return getRequest().getHeader(HttpHeaders.USER_AGENT);
 
-    }
-
-    /**
-     * 获取字符串md5值(加盐)
-     *
-     * @param str 字符串
-     * @return 加密的字符串
-     */
-    public static String getMd5(String str) {
-        String base = str + DiceConsts.MD5_SLAT;
-        return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 
     /**

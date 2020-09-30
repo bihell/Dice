@@ -24,8 +24,22 @@ public class LoginUtil {
     }
 
 
+
     /**
-     * 获取当前登录用户对象 todo
+     * 通过token获取用户对象
+     *
+     * @return
+     */
+    public static LoginSysUserRedisVo getLoginSysUserRedisVo(String token) {
+        // 获取当前登录用户
+        String username = JwtUtil.getUsername(token);
+        if (StringUtils.isBlank(username)) {
+            return null;
+        }
+        return (LoginSysUserRedisVo) redisTemplate.opsForValue().get(String.format(CommonRedisKey.LOGIN_USER, username));
+    }
+    /**
+     * 获取当前登录用户对象
      *
      * @return
      */
@@ -46,6 +60,19 @@ public class LoginUtil {
      */
     public static Long getUserId() {
         LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo();
+        if (loginSysUserRedisVo == null) {
+            return null;
+        }
+        return loginSysUserRedisVo.getId();
+    }
+
+    /**
+     * 根据token获取用户的ID
+     *
+     * @return
+     */
+    public static Long getUserId(String token) {
+        LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo(token);
         if (loginSysUserRedisVo == null) {
             return null;
         }

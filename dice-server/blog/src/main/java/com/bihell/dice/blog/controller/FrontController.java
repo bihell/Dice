@@ -37,13 +37,9 @@ import java.util.Map;
 public class FrontController extends BaseController {
 
     private final ArticleService articleService;
-
     private final MetaService metaService;
-
     private final CommentService commentService;
-
     private final EmailService emailService;
-
     private final OptionService optionService;
 
     /**

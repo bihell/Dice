@@ -15,19 +15,9 @@ public interface UserService extends IService<User> {
 
     boolean addUser(User user);
 
-    void updateUser(User user);
+    boolean updateUser(User user);
 
     User getUserSingle(Integer id);
-
-    /**
-     * 修改用户密码
-     *
-     * @param username    用户名
-     * @param oldPassword 原密码
-     * @param newPassword 新密码
-     * @return boolean
-     */
-    boolean resetPassword(String username, String oldPassword, String newPassword);
 
     /**
      * 修改用户信息

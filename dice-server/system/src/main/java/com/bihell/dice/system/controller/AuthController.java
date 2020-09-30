@@ -73,12 +73,6 @@ public class AuthController {
         return RestResponse.ok();
     }
 
-    @PostMapping("/user/update")
-    public RestResponse updateUserSingle(@RequestBody User user) {
-        userService.updateUser(user);
-        return RestResponse.ok();
-    }
-
     @GetMapping("/user/get")
     public RestResponse getUserSingle(@RequestParam Integer id) {
         return RestResponse.ok(userService.getUserSingle(id));

@@ -317,11 +317,11 @@ export default {
       api.addUser(data).then(res => {
         if (res.code === 200) {
           this.dialog2.dialogFormVisible = false
-          this.msgTips('success', '成功', '新增成功')
+          this.msgTips('success', '成功', res.message)
           this.listQuery.pageNum = 1
           this.getList()
         } else {
-          this.msgTips('error', '失败', res.msg)
+          this.msgTips('error', '失败', res.message)
         }
       })
     },
@@ -333,12 +333,12 @@ export default {
         ...params
       }
       api.updateUserSingle(data).then(res => {
-        if (res.code === 0) {
+        if (res.code === 200) {
           this.dialog2.dialogFormVisible = false
-          this.msgTips('success', '成功', res.msg)
+          this.msgTips('success', '成功', res.message)
           this.getList()
         } else {
-          this.msgTips('error', '失败', res.msg)
+          this.msgTips('error', '失败', res.message)
         }
       })
     },

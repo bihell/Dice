@@ -1,7 +1,6 @@
 package com.bihell.dice.system.controller;
 
 import com.bihell.dice.framework.common.api.ApiResult;
-import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.framework.log.annotation.OperationLogIgnore;
 import com.bihell.dice.framework.shiro.util.JwtTokenUtil;
 import com.bihell.dice.system.param.LoginParam;
@@ -36,7 +35,7 @@ public class LoginController {
 
     @PostMapping("login")
     @OperationLogIgnore
-    @ApiOperation(value = "登录", notes = "系统用户登录", response = com.bihell.dice.system.vo.LoginSysUserTokenVo.class)
+    @ApiOperation(value = "登录", notes = "系统用户登录", response = LoginSysUserTokenVo.class)
     public ApiResult<LoginSysUserTokenVo> login(@Validated @RequestBody LoginParam loginParam, HttpServletResponse response) throws Exception {
         LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
         // 设置token响应头

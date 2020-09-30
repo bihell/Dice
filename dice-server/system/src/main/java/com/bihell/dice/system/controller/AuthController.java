@@ -67,12 +67,6 @@ public class AuthController {
         return RestResponse.ok(new Pagination<User>(userMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
     }
 
-    @PostMapping("/user/add")
-    public RestResponse addUser(@RequestBody User user) {
-        userService.addUser(user);
-        return RestResponse.ok();
-    }
-
     @PostMapping("/user/assign/role")
     public RestResponse assignRole(@RequestBody User user) {
         userService.assignRole(user);

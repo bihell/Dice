@@ -13,7 +13,7 @@ import com.bihell.dice.system.param.QueryParam;
  */
 public interface UserService extends IService<User> {
 
-    void addUser(User user);
+    boolean addUser(User user);
 
     void updateUser(User user);
 

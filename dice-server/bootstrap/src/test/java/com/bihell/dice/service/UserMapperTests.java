@@ -20,14 +20,6 @@ public class UserMapperTests {
     @Resource
     private UserMapper userMapper;
 
-    @Test
-    @Rollback
-    public void test() throws Exception {
-        userMapper.insert("test", "test");
-//        User u = userMapper.findByName("AAA");
-//        Assert.assertEquals(20, u.getAge().intValue());
-    }
-
     @Transactional
     @Test
     @Rollback

@@ -6,6 +6,8 @@ import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.Archive;
 import com.bihell.dice.blog.model.dto.CommentDto;
 import com.bihell.dice.blog.model.dto.MetaDto;
+import com.bihell.dice.framework.common.api.ApiCode;
+import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.blog.service.blog.ArticleService;
 import com.bihell.dice.blog.service.blog.CommentService;
@@ -13,10 +15,10 @@ import com.bihell.dice.blog.service.blog.MetaService;
 import com.bihell.dice.blog.service.blog.OptionService;
 import com.bihell.dice.blog.service.message.EmailService;
 import com.bihell.dice.config.constant.DiceConsts;
+import com.bihell.dice.framework.util.CacheUtil;
 import com.bihell.dice.framework.util.DiceUtil;
 import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.blog.utils.Types;
-import com.bihell.dice.system.controller.BaseController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -34,13 +36,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/blog/nuxt")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class FrontController extends BaseController {
+public class FrontController {
 
     private final ArticleService articleService;
     private final MetaService metaService;
     private final CommentService commentService;
     private final EmailService emailService;
     private final OptionService optionService;
+    protected final CacheUtil cacheUtil;
+
 
     /**
      * 文章列表
@@ -63,14 +67,14 @@ public class FrontController extends BaseController {
      * @return {@see Article}
      */
     @GetMapping("article/{id}")
-    public RestResponse article(@PathVariable Integer id,
+    public ApiResult<Article> article(@PathVariable Integer id,
                                 @RequestParam(required = false,defaultValue = "") String token) {
         Article article = articleService.getFrontArticle(id,token);
         if (null == article) {
-            return this.error404();
+            return ApiResult.fail(ApiCode.UNAUTHORIZED, null);
         }
         this.updateHits(article.getId(), article.getHits());
-        return RestResponse.ok(article);
+        return ApiResult.ok(article);
     }
 
     /**
@@ -145,12 +149,12 @@ public class FrontController extends BaseController {
      * @return {@see Article}
      */
     @GetMapping("page/{id}")
-    public RestResponse page(@PathVariable Integer id) {
+    public ApiResult<Article> page(@PathVariable Integer id) {
         Article page = articleService.getFrontPage(id);
         if (null == page) {
-            return error404();
+            return ApiResult.fail(ApiCode.NOT_FOUND,null);
         }
-        return RestResponse.ok(page);
+        return ApiResult.ok(page);
     }
 
     /**

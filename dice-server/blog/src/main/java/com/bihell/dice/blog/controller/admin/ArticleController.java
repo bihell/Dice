@@ -2,8 +2,9 @@ package com.bihell.dice.blog.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bihell.dice.framework.common.api.ApiCode;
+import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.util.LoginUtil;
-import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.blog.model.params.ArticleParam;
@@ -26,7 +27,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/v1/api/admin/article")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class ArticleController extends BaseController {
+public class ArticleController {
 
     private final ArticleService articleService;
 
@@ -51,12 +52,12 @@ public class ArticleController extends BaseController {
      * @return {@see Article}
      */
     @GetMapping("{id}")
-    public RestResponse showArticle(@PathVariable Integer id) {
+    public ApiResult<Article> showArticle(@PathVariable Integer id) {
         Article article = articleService.getAdminArticle(id);
         if (null == article) {
-            return this.error404();
+            return  ApiResult.fail(ApiCode.NOT_FOUND,null);
         }
-        return RestResponse.ok(article);
+        return ApiResult.ok(article);
     }
 
     /**

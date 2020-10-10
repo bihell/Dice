@@ -3,12 +3,13 @@ package com.bihell.dice.blog.controller.admin;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.CommentDto;
+import com.bihell.dice.framework.common.api.ApiCode;
+import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.blog.service.blog.CommentService;
 import com.bihell.dice.config.constant.DiceConsts;
 import com.bihell.dice.framework.util.DiceUtil;
 import com.bihell.dice.framework.common.api.RestResponse;
-import com.bihell.dice.system.controller.BaseController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/api/admin/comment")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class CommentController extends BaseController {
+public class CommentController {
 
     private final CommentService commentService;
 
@@ -47,16 +48,16 @@ public class CommentController extends BaseController {
      * @return {@see CommentDto}
      */
     @GetMapping("{id}")
-    public RestResponse detail(@PathVariable Integer id) {
+    public ApiResult<CommentDto> detail(@PathVariable Integer id) {
         CommentDto comment = commentService.getCommentDetail(id);
         if (null == comment) {
-            return this.error404();
+            return ApiResult.fail(ApiCode.UNAUTHORIZED, null);
         }
         if (null != comment.getPComment()) {
             comment.getPComment().setContent(DiceUtil.mdToHtml(comment.getPComment().getContent()));
         }
         comment.setContent(DiceUtil.mdToHtml(comment.getContent()));
-        return RestResponse.ok(comment);
+        return ApiResult.ok(comment);
     }
 
     /**

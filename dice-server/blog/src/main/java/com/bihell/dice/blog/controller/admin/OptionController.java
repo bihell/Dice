@@ -1,6 +1,5 @@
 package com.bihell.dice.blog.controller.admin;
 
-import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.service.blog.OptionService;
 import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/v1/api/admin/option")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class OptionController extends BaseController {
+public class OptionController {
 
     private final OptionService optionService;
 

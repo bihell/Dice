@@ -1,8 +1,9 @@
 package com.bihell.dice.blog.controller.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.bihell.dice.framework.common.api.ApiCode;
+import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.util.LoginUtil;
-import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.mapper.blogs.ArticleMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.framework.core.pagination.Pagination;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/api/admin/page")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class PageController extends BaseController {
+public class PageController {
 
     private final ArticleService articleService;
     private final ArticleMapper articleMapper;
@@ -48,12 +49,12 @@ public class PageController extends BaseController {
      * @return {@see Article}
      */
     @GetMapping("{id}")
-    public RestResponse showPage(@PathVariable Integer id) {
+    public ApiResult<Article> showPage(@PathVariable Integer id) {
         Article page = articleService.getAdminPage(id);
         if (null == page) {
-            return this.error404();
+            return ApiResult.fail(ApiCode.NOT_FOUND, null);
         }
-        return RestResponse.ok(page);
+        return ApiResult.ok(page);
     }
 
     /**

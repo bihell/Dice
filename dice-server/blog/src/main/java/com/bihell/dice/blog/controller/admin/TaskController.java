@@ -8,7 +8,6 @@ import com.bihell.dice.blog.mapper.tool.TaskMapper;
 import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.blog.model.tool.Task;
 import com.bihell.dice.blog.model.tool.TaskLog;
-import com.bihell.dice.system.controller.BaseController;
 import com.bihell.dice.blog.service.task.TaskService;
 import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RequestMapping("/v1/api/admin/task")
-public class TaskController extends BaseController {
+public class TaskController {
     private final TaskMapper taskMapper;
     private final TaskService taskService;
     private final TaskLogMapper taskLogMapper;

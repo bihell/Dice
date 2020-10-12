@@ -71,7 +71,7 @@ public class FrontController {
                                 @RequestParam(required = false,defaultValue = "") String token) {
         Article article = articleService.getFrontArticle(id,token);
         if (null == article) {
-            return ApiResult.fail(ApiCode.UNAUTHORIZED, null);
+            return ApiResult.fail(ApiCode.NOT_FOUND, null);
         }
         this.updateHits(article.getId(), article.getHits());
         return ApiResult.ok(article);

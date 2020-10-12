@@ -51,7 +51,7 @@ public class CommentController {
     public ApiResult<CommentDto> detail(@PathVariable Integer id) {
         CommentDto comment = commentService.getCommentDetail(id);
         if (null == comment) {
-            return ApiResult.fail(ApiCode.UNAUTHORIZED, null);
+            return ApiResult.fail(ApiCode.NOT_FOUND, null);
         }
         if (null != comment.getPComment()) {
             comment.getPComment().setContent(DiceUtil.mdToHtml(comment.getPComment().getContent()));

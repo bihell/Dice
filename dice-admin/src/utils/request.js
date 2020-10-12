@@ -63,29 +63,13 @@ service.interceptors.response.use(
 
     // if the custom code is not 20000, it is judged as an error.
     if (!res.success) {
-      if (res.code !== 999) {
-        console.log(res)
-        Message({
-          message: res.msg || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
-      } else {
-        // to re-login
-        store.dispatch('user/resetToken').then(() => {
-          location.reload()
-        })
-        // MessageBox.confirm('你已经登出，可以按「取消」按钮停留在此页面或者重新登录。', '登出提示', {
-        //   confirmButtonText: '重新登录',
-        //   cancelButtonText: '取消',
-        //   type: 'warning'
-        // }).then(() => {
-        //   store.dispatch('user/resetToken').then(() => {
-        //     location.reload()
-        //   })
-        // })
-      }
-      return Promise.reject(new Error(res.msg || 'Error'))
+      console.log(res)
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      })
+      return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res
     }
@@ -97,11 +81,18 @@ service.interceptors.response.use(
       loadingInstance = null
     }
     console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    if (error.response.status === 401) {
+      // to re-login
+      store.dispatch('user/resetToken').then(() => {
+        location.reload()
+      })
+    } else {
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )

@@ -21,8 +21,6 @@ local json = require("cjson.safe")
 
 -- -- 验证PASS登录
 local function verify_pass_login()
-
-
     local http = require "resty.http"
     local httpc = http.new()
     local res, err = httpc:request_uri("http://127.0.0.1:9091/v1/api/admin/auth/user_info", {
@@ -32,19 +30,11 @@ local function verify_pass_login()
             ["Authorization"] = ngx.req.get_headers()['Authorization']
         }
     })
-    if not res or not res.body or res.status ~= ngx.HTTP_OK then
-        ngx.log(ngx.ERR, err)
-        func.error_exit(err)
+    if not res or not res.body or res.status == ngx.HTTP_UNAUTHORIZED then
+        ngx.exit(ngx.HTTP_UNAUTHORIZED)
     end
 
     local result = json.decode(res.body)
-
-    if not result or result.code == 999 then
-        ngx.log(ngx.INFO, string.format('get pass token fail %s',res.body))
-        -- func.redirect_login()
-        ngx.say('{"code":999,"msg":"Token Expired or Not Exist","data":null,"success":false}')
-        ngx.exit(ngx.OK)
-    end
 
     ngx.log(ngx.INFO, string.format('get pass info : %s', res.body))
 
@@ -57,8 +47,6 @@ local function verify_pass_login()
 
     return auth_data, auth_data_json
 end
-
--- 权限校验：C端权限，验证是否登录；B端权限，验证header是否携带token
 
 if ngx.req.get_headers()['Authorization'] ~= nil then
     local auth_data_json = ngx.shared.auth_cache:get(ngx.req.get_headers()['Authorization'])

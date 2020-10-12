@@ -52,7 +52,7 @@ services:
     volumes:
     - ./dice-server:/app
     - ~/.m2:/root/.m2
-    - ~/.dice/logs/server:/app/log
+    - ~/.dice/logs/server:/app/logs
     - ~/.dice/upload:/root/.dice/upload
     expose:
     - "9091"

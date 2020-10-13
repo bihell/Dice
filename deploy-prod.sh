@@ -32,16 +32,21 @@ judge(){
     fi
 }
 
+working_dir=`pwd`
+
 # 安装 Dice-Admin 依赖
-cd ./dice-admin/ && npm install
+cd $working_dir/dice-admin/ && npm install
 judge "安装 Dice-Admin 项目依赖"
 
 # 编译 Dice-Admin 项目
 npm run build:prod
 judge "编译 Dice-Admin 项目"
-cd -
+
+cd $working_dir/dice-server/ && mvn clean package -P docker,release
+judge "编译 Dice-Server 打包"
 
 # docker 部署
+cd $working_dir
 docker-compose -f dice-prod.yml build
 judge "生成容器"
 docker-compose -f dice-prod.yml down

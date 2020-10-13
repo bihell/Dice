@@ -9,6 +9,7 @@
         <module>framework</module>
         <module>admin</module>
         <module>system</module>
+        <module>distribution</module>
     </modules>
     <groupId>com.bihell</groupId>
     <artifactId>Dice</artifactId>
@@ -407,15 +408,6 @@
         </resources>
 
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

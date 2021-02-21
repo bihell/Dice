@@ -8,8 +8,7 @@ services:
     environment:
       TZ: Asia/Shanghai
     ports:
-    - "80:80"
-    - "443:443"
+    - "8082:8082"
     volumes:
     - ~/.dice/logs/openresty:/usr/local/openresty/nginx/logs
     depends_on:

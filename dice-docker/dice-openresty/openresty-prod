@@ -11,8 +11,6 @@ COPY ./dice-docker/dice-openresty/lua/http_headers.lua /usr/local/openresty/lual
 COPY ./dice-admin/dist /usr/local/openresty/nginx/html/dice-admin
 
 COPY ./dice-docker/dice-openresty/data /data
-COPY ./dice-docker/dice-openresty/bigdata /usr/local/openresty/nginx/html/bigdata
-COPY ./dice-docker/dice-openresty/conf.d/bigdata.conf /etc/nginx/conf.d/bigdata.conf
 
 EXPOSE 80
 

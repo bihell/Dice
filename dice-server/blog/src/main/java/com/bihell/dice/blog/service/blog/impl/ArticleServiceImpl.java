@@ -3,13 +3,16 @@ package com.bihell.dice.blog.service.blog.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bihell.dice.blog.mapper.blogs.ArticleMapper;
 import com.bihell.dice.blog.mapper.blogs.CommentMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.Archive;
+import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
+import com.bihell.dice.framework.core.pagination.PageInfo;
+import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.shiro.cache.LoginRedisService;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.blog.enums.PostStatusEnum;
@@ -20,6 +23,7 @@ import com.bihell.dice.framework.common.service.RedisService;
 import com.bihell.dice.config.constant.DiceConsts;
 import com.bihell.dice.framework.util.DiceUtil;
 import com.bihell.dice.blog.utils.Types;
+import com.bihell.dice.blog.param.ArticlePageParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +46,7 @@ import java.util.List;
 @Service("articlesService")
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
+public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     static final String ARTICLE_CACHE_NAME = "articles";
 
@@ -111,28 +115,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
     }
 
-    /**
-     * 分页查询后端文章
-     *
-     * @param current 当前页面
-     * @param limit   每页数量
-     * @param query   查询条件
-     * @return Page<Article>
-     */
     @Override
-    public IPage<Article> getAdminArticles(Integer current, Integer limit, Article query) {
-        Page<Article> page = new Page<>(current, limit);
+    public Paging<Article> getArticlePageList(ArticlePageParam articlePageParam) throws Exception {
+        Page<Article> page = new PageInfo<>(articlePageParam, OrderItem.desc(getLambdaColumn(Article::getUpdateTime)));
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
                 .eq(Article::getType, Types.POST)
-                .eq(!StringUtils.isEmpty(query.getStatus()), Article::getStatus, query.getStatus())
-                .eq(!StringUtils.isEmpty(query.getPriority()), Article::getPriority, query.getPriority())
-                .like(!StringUtils.isEmpty(query.getTitle()), Article::getTitle, query.getTitle())
-                .like(!StringUtils.isEmpty(query.getTags()), Article::getTags, query.getTags())
-                .like(!StringUtils.isEmpty(query.getCategory()), Article::getCategory, query.getCategory())
-                .like(!StringUtils.isEmpty(query.getContent()), Article::getContent, query.getContent())
-                .orderByDesc(Article::getCreateTime);
-        return articleMapper.selectPage(page, wrapper);
+                .eq(!StringUtils.isEmpty(articlePageParam.getStatus()), Article::getStatus, articlePageParam.getStatus())
+                .eq(!StringUtils.isEmpty(articlePageParam.getPriority()), Article::getPriority, articlePageParam.getPriority())
+                .like(!StringUtils.isEmpty(articlePageParam.getTitle()), Article::getTitle, articlePageParam.getTitle())
+                .like(!StringUtils.isEmpty(articlePageParam.getContent()), Article::getContent, articlePageParam.getContent());
+        IPage<Article> iPage = articleMapper.selectPage(page, wrapper);
+        return new Paging<>(iPage);
     }
 
     /**
@@ -173,9 +167,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
 
         Integer id = article.getId();
+
         // 存储分类和标签
-        metasService.saveOrRemoveMetas(article.getCategory(), Types.CATEGORY, id);
-        metasService.saveOrRemoveMetas(article.getTags(), Types.TAG, id);
+        if (article.getCategory() != null) {
+            metasService.saveOrRemoveMetas(article.getCategory(), Types.CATEGORY, id);
+        }
+        if (article.getTags() != null) {
+            metasService.saveOrRemoveMetas(article.getTags(), Types.TAG, id);
+        }
+
         return id;
     }
 
@@ -279,21 +279,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     /**
      * 分页查询后端自定义页面
-     *
-     * @param current 当前页面
-     * @param limit   每页数量
-     * @return Page<Article>
+     * @param articlePageParam
+     * @return
      */
     @Override
-    public IPage<Article> getAdminPages(Integer current, Integer limit) {
+    public Paging<Article> getAdminPages(ArticlePageParam articlePageParam) {
 
-        Page<Article> page = new Page<>(current, limit);
+        Page<Article> page = new PageInfo<>(articlePageParam, OrderItem.desc(getLambdaColumn(Article::getUpdateTime)));
 
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
                 .eq(Article::getType, Types.PAGE);
-
-        return articleMapper.selectPage(page, wrapper);
+        IPage<Article> iPage = articleMapper.selectPage(page, wrapper);
+        return new Paging<>(iPage);
     }
 
     /**

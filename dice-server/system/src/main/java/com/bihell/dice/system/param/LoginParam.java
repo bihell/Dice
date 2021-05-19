@@ -9,7 +9,8 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 登录参数
- **/
+ *
+ * @author haseochen*/
 @Data
 @ApiModel("登录参数")
 public class LoginParam implements LoginUsername {

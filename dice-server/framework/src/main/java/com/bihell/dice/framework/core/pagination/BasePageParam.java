@@ -1,6 +1,8 @@
 package com.bihell.dice.framework.core.pagination;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.bihell.dice.config.constant.CommonConstant;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,7 +10,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 查询参数 todo
+ * 查询参数
+ * @author haseochen
  */
 @Data
 @ApiModel("查询参数对象")
@@ -16,6 +19,8 @@ public abstract class BasePageParam implements Serializable {
     private static final long serialVersionUID = -3263921252635611410L;
 
     @ApiModelProperty(value = "页码,默认为1", example = "1")
+    @JSONField(name = CommonConstant.PAGE_INDEX_NAME)
+    @JsonProperty(CommonConstant.PAGE_INDEX_NAME)
     private Long pageIndex = CommonConstant.DEFAULT_PAGE_INDEX;
 
     @ApiModelProperty(value = "页大小,默认为10", example = "10")

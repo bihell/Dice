@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.system.entity.AuthApi;
-import com.bihell.dice.system.param.QueryParam;
+import com.bihell.dice.system.param.ApiPageParam;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -14,11 +14,11 @@ import org.apache.ibatis.annotations.Param;
 public interface AuthApiMapper extends BaseMapper<AuthApi> {
 
     /**
-     * 查询 Api 列表
+     * 获取 Api 列表
      * @param page
-     * @param queryParam
+     * @param apiPageParam
      * @return
      */
-    IPage<AuthApi> queryByParam(@Param("pg") Page<AuthApi> page, @Param("queryParam") QueryParam queryParam);
+    IPage<AuthApi> queryByParam(@Param("pg") Page<AuthApi> page, @Param("queryParam") ApiPageParam apiPageParam);
 
 }

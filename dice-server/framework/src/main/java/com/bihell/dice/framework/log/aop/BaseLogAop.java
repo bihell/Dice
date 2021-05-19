@@ -888,7 +888,7 @@ public abstract class BaseLogAop {
                     sysLoginLog.setSuccess(apiResult.isSuccess()).setCode(apiResult.getCode());
                     if (apiResult.isSuccess()) {
                         if (LOGIN_TYPE == type) {
-                            Object object = apiResult.getData();
+                            Object object = apiResult.getResult();
                             if (object != null && object instanceof LoginToken) {
                                 LoginToken loginToken = (LoginToken) object;
                                 String token = loginToken.getToken();

@@ -3,14 +3,19 @@ package com.bihell.dice.blog.service.blog.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.blog.mapper.blogs.CommentMapper;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.CommentDto;
+import com.bihell.dice.blog.param.CommentPageParam;
 import com.bihell.dice.framework.common.exception.TipException;
 import com.bihell.dice.blog.service.blog.CommentService;
 import com.bihell.dice.config.constant.DiceConsts;
+import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
+import com.bihell.dice.framework.core.pagination.PageInfo;
+import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.util.DiceUtil;
 import com.bihell.dice.blog.utils.Types;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +38,7 @@ import org.springframework.util.StringUtils;
 @Service("commentsService")
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> implements CommentService {
 
     private static final String COMMENT_CACHE_NAME = "comments";
 
@@ -43,10 +48,11 @@ public class CommentServiceImpl implements CommentService {
      * 保存评论
      *
      * @param comment 评论entity
+     * @return
      */
     @Override
     @CacheEvict(value = {COMMENT_CACHE_NAME, ArticleServiceImpl.ARTICLE_CACHE_NAME}, allEntries = true, beforeInvocation = true)
-    public void save(Comment comment) {
+    public boolean save(Comment comment) {
         if (null == comment) {
             throw new TipException("评论对象为空");
         }
@@ -79,6 +85,7 @@ public class CommentServiceImpl implements CommentService {
         // 增加文章的评论数
         article.setCommentCount(article.getCommentCount() + 1);
         article.updateById();
+        return false;
     }
 
     /**
@@ -108,28 +115,19 @@ public class CommentServiceImpl implements CommentService {
         return result;
     }
 
-    /**
-     * 获取文章下的评论
-     *
-     * @param current 第几页
-     * @param limit   每页数量
-     * @return Page<Comment>
-     */
     @Override
-    public IPage<Comment> getAdminComments(Integer current, Integer limit) {
-
-        Page<Comment> page = new Page<>(current, limit);
+    public Paging<Comment> getCommentPageList(CommentPageParam commentPageParam) {
+        Page<Comment> page = new PageInfo<>(commentPageParam, OrderItem.desc(getLambdaColumn(Comment::getCreated)));
 
         LambdaQueryWrapper<Comment> wrapper = new QueryWrapper<Comment>().lambda()
                 .eq(Comment::getStatus, Types.COMMENT_STATUS_NORMAL);
-        IPage<Comment> result = commentMapper.selectPage(page, wrapper);
 
+        IPage<Comment> result = commentMapper.selectPage(page, wrapper);
         result.getRecords().forEach(comments -> {
             String content = DiceUtil.contentTransform(comments.getContent(), false, true);
             comments.setContent(content);
         });
-
-        return result;
+        return new Paging<>(result);
     }
 
     /**
@@ -221,7 +219,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     @Cacheable(value = COMMENT_CACHE_NAME, key = "'comment_count'")
-    public Integer count() {
+    public int count() {
         return commentMapper.selectCount(new QueryWrapper<Comment>().lambda().eq(Comment::getStatus, Types.COMMENT_STATUS_NORMAL));
     }
 

@@ -7,11 +7,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * 可排序查询参数对象 todo
+ * 可排序查询参数对象
+ * @author haseochen
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -21,6 +23,12 @@ public abstract class BasePageOrderParam extends BasePageParam {
 
     @ApiModelProperty("排序")
     private List<OrderItem> pageSorts;
+
+    @ApiModelProperty("排序的字段")
+    private String field;
+
+    @ApiModelProperty("字段排序设置")
+    private String order;
 
     public void defaultPageSort(OrderItem orderItem) {
         this.defaultPageSorts(Arrays.asList(orderItem));

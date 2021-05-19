@@ -1,9 +1,17 @@
 package com.bihell.dice.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.framework.common.exception.TipException;
+import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
+import com.bihell.dice.framework.core.pagination.PageInfo;
+import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.system.entity.*;
 import com.bihell.dice.system.mapper.AuthItemMapper;
+import com.bihell.dice.system.mapper.AuthRoleMapper;
+import com.bihell.dice.system.param.RolePageParam;
 import com.bihell.dice.system.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,15 +33,16 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class AuthRoleServiceImpl implements AuthRoleService {
+public class AuthRoleServiceImpl extends BaseServiceImpl<AuthRoleMapper,AuthRole> implements AuthRoleService {
     private final AuthItemMapper authItemMapper;
     private final AuthRelRoleApiService authRelRoleApiService;
     private final AuthRelRoleContentService authRelRoleContentService;
     private final AuthRelRoleUserService authRelRoleUserService;
     private final AuthRelRoleItemService authRelRoleItemService;
+    private final AuthRoleMapper authRoleMapper;
 
     @Override
-    public AuthRole save(AuthRole authRole) {
+    public AuthRole saveRole(AuthRole authRole) {
 
         if (authRole.selectCount(new QueryWrapper<AuthRole>().lambda()
                 .eq(AuthRole::getRoleName, authRole.getRoleName())
@@ -117,5 +126,12 @@ public class AuthRoleServiceImpl implements AuthRoleService {
                     .collect(Collectors.toList());
             authRelRoleItemService.saveBatch(authRelRoleItemList);
         }
+    }
+
+    @Override
+    public Paging<AuthRole> getRolePageList(RolePageParam rolePageParam) {
+        Page<AuthRole> page = new PageInfo<>(rolePageParam, OrderItem.desc(getLambdaColumn(AuthRole::getUpdateTime)));
+        IPage<AuthRole> iPage = authRoleMapper.queryByParam(page,rolePageParam);
+        return new Paging(iPage);
     }
 }

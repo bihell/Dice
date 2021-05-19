@@ -6,32 +6,32 @@ package com.bihell.dice.config.constant;
 public interface CommonConstant {
 
     /**
-     * 默认页码为1 todo
+     * 默认页码为1
      */
     Long DEFAULT_PAGE_INDEX = 1L;
 
     /**
-     * 默认页大小为10 todo
+     * 默认页大小为10
      */
     Long DEFAULT_PAGE_SIZE = 10L;
 
     /**
-     * 分页总行数名称 todo
+     * 分页总行数名称
      */
     String PAGE_TOTAL_NAME = "total";
 
     /**
-     * 分页数据列表名称 todo
+     * 分页数据列表名称
      */
-    String PAGE_RECORDS_NAME = "records";
+    String PAGE_RECORDS_NAME = "items";
 
     /**
-     * 分页当前页码名称 todo
+     * 分页当前页码名称
      */
-    String PAGE_INDEX_NAME = "pageIndex";
+    String PAGE_INDEX_NAME = "page";
 
     /**
-     * 分页当前页大小名称 todo
+     * 分页当前页大小名称
      */
     String PAGE_SIZE_NAME = "pageSize";
 

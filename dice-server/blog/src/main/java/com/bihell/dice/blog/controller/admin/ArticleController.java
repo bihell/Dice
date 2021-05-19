@@ -1,19 +1,21 @@
 package com.bihell.dice.blog.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.framework.common.api.ApiCode;
 import com.bihell.dice.framework.common.api.ApiResult;
+import com.bihell.dice.framework.core.pagination.Paging;
+import com.bihell.dice.framework.log.annotation.OperationLog;
+import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.blog.model.blog.Article;
-import com.bihell.dice.framework.core.pagination.Pagination;
-import com.bihell.dice.blog.model.params.ArticleParam;
 import com.bihell.dice.blog.service.blog.ArticleService;
-import com.bihell.dice.config.constant.DiceConsts;
 import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.blog.utils.Types;
+import com.bihell.dice.blog.param.ArticlePageParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,17 +34,14 @@ public class ArticleController {
     private final ArticleService articleService;
 
     /**
-     * 文章信息列表
-     *
-     * @param pageNum  第几页
-     * @param pageSize 每页数量
-     * @return {@see Pagination<Article>}
+     * 文章分页列表
      */
-    @GetMapping
-    public RestResponse index(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
-                              @RequestParam(required = false, defaultValue = DiceConsts.PAGE_SIZE) Integer pageSize, Article articleParam) {
-        IPage<Article> articles = articleService.getAdminArticles(pageNum, pageSize, articleParam);
-        return RestResponse.ok(new Pagination<Article>(articles));
+    @PostMapping("/getPageList")
+    @OperationLog(name = "文章分页列表", type = OperationLogType.PAGE)
+    @ApiOperation(value = "文章分页列表", response = Article.class)
+    public ApiResult<Paging<Article>> getArticlePageList(@Validated @RequestBody ArticlePageParam articlePageParam) throws Exception {
+        Paging<Article> paging = articleService.getArticlePageList(articlePageParam);
+        return ApiResult.ok(paging);
     }
 
     /**
@@ -52,10 +51,10 @@ public class ArticleController {
      * @return {@see Article}
      */
     @GetMapping("{id}")
-    public ApiResult<Article> showArticle(@PathVariable Integer id) {
+    public ApiResult<Article> getArticle(@PathVariable Integer id) {
         Article article = articleService.getAdminArticle(id);
         if (null == article) {
-            return  ApiResult.fail(ApiCode.NOT_FOUND,null);
+            return ApiResult.fail(ApiCode.NOT_FOUND, null);
         }
         return ApiResult.ok(article);
     }
@@ -64,25 +63,21 @@ public class ArticleController {
      * 新建或修改文章
      */
     @PostMapping
-    public RestResponse saveArticle(@Valid @RequestBody ArticleParam articleParam) {
-        articleParam.setCreator(LoginUtil.getUserId());
-        Integer articleId = articleService.saveArticle(articleParam);
-        return RestResponse.ok(articleId);
+    public ApiResult<Integer> saveArticle(@Valid @RequestBody Article article) {
+        article.setCreator(LoginUtil.getUserId());
+        Integer articleId = articleService.saveArticle(article);
+        return ApiResult.ok(articleId);
     }
 
     /**
      * 删除文章
-     *
      * @param id 文章id
-     * @return {@see RestResponse.ok()}
+     * @return ApiResult<Boolean>
      */
     @DeleteMapping("{id}")
-    public RestResponse deleteArticle(@PathVariable Integer id) {
-        if (articleService.deleteArticle(id)) {
-            return RestResponse.ok("删除文章成功");
-        } else {
-            return RestResponse.fail();
-        }
+    public ApiResult<Boolean> deleteArticle(@PathVariable Integer id) {
+        boolean flag = articleService.deleteArticle(id);
+        return ApiResult.result(flag);
     }
 
     /**

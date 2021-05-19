@@ -43,7 +43,7 @@ public class ApiResult<T> implements Serializable {
     /**
      * 响应数据
      */
-    private T data;
+    private T result;
 
     /**
      * 响应时间
@@ -83,7 +83,7 @@ public class ApiResult<T> implements Serializable {
         return (ApiResult<T>) ApiResult.builder()
                 .code(apiCode.getCode())
                 .message(message)
-                .data(data)
+                .result(data)
                 .success(success)
                 .time(new Date())
                 .build();

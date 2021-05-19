@@ -1,8 +1,0 @@
-FROM openjdk:9
-
-LABEL MAINTAINER="tpxcer@outlook.com"
-
-ENV LANG C.UTF-8
-
-# 拷贝dice-server jar包
-COPY ./dice-server/bootstrap/target/bootstrap-2.0.jar /app/dice.jar

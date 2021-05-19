@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.system.entity.AuthRole;
 import com.bihell.dice.system.param.QueryParam;
+import com.bihell.dice.system.param.RolePageParam;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -15,13 +16,12 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface AuthRoleMapper extends BaseMapper<AuthRole> {
 
-
     /**
      * 查询 role 列表
      * @param page
-     * @param queryParam
+     * @param rolePageParam
      * @return
      */
-    IPage<AuthRole> queryByParam(@Param("pg") Page<AuthRole> page, @Param("queryParam") QueryParam queryParam);
+    IPage<AuthRole> queryByParam(@Param("pg") Page<AuthRole> page, @Param("queryParam") RolePageParam rolePageParam);
 
 }

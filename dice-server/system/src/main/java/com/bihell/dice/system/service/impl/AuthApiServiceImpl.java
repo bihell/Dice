@@ -1,7 +1,14 @@
 package com.bihell.dice.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
+import com.bihell.dice.framework.core.pagination.PageInfo;
+import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.system.entity.AuthApi;
 import com.bihell.dice.system.mapper.AuthApiMapper;
+import com.bihell.dice.system.param.ApiPageParam;
 import com.bihell.dice.system.service.AuthApiService;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
@@ -21,7 +28,7 @@ import java.util.Map;
 @Service
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class AuthApiServiceImpl implements AuthApiService {
+public class AuthApiServiceImpl extends BaseServiceImpl<AuthApiMapper, AuthApi> implements AuthApiService {
 
     private final AuthApiMapper authApiMapper;
 
@@ -44,5 +51,12 @@ public class AuthApiServiceImpl implements AuthApiService {
         Preconditions.checkArgument(authApiMapper.selectByMap(param).size() < 2, "Api 地址重复");
         authApi.updateById();
         return authApi;
+    }
+
+    @Override
+    public Paging<AuthApi> getApiPageList(ApiPageParam apiPageParam) {
+        Page<AuthApi> page = new PageInfo<>(apiPageParam, OrderItem.desc(getLambdaColumn(AuthApi::getUpdateTime)));
+        IPage<AuthApi> iPage = authApiMapper.queryByParam(page,apiPageParam);
+        return new Paging(iPage);
     }
 }

@@ -14,7 +14,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 分页结果对象 todo
+ * 分页结果对象
+ * @author haseochen
  */
 
 @Slf4j

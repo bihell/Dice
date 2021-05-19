@@ -1,10 +1,15 @@
 package com.bihell.dice.blog.controller.admin;
 
+import com.bihell.dice.blog.model.blog.Meta;
+import com.bihell.dice.blog.model.dto.MetaDto;
 import com.bihell.dice.blog.service.blog.MetaService;
-import com.bihell.dice.framework.common.api.RestResponse;
+import com.bihell.dice.framework.common.api.ApiResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 属性(标签和分类)管理 Controller
@@ -19,61 +24,45 @@ public class MetaController {
 
     private final MetaService metaService;
 
-    /**
-     * 获取所有属性
-     *
-     * @return {@see List<MetaDto>}
-     */
-    @GetMapping
-    public RestResponse getAll(@RequestParam String type,
-                               @RequestParam(required = false) String title,
-                               @RequestParam(required = false) String snippetFileContent) {
-        return RestResponse.ok(metaService.getMetaDtos(type, title, snippetFileContent));
+    @GetMapping("/getList")
+    public ApiResult<List<MetaDto>> getMetaList(@RequestParam String type,
+                                                @RequestParam(required = false) String title,
+                                                @RequestParam(required = false) String snippetFileContent) {
+        return ApiResult.ok(metaService.getMetaDtos(type, title, snippetFileContent));
     }
 
     /**
      * 根据name删除分类
-     *
-     * @param name 属性名
-     * @param type 属性类型 {@see Types#CATEGORY},{@see Types#TAG}
-     * @return {@see RestResponse.ok()}
+     * @param meta
+     * @return
      */
     @DeleteMapping
-    public RestResponse deleteMeta(@RequestParam String name, @RequestParam String type) {
-        if (metaService.deleteMeta(name, type)) {
-            return RestResponse.ok();
-        }
-        return RestResponse.fail();
+    public ApiResult<Boolean>  deleteMeta(@Valid @RequestBody Meta meta) {
+        boolean flag=metaService.deleteMeta(meta.getName(), meta.getType());
+        return ApiResult.result(flag);
     }
 
     /**
      * 添加一个分类
      *
-     * @param name 属性名
-     * @param type 属性类型 {@see Types#CATEGORY},{@see Types#TAG}
-     * @return {@see RestResponse.ok()}
+     * @param meta
+     * @return
      */
     @PostMapping
-    public RestResponse saveMeta(@RequestParam String name, @RequestParam String type) {
-        if (metaService.saveMeta(name, type)) {
-            return RestResponse.ok();
-        }
-        return RestResponse.fail();
+    public ApiResult<Boolean> saveMeta(@Valid @RequestBody Meta meta) {
+        boolean flag = metaService.saveMeta(meta.getName(), meta.getType());
+        return ApiResult.result(flag);
     }
 
     /**
      * 根据id修改分类
      *
-     * @param id   属性id
-     * @param name 新属性名
-     * @param type 新属性类型
+     * @param meta
      * @return
      */
     @PostMapping("{id}")
-    public RestResponse updateMeta(@PathVariable Integer id, @RequestParam String name, @RequestParam String type) {
-        if (metaService.updateMeta(id, name, type)) {
-            return RestResponse.ok();
-        }
-        return RestResponse.fail();
+    public ApiResult<Boolean> updateMeta(@Valid @RequestBody Meta meta) {
+        boolean flag = metaService.updateMeta(meta.getId(), meta.getName(), meta.getType());
+        return ApiResult.result(flag);
     }
 }

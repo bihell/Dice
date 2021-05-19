@@ -18,7 +18,6 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
         boolean hasSetter = metaObject.hasSetter("createTime");
         if (hasSetter) {
             setFieldValByName("createTime", LocalDateTime.now(), metaObject);
-
         }
         Object val = getFieldValByName("updateTime", metaObject);
         if (val == null) {

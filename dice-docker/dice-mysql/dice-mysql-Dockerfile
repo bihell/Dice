@@ -1,8 +1,0 @@
-FROM mysql:8
-
-LABEL MAINTAINER="tpxcer@outlook.com"
-
-ENV LANG C.UTF-8
-
-# 拷贝初始化sql
-COPY ./dice-server/bootstrap/src/main/resources/init.sql /docker-entrypoint-initdb.d/init.sql

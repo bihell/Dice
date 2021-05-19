@@ -3,6 +3,7 @@ package com.bihell.dice.blog.mapper.blogs;
 import com.bihell.dice.blog.model.dto.MetaDto;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.blog.model.blog.Meta;
+import com.bihell.dice.blog.vo.MetaQueryVO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -25,6 +26,13 @@ public interface MetaMapper extends BaseMapper<Meta> {
     @Select("SELECT * FROM dice.meta WHERE type = #{type} AND id IN (SELECT m_id FROM dice.middle WHERE a_id = #{articleId})")
     List<Meta> selectByArticle(@Param("articleId") Integer articleId, @Param("type") String type);
 
+    /**
+     * 根据传入的类型获取meta列表
+     * @param type
+     * @return MetaQueryVO
+     */
+    @Select("SELECT name as label,id as value FROM dice.meta WHERE type = #{type}")
+    List<MetaQueryVO> selectByMetaType(@Param("type") String type);
 
     /**
      * 获取属性以及属性下的文章

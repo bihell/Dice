@@ -15,7 +15,12 @@
           <a href="/feed.xml">RSS订阅</a>
         </li>
         <li class="tab-item">
-          <a href="https://bigdata.bihell.com">大数据&利器</a>
+          <a href="https://bigdata.bihell.com">大数据</a>
+        </li>
+        <li class="tab-item">
+          <a href="https://bigdata.bihell.com/tools/liqi/soft/li-qi.html"
+            >利器</a
+          >
         </li>
       </ul>
       <div class="header-menu">

@@ -1,18 +1,23 @@
 package com.bihell.dice.system.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.framework.core.pagination.Pagination;
+import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.system.entity.*;
 import com.bihell.dice.system.mapper.*;
+import com.bihell.dice.system.param.ApiPageParam;
 import com.bihell.dice.system.param.QueryParam;
+import com.bihell.dice.system.param.RolePageParam;
+import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.*;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,9 +35,7 @@ public class AuthController {
     private final AuthItemMapper authItemMapper;
     private final AuthGroupService authGroupService;
     private final AuthItemService authItemService;
-    private final AuthApiMapper authApiMapper;
     private final AuthApiService authApiService;
-    private final AuthRoleMapper authRoleMapper;
     private final AuthContentMapper authContentMapper;
     private final AuthContentService authContentService;
     private final AuthRoleService authRoleService;
@@ -49,14 +52,10 @@ public class AuthController {
         return RestResponse.ok(user);
     }
 
-    /**
-     * 获取用户列表 todo 这里的QueryParam需要调整
-     */
-    @GetMapping("/user/list")
-    public RestResponse list(QueryParam queryParam) {
-
-        IPage<User> userList = userService.getUserList(queryParam);
-        return RestResponse.ok(new Pagination<User>(userList));
+    @PostMapping("/user/list")
+    public ApiResult<Paging<User>> list(@Validated @RequestBody UserPageParam userPageParam) {
+        Paging<User> paging = userService.getUserPageList(userPageParam);
+        return ApiResult.ok(paging);
     }
 
     /**
@@ -164,9 +163,10 @@ public class AuthController {
         return RestResponse.ok();
     }
 
-    @GetMapping("/api/list")
-    public RestResponse getApiList(QueryParam queryParam) {
-        return RestResponse.ok(new Pagination<AuthApi>(authApiMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
+    @PostMapping("/api/list")
+    public  ApiResult<Paging<AuthApi>> getApiList(@Validated @RequestBody ApiPageParam apiPageParam) {
+        Paging<AuthApi> paging = authApiService.getApiPageList(apiPageParam);
+        return ApiResult.ok(paging);
     }
 
     /**
@@ -242,12 +242,13 @@ public class AuthController {
 
     @PostMapping("/role/add")
     public RestResponse addRole(@RequestBody AuthRole authRole) {
-        return RestResponse.ok(authRoleService.save(authRole));
+        return RestResponse.ok(authRoleService.saveRole(authRole));
     }
 
-    @GetMapping("/role/list")
-    public RestResponse getRoleList(QueryParam queryParam) {
-        return RestResponse.ok(new Pagination<AuthRole>(authRoleMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
+    @PostMapping("/role/list")
+    public ApiResult<Paging<AuthRole>> getRoleList(@Validated @RequestBody RolePageParam rolePageParam) {
+        Paging<AuthRole> paging = authRoleService.getRolePageList(rolePageParam);
+        return ApiResult.ok(paging);
     }
 
     @GetMapping("/role/get")

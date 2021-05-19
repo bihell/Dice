@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.model.dto.Archive;
+import com.bihell.dice.framework.core.pagination.Paging;
+import com.bihell.dice.blog.param.ArticlePageParam;
 
 import java.util.List;
 
@@ -33,14 +35,19 @@ public interface ArticleService extends IService<Article> {
     Article getFrontArticle(Integer id,String token);
 
     /**
-     * 分页查询后端文章
-     *
-     * @param page  当前页面
-     * @param limit 每页数量
-     * @param query 查询条件
-     * @return Page<Article>
+     * 分页查询文章列表
+     * @param articlePageParam
+     * @return
+     * @throws Exception
      */
-    IPage<Article> getAdminArticles(Integer page, Integer limit, Article query);
+    Paging<Article> getArticlePageList(ArticlePageParam articlePageParam) throws Exception;
+
+    /**
+     * 分页查询后端自定义页面
+     * @param articlePageParam
+     * @return
+     */
+    Paging<Article> getAdminPages(ArticlePageParam articlePageParam);
 
     /**
      * 根据id获取后端文章
@@ -88,15 +95,6 @@ public interface ArticleService extends IService<Article> {
      * @return Article
      */
     Article getFrontPage(Integer id);
-
-    /**
-     * 分页查询后端自定义页面
-     *
-     * @param page  当前页面
-     * @param limit 每页数量
-     * @return Page<Article>
-     */
-    IPage<Article> getAdminPages(Integer page, Integer limit);
 
     /**
      * 根据id获取后端页面

@@ -32,7 +32,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-/** todo
+/**
+ * @author haseochen
  */
 @Configuration
 public class JacksonConfig implements WebMvcConfigurer {

@@ -2,8 +2,10 @@ package com.bihell.dice.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.system.entity.User;
 import com.bihell.dice.system.param.QueryParam;
+import com.bihell.dice.system.param.UserPageParam;
 
 /**
  * User Service 接口
@@ -29,11 +31,18 @@ public interface UserService extends IService<User> {
      */
     boolean resetUser(String oldUsername, String newUsername, String email);
 
-    /**
-     * 获取用户列表
-     * @return
-     */
-    IPage<User> getUserList(QueryParam queryParam);
+//    /**
+//     * 获取用户列表
+//     * @return
+//     */
+//    IPage<User> getUserList(QueryParam queryParam);
 
     void assignRole(User user);
+
+    /**
+     * 获取用户列表
+     * @param userPageParam
+     * @return
+     */
+    Paging<User> getUserPageList(UserPageParam userPageParam);
 }

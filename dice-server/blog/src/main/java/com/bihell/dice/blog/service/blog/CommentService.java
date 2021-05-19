@@ -3,7 +3,9 @@ package com.bihell.dice.blog.service.blog;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bihell.dice.blog.model.blog.Comment;
 import com.bihell.dice.blog.model.dto.CommentDto;
+import com.bihell.dice.blog.param.CommentPageParam;
 import com.bihell.dice.blog.utils.Types;
+import com.bihell.dice.framework.core.pagination.Paging;
 
 /**
  * 评论 Service 接口
@@ -17,7 +19,7 @@ public interface CommentService {
      *
      * @param comments 评论entity
      */
-    void save(Comment comments);
+    boolean save(Comment comments);
 
     /**
      * 获取文章下的评论
@@ -28,13 +30,14 @@ public interface CommentService {
      */
     IPage<Comment> getCommentsByArticleId(Integer current, Integer limit, Integer articleId);
 
+
     /**
-     * 获取文章下的评论
+     * 获取评论列表
      *
-     * @param limit 每页数量
-     * @return Page<Comment>
+     * @param commentPageParam
+     * @return Paging<Comment>
      */
-    IPage<Comment> getAdminComments(Integer current, Integer limit);
+    Paging<Comment> getCommentPageList(CommentPageParam commentPageParam);
 
     /**
      * 获取评论详情
@@ -65,5 +68,5 @@ public interface CommentService {
      *
      * @return 数量
      */
-    Integer count();
+    int count();
 }

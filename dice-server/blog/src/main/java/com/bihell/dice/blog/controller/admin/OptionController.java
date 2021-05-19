@@ -1,12 +1,13 @@
 package com.bihell.dice.blog.controller.admin;
 
 import com.bihell.dice.blog.service.blog.OptionService;
-import com.bihell.dice.framework.common.api.RestResponse;
+import com.bihell.dice.framework.common.api.ApiResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 /**
@@ -26,9 +27,9 @@ public class OptionController {
      *
      * @return Map
      */
-    @GetMapping("all")
-    public RestResponse getAllOptions() {
-        return RestResponse.ok(optionService.getAllOptionMap());
+    @GetMapping
+    public ApiResult<Map<String, String>> getAllOptions() {
+        return ApiResult.ok(optionService.getAllOptionMap());
     }
 
     /**
@@ -37,9 +38,10 @@ public class OptionController {
      * @param options 设置key-value
      * @return {@see RestResponse.ok()}
      */
-    @PostMapping("save")
-    public RestResponse saveAllOptions(@RequestParam Map<String, String> options) {
+    @PostMapping
+    public ApiResult<Boolean> saveAllOptions(@Valid @RequestBody Map<String, String> options) {
         optionService.save(options);
-        return RestResponse.ok();
+
+        return ApiResult.ok();
     }
 }

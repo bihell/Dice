@@ -88,9 +88,9 @@ public class DateUtil {
                         .toInstant());
     }
 
-    public static LocalDate convertToLocalDate(Date dateToConvert) {
-        return LocalDate.ofInstant(dateToConvert.toInstant(), ZoneId.systemDefault());
-    }
+//    public static LocalDate convertToLocalDate(Date dateToConvert) {
+//        return LocalDate.ofInstant(dateToConvert.toInstant(), ZoneId.systemDefault());
+//    }
 
     public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
         return LocalDateTime.ofInstant(

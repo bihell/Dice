@@ -1,5 +1,0 @@
-FROM redis:5.0.6
-
-LABEL MAINTAINER="tpxcer@outlook.com"
-
-ENV LANG C.UTF-8

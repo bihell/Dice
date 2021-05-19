@@ -8,8 +8,8 @@ export const actions = {
   },
   // 文章详情
   async getArticle({ commit }, params) {
-    const { data } = await api.getArticle(params.id, params.token)
-    commit('article/SET_DETAIL', data)
+    const { result } = await api.getArticle(params.id, params.token)
+    commit('article/SET_DETAIL', result)
   },
   // 文章列表
   async getArticles({ commit }, page) {
@@ -43,8 +43,8 @@ export const actions = {
   },
   // 自定义页面
   async getPage({ commit }, id) {
-    const { data } = await api.getPage(id)
-    commit('article/SET_PAGE', data)
+    const { result } = await api.getPage(id)
+    commit('article/SET_PAGE', result)
   },
   // 评论列表
   async getComments({ commit }, params) {

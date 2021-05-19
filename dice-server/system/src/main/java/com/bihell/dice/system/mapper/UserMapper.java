@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.system.entity.User;
 import com.bihell.dice.system.param.QueryParam;
+import com.bihell.dice.system.param.UserPageParam;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,6 +20,15 @@ import java.util.Map;
 public interface UserMapper extends BaseMapper<User> {
 
     IPage<User> queryByParam(@Param("pg") Page<User> page, @Param("queryParam") QueryParam queryParam);
+
+
+//    /**
+//     * 查询用户列表
+//     * @param page
+//     * @param userPageParam
+//     * @return
+//     */
+//    IPage<User> getUserPageList(@Param("page") Page page, @Param("param") UserPageParam userPageParam);
 
     @Insert("INSERT INTO USER(username, password) VALUES(#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})")
     int insertByMap(Map<String, Object> map);

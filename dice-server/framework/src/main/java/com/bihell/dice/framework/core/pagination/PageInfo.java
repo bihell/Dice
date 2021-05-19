@@ -7,19 +7,22 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * 自定义分页参数 todo
- **/
+ * 自定义分页参数
+ *
+ * @author haseochen
+ */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class PageInfo<T> extends Page<T> {
-	private static final long serialVersionUID = -2211095086394170578L;
+    private static final long serialVersionUID = -2211095086394170578L;
 
-	/**
+    /**
      * 分页参数
      */
     private BasePageParam pageParam;
@@ -117,10 +120,19 @@ public class PageInfo<T> extends Page<T> {
         super.setSize(pageParam.getPageSize());
         // 排序字段处理
         BasePageOrderParam basePageOrderParam = (BasePageOrderParam) pageParam;
+
         List<OrderItem> orderItems = basePageOrderParam.getPageSorts();
         if (CollectionUtils.isEmpty(orderItems)) {
-            setDefaultOrder(defaultOrderItem);
-            return;
+            if (basePageOrderParam.getField() == null || basePageOrderParam.getOrder() == null) {
+                setDefaultOrder(defaultOrderItem);
+                return;
+            } else {
+                OrderItem orderItem = new OrderItem();
+                orderItem.setColumn(basePageOrderParam.getField());
+                orderItem.setAsc("ascend".equals(basePageOrderParam.getOrder()));
+                orderItems = new ArrayList<>();
+                orderItems.add(orderItem);
+            }
         }
         if (orderMapping == null) {
             orderMapping = new OrderMapping(true);

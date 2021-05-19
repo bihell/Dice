@@ -37,7 +37,7 @@
 
       <ErrorAction v-if="getUseErrorHandle" :class="`${prefixCls}-action__item error-action`" />
 
-<!--      <Notify v-if="getShowNotice" :class="`${prefixCls}-action__item notify-item`" />-->
+      <Notify v-if="getShowNotice" :class="`${prefixCls}-action__item notify-item`" />
 
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
 
@@ -92,7 +92,7 @@
       UserDropDown,
       AppLocalePicker,
       FullScreen,
-      // Notify,
+      Notify,
       AppSearch,
       ErrorAction,
       SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue'), {
@@ -112,15 +112,11 @@
         getMenuWidth,
         getIsMixSidebar,
       } = useMenuSetting();
-      const {
-        getUseErrorHandle,
-        getShowSettingButton,
-        getSettingButtonPosition,
-      } = useRootSetting();
+      const { getUseErrorHandle, getShowSettingButton, getSettingButtonPosition } =
+        useRootSetting();
 
       const {
         getHeaderTheme,
-        getUseLockPage,
         getShowFullScreen,
         getShowNotice,
         getShowContent,
@@ -189,7 +185,6 @@
         getShowLocalePicker,
         getShowFullScreen,
         getShowNotice,
-        getUseLockPage,
         getUseErrorHandle,
         getLogoWidth,
         getIsMixSidebar,

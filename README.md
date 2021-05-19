@@ -123,10 +123,8 @@ npm install
 npm run dev
 ```
 
-> 1）项目中lua需要用到Http请求，因此你需要把对应的lua模块添加进来。可以从[lua-resty-http](https://github.com/ledgetech/lua-resty-http/tree/master/lib/resty) 下载`http.lua`和`http_headers.lua`。并放到`/usr/local/Cellar/openresty/1.15.8.3_1/lualib/resty`目录中。
+> 如果你的MySQL版本较新，可能会碰到无法连接的错误。可以重新设置一下账号权限，方式如下：
 
-> 2）如果你的MySQL版本较新，可能会碰到无法连接的错误。可以重新设置一下账号权限，方式如下：
->
 > ```
 > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'
 > flush privileges;

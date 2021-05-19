@@ -132,7 +132,7 @@ npm run dev
 > flush privileges;
 > ```
 
-#### 3.2.4 访问
+#### 2.2.4 访问
 
 `http://localhost:3000/` 为博客前端首页
 

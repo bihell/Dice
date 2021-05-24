@@ -38,13 +38,13 @@ export const useUserStore = defineStore({
     roleList: [],
   }),
   getters: {
-    getUserInfo(): UserInfo {
+    getUserInfo(_): UserInfo {
       return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
     },
-    getToken(): string {
+    getToken(_): string {
       return this.token || getAuthCache<string>(TOKEN_KEY);
     },
-    getRoleList(): RoleEnum[] {
+    getRoleList(_): RoleEnum[] {
       return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
   },
@@ -97,6 +97,7 @@ export const useUserStore = defineStore({
         userId: userId,
         username: 'Dice',
         realName: 'Dice Admin',
+        avatar: 'http://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
         desc: 'manager',
         password: '123456',
         token: 'fakeToken1',

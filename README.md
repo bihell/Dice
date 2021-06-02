@@ -74,6 +74,7 @@ brew services start redis
 #### 2.2.1 `dice-server` Java后台
 
 项目使用lombok插件，如果要在ide中调试要有lombok插件
+数据库初始语句:dice-server/bootstrap/src/main/resources/init.sql
 
 ##### 2.2.1.1 修改相应配置
 

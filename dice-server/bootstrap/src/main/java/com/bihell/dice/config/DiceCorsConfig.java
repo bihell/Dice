@@ -14,6 +14,7 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * 跨域配置
+ * @author haseochen
  */
 @Slf4j
 @Configuration

@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
         } else if (exception instanceof VerificationCodeException) {
             errorCode = ApiCode.VERIFICATION_CODE_EXCEPTION.getCode();
         } else {
-            errorCode = ApiCode.SPRING_BOOT_PLUS_EXCEPTION.getCode();
+            errorCode = ApiCode.DICE_EXCEPTION.getCode();
         }
         return new ApiResult<Boolean>()
                 .setCode(errorCode)

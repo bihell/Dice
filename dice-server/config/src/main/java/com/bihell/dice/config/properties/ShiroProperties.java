@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * Shiro配置映射类 todo
  *
- **/
+ *
+ * @author haseochen*/
 @Data
 @ConfigurationProperties(prefix = "dice.shiro")
 public class ShiroProperties {

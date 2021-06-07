@@ -10,7 +10,8 @@ import java.util.List;
 
 /**
  * 跨域属性配置
- **/
+ *
+ * @author haseochen*/
 @Data
 @Component
 @ConfigurationProperties(prefix = "dice.cors")

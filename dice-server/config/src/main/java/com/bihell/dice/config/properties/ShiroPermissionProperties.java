@@ -4,7 +4,8 @@ import lombok.Data;
 
 /**
  * Shiro权限配置映射类 todo
- **/
+ *
+ * @author haseochen*/
 @Data
 public class ShiroPermissionProperties {
 

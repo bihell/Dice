@@ -1,5 +1,9 @@
 import { defHttp } from '/@/utils/http/axios';
-import { ArticleListParams, ArticleListGetResultModel, PostItem } from './model/blogModel';
+import {
+  ArticleListParams,
+  ArticleListGetResultModel,
+  PostItem,
+} from './model/blogModel';
 
 enum Api {
   ARTICLE_LIST = '/article/getPageList',

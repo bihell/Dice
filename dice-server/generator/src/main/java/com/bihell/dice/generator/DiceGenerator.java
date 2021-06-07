@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * dice代码生成器入口类
  **/
 @Component
-public class SpringBootPlusGenerator {
+public class DiceGenerator {
 
     /**
      * 生成代码
@@ -24,14 +24,16 @@ public class SpringBootPlusGenerator {
 
         // 设置基本信息
         generatorProperties
-                .setMavenModuleName("example")
-                .setParentPackage("com.example")
-                .setModuleName("foobar")
+                .setMavenModuleName("nav")
+                .setParentPackage("com.bihell")
+                .setModuleName("nav")
                 .setAuthor("tpxcer")
                 .setFileOverride(true);
 
         // 设置表信息
-        generatorProperties.addTable("foo_bar","id");
+        generatorProperties.addTable("nav_detail","id");
+        generatorProperties.addTable("nav_type","id");
+
         // 设置表前缀
         // generatorProperties.setTablePrefix(Arrays.asList("tb_"));
 
@@ -41,7 +43,7 @@ public class SpringBootPlusGenerator {
                 .setUsername("root")
                 .setPassword("root")
                 .setDriverName("com.mysql.jdbc.Driver")
-                .setUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+                .setUrl("jdbc:mysql://localhost:3306/dice?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
 
         // 生成配置
         generatorProperties.getGeneratorConfig()

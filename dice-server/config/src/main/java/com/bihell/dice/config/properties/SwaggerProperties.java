@@ -10,7 +10,8 @@ import java.util.List;
 
 /**
  * Swagger配置属性
- **/
+ *
+ * @author haseochen*/
 @Data
 @Component
 @ConfigurationProperties(prefix = "dice.swagger")

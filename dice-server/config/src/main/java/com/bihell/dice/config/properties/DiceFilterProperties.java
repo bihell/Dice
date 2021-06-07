@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Filter配置属性 todo
- **/
+ *
+ * @author haseochen*/
 @Data
 @Component
 @ConfigurationProperties(prefix = "dice.filter")

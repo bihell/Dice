@@ -30,6 +30,10 @@
             <groupId>com.bihell</groupId>
             <artifactId>framework</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.bihell</groupId>
+            <artifactId>nav</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

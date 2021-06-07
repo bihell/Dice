@@ -10,7 +10,8 @@ import java.util.Set;
 
 /**
  * AOP配置属性 todo
- **/
+ *
+ * @author haseochen*/
 @Data
 @Component
 @ConfigurationProperties(prefix = "dice.aop")

@@ -2,6 +2,7 @@ package com.bihell.dice.config.constant;
 
 /**
  * 公共常量
+ * @author haseochen
  */
 public interface CommonConstant {
 

@@ -50,7 +50,7 @@ public enum ApiCode {
     /**
      * 系统处理异常
      **/
-    SPRING_BOOT_PLUS_EXCEPTION(5100, "系统处理异常"),
+    DICE_EXCEPTION(5100, "系统处理异常"),
     /**
      * 业务处理异常
      **/

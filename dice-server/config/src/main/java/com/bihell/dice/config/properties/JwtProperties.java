@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * JWT属性配置 todo
- **/
+ *
+ * @author haseochen*/
 @Data
 @Component
 @ConfigurationProperties(prefix = "dice.jwt")

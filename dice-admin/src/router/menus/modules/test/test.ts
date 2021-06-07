@@ -1,7 +1,7 @@
 import type { MenuModule } from '/@/router/types';
 
 const menu: MenuModule = {
-  orderNo: 99,
+  orderNo: 999,
   menu: {
     path: '/test',
     name: '测试',

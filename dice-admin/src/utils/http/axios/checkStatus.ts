@@ -20,7 +20,8 @@ export function checkStatus(status: number, msg: string): void {
     case 401:
       error(t('sys.api.errMsg401'));
       userStore.setToken(undefined);
-      userStore.setSessionTimeout(true);
+      // userStore.setSessionTimeout(true);
+      userStore.logout(true);
       break;
     case 403:
       error(t('sys.api.errMsg403'));

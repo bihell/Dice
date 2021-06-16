@@ -15,18 +15,20 @@ const nav: AppRouteModule = {
     {
       path: 'nav-type',
       name: 'NavType',
-      component: () => import('/@/views/nav/type/TypeList.vue'),
       meta: {
         title: '导航分类',
+        ignoreKeepAlive: true,
       },
+      component: () => import('/@/views/nav/type/index.vue'),
     },
     {
       path: 'nav-detail',
       name: 'NavDetail',
-      component: () => import('/@/views/nav/detail/DetailList.vue'),
       meta: {
-        title: '导航列表',
+        title: '导航清单',
+        ignoreKeepAlive: true,
       },
+      component: () => import('/@/views/nav/list/index.vue'),
     },
   ],
 };

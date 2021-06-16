@@ -9,6 +9,7 @@ export interface DrawerInstance {
 
 export interface ReturnMethods extends DrawerInstance {
   openDrawer: <T = any>(visible?: boolean, data?: T, openOnSet?: boolean) => void;
+  closeDrawer: () => void;
   getVisible?: ComputedRef<boolean>;
 }
 
@@ -181,7 +182,6 @@ export interface DrawerProps extends DrawerFooterProps {
   placement?: 'top' | 'right' | 'bottom' | 'left';
   afterVisibleChange?: (visible?: boolean) => void;
   keyboard?: boolean;
-
   /**
    * Specify a callback that will be called when a user clicks mask, close button or Cancel button.
    */

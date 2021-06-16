@@ -1,4 +1,4 @@
-import Icon from './Icon/index';
+import { Icon } from './Icon';
 import { Button } from './Button';
 import {
   // Need
@@ -43,12 +43,13 @@ import {
 
 import { App } from 'vue';
 
-const compList = [Icon, Button, AntButton.Group];
+const compList = [Icon, AntButton.Group];
 
 export function registerGlobComp(app: App) {
-  compList.forEach((comp: any) => {
+  compList.forEach((comp) => {
     app.component(comp.name || comp.displayName, comp);
   });
+
   app
     .use(Select)
     .use(Alert)
@@ -84,5 +85,6 @@ export function registerGlobComp(app: App) {
     .use(Row)
     .use(Col)
     .use(Spin)
-    .use(InputNumber);
+    .use(InputNumber)
+    .use(Button);
 }

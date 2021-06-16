@@ -1,9 +1,13 @@
 package com.bihell.dice.nav.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.nav.entity.NavType;
 import com.bihell.dice.nav.param.NavTypePageParam;
 import com.bihell.dice.framework.common.service.BaseService;
 import com.bihell.dice.framework.core.pagination.Paging;
+import com.bihell.dice.nav.vo.NavTypeVo;
+
+import java.util.List;
 
 /**
  *  服务类
@@ -11,7 +15,7 @@ import com.bihell.dice.framework.core.pagination.Paging;
  * @author tpxcer
  * @since 2021-06-04
  */
-public interface NavTypeService extends BaseService<NavType> {
+public interface NavTypeService extends IService<NavType> {
 
     /**
      * 保存
@@ -44,10 +48,22 @@ public interface NavTypeService extends BaseService<NavType> {
     /**
      * 获取分页对象
      *
-     * @param navDetailQueryParam
+     * @param
      * @return
      * @throws Exception
      */
     Paging<NavType> getNavTypePageList(NavTypePageParam navDetailPageParam) throws Exception;
+
+    /**
+     * 获取导航分类列表
+     * @return
+     */
+    List<NavType> getAllNavTypeList();
+
+    /**
+     * 获取导航分类树形列表
+     * @return
+     */
+    List<NavTypeVo> getNavTypeTree();
 
 }

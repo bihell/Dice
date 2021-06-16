@@ -3,6 +3,7 @@ package com.bihell.dice.nav.controller;
 import com.bihell.dice.nav.entity.NavType;
 import com.bihell.dice.nav.param.NavTypePageParam;
 import com.bihell.dice.nav.service.NavTypeService;
+import com.bihell.dice.nav.vo.NavTypeVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.bihell.dice.framework.common.controller.BaseController;
@@ -13,12 +14,15 @@ import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.framework.core.validator.groups.Add;
 import com.bihell.dice.framework.core.validator.groups.Update;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  *  控制器
@@ -89,5 +93,15 @@ public class NavTypeController extends BaseController {
         return ApiResult.ok(paging);
     }
 
+    /**
+     * 获取导航类型树形列表
+     */
+    @GetMapping("/getNavTypeTree")
+    @OperationLog(name = "获取导航类型树形列表", type = OperationLogType.OTHER_QUERY)
+    @ApiOperation(value = "获取导航类型树形列表", response = NavTypeVo.class)
+    public ApiResult<List<NavTypeVo>> getDepartmentTree() throws Exception {
+        List<NavTypeVo> treeVos = navDetailService.getNavTypeTree();
+        return ApiResult.ok(treeVos);
+    }
 }
 

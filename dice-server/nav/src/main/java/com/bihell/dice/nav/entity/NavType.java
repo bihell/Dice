@@ -3,18 +3,13 @@ package com.bihell.dice.nav.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.bihell.dice.framework.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import com.bihell.dice.framework.core.validator.groups.Update;
 
@@ -45,10 +40,6 @@ public class NavType extends Model<NavType> {
     @ApiModelProperty("修改人")
     private Integer modifier;
 
-    @ApiModelProperty("逻辑删除标识（0.未删除,1.已删除）")
-    @TableLogic
-    private Integer deleted;
-
     @ApiModelProperty("是否公开：1是，0否")
     private Integer isPublic;
 
@@ -65,5 +56,13 @@ public class NavType extends Model<NavType> {
 
     @ApiModelProperty("状态（1启用，0禁用）")
     private Integer status;
+
+    @ApiModelProperty("父id")
+    private Integer parentId;
+
+    @ApiModelProperty("排序")
+    private Integer sort;
+
+    private Integer level;
 
 }

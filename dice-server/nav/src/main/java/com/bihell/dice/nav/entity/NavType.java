@@ -43,11 +43,9 @@ public class NavType extends Model<NavType> {
     @ApiModelProperty("是否公开：1是，0否")
     private Integer isPublic;
 
-    @NotNull(message = "创建时间不能为空")
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
 
-    @NotNull(message = "更新时间不能为空")
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 

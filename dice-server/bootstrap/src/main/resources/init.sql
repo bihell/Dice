@@ -422,6 +422,27 @@ create index ip_address_ip_end_num_index
 create index ip_address_ip_start_num_index
     on ip_address (ip_start_num);
 
+create table nav_type
+(
+    id          int auto_increment comment '导航类型id'
+        primary key,
+    name        varchar(50)                         null comment '导航类型名称',
+    creator     int                                 null comment '创建人',
+    modifier    int                                 null comment '修改人',
+    is_public   int       default 1                 null comment '是否公开：1是，0否',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    icon        varchar(255)                        null comment '类型图标',
+    status      tinyint   default 1                 null comment '状态（1启用，0禁用）',
+    parent_id   int                                 null,
+    level       int                                 null,
+    sort        int                                 null
+)
+    charset = utf8mb4;
+
+create index nav_type_creator_index
+    on nav_type (creator);
+
 INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-09-29 15:28:07', '66666');
 INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-09-29 15:28:07', '66666');
 

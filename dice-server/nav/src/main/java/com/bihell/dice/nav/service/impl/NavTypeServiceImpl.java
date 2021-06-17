@@ -74,7 +74,6 @@ public class NavTypeServiceImpl extends BaseServiceImpl<NavTypeMapper, NavType> 
             throw new IllegalArgumentException("NavType列表不能为空");
         }
         List<NavTypeVo> list = NavTypeConvert.INSTANCE.listToTreeVoList(navTypeList);
-        System.out.println(list);
         List<NavTypeVo> treeVos = new ArrayList<>();
         for (NavTypeVo treeVo : list) {
             if (treeVo.getParentId() == null) {

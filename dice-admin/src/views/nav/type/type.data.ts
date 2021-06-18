@@ -2,6 +2,7 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
+import { Icon } from '/@/components/Icon';
 
 export const columns: BasicColumn[] = [
   {
@@ -11,6 +12,14 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
+    title: '图标',
+    dataIndex: 'icon',
+    width: 50,
+    customRender: ({ record }) => {
+      return h(Icon, { icon: record.icon });
+    },
+  },
+  {
     title: '排序',
     dataIndex: 'sort',
     width: 50,
@@ -18,7 +27,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
-    width: 80,
+    width: 50,
     customRender: ({ record }) => {
       const status = record.status;
       const enable = ~~status === 1;
@@ -31,7 +40,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'deptName',
+    field: 'navTypeName',
     label: '分类名称',
     component: 'Input',
     colProps: { span: 8 },
@@ -52,28 +61,27 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    field: 'deptName',
-    label: '部门名称',
+    field: 'name',
+    label: '分类名称',
     component: 'Input',
     required: true,
   },
   {
-    field: 'parentDept',
-    label: '上级部门',
+    field: 'parentId',
+    label: '上级分类',
     component: 'TreeSelect',
 
     componentProps: {
       replaceFields: {
-        title: 'deptName',
+        title: 'name',
         key: 'id',
         value: 'id',
       },
       getPopupContainer: () => document.body,
     },
-    required: true,
   },
   {
-    field: 'orderNo',
+    field: 'sort',
     label: '排序',
     component: 'InputNumber',
     required: true,
@@ -85,15 +93,15 @@ export const formSchema: FormSchema[] = [
     defaultValue: '0',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '启用', value: 1 },
+        { label: '停用', value: 0 },
       ],
     },
     required: true,
   },
   {
-    label: '备注',
-    field: 'remark',
-    component: 'InputTextArea',
+    label: '图标',
+    field: 'icon',
+    component: 'Input',
   },
 ];

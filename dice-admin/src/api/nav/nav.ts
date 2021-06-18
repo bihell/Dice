@@ -5,6 +5,7 @@ import { NavTypeItem } from '/@/api/nav/model/navModel';
 
 enum Api {
   NavTypeTreeList = '/nav/type/getNavTypeTree',
+  NavTypeAdd = '/nav/type/add',
 }
 
 export function apiNavTypeList(params: BasicPageParams) {
@@ -17,3 +18,5 @@ export function apiNavTypeList(params: BasicPageParams) {
 
 export const getNavTypeTreeList = (params?: NavTypeItem) =>
   defHttp.get({ url: Api.NavTypeTreeList, params });
+
+export const addNavType = (params: any) => defHttp.post({ url: Api.NavTypeAdd, params: params });

@@ -7,20 +7,24 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './type.data';
+  import { accountFormSchema } from './list.data';
+  import { getDeptList } from '/@/api/demo/system';
 
-  import { addNavType, getNavTypeTreeList } from '/@/api/nav/nav';
   export default defineComponent({
-    name: 'DeptModal',
+    name: 'AccountModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
+      const rowId = ref('');
 
-      const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+      const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
-        schemas: formSchema,
+        schemas: accountFormSchema,
         showActionButtonGroup: false,
+        actionColOptions: {
+          span: 23,
+        },
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
@@ -29,26 +33,35 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          rowId.value = data.record.id;
           setFieldsValue({
             ...data.record,
           });
         }
-        const treeData = await getNavTypeTreeList();
-        updateSchema({
-          field: 'parentId',
-          componentProps: { treeData },
-        });
+
+        const treeData = await getDeptList();
+        updateSchema([
+          {
+            field: 'pwd',
+            show: !unref(isUpdate),
+          },
+          {
+            field: 'dept',
+            componentProps: { treeData },
+          },
+        ]);
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增分类' : '编辑分类'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增账号' : '编辑账号'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          await addNavType(values);
+          // TODO custom api
+          console.log(values);
           closeModal();
-          emit('success');
+          emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {
           setModalProps({ confirmLoading: false });
         }

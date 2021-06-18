@@ -28,30 +28,24 @@
       BasicForm,
     },
     setup() {
-      const [
-        blogSetRegister,
-        { setFieldsValue: baseSetting, getFieldsValue: getBaseSetting },
-      ] = useForm({
-        labelWidth: 120,
-        schemas: blogSetSchemas,
-        showActionButtonGroup: false,
-      });
-      const [
-        seoSetRegister,
-        { setFieldsValue: seoSetting, getFieldsValue: getSeoSetting },
-      ] = useForm({
-        labelWidth: 500,
-        schemas: seoSetSchemas,
-        showActionButtonGroup: false,
-      });
-      const [
-        mailSetRegister,
-        { setFieldsValue: mailSetting, getFieldsValue: getMailSetting },
-      ] = useForm({
-        labelWidth: 500,
-        schemas: mailSetSchemas,
-        showActionButtonGroup: false,
-      });
+      const [blogSetRegister, { setFieldsValue: baseSetting, getFieldsValue: getBaseSetting }] =
+        useForm({
+          labelWidth: 120,
+          schemas: blogSetSchemas,
+          showActionButtonGroup: false,
+        });
+      const [seoSetRegister, { setFieldsValue: seoSetting, getFieldsValue: getSeoSetting }] =
+        useForm({
+          labelWidth: 500,
+          schemas: seoSetSchemas,
+          showActionButtonGroup: false,
+        });
+      const [mailSetRegister, { setFieldsValue: mailSetting, getFieldsValue: getMailSetting }] =
+        useForm({
+          labelWidth: 500,
+          schemas: mailSetSchemas,
+          showActionButtonGroup: false,
+        });
 
       onMounted(async () => {
         await store.fetchBlogSetting();

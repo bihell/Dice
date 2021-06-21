@@ -1,3 +1,4 @@
+import type { App } from 'vue';
 import { Icon } from './Icon';
 import { Button } from './Button';
 import {
@@ -40,8 +41,6 @@ import {
   Spin,
   InputNumber,
 } from 'ant-design-vue';
-
-import { App } from 'vue';
 
 const compList = [Icon, AntButton.Group];
 

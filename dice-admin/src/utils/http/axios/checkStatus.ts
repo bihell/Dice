@@ -1,14 +1,16 @@
-import type { ErrorMessageMode } from './types';
-
+import type { ErrorMessageMode } from '/#/axios';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
 // import router from '/@/router';
 // import { PageEnum } from '/@/enums/pageEnum';
 import { useUserStoreWidthOut } from '/@/store/modules/user';
+import projectSetting from '/@/settings/projectSetting';
+import { SessionTimeoutProcessingEnum } from '/@/enums/appEnum';
 
 const { createMessage, createErrorModal } = useMessage();
-
 const error = createMessage.error!;
+const stp = projectSetting.sessionTimeoutProcessing;
+
 export function checkStatus(
   status: number,
   msg: string,
@@ -27,8 +29,12 @@ export function checkStatus(
     // Return to the current page after successful login. This step needs to be operated on the login page.
     case 401:
       errMessage = t('sys.api.errMsg401');
-      userStore.setToken(undefined);
-      userStore.setSessionTimeout(true);
+      if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
+        userStore.setToken(undefined);
+        userStore.setSessionTimeout(true);
+      } else {
+        userStore.logout(true);
+      }
       break;
     case 403:
       errMessage = t('sys.api.errMsg403');
@@ -68,7 +74,7 @@ export function checkStatus(
     if (errorMessageMode === 'modal') {
       createErrorModal({ title: t('sys.api.errorTip'), content: errMessage });
     } else if (errorMessageMode === 'message') {
-      error(errMessage);
+      error({ content: errMessage, key: `global_error_message_status_${status}` });
     }
   }
 }

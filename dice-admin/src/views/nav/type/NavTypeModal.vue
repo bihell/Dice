@@ -9,13 +9,14 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './type.data';
 
-  import { addNavType, getNavTypeTreeList } from '/@/api/nav/nav';
+  import { addNavType, updateNavType, getNavTypeTreeList } from '/@/api/nav/nav';
   export default defineComponent({
     name: 'DeptModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
+      const id = ref(null);
 
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 100,
@@ -32,6 +33,7 @@
           setFieldsValue({
             ...data.record,
           });
+          id.value = data.record.id;
         }
         const treeData = await getNavTypeTreeList();
         updateSchema({
@@ -46,7 +48,12 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          await addNavType(values);
+          if (isUpdate.value) {
+            values.id = id.value;
+            await updateNavType(values);
+          } else {
+            await addNavType(values);
+          }
           closeModal();
           emit('success');
         } finally {

@@ -30,7 +30,7 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getNavTypeTreeList } from '/@/api/nav/nav';
+  import { getNavTypeTreeList, delNavType } from '/@/api/nav/nav';
 
   import { useModal } from '/@/components/Modal';
   import DeptModal from './NavTypeModal.vue';
@@ -80,7 +80,8 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
+        delNavType(record);
+        reload();
       }
 
       function handleSuccess() {

@@ -9,9 +9,10 @@ import java.util.Set;
 
 /**
  * <p>
- * 登录用户对象，响应给前端 todo
+ * 登录用户对象，响应给前端
  * </p>
- **/
+ *
+ * @author haseochen*/
 @Data
 @Accessors(chain = true)
 public class LoginSysUserVo implements Serializable {

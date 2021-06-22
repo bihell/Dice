@@ -44,8 +44,8 @@ public class NavTypeController extends BaseController {
     @PostMapping("/add")
     @OperationLog(name = "添加", type = OperationLogType.ADD)
     @ApiOperation(value = "添加", response = ApiResult.class)
-    public ApiResult<Boolean> addNavType(@Validated(Add.class) @RequestBody NavType navDetail) throws Exception {
-        boolean flag = navDetailService.saveNavType(navDetail);
+    public ApiResult<Boolean> addNavType(@Validated(Add.class) @RequestBody NavType navType) throws Exception {
+        boolean flag = navDetailService.saveNavType(navType);
         return ApiResult.result(flag);
     }
 
@@ -55,8 +55,8 @@ public class NavTypeController extends BaseController {
     @PostMapping("/update")
     @OperationLog(name = "修改", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改", response = ApiResult.class)
-    public ApiResult<Boolean> updateNavType(@Validated(Update.class) @RequestBody NavType navDetail) throws Exception {
-        boolean flag = navDetailService.updateNavType(navDetail);
+    public ApiResult<Boolean> updateNavType(@Validated(Update.class) @RequestBody NavType navType) throws Exception {
+        boolean flag = navDetailService.updateNavType(navType);
         return ApiResult.result(flag);
     }
 

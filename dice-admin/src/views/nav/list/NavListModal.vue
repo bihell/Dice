@@ -7,11 +7,10 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { accountFormSchema } from './list.data';
-  import { getDeptList } from '/@/api/demo/system';
-
+  import { navDetailFormSchema } from './list.data';
+  import { addNavDetail, getNavTypeTreeList, updateNavDetail } from '/@/api/nav/nav';
   export default defineComponent({
-    name: 'AccountModal',
+    name: 'NavDetailModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
@@ -20,7 +19,7 @@
 
       const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
-        schemas: accountFormSchema,
+        schemas: navDetailFormSchema,
         showActionButtonGroup: false,
         actionColOptions: {
           span: 23,
@@ -39,27 +38,27 @@
           });
         }
 
-        const treeData = await getDeptList();
+        const treeData = await getNavTypeTreeList();
         updateSchema([
           {
-            field: 'pwd',
-            show: !unref(isUpdate),
-          },
-          {
-            field: 'dept',
+            field: 'typeId',
             componentProps: { treeData },
           },
         ]);
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增账号' : '编辑账号'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增导航' : '编辑导航'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (isUpdate.value) {
+            values.id = rowId.value;
+            await updateNavDetail(values);
+          } else {
+            await addNavDetail(values);
+          }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

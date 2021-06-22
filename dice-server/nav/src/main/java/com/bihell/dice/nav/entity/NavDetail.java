@@ -36,11 +36,9 @@ public class NavDetail extends Model<NavDetail> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @NotNull(message = "创建时间不能为空")
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
 
-    @NotNull(message = "更新时间不能为空")
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 
@@ -61,7 +59,7 @@ public class NavDetail extends Model<NavDetail> {
     private String icon;
 
     @ApiModelProperty("简介")
-    private String summary;
+    private String description;
 
     @ApiModelProperty("导航地址名称")
     private String name;

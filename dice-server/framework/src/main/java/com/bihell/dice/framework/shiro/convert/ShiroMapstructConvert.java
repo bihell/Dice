@@ -6,8 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * Shiro包下使用mapstruct对象属性复制转换器 todo
- **/
+ * Shiro包下使用mapstruct对象属性复制转换器
+ *
+ * @author haseochen*/
 @Mapper
 public interface ShiroMapstructConvert {
 

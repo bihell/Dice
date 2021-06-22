@@ -443,6 +443,27 @@ create table nav_type
 create index nav_type_creator_index
     on nav_type (creator);
 
+create table nav_detail
+(
+    id          bigint auto_increment comment '导航明细项id'
+        primary key,
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    creator     int                                 null comment '创建人',
+    modifier    int                                 null comment '修改人',
+    deleted     tinyint   default 0                 null comment '逻辑删除标识（0.未删除,1.已删除）',
+    is_public   tinyint   default 1                 null comment '是否公开',
+    icon        varchar(255)                        null comment '图标',
+    description varchar(255)                        null comment '简介',
+    name        varchar(255)                        null comment '导航地址名称',
+    type_id     int                                 null comment '类型id',
+    status      tinyint                             null comment '状态（1启用，0禁用）'
+)
+    comment '导航明细表' charset = utf8mb4;
+
+create index nav_detail_creator_index
+    on nav_detail (creator);
+
 INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-09-29 15:28:07', '66666');
 INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-09-29 15:28:07', '66666');
 

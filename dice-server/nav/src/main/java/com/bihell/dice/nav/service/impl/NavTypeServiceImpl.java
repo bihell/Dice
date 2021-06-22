@@ -71,7 +71,7 @@ public class NavTypeServiceImpl extends BaseServiceImpl<NavTypeMapper, NavType> 
     public List<NavTypeVo> getNavTypeTree() {
         List<NavType> navTypeList = getAllNavTypeList();
         if (CollectionUtils.isEmpty(navTypeList)) {
-            throw new IllegalArgumentException("NavType列表不能为空");
+            return null;
         }
         List<NavTypeVo> list = NavTypeConvert.INSTANCE.listToTreeVoList(navTypeList);
         List<NavTypeVo> treeVos = new ArrayList<>();

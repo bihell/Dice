@@ -7,6 +7,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+/**
+ * @author haseochen
+ */
 @Data
 @Accessors(chain = true)
 @ApiModel("登录用户信息TokenVO")

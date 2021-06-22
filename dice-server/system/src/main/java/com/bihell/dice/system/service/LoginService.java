@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
  * <p>
  * 登录服务接口
  * </p>
- **/
+ *
+ * @author haseochen*/
 public interface LoginService {
 
     /**

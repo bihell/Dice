@@ -41,7 +41,8 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * 登录服务实现类
  * </p>
- **/
+ *
+ * @author haseochen*/
 @Api
 @Slf4j
 @Service

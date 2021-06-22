@@ -1,0 +1,114 @@
+<template>
+  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+    <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
+    <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5">
+      <template #toolbar>
+        <a-button type="primary" @click="handleCreate">新增导航</a-button>
+      </template>
+      <template #action="{ record }">
+        <TableAction
+          :actions="[
+            {
+              icon: 'clarity:note-edit-line',
+              onClick: handleEdit.bind(null, record),
+            },
+            {
+              icon: 'ant-design:delete-outlined',
+              color: 'error',
+              popConfirm: {
+                title: '是否确认删除',
+                confirm: handleDelete.bind(null, record),
+              },
+            },
+          ]"
+        />
+      </template>
+    </BasicTable>
+    <AccountModal @register="registerModal" @success="handleSuccess" />
+  </PageWrapper>
+</template>
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
+  import { BasicTable, useTable, TableAction } from '/@/components/Table';
+  import { delNavDetail, getNavDetailList } from "/@/api/nav/nav";
+  import { PageWrapper } from '/@/components/Page';
+  import DeptTree from './NavListTree.vue';
+
+  import { useModal } from '/@/components/Modal';
+  import AccountModal from './NavListModal.vue';
+
+  import { columns, searchFormSchema } from './list.data';
+
+  export default defineComponent({
+    name: 'AccountManagement',
+    components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
+    setup() {
+      const [registerModal, { openModal }] = useModal();
+      const [registerTable, { reload, updateTableDataRecord }] = useTable({
+        title: '导航列表',
+        api: getNavDetailList,
+        rowKey: 'id',
+        columns,
+        formConfig: {
+          labelWidth: 120,
+          schemas: searchFormSchema,
+        },
+        useSearchForm: true,
+        showTableSetting: true,
+        bordered: true,
+        actionColumn: {
+          width: 80,
+          title: '操作',
+          dataIndex: 'action',
+          slots: { customRender: 'action' },
+        },
+      });
+
+      function handleCreate() {
+        openModal(true, {
+          isUpdate: false,
+        });
+      }
+
+      function handleEdit(record: Recordable) {
+        console.log(record);
+        openModal(true, {
+          record,
+          isUpdate: true,
+        });
+      }
+
+      function handleDelete(record: Recordable) {
+        delNavDetail(record);
+        reload();
+      }
+
+      function handleSuccess({ isUpdate, values }) {
+        if (isUpdate) {
+          // 演示不刷新表格直接更新内部数据。
+          // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
+          const result = updateTableDataRecord(values.id, values);
+          console.log(result);
+        } else {
+          reload();
+        }
+      }
+
+      function handleSelect(deptId = '') {
+        console.log(deptId);
+        reload({ searchInfo: { deptId } });
+      }
+
+      return {
+        registerTable,
+        registerModal,
+        handleCreate,
+        handleEdit,
+        handleDelete,
+        handleSuccess,
+        handleSelect,
+      };
+    },
+  });
+</script>

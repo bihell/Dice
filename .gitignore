@@ -53,3 +53,4 @@ yarn-error.log*
 *.sln
 *.sw*
 package-lock.json
+dice-admin/dist

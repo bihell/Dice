@@ -6,7 +6,7 @@
       search
       :clickRowToExpand="false"
       :treeData="treeData"
-      :replaceFields="{ key: 'id', title: 'deptName' }"
+      :replaceFields="{ key: 'id', title: 'name' }"
       @select="handleSelect"
     />
   </div>
@@ -15,7 +15,7 @@
   import { defineComponent, onMounted, ref } from 'vue';
 
   import { BasicTree, TreeItem } from '/@/components/Tree';
-  import { getDeptList } from '/@/api/demo/system';
+  import { getNavTypeTreeList } from '/@/api/nav/nav';
 
   export default defineComponent({
     name: 'DeptTree',
@@ -26,7 +26,7 @@
       const treeData = ref<TreeItem[]>([]);
 
       async function fetch() {
-        treeData.value = ((await getDeptList()) as unknown) as TreeItem[];
+        treeData.value = (await getNavTypeTreeList()) as unknown as TreeItem[];
       }
 
       function handleSelect(keys: string, e) {

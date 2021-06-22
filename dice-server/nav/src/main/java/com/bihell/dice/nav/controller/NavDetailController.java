@@ -81,10 +81,10 @@ public class NavDetailController extends BaseController {
     /**
      * 导航明细表分页列表
      */
-    @PostMapping("/getPageList")
+    @GetMapping("/getPageList")
     @OperationLog(name = "导航明细表分页列表", type = OperationLogType.PAGE)
     @ApiOperation(value = "导航明细表分页列表", response = NavDetail.class)
-    public ApiResult<Paging<NavDetail>> getNavDetailPageList(@Validated @RequestBody NavDetailPageParam navDetailPageParam) throws Exception {
+    public ApiResult<Paging<NavDetail>> getNavDetailPageList(@Validated NavDetailPageParam navDetailPageParam) throws Exception {
         Paging<NavDetail> paging = navDetailService.getNavDetailPageList(navDetailPageParam);
         return ApiResult.ok(paging);
     }

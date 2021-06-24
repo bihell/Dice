@@ -54,12 +54,12 @@ public class DiceProperties {
     private DiceFilterProperties filter;
 
     /**
-     * 上传目录 todo
+     * 上传目录
      */
     private String uploadFolder;
 
     /**
-     * 资源访问路径，前端访问 todo
+     * 资源访问路径，前端访问
      */
     private String resourceAccessPath;
 
@@ -68,7 +68,7 @@ public class DiceProperties {
      */
     private String resourceAccessPatterns;
     /**
-     * 资源访问全路径 todo
+     * 资源访问全路径
      */
     private String resourceAccessUrl;
 

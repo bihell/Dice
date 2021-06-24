@@ -5,6 +5,9 @@
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增导航</a-button>
       </template>
+      <template #avatar="{ record }">
+        <Avatar shape="square" :size="50" :src="record.icon" />
+      </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
@@ -29,9 +32,9 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-
+  import { Avatar } from 'ant-design-vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { delNavDetail, getNavDetailList } from "/@/api/nav/nav";
+  import { delNavDetail, getNavDetailList } from '/@/api/nav/nav';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './NavListTree.vue';
 
@@ -42,7 +45,7 @@
 
   export default defineComponent({
     name: 'AccountManagement',
-    components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
+    components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction, Avatar },
     setup() {
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
@@ -72,7 +75,6 @@
       }
 
       function handleEdit(record: Recordable) {
-        console.log(record);
         openModal(true, {
           record,
           isUpdate: true,

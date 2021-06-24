@@ -12,7 +12,7 @@ server:
       # tomcat初始化线程数量
       min-spare: 30
   servlet:
-    context-path: /
+    context-path:
     # HTTP编码
     encoding:
       charset: UTF-8
@@ -158,8 +158,8 @@ dice:
       logout-path: /v1/api/admin/auth/logout
 
   # 文件上传下载配置
-  # 上传目录（当前用户下） todo
-  upload-folder: .dice
+  # 上传目录（当前用户下）
+  upload-folder: /opt/upload/
   # 资源访问路径
   resource-access-path: /resource/
   # 资源访问路径匹配：/resource/**

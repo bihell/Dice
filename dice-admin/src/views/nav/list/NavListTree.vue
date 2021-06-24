@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white m-4 mr-0 overflow-hidden">
     <BasicTree
-      title="部门列表"
+      title="导航分类"
       toolbar
       search
       :clickRowToExpand="false"

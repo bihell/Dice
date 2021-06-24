@@ -44,7 +44,7 @@ public interface NavDetailService extends BaseService<NavDetail> {
     /**
      * 获取分页对象
      *
-     * @param navDetailQueryParam
+     * @param
      * @return
      * @throws Exception
      */

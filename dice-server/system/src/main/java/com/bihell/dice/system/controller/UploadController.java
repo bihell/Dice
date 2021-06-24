@@ -1,7 +1,8 @@
-package com.bihell.dice.blog.controller.admin;
+package com.bihell.dice.system.controller;
 
 import com.bihell.dice.config.properties.DiceProperties;
 import com.bihell.dice.framework.common.api.ApiResult;
+import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.framework.util.UploadUtil;
@@ -18,19 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.bihell.dice.framework.log.annotation.Module;
-
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 上传控制器 todo
+ * 上传控制器
+ * @author haseochen
  */
 @Slf4j
 @RestController
-@RequestMapping("/upload")
-@Module("blog")
+@RequestMapping("/v1/api/admin/upload")
+@Module("system")
 @Api(value = "文件上传", tags = {"文件上传"})
 public class UploadController {
 
@@ -57,7 +57,7 @@ public class UploadController {
         log.info("Size = " + multipartFile.getSize());
         log.info("type = " + type);
 
-        // 上传文件，返回保存的文件名称 todo 路径需要修改
+        // 上传文件，返回保存的文件名称
         String saveFileName = UploadUtil.upload(diceProperties.getUploadFolder(), multipartFile, originalFilename -> {
             // 文件后缀
             String fileExtension = FilenameUtils.getExtension(originalFilename);

@@ -70,4 +70,9 @@ public class NavDetail extends Model<NavDetail> {
     @ApiModelProperty("状态（1启用，0禁用）")
     private Integer status;
 
+    @ApiModelProperty("导航URL")
+    private String url;
+
+    @ApiModelProperty("排序")
+    private Integer sort;
 }

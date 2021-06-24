@@ -457,7 +457,9 @@ create table nav_detail
     description varchar(255)                        null comment '简介',
     name        varchar(255)                        null comment '导航地址名称',
     type_id     int                                 null comment '类型id',
-    status      tinyint                             null comment '状态（1启用，0禁用）'
+    status      tinyint                             null comment '状态（1启用，0禁用）',
+    url         varchar(255)                        null comment '导航网址',
+    sort        int                                 null comment '排序'
 )
     comment '导航明细表' charset = utf8mb4;
 

@@ -33,8 +33,11 @@
 
         if (unref(isUpdate)) {
           rowId.value = data.record.id;
+          // const record = { ...data.record };
+          // console.log(data.record);
           setFieldsValue({
             ...data.record,
+            icon: [data.record.icon],
           });
         }
 
@@ -55,8 +58,11 @@
           setModalProps({ confirmLoading: true });
           if (isUpdate.value) {
             values.id = rowId.value;
+            values.icon = values.icon[0];
             await updateNavDetail(values);
           } else {
+            // console.log(values.icon);
+            values.icon = values.icon[0];
             await addNavDetail(values);
           }
           closeModal();

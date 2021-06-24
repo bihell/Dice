@@ -1,5 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { uploadApi } from '/@/api/sys/upload';
 
 export const columns: BasicColumn[] = [
   {
@@ -11,16 +12,22 @@ export const columns: BasicColumn[] = [
     title: '图标',
     dataIndex: 'icon',
     width: 100,
+    slots: { customRender: 'avatar' },
   },
   {
     title: '创建时间',
     dataIndex: 'createTime',
-    width: 180,
+    width: 170,
+  },
+  {
+    title: '排序',
+    dataIndex: 'sort',
+    width: 100,
   },
   {
     title: '地址',
     dataIndex: 'url',
-    width: 200,
+    width: 300,
   },
   {
     title: '描述',
@@ -78,9 +85,18 @@ export const navDetailFormSchema: FormSchema[] = [
   },
   {
     field: 'icon',
+    component: 'Upload',
     label: '图标',
-    component: 'Input',
-    required: true,
+    colProps: {
+      span: 8,
+    },
+    rules: [{ required: true, message: '请选择上传文件' }],
+    componentProps: {
+      api: uploadApi,
+      multiple: false,
+      maxNumber: 1,
+      uploadParams: { type: 'nav' },
+    },
   },
   {
     label: '排序',

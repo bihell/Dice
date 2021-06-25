@@ -39,20 +39,21 @@ export const columns: BasicColumn[] = [
 ];
 
 export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'navTypeName',
-    label: '分类名称',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
+  // todo 有实际需求的时候实现
+  // {
+  //   field: 'name',
+  //   label: '分类名称',
+  //   component: 'Input',
+  //   colProps: { span: 8 },
+  // },
   {
     field: 'status',
     label: '状态',
     component: 'Select',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '启用', value: '1' },
+        { label: '停用', value: '0' },
       ],
     },
     colProps: { span: 8 },

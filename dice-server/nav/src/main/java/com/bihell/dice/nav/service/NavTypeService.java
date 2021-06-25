@@ -58,12 +58,12 @@ public interface NavTypeService extends IService<NavType> {
      * 获取导航分类列表
      * @return
      */
-    List<NavType> getAllNavTypeList();
+    List<NavType> getAllNavTypeList(NavTypePageParam navTypePageParam);
 
     /**
      * 获取导航分类树形列表
      * @return
      */
-    List<NavTypeVo> getNavTypeTree();
+    List<NavTypeVo> getNavTypeTree(NavTypePageParam navTypePageParam);
 
 }

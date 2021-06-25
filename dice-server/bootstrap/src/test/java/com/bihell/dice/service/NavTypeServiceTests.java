@@ -13,13 +13,13 @@ public class NavTypeServiceTests {
     @Autowired
     NavTypeService navTypeService;
 
-    @Test
-    public void getAllNavTypeList(){
-        System.out.println(navTypeService.getAllNavTypeList());
-    }
+//    @Test
+//    public void getAllNavTypeList(){
+//        System.out.println(navTypeService.getAllNavTypeList());
+//    }
 
-    @Test
-    public void getNavTypeTree(){
-        System.out.println(navTypeService.getNavTypeTree());
-    }
+//    @Test
+//    public void getNavTypeTree(){
+//        System.out.println(navTypeService.getNavTypeTree());
+//    }
 }

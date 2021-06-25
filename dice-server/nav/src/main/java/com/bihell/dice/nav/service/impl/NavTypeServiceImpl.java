@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,15 +62,18 @@ public class NavTypeServiceImpl extends BaseServiceImpl<NavTypeMapper, NavType> 
         IPage<NavType> iPage = navTypeMapper.selectPage(page, wrapper);
         return new Paging<NavType>(iPage);
     }
-
     @Override
-    public List<NavType> getAllNavTypeList() {
-        return navTypeMapper.selectList(new QueryWrapper<>());
+    public List<NavType> getAllNavTypeList(NavTypePageParam navTypePageParam) {
+        LambdaQueryWrapper<NavType> wrapper = new QueryWrapper<NavType>().lambda()
+                .eq(!StringUtils.isEmpty(navTypePageParam.getStatus()),NavType::getStatus,navTypePageParam.getStatus())
+                .like(!StringUtils.isEmpty(navTypePageParam.getName()),NavType::getName,navTypePageParam.getName())
+                .orderByAsc(NavType::getSort);
+        return navTypeMapper.selectList(wrapper);
     }
 
     @Override
-    public List<NavTypeVo> getNavTypeTree() {
-        List<NavType> navTypeList = getAllNavTypeList();
+    public List<NavTypeVo> getNavTypeTree(NavTypePageParam navTypePageParam) {
+        List<NavType> navTypeList = getAllNavTypeList(navTypePageParam);
         if (CollectionUtils.isEmpty(navTypeList)) {
             return null;
         }

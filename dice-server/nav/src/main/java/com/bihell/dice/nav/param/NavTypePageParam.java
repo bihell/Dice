@@ -20,4 +20,6 @@ import com.bihell.dice.framework.core.pagination.BasePageOrderParam;
 @ApiModel(value = "分页参数")
 public class NavTypePageParam extends BasePageOrderParam {
     private static final long serialVersionUID = 1L;
+    private String name;
+    private Integer status;
 }

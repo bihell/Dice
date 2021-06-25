@@ -1,6 +1,7 @@
 package com.bihell.dice.nav.controller;
 
 import com.bihell.dice.nav.entity.NavType;
+import com.bihell.dice.nav.param.NavDetailPageParam;
 import com.bihell.dice.nav.param.NavTypePageParam;
 import com.bihell.dice.nav.service.NavTypeService;
 import com.bihell.dice.nav.vo.NavTypeVo;
@@ -99,8 +100,8 @@ public class NavTypeController extends BaseController {
     @GetMapping("/getNavTypeTree")
     @OperationLog(name = "获取导航类型树形列表", type = OperationLogType.OTHER_QUERY)
     @ApiOperation(value = "获取导航类型树形列表", response = NavTypeVo.class)
-    public ApiResult<List<NavTypeVo>> getDepartmentTree() throws Exception {
-        List<NavTypeVo> treeVos = navDetailService.getNavTypeTree();
+    public ApiResult<List<NavTypeVo>> getDepartmentTree(@Validated NavTypePageParam navTypePageParam) throws Exception {
+        List<NavTypeVo> treeVos = navDetailService.getNavTypeTree(navTypePageParam);
         return ApiResult.ok(treeVos);
     }
 }

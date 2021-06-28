@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import { Icon } from './Icon';
+// import { Icon } from './Icon';
 import { Button } from './Button';
 import {
   // Need
@@ -40,9 +40,10 @@ import {
   Col,
   Spin,
   InputNumber,
+  Layout,
 } from 'ant-design-vue';
 
-const compList = [Icon, AntButton.Group];
+const compList = [AntButton.Group];
 
 export function registerGlobComp(app: App) {
   compList.forEach((comp) => {
@@ -85,5 +86,6 @@ export function registerGlobComp(app: App) {
     .use(Col)
     .use(Spin)
     .use(InputNumber)
-    .use(Button);
+    .use(Button)
+    .use(Layout);
 }

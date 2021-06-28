@@ -8,6 +8,8 @@ const test: AppRouteModule = {
   component: LAYOUT,
   redirect: '/test/test1',
   meta: {
+    hideMenu: true,
+    orderNo: 999,
     icon: 'file-icons:test-js',
     title: '测试',
   },

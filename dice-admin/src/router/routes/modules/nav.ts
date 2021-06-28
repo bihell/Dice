@@ -8,6 +8,7 @@ const nav: AppRouteModule = {
   component: LAYOUT,
   redirect: '/nav/nav-list',
   meta: {
+    orderNo: 2,
     icon: 'grommet-icons:navigate',
     title: '导航',
   },

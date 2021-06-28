@@ -8,6 +8,7 @@ const blog: AppRouteModule = {
   component: LAYOUT,
   redirect: '/blog/posts',
   meta: {
+    orderNo: 1,
     icon: 'carbon:blog',
     title: '博客',
   },

@@ -103,6 +103,6 @@ export const formSchema: FormSchema[] = [
   {
     label: '图标',
     field: 'icon',
-    component: 'Input',
+    component: 'IconPicker',
   },
 ];

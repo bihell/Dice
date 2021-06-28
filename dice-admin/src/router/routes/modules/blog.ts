@@ -26,6 +26,7 @@ const blog: AppRouteModule = {
       name: 'PostEdit',
       component: () => import('/@/views/blog/post/PostEdit.vue'),
       meta: {
+        hideMenu: true,
         title: '编辑文章',
       },
     },
@@ -58,6 +59,7 @@ const blog: AppRouteModule = {
       name: 'PageEdit',
       component: () => import('/@/views/blog/page/PageEdit.vue'),
       meta: {
+        hideMenu: true,
         title: '编辑页面',
       },
     },

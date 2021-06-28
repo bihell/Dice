@@ -28,6 +28,7 @@ export const columns: BasicColumn[] = [
     title: '地址',
     dataIndex: 'url',
     width: 300,
+    slots: { customRender: 'link' },
   },
   {
     title: '描述',

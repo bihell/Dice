@@ -46,7 +46,7 @@ public class NavDetail extends Model<NavDetail> {
     private Long creator;
 
     @ApiModelProperty("修改人")
-    private Integer modifier;
+    private Long modifier;
 
     @ApiModelProperty("逻辑删除标识（0.未删除,1.已删除）")
     @TableLogic

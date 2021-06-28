@@ -38,7 +38,7 @@ public class NavType extends Model<NavType> {
     private Long creator;
 
     @ApiModelProperty("修改人")
-    private Integer modifier;
+    private Long modifier;
 
     @ApiModelProperty("是否公开：1是，0否")
     private Integer isPublic;

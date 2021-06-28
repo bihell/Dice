@@ -8,6 +8,9 @@
       <template #avatar="{ record }">
         <Avatar shape="square" :size="50" :src="record.icon" />
       </template>
+      <template #link="{ record }">
+        <a :href="record.url" target="_blank">{{ record.url }}</a>
+      </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
@@ -97,9 +100,8 @@
         }
       }
 
-      function handleSelect(deptId = '') {
-        console.log(deptId);
-        reload({ searchInfo: { deptId } });
+      function handleSelect(typeId = '') {
+        reload({ searchInfo: { typeId } });
       }
 
       return {

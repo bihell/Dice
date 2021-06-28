@@ -1,5 +1,6 @@
 package com.bihell.dice.nav.controller;
 
+import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.nav.entity.NavDetail;
 import com.bihell.dice.nav.param.NavDetailPageParam;
 import com.bihell.dice.nav.service.NavDetailService;
@@ -41,6 +42,7 @@ public class NavDetailController extends BaseController {
     @OperationLog(name = "添加导航明细表", type = OperationLogType.ADD)
     @ApiOperation(value = "添加导航明细表", response = ApiResult.class)
     public ApiResult<Boolean> addNavDetail(@Validated(Add.class) @RequestBody NavDetail navDetail) throws Exception {
+        navDetail.setCreator(LoginUtil.getUserId());
         boolean flag = navDetailService.saveNavDetail(navDetail);
         return ApiResult.result(flag);
     }
@@ -52,6 +54,7 @@ public class NavDetailController extends BaseController {
     @OperationLog(name = "修改导航明细表", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改导航明细表", response = ApiResult.class)
     public ApiResult<Boolean> updateNavDetail(@Validated(Update.class) @RequestBody NavDetail navDetail) throws Exception {
+        navDetail.setModifier(LoginUtil.getUserId());
         boolean flag = navDetailService.updateNavDetail(navDetail);
         return ApiResult.result(flag);
     }

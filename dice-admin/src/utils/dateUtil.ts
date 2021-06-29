@@ -5,6 +5,14 @@ import moment from 'moment';
 
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
 const DATE_FORMAT = 'YYYY-MM-DD ';
+const TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+
+export function formatToTimestamp(
+  date: moment.MomentInput = null,
+  format = TIMESTAMP_FORMAT
+): string {
+  return moment(date).format(format);
+}
 
 export function formatToDateTime(
   date: moment.MomentInput = null,

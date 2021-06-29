@@ -11,7 +11,7 @@ import {
 import { useMessage } from '/@/hooks/web/useMessage';
 const { createMessage } = useMessage();
 const { success } = createMessage;
-import { formatToDateTime } from '/@/utils/dateUtil';
+import { formatToTimestamp } from '/@/utils/dateUtil';
 // import { useGo } from '/@/hooks/web/usePage';
 // const go = useGo();
 
@@ -59,11 +59,11 @@ class Store {
   }
 
   setCreateTime(datetime) {
-    this.state.currentPost.createTime = formatToDateTime(datetime);
+    this.state.currentPost.createTime = formatToTimestamp(datetime);
   }
 
   setUpdateTime(datetime) {
-    this.state.currentPost.updateTime = formatToDateTime(datetime);
+    this.state.currentPost.updateTime = formatToTimestamp(datetime);
   }
 
   setComment(allowComment) {

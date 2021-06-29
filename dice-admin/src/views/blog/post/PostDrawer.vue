@@ -5,7 +5,7 @@
         <a-select
           v-model:value="tags"
           mode="multiple"
-          style="width: 100%;"
+          style="width: 100%"
           placeholder="请选择标签"
           @change="setTags"
         >
@@ -17,7 +17,7 @@
       <a-form-item label="分类">
         <a-select
           v-model:value="category"
-          style="width: 100%;"
+          style="width: 100%"
           placeholder="请选择分类"
           @change="setCategory"
         >
@@ -101,8 +101,8 @@
       }
 
       function setCreateTime(v) {
-        console.log(moment(store.state.currentPost.createTime).utc().format());
-        console.log(v.utc().format());
+        // console.log(moment(store.state.currentPost.createTime).utc().format());
+        // console.log(v.utc().format());
         store.setCreateTime(v.utc().format());
       }
 

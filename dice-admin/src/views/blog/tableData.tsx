@@ -1,6 +1,5 @@
 import { FormProps, FormSchema } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table/src/types/table';
-import { formatToDateTime } from '/@/utils/dateUtil';
 
 export function getBasicColumns(): BasicColumn[] {
   return [
@@ -40,14 +39,14 @@ export function getBasicColumns(): BasicColumn[] {
       sorter: true,
       dataIndex: 'createTime',
       width: 150,
-      customRender: ({ record }) => formatToDateTime(record.createTime),
+      customRender: ({ record }) => record.createTime.substring(0, 16),
     },
     {
       title: '修改日期',
       sorter: true,
       dataIndex: 'updateTime',
       width: 150,
-      customRender: ({ record }) => formatToDateTime(record.updateTime),
+      customRender: ({ record }) => record.updateTime.substring(0, 16),
     },
   ];
 }
@@ -83,14 +82,14 @@ export function getPageColumns(): BasicColumn[] {
       sorter: true,
       dataIndex: 'createTime',
       width: 150,
-      customRender: ({ record }) => formatToDateTime(record.createTime),
+      customRender: ({ record }) => record.createTime.substring(0, 16),
     },
     {
       title: '修改日期',
       sorter: true,
       dataIndex: 'updateTime',
       width: 150,
-      customRender: ({ record }) => formatToDateTime(record.updateTime),
+      customRender: ({ record }) => record.updateTime.substring(0, 16),
     },
   ];
 }
@@ -124,7 +123,6 @@ export function getCommentColumns(): BasicColumn[] {
       dataIndex: 'created',
       width: 150,
       align: 'center',
-      customRender: ({ record }) => formatToDateTime(record.created),
     },
   ];
 }

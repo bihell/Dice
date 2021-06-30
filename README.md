@@ -1,12 +1,11 @@
 <p align="center">
   <img align="center" src="https://raw.githubusercontent.com/bihell/blog-img/master/logo.png"/>
 </p>
-
 <p align="center">
     <a href="https://www.travis-ci.org/bihell/Dice"><img src="https://www.travis-ci.org/bihell/Dice.svg?branch=master"></a>
     <a href="https://codebeat.co/projects/github-com-bihell-dice-master"><img alt="codebeat badge" src="https://codebeat.co/badges/eb0bdd65-dad1-45e6-aea6-371c64d4d943" /></a>
     <a href="https://github.com/bihell/Dice/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/bihell/Dice"></a>
-    <a alt="spring boot"><img src="https://img.shields.io/badge/java-9-yellow.svg"/></a>
+    <a alt="spring boot"><img src="https://img.shields.io/badge/java-8-yellow.svg"/></a>
     <a alt="spring boot"><img src="https://img.shields.io/badge/spring%20boot-2.3.3.RELEASE-blue"/></a>
     <a alt="vue"><img src="https://img.shields.io/badge/vue-3-orange.svg"></a>
     <a alt="nuxt"><img src="https://img.shields.io/badge/nuxt-2.11.0-yellowgreen.svg"></a>
@@ -14,13 +13,14 @@
     <a alt="docker-compose"><img src="https://img.shields.io/badge/docker--compose-1.25.2-lightgrey.svg"></a>
 </p>
 
+
 * 基于`node` `java` `spring-boot` `vue` `nuxt` 开发的个人管理系统
 * 功能精简但齐全，界面简洁却美观，满足个人日常使用要求
 * 项目会持续更新，如果有不完善的地方，欢迎指出
 
 > 演示站点：[博客前端](https://bihell.com/) [管理前端](https://bihell.com/admin)  
-> 因管理前端的权限还未开发完毕，因此不提供Demo账号，有兴趣的小伙伴可自行下载源码运行
-> QQ群：787519476
+> 因管理前端改为Vue3,权限还未开发完毕，因此不提供Demo账号，有兴趣的小伙伴可自行下载源码运行
+> QQ交流群：787519476
 
 ## 一、部分界面
 
@@ -32,13 +32,15 @@
 
 ![文章编辑](img/tag_list.png)
 
+![导航分类](img/nav_type.png)
 
+![导航列表](img/nav_list.png)
 
 ## 二、参与开发
 
-目前管理前端刚切为vue3，很多功能细节需要完善。打算做一个导航模块，支持用户自定义导航的收录管理和展示。后续精力主要放在导航这块。
+目前管理前端刚切为vue3，很多功能细节需要完善。欢迎大家参与进来
 
-> 请确保系统中已经安装`docker`、`docker-componse`、`nodejs`、`npm`、`Java9`、`Redis`、`MySQL`等必须的依赖。
+> 请确保系统中已经安装`docker`、`docker-componse`、`nodejs`、`npm`、`Java8`、`Redis`、`MySQL`等必须的依赖。
 
 ### 2.1 安装依赖（MacOS）
 

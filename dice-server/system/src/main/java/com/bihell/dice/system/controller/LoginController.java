@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.bihell.dice.framework.log.annotation.Module;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +41,7 @@ public class LoginController {
         return ApiResult.ok(loginSysUserTokenVo, "登录成功");
     }
 
-    @PostMapping("logout")
+    @GetMapping("logout")
     @OperationLogIgnore
     @ApiOperation(value = "登出", notes = "系统用户登出")
     public ApiResult<String> logout(HttpServletRequest request) throws Exception {

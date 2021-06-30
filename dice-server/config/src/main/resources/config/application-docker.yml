@@ -1,6 +1,6 @@
 dice:
   # 当前环境服务IP地址
-  server-ip: 172.28.1.3
+  server-ip:
   # 生产环境禁用Swagger
   swagger:
     enable: false
@@ -11,6 +11,8 @@ dice:
       log-print-type: NONE
       request-log-format: false
       response-log-format: false
+
+  resource-access-url: https://bihell.com/resource/
 
 spring:
   datasource:

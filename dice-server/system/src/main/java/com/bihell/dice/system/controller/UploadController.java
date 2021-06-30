@@ -5,6 +5,7 @@ import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
+import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.framework.util.UploadUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * 上传控制器
+ *
  * @author haseochen
  */
 @Slf4j
@@ -39,14 +41,15 @@ public class UploadController {
 
     /**
      * 上传单个文件
+     *
      * @return
      */
     @PostMapping
     @OperationLog(name = "上传单个文件", type = OperationLogType.UPLOAD)
     @ApiOperation(value = "上传单个文件", response = ApiResult.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "file", value = "文件", required = true,dataType = "__file"),
-            @ApiImplicitParam(name = "type", value = "类型 head:头像",required = true)
+            @ApiImplicitParam(name = "file", value = "文件", required = true, dataType = "__file"),
+            @ApiImplicitParam(name = "type", value = "类型", required = true)
     })
     public ApiResult<String> upload(@RequestParam("file") MultipartFile multipartFile,
                                     @RequestParam("type") String type) throws Exception {
@@ -58,7 +61,7 @@ public class UploadController {
         log.info("type = " + type);
 
         // 上传文件，返回保存的文件名称
-        String saveFileName = UploadUtil.upload(diceProperties.getUploadFolder(), multipartFile, originalFilename -> {
+        String saveFileName = UploadUtil.upload(diceProperties.getUploadFolder() + '/' + LoginUtil.getUserId(), multipartFile, originalFilename -> {
             // 文件后缀
             String fileExtension = FilenameUtils.getExtension(originalFilename);
             // 这里可自定义文件名称，比如按照业务类型/文件格式/日期
@@ -69,7 +72,7 @@ public class UploadController {
 
         // 上传成功之后，返回访问路径，请根据实际情况设置
 
-        String fileAccessPath = diceProperties.getResourceAccessUrl() + saveFileName;
+        String fileAccessPath = diceProperties.getResourceAccessUrl() + LoginUtil.getUserId() + '/' + saveFileName;
         log.info("fileAccessPath:{}", fileAccessPath);
 
         return ApiResult.ok(fileAccessPath);

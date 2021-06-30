@@ -466,6 +466,36 @@ create table nav_detail
 create index nav_detail_creator_index
     on nav_detail (creator);
 
+create table sys_login_log
+(
+    id                bigint auto_increment comment '主键'
+        primary key,
+    request_id        varchar(32)                          null comment '请求ID',
+    username          varchar(32)                          null comment '用户名称',
+    ip                varchar(15)                          null comment 'IP',
+    area              varchar(45)                          null comment '区域',
+    operator          varchar(6)                           null comment '运营商',
+    token             varchar(32)                          null comment 'tokenMd5值',
+    type              int                                  null comment '1:登录，2：登出',
+    success           tinyint(1) default 0                 not null comment '是否成功 true:成功/false:失败',
+    code              int                                  null comment '响应码',
+    exception_message varchar(300)                         null comment '失败消息记录',
+    user_agent        varchar(300)                         null comment '浏览器名称',
+    browser_name      varchar(100)                         null comment '浏览器名称',
+    browser_version   varchar(100)                         null comment '浏览器版本',
+    engine_name       varchar(100)                         null comment '浏览器引擎名称',
+    engine_version    varchar(100)                         null comment '浏览器引擎版本',
+    os_name           varchar(100)                         null comment '系统名称',
+    platform_name     varchar(100)                         null comment '平台名称',
+    mobile            tinyint(1)                           null comment '是否是手机,0:否,1:是',
+    device_name       varchar(100)                         null comment '移动端设备名称',
+    device_model      varchar(100)                         null comment '移动端设备型号',
+    remark            varchar(200)                         null comment '备注',
+    create_time       datetime   default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time       datetime                             null comment '修改时间'
+)
+    comment '系统登录日志';
+
 INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2020-09-29 15:28:07', '66666');
 INSERT INTO dice.user (id, username, password, email, screen_name, created, logged, salt) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2020-09-29 15:28:07', '66666');
 

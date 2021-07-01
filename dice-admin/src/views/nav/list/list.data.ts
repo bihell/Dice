@@ -1,7 +1,7 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { uploadApi } from '/@/api/sys/upload';
-import { deleteFile } from "/@/api/sys/deleteFile";
+import { deleteFile } from '/@/api/sys/deleteFile';
 
 export const columns: BasicColumn[] = [
   {
@@ -102,8 +102,9 @@ export const navDetailFormSchema: FormSchema[] = [
         const params = { file: data.responseData.result, type: 'nav' };
         deleteFile(params);
       },
-      onChange: (data) => {
-        console.log(data);
+      onPreviewDelete: (url) => {
+        const params = { file: url, type: 'nav' };
+        deleteFile(params);
       },
     },
   },

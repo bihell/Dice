@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
-    <a-row :gutter="12">
-      <a-col :span="24">
+    <Row :gutter="12">
+      <Col :span="24">
         <div class="mb-2">
           <a-input size="large" placeholder="请输入文章标题" :value="title" @input="setTitle" />
         </div>
 
         <MarkDown :value="content" :height="contentHeight" @change="setContent" />
-      </a-col>
-    </a-row>
+      </Col>
+    </Row>
     <PageFooter>
       <template #right>
         <a-button class="mr-2" type="dashed" @click="savePost('DRAFT')"> 保存草稿 </a-button>
@@ -29,9 +29,10 @@
   import { store } from '../store';
   import { useDrawer } from '/@/components/Drawer';
   import ArticleDrawer from './PostDrawer.vue';
+  import { Row, Col } from 'ant-design-vue';
 
   export default {
-    components: { MarkDown, PageFooter, ArticleDrawer },
+    components: { MarkDown, PageFooter, ArticleDrawer, Row, Col },
     setup() {
       const [register1, { openDrawer: openDrawer1 }] = useDrawer();
       const contentHeight = computed(() => {

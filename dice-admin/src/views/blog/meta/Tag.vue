@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <a-row :gutter="30">
-      <a-col :xs="24" :sm="12" :md="12" :lg="12">
-        <a-card title="标签列表">
+    <Row :gutter="30">
+      <Col :xs="24" :sm="12" :md="12" :lg="12">
+        <Card title="标签列表">
           <ul class="meta-list">
             <li v-for="tag in tagList" :key="tag.id">
               <span class="meta" @click="handleTagClick(tag)">{{ tag.name }} </span>
-              <span style="float: right; clear: both;">
+              <span style="float: right; clear: both">
                 <span class="radius-count">{{ tag.count }}</span>
                 <a-button type="danger" @click="handleDeleteMetaClick(tag.name, 'tag')"
                   >删除</a-button
@@ -15,17 +15,17 @@
             </li>
           </ul>
           <a-input v-model:value.trim="tag.name" placeholder="请输入标签名称" class="meta-input" />
-          <a-button style="float: right; clear: both;" @click="handleSaveOrUpdateTagClick">
+          <a-button style="float: right; clear: both" @click="handleSaveOrUpdateTagClick">
             保存标签
           </a-button>
-        </a-card>
-      </a-col>
-      <a-col :xs="24" :sm="12" :md="12" :lg="12">
-        <a-card title="分类列表">
+        </Card>
+      </Col>
+      <Col :xs="24" :sm="12" :md="12" :lg="12">
+        <Card title="分类列表">
           <ul class="meta-list">
             <li v-for="category in categoryList" :key="category.id">
               <span class="meta" @click="handleCategoryClick(category)">{{ category.name }} </span>
-              <span style="float: right; clear: both;">
+              <span style="float: right; clear: both">
                 <span class="radius-count">{{ category.count }}</span>
                 <a-button type="danger" @click="handleDeleteMetaClick(category.name, 'category')"
                   >删除</a-button
@@ -38,12 +38,12 @@
             placeholder="请输入标签名称"
             class="meta-input"
           />
-          <a-button style="float: right; clear: both;" @click="handleSaveOrUpdateCategoryClick">
+          <a-button style="float: right; clear: both" @click="handleSaveOrUpdateCategoryClick">
             保存标签
           </a-button>
-        </a-card>
-      </a-col>
-    </a-row>
+        </Card>
+      </Col>
+    </Row>
   </div>
 </template>
 
@@ -51,10 +51,16 @@
   import { store } from '../store';
   import { computed, reactive } from 'vue';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { apiSaveMeta, apiUpdateMeta, apiDeleteMeta, apiDeletePost } from '/@/api/blog/blog';
+  import { apiSaveMeta, apiUpdateMeta, apiDeleteMeta } from '/@/api/blog/blog';
+  import { Row, Card, Col } from 'ant-design-vue';
   const { createMessage, createConfirm, createErrorModal } = useMessage();
   const { success } = createMessage;
   export default {
+    components: {
+      Row,
+      Card,
+      Col,
+    },
     setup() {
       store.fetchMetaList();
       const tag = reactive({

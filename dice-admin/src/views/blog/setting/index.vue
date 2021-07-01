@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
-    <a-tabs tab-position="left" @change="callback">
-      <a-tab-pane key="1" tab="博客设置">
+    <Tabs tab-position="left" @change="callback">
+      <TabPane key="1" tab="博客设置">
         <BasicForm layout="vertical" @register="blogSetRegister" />
         <a-button type="primary" @click="saveSetting(1)">保存博客设置</a-button>
-      </a-tab-pane>
-      <a-tab-pane key="2" tab="SEO 设置">
+      </TabPane>
+      <TabPane key="2" tab="SEO 设置">
         <BasicForm layout="vertical" @register="seoSetRegister" />
         <a-button type="primary" @click="saveSetting(2)">保存SEO设置</a-button>
-      </a-tab-pane>
-      <a-tab-pane key="3" tab="邮箱设置">
+      </TabPane>
+      <TabPane key="3" tab="邮箱设置">
         <BasicForm layout="vertical" @register="mailSetRegister" />
         <a-button type="primary" @click="saveSetting(3)">保存邮箱设置</a-button>
-      </a-tab-pane>
-    </a-tabs>
+      </TabPane>
+    </Tabs>
   </div>
 </template>
 
@@ -22,10 +22,13 @@
   import { blogSetSchemas, seoSetSchemas, mailSetSchemas } from '../tableData';
   import { BasicForm, useForm } from '/@/components/Form';
   import { store } from '../store';
+  import { Tabs, TabPane } from 'ant-design-vue';
 
   export default defineComponent({
     components: {
       BasicForm,
+      Tabs,
+      TabPane,
     },
     setup() {
       const [blogSetRegister, { setFieldsValue: baseSetting, getFieldsValue: getBaseSetting }] =

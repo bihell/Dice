@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
-    <a-row :gutter="12">
-      <a-col :span="24">
+    <Row :gutter="12">
+      <Col :span="24">
         <div class="mb-2">
           <a-input size="large" placeholder="请输入页面标题" :value="title" @input="setPageTitle" />
         </div>
 
         <MarkDown :value="content" :height="contentHeight" @change="setPageContent" />
-      </a-col>
-    </a-row>
+      </Col>
+    </Row>
     <PageFooter>
       <template #right>
         <div class="components-input-demo-size">
@@ -22,7 +22,7 @@
             @change="setPageComment"
           />
           排序权重
-          <a-input-number
+          <InputNumber
             class="mr-2"
             id="inputNumber"
             v-model:value="priority"
@@ -45,9 +45,10 @@
   import { useRoute } from 'vue-router';
   import { PageFooter } from '/@/components/Page';
   import { store } from '../store';
+  import { Row, Col, InputNumber } from 'ant-design-vue';
 
   export default {
-    components: { MarkDown, PageFooter },
+    components: { MarkDown, PageFooter, Row, Col, InputNumber },
     setup() {
       const contentHeight = computed(() => {
         return document.documentElement.clientHeight - 185;

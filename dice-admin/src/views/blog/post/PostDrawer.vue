@@ -1,66 +1,66 @@
 <template>
   <BasicDrawer v-bind="$attrs" title="文章设置" width="20%" show-footer @register="register">
-    <a-form layout="vertical">
-      <a-form-item label="标签">
-        <a-select
+    <Form layout="vertical">
+      <FormItem label="标签">
+        <Select
           v-model:value="tags"
           mode="multiple"
           style="width: 100%"
           placeholder="请选择标签"
           @change="setTags"
         >
-          <a-select-option v-for="tag in tagList" :key="tag.name">
+          <SelectOption v-for="tag in tagList" :key="tag.name">
             {{ tag.name }}
-          </a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item label="分类">
-        <a-select
+          </SelectOption>
+        </Select>
+      </FormItem>
+      <FormItem label="分类">
+        <Select
           v-model:value="category"
           style="width: 100%"
           placeholder="请选择分类"
           @change="setCategory"
         >
-          <a-select-option v-for="category in categoryList" :key="category.name">
+          <SelectOption v-for="category in categoryList" :key="category.name">
             {{ category.name }}
-          </a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item label="是否置顶">
-        <a-switch
+          </SelectOption>
+        </Select>
+      </FormItem>
+      <FormItem label="是否置顶">
+        <Switch
           v-model:checked="priority"
           checked-children="是"
           un-checked-children="否"
           default-checked
           @change="setPriority"
         />
-      </a-form-item>
-      <a-form-item label="开启评论">
-        <a-switch
+      </FormItem>
+      <FormItem label="开启评论">
+        <Switch
           v-model:checked="comment"
           checked-children="是"
           un-checked-children="否"
           default-checked
           @change="setComment"
         />
-      </a-form-item>
-      <a-form-item label="创建日期">
-        <a-date-picker
+      </FormItem>
+      <FormItem label="创建日期">
+        <DatePicker
           v-model:value="createTime"
           show-time
           placeholder="选择创建日期"
           @change="setCreateTime"
         />
-      </a-form-item>
-      <a-form-item label="修改日期">
-        <a-date-picker
+      </FormItem>
+      <FormItem label="修改日期">
+        <DatePicker
           v-model:value="updateTime"
           show-time
           placeholder="选择修改日期"
           @change="setUpdateTime"
         />
-      </a-form-item>
-    </a-form>
+      </FormItem>
+    </Form>
 
     <template #footer>
       <a-button class="mr-2" type="dashed" @click="savePost('DRAFT')"> 保存草稿 </a-button>
@@ -74,9 +74,10 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { store } from '../store';
   import moment from 'moment';
+  import { Form, FormItem, Select, SelectOption, DatePicker, Switch } from 'ant-design-vue';
 
   export default defineComponent({
-    components: { BasicDrawer },
+    components: { BasicDrawer, Form, FormItem, Select, SelectOption, DatePicker, Switch },
     setup() {
       const [register] = useDrawerInner();
 

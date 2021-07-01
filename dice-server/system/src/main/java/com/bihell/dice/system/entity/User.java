@@ -30,38 +30,29 @@ public class User extends Model<User> {
     @TableId
     private Long id;
 
-    /**
-     * 账号
-     */
+    @ApiModelProperty("账号")
     private String username;
 
-    /**
-     * 用户密码
-     */
+    @ApiModelProperty("用户密码")
     private String password;
 
-    /**
-     * 用户邮箱
-     */
+    @ApiModelProperty("用户邮箱")
     private String email;
 
-    /**
-     * 用户显示名称
-     */
+    @ApiModelProperty("用户显示名称")
     private String screenName;
 
-    /**
-     * 用户创建时间
-     */
+    @ApiModelProperty("用户创建时间")
     private LocalDateTime created;
 
-    /**
-     * 最后登陆时间
-     */
+    @ApiModelProperty("最后登陆时间")
     private LocalDateTime logged;
 
+    @ApiModelProperty("头像")
+    private String avatar;
+
     @TableField(exist = false)
-    private List<Integer> roleIds;
+    private List<Integer> roles;
 
     @ApiModelProperty("盐值")
     private String salt;

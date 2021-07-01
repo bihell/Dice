@@ -60,8 +60,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public void assignRole(User user) {
         user.deleteById();
-        if (!CollectionUtils.isEmpty(user.getRoleIds())) {
-            List<AuthRelRoleUser> authRelRoleUserList = user.getRoleIds().stream()
+        if (!CollectionUtils.isEmpty(user.getRoles())) {
+            List<AuthRelRoleUser> authRelRoleUserList = user.getRoles().stream()
                     .filter(Objects::nonNull)
                     .map(i -> new AuthRelRoleUser().setUserId(user.getId()).setRoleId(i))
                     .collect(Collectors.toList());

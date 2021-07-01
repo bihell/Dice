@@ -7,7 +7,7 @@ import { PageEnum } from '/@/enums/pageEnum';
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, loginApi } from '/@/api/sys/user';
+import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -95,16 +95,8 @@ export const useUserStore = defineStore({
       }
     },
     async getUserInfoAction() {
-      const userInfo = {
-        userId: 1,
-        username: 'Dice',
-        realName: 'Dice Admin',
-        avatar: 'http://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
-        desc: 'manager',
-        password: '123456',
-        token: 'fakeToken1',
-        roles: [{ roleName: 'Super Admin', value: 'super' }],
-      };
+      const userInfo = await getUserInfo();
+      userInfo.roles = [{ roleName: 'Super Admin', value: 'super' }];
       const { roles } = userInfo;
       const roleList = roles.map((item) => item.value) as RoleEnum[];
       this.setUserInfo(userInfo);

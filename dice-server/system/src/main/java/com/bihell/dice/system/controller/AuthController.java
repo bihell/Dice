@@ -5,6 +5,8 @@ import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.common.api.RestResponse;
 import com.bihell.dice.framework.core.pagination.Pagination;
 import com.bihell.dice.framework.core.pagination.Paging;
+import com.bihell.dice.framework.log.annotation.OperationLog;
+import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.system.entity.*;
 import com.bihell.dice.system.mapper.*;
@@ -14,7 +16,9 @@ import com.bihell.dice.system.param.RolePageParam;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.*;
 import com.google.common.base.Preconditions;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
@@ -42,14 +46,14 @@ public class AuthController {
     private final UserMapper userMapper;
 
     /**
-     * 获取用户名 todo 待优化
-     *
-     * @return {@see String}
+     * 获取用户信息
      */
-    @GetMapping("user_info")
-    public RestResponse getUser() {
+    @GetMapping("getUserInfo")
+    @OperationLog(name = "系统用户详情", type = OperationLogType.INFO)
+    @ApiOperation(value = "系统用户详情", notes = "", response = User.class)
+    public ApiResult<User> getUser() {
         User user = userMapper.selectById(LoginUtil.getUserId());
-        return RestResponse.ok(user);
+        return ApiResult.ok(user);
     }
 
     @PostMapping("/user/list")

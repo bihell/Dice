@@ -17,6 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
+@Deprecated
 public class AuthGroup extends BaseEntity<AuthGroup> {
 
     @TableId(value = "group_id")

@@ -8,6 +8,7 @@ const auth: AppRouteModule = {
   component: LAYOUT,
   redirect: '/auth/users',
   meta: {
+    hideMenu: true,
     orderNo: 99,
     icon: 'cib:auth0',
     title: '权限',

@@ -20,6 +20,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
+@Deprecated
 public class AuthRole extends Model<AuthRole> {
 
     @TableId(value = "role_id")

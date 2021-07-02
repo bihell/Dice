@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
+@Deprecated
 public class AuthRelRoleApi extends BaseEntity<AuthRelRoleApi> {
 
     @TableId

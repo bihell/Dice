@@ -22,6 +22,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
+@Deprecated
 public class AuthApi extends Model<AuthApi> {
 
     @TableId(value = "api_id")

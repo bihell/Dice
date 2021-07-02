@@ -17,6 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
+@Deprecated
 public class AuthItem extends BaseEntity<AuthItem> {
 
     @TableId(value = "item_id")

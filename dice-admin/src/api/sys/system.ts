@@ -16,9 +16,12 @@ enum Api {
   AccountList = '/system/getAccountList',
   DeptList = '/system/getDeptList',
   setRoleStatus = '/system/setRoleStatus',
-  MenuList = '/system/getMenuList',
+  MenuTreeList = '/auth/sysPermission/getAllMenuTree',
   RolePageList = '/auth/sysRole/getPageList',
   GetAllRoleList = '/system/getAllRoleList',
+  PermissionAdd = '/auth/sysPermission/add',
+  PermissionUpdate = '/auth/sysPermission/update',
+  PermissionDelete = '/auth/sysPermission/delete',
 }
 
 export const getAccountList = (params: AccountParams) =>
@@ -27,8 +30,8 @@ export const getAccountList = (params: AccountParams) =>
 export const getDeptList = (params?: DeptListItem) =>
   defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
 
-export const getMenuList = (params?: MenuParams) =>
-  defHttp.get<MenuListGetResultModel>({ url: Api.MenuList, params });
+export const getMenuTreeList = (params?: MenuParams) =>
+  defHttp.get<MenuListGetResultModel>({ url: Api.MenuTreeList, params });
 
 export const getRoleListByPage = (params?: RolePageParams) =>
   defHttp.get<RolePageListGetResultModel>({ url: Api.RolePageList, params });
@@ -38,3 +41,11 @@ export const getAllRoleList = (params?: RoleParams) =>
 
 export const setRoleStatus = (id: number, status: string) =>
   defHttp.post({ url: Api.setRoleStatus, params: { id, status } });
+
+export const addPermission = (params: any) => defHttp.post({ url: Api.PermissionAdd, params });
+
+export const updatePermission = (params: any) =>
+  defHttp.post({ url: Api.PermissionUpdate, params });
+
+export const delPermission = (params: any) =>
+  defHttp.post({ url: Api.PermissionDelete + '/' + params.id });

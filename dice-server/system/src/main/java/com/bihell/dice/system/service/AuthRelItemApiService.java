@@ -6,6 +6,7 @@ import com.bihell.dice.system.entity.AuthRelItemApi;
 /**
  * @author haseochen
  */
+@Deprecated
 public interface AuthRelItemApiService extends IService<AuthRelItemApi> {
 
 

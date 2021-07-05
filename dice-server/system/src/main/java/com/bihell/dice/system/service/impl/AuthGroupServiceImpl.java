@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Deprecated
 public class AuthGroupServiceImpl implements AuthGroupService {
 
     private final AuthGroupMapper authGroupMapper;

@@ -6,6 +6,7 @@ import com.bihell.dice.system.entity.AuthRelRoleUser;
 /**
  * @author haseochen
  */
+@Deprecated
 public interface AuthRelRoleUserService extends IService<AuthRelRoleUser> {
 
 

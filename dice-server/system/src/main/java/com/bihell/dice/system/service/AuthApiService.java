@@ -7,6 +7,7 @@ import com.bihell.dice.system.param.ApiPageParam;
 /**
  * @author haseochen
  */
+@Deprecated
 public interface AuthApiService {
 
     /**

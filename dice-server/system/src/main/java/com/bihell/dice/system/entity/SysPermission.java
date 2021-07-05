@@ -43,17 +43,16 @@ public class SysPermission extends Model<SysPermission> {
     private Long parentId;
 
     @ApiModelProperty("路径")
-    private String url;
+    private String routePath;
 
     @ApiModelProperty("唯一编码")
-    @NotBlank(message = "唯一编码不能为空")
     private String code;
 
     @ApiModelProperty("图标")
     private String icon;
 
-    @ApiModelProperty("类型，1：菜单，2：按钮")
-    @NotNull(message = "类型，1：菜单，2：按钮不能为空")
+    @ApiModelProperty("类型，1：目录，2：菜单，3：按钮")
+    @NotNull(message = "类型，1：目录，2：菜单，3：按钮 不能为空")
     private Integer type;
 
     @ApiModelProperty("层级，1：第一级，2：第二级，N：第N级")
@@ -61,7 +60,7 @@ public class SysPermission extends Model<SysPermission> {
     private Integer level;
 
     @ApiModelProperty("状态，0：禁用，1：启用")
-    private Integer state;
+    private Integer status;
 
     @ApiModelProperty("排序")
     private Integer sort;
@@ -82,4 +81,10 @@ public class SysPermission extends Model<SysPermission> {
     @Null(message = "修改时间不用传")
     private LocalDateTime updateTime;
 
+    @ApiModelProperty("组件")
+    private String component;
+
+    private Integer isShow;
+    private Integer keepAlive;
+    private Integer isExt;
 }

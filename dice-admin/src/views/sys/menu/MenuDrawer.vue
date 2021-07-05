@@ -4,44 +4,33 @@
     @register="registerDrawer"
     showFooter
     :title="getTitle"
-    width="500px"
+    width="50%"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm">
-      <template #menu="{ model, field }">
-        <BasicTree
-          v-model:value="model[field]"
-          :treeData="treeData"
-          :replaceFields="{ title: 'menuName', key: 'id' }"
-          checkable
-          toolbar
-          title="菜单分配"
-        />
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" />
   </BasicDrawer>
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './role.data';
+  import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuTreeList } from '/@/api/sys/system';
+  import { addPermission, updatePermission, getMenuTreeList } from '/@/api/sys/system';
 
   export default defineComponent({
-    name: 'RoleDrawer',
-    components: { BasicDrawer, BasicForm, BasicTree },
+    name: 'MenuDrawer',
+    components: { BasicDrawer, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
-      const treeData = ref<TreeItem[]>([]);
+      const id = ref(null);
 
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-        labelWidth: 90,
+      const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+        labelWidth: 100,
         schemas: formSchema,
         showActionButtonGroup: false,
+        baseColProps: { lg: 12, md: 24 },
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
@@ -53,18 +42,28 @@
           setFieldsValue({
             ...data.record,
           });
+          id.value = data.record.id;
         }
-        treeData.value = (await getMenuTreeList()) as any as TreeItem[];
+        const treeData = await getMenuTreeList();
+        updateSchema({
+          field: 'parentId',
+          componentProps: { treeData },
+        });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增角色' : '编辑角色'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增菜单' : '编辑菜单'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
+          values.level = values.type;
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (isUpdate.value) {
+            values.id = id.value;
+            await updatePermission(values);
+          } else {
+            await addPermission(values);
+          }
           closeDrawer();
           emit('success');
         } finally {
@@ -72,13 +71,7 @@
         }
       }
 
-      return {
-        registerDrawer,
-        registerForm,
-        getTitle,
-        handleSubmit,
-        treeData,
-      };
+      return { registerDrawer, registerForm, getTitle, handleSubmit };
     },
   });
 </script>

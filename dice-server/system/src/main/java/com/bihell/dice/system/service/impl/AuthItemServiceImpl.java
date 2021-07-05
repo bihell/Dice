@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Deprecated
 public class AuthItemServiceImpl implements AuthItemService {
     private final AuthItemMapper authItemMapper;
     private final AuthRelItemApiMapper authRelItemApiMapper;

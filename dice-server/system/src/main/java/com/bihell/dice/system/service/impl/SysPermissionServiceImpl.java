@@ -99,7 +99,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public List<SysPermission> getAllMenuList() throws Exception {
-        SysPermission sysPermission = new SysPermission().setState(StateEnum.ENABLE.getCode());
+        SysPermission sysPermission = new SysPermission().setStatus(StateEnum.ENABLE.getCode());
         // 获取所有已启用的权限列表
         return sysPermissionMapper.selectList(new QueryWrapper(sysPermission));
     }
@@ -114,9 +114,9 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public List<SysPermissionTreeVo> convertSysPermissionTreeVoList(List<SysPermission> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            throw new IllegalArgumentException("SysPermission列表不能为空");
-        }
+         if (CollectionUtils.isEmpty(list)) {
+             throw new IllegalArgumentException("SysPermission列表不能为空");
+         }
         // 按level分组获取map
         Map<Integer, List<SysPermission>> map = list.stream().collect(Collectors.groupingBy(SysPermission::getLevel));
         List<SysPermissionTreeVo> treeVos = new ArrayList<>();
@@ -188,7 +188,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
         List<Integer> levels = Arrays.asList(MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode());
         Wrapper wrapper = lambdaQuery()
                 .in(SysPermission::getLevel, levels)
-                .eq(SysPermission::getState, StateEnum.ENABLE.getCode())
+                .eq(SysPermission::getStatus, StateEnum.ENABLE.getCode())
                 .getWrapper();
 
 

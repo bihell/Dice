@@ -10,5 +10,6 @@ import org.springframework.stereotype.Service;
  * @author haseochen
  */
 @Service
+@Deprecated
 public class AuthRelRoleUserServiceImpl extends ServiceImpl<AuthRelRoleUserMapper, AuthRelRoleUser> implements AuthRelRoleUserService {
 }

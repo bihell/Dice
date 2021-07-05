@@ -20,6 +20,7 @@ import java.util.Map;
 @Service
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Deprecated
 public class AuthContentServiceImpl implements AuthContentService {
 
     private final AuthContentMapper authContentMapper;

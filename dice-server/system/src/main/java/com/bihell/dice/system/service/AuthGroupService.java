@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author haseochen
  */
+@Deprecated
 public interface AuthGroupService {
 
     /**

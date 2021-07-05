@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Deprecated
 public class AuthRoleServiceImpl extends BaseServiceImpl<AuthRoleMapper,AuthRole> implements AuthRoleService {
     private final AuthItemMapper authItemMapper;
     private final AuthRelRoleApiService authRelRoleApiService;

@@ -5,6 +5,7 @@ import com.bihell.dice.system.entity.AuthItem;
 /**
  * @author haseochen
  */
+@Deprecated
 public interface AuthItemService {
 
     /**

@@ -28,6 +28,7 @@ import java.util.Map;
 @Service
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Deprecated
 public class AuthApiServiceImpl extends BaseServiceImpl<AuthApiMapper, AuthApi> implements AuthApiService {
 
     private final AuthApiMapper authApiMapper;

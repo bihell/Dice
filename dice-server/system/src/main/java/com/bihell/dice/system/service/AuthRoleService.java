@@ -7,6 +7,7 @@ import com.bihell.dice.system.param.RolePageParam;
 /**
  * @author haseochen
  */
+@Deprecated
 public interface AuthRoleService {
 
     AuthRole saveRole(AuthRole authRole);

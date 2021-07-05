@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class SysPermissionTreeVo implements Serializable {
     private Long parentId;
 
     @ApiModelProperty("路径")
-    private String url;
+    private String routePath;
 
     @ApiModelProperty("唯一编码")
     private String code;
@@ -58,12 +59,18 @@ public class SysPermissionTreeVo implements Serializable {
     private Integer version;
 
     @ApiModelProperty("创建时间")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     @ApiModelProperty("修改时间")
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     @ApiModelProperty("子节点集合")
     private List<SysPermissionTreeVo> children;
 
+    @ApiModelProperty("组件")
+    private String component;
+
+    private Integer isShow;
+    private Integer keepAlive;
+    private Integer isExt;
 }

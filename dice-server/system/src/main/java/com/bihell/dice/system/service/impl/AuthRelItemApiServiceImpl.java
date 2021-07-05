@@ -10,5 +10,6 @@ import org.springframework.stereotype.Service;
  * @author haseochen
  */
 @Service
+@Deprecated
 public class AuthRelItemApiServiceImpl extends ServiceImpl<AuthRelItemApiMapper, AuthRelItemApi> implements AuthRelItemApiService {
 }

@@ -52,9 +52,9 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-const isDir = (type: string) => type === 1;
-const isMenu = (type: string) => type === 2;
-const isButton = (type: string) => type === 3;
+const isDir = (type: number) => type === 1;
+const isMenu = (type: number) => type === 2;
+const isButton = (type: number) => type === 3;
 
 export const searchFormSchema: FormSchema[] = [
   // todo

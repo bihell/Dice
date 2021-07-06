@@ -43,7 +43,7 @@ public class SysRolePermission extends Model<SysRolePermission> {
     private Long permissionId;
 
     @ApiModelProperty("状态，0：禁用，1：启用")
-    private Integer state;
+    private Integer status;
 
     @ApiModelProperty("备注")
     private String remark;

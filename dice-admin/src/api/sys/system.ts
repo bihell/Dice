@@ -18,11 +18,22 @@ enum Api {
   setRoleStatus = '/system/setRoleStatus',
   MenuTreeList = '/auth/sysPermission/getAllMenuTree',
   RolePageList = '/auth/sysRole/getPageList',
+  UpdateRolePermission = '/auth/sysRole/updateSysRolePermission',
+  RoleAdd = '/auth/sysRole/add',
   GetAllRoleList = '/system/getAllRoleList',
+  GetThreeLevelPermissionIdsByRoleId = '/auth/sysPermission/getThreeLevelPermissionIdsByRoleId',
   PermissionAdd = '/auth/sysPermission/add',
   PermissionUpdate = '/auth/sysPermission/update',
   PermissionDelete = '/auth/sysPermission/delete',
 }
+
+export const getThreeLevelPermissionIdsByRoleId = (roleId: Number) =>
+  defHttp.get({ url: Api.GetThreeLevelPermissionIdsByRoleId + '/' + roleId });
+
+export const addRole = (params: any) => defHttp.post({ url: Api.RoleAdd, params });
+
+export const updateRolePermission = (params: any) =>
+  defHttp.post({ url: Api.UpdateRolePermission, params });
 
 export const getAccountList = (params: AccountParams) =>
   defHttp.get<AccountListGetResultModel>({ url: Api.AccountList, params });

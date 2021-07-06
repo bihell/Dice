@@ -51,8 +51,8 @@ public class SysPermission extends Model<SysPermission> {
     @ApiModelProperty("图标")
     private String icon;
 
-    @ApiModelProperty("类型，1：目录，2：菜单，3：按钮")
-    @NotNull(message = "类型，1：目录，2：菜单，3：按钮 不能为空")
+    @ApiModelProperty("类型，0：目录，1：菜单，2：按钮")
+    @NotNull(message = "类型，0：目录，1：菜单，2：按钮 不能为空")
     private Integer type;
 
     @ApiModelProperty("层级，1：第一级，2：第二级，N：第N级")

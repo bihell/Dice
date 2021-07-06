@@ -44,7 +44,7 @@ public class SysRoleController extends BaseController {
      * 添加系统角色
      */
     @PostMapping("/add")
-    @RequiresPermissions("sys:role:add")
+//    @RequiresPermissions("sys:role:add")
     @OperationLog(name = "添加系统角色", type = OperationLogType.ADD)
     @ApiOperation(value = "添加系统角色", response = ApiResult.class)
     public ApiResult<Boolean> addSysRole(@Validated(Add.class) @RequestBody SysRole sysRole) throws Exception {
@@ -117,7 +117,7 @@ public class SysRoleController extends BaseController {
      * 修改系统角色权限
      */
     @PostMapping("/updateSysRolePermission")
-    @RequiresPermissions("sys:role-permission:update")
+//    @RequiresPermissions("sys:role-permission:update")
     @OperationLog(name = "修改系统角色权限", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改系统角色权限", response = ApiResult.class)
     public ApiResult<Boolean> updateSysRolePermission(@Validated @RequestBody UpdateSysRolePermissionParam param) throws Exception {

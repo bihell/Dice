@@ -45,7 +45,7 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
             SysRolePermission sysRolePermission = new SysRolePermission()
                     .setRoleId(roleId)
                     .setPermissionId(permissionId)
-                    .setState(StateEnum.ENABLE.getCode());
+                    .setStatus(StateEnum.ENABLE.getCode());
             list.add(sysRolePermission);
         });
         // 批量保存角色权限中间表
@@ -57,7 +57,7 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         Wrapper wrapper = lambdaQuery()
                 .select(SysRolePermission::getPermissionId)
                 .eq(SysRolePermission::getRoleId,roleId)
-                .eq(SysRolePermission::getState,StateEnum.ENABLE.getCode())
+                .eq(SysRolePermission::getStatus,StateEnum.ENABLE.getCode())
                 .getWrapper();
         return sysRolePermissionMapper.selectObjs(wrapper);
     }
@@ -76,7 +76,7 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
             sysRolePermission
                     .setRoleId(roleId)
                     .setPermissionId(permissionId)
-                    .setState(StateEnum.ENABLE.getCode());
+                    .setStatus(StateEnum.ENABLE.getCode());
             list.add(sysRolePermission);
         });
         return saveBatch(list, 20);

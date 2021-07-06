@@ -174,7 +174,7 @@ public class SysPermissionController extends BaseController {
      * @return
      */
     @GetMapping("/getThreeLevelPermissionIdsByRoleId/{roleId}")
-    @RequiresPermissions("sys:permission:three-ids-by-role-id")
+//    @RequiresPermissions("sys:permission:three-ids-by-role-id")
     @OperationLog(name = "根据角色id获取该对应的所有三级权限ID", type = OperationLogType.OTHER_QUERY)
     @ApiOperation(value = "根据角色id获取该对应的所有三级权限ID", response = ApiResult.class)
     public ApiResult<List<Long>> getPermissionIdsByRoleId(@PathVariable("roleId") Long roleId) throws Exception {

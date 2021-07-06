@@ -14,7 +14,7 @@ import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
   AccountList = '/system/getAccountList',
-  DeptList = '/system/getDeptList',
+  DeptTreeList = '/auth/sysDepartment/getDepartmentTree',
   setRoleStatus = '/system/setRoleStatus',
   MenuTreeList = '/auth/sysPermission/getAllMenuTree',
   RolePageList = '/auth/sysRole/getPageList',
@@ -25,7 +25,13 @@ enum Api {
   PermissionAdd = '/auth/sysPermission/add',
   PermissionUpdate = '/auth/sysPermission/update',
   PermissionDelete = '/auth/sysPermission/delete',
+  DeptAdd = '/auth/sysDepartment/add',
+  DeptUpdate = '/auth/sysDepartment/update',
 }
+
+export const addDept = (params: any) => defHttp.post({ url: Api.DeptAdd, params });
+
+export const updateDept = (params: any) => defHttp.post({ url: Api.DeptUpdate, params });
 
 export const getThreeLevelPermissionIdsByRoleId = (roleId: Number) =>
   defHttp.get({ url: Api.GetThreeLevelPermissionIdsByRoleId + '/' + roleId });
@@ -38,8 +44,8 @@ export const updateRolePermission = (params: any) =>
 export const getAccountList = (params: AccountParams) =>
   defHttp.get<AccountListGetResultModel>({ url: Api.AccountList, params });
 
-export const getDeptList = (params?: DeptListItem) =>
-  defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
+export const getDeptTreeList = (params?: DeptListItem) =>
+  defHttp.get<DeptListGetResultModel>({ url: Api.DeptTreeList, params });
 
 export const getMenuTreeList = (params?: MenuParams) =>
   defHttp.get<MenuListGetResultModel>({ url: Api.MenuTreeList, params });

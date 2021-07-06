@@ -7,27 +7,26 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <pre>
- * 部门TreeVo
+ * 部门 查询结果对象
  * </pre>
  *
  * @author geekidea
- * @since 2019-11-1
+ * @date 2019-10-24
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SysDepartmentTreeVo对象", description = "部门")
-public class SysDepartmentTreeVo implements Serializable {
-    private static final long serialVersionUID = -2250233632748939400L;
+@ApiModel(value = "SysDepartmentQueryVo对象", description = "部门查询参数")
+public class SysDepartmentQueryVo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")
     private Long id;
 
     @ApiModelProperty("部门名称")
-    private String deptName;
+    private String name;
 
     @ApiModelProperty("父id")
     private Long parentId;
@@ -49,7 +48,5 @@ public class SysDepartmentTreeVo implements Serializable {
 
     @ApiModelProperty("修改时间")
     private Date updateTime;
-
-    private List<SysDepartmentTreeVo> children;
 
 }

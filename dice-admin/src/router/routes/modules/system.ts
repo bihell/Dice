@@ -52,15 +52,15 @@ const system: AppRouteModule = {
       },
       component: () => import('/@/views/sys/menu/index.vue'),
     },
-    // {
-    //   path: 'dept',
-    //   name: 'DeptManagement',
-    //   meta: {
-    //     title: t('routes.demo.system.dept'),
-    //     ignoreKeepAlive: true,
-    //   },
-    //   component: () => import('/@/views/demo/system/dept/index.vue'),
-    // },
+    {
+      path: 'dept',
+      name: 'DeptManagement',
+      meta: {
+        title: '部门管理',
+        ignoreKeepAlive: true,
+      },
+      component: () => import('/@/views/sys/dept/index.vue'),
+    },
     // {
     //   path: 'changePassword',
     //   name: 'ChangePassword',

@@ -13,7 +13,7 @@ import com.bihell.dice.framework.shiro.util.SaltUtil;
 import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
 import com.bihell.dice.framework.util.PasswordUtil;
 import com.bihell.dice.system.convert.SysUserConvert;
-import com.bihell.dice.system.entity.User;
+import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.exception.VerificationCodeException;
 import com.bihell.dice.system.param.LoginParam;
 import com.bihell.dice.system.service.LoginService;
@@ -66,7 +66,7 @@ public class LoginServiceImpl implements LoginService {
 
         String username = loginParam.getUsername();
         // 从数据库中获取登录用户信息
-        User sysUser = new User().selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username).or().eq(User::getEmail, username));
+        SysUser sysUser = new SysUser().selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, username).or().eq(SysUser::getEmail, username));
         if (sysUser == null) {
             log.error("登录失败,loginParam:{}", loginParam);
             throw new AuthenticationException("用户名或密码错误");

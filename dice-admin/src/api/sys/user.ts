@@ -8,6 +8,15 @@ enum Api {
   Logout = '/auth/logout',
   GetUserInfo = '/auth/getUserInfo',
   GetPermCode = '/getPermCode',
+  USER_LIST = '/auth/user/getPageList',
+}
+
+export function getUserList(params: any) {
+  return defHttp.request({
+    url: Api.USER_LIST,
+    method: 'GET',
+    params,
+  });
 }
 
 /**

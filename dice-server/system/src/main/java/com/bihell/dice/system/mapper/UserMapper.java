@@ -3,9 +3,10 @@ package com.bihell.dice.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bihell.dice.system.entity.User;
+import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.param.QueryParam;
 import com.bihell.dice.system.param.UserPageParam;
+import com.bihell.dice.system.vo.SysUserQueryVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,22 +18,23 @@ import java.util.Map;
  * @author bihell
  * @since 2017/7/12 21:34
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<SysUser> {
 
-    IPage<User> queryByParam(@Param("pg") Page<User> page, @Param("queryParam") QueryParam queryParam);
+    IPage<SysUser> queryByParam(@Param("pg") Page<SysUser> page, @Param("queryParam") QueryParam queryParam);
 
 
-//    /**
-//     * 查询用户列表
-//     * @param page
-//     * @param userPageParam
-//     * @return
-//     */
-//    IPage<User> getUserPageList(@Param("page") Page page, @Param("param") UserPageParam userPageParam);
+    /**
+     * 获取分页对象
+     *
+     * @param page
+     * @param sysUserPageParam
+     * @return
+     */
+    IPage<SysUserQueryVo> getSysUserPageList(@Param("page") Page page, @Param("param") UserPageParam sysUserPageParam);
 
     @Insert("INSERT INTO USER(username, password) VALUES(#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})")
     int insertByMap(Map<String, Object> map);
 
     @Insert("INSERT INTO USER(username, password) VALUES(#{username}, #{password})")
-    int insertByObject(User user);
+    int insertByObject(SysUser sysUser);
 }

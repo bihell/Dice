@@ -1,11 +1,10 @@
 package com.bihell.dice.system.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.framework.core.pagination.Paging;
-import com.bihell.dice.system.entity.User;
-import com.bihell.dice.system.param.QueryParam;
+import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.param.UserPageParam;
+import com.bihell.dice.system.vo.SysUserQueryVo;
 
 /**
  * User Service 接口
@@ -13,13 +12,13 @@ import com.bihell.dice.system.param.UserPageParam;
  * @author bihell
  * @since 2017/7/12 21:25
  */
-public interface UserService extends IService<User> {
+public interface UserService extends IService<SysUser> {
 
-    boolean addUser(User user);
+    boolean addUser(SysUser sysUser);
 
-    boolean updateUser(User user);
+    boolean updateUser(SysUser sysUser);
 
-    User getUserSingle(Integer id);
+    SysUser getUserSingle(Integer id);
 
     /**
      * 修改用户信息
@@ -37,12 +36,12 @@ public interface UserService extends IService<User> {
 //     */
 //    IPage<User> getUserList(QueryParam queryParam);
 
-    void assignRole(User user);
+    void assignRole(SysUser sysUser);
 
     /**
      * 获取用户列表
      * @param userPageParam
      * @return
      */
-    Paging<User> getUserPageList(UserPageParam userPageParam);
+    Paging<SysUserQueryVo> getUserPageList(UserPageParam userPageParam);
 }

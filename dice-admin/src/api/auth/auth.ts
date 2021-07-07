@@ -1,17 +1,8 @@
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
-  USER_LIST = '/auth/user/list',
   API_LIST = '/auth/api/list',
   Role_LIST = '/auth/role/list',
-}
-
-export function apiUserList(params: any) {
-  return defHttp.request({
-    url: Api.USER_LIST,
-    method: 'POST',
-    params,
-  });
 }
 
 export function apiApiList(params: any) {

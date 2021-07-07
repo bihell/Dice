@@ -13,15 +13,15 @@ const system: AppRouteModule = {
     title: '系统',
   },
   children: [
-    // {
-    //   path: 'account',
-    //   name: 'AccountManagement',
-    //   meta: {
-    //     title: t('routes.demo.system.account'),
-    //     ignoreKeepAlive: false,
-    //   },
-    //   component: () => import('/@/views/demo/system/account/index.vue'),
-    // },
+    {
+      path: 'account',
+      name: 'AccountManagement',
+      meta: {
+        title: '用户管理',
+        ignoreKeepAlive: false,
+      },
+      component: () => import('/@/views/sys/account/index.vue'),
+    },
     // {
     //   path: 'account_detail/:id',
     //   name: 'AccountDetail',

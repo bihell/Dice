@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class User extends Model<User> {
+public class SysUser extends Model<SysUser> {
 
 
     @TableId
@@ -40,10 +41,10 @@ public class User extends Model<User> {
     private String email;
 
     @ApiModelProperty("用户显示名称")
-    private String screenName;
+    private String nickname;
 
     @ApiModelProperty("用户创建时间")
-    private LocalDateTime created;
+    private LocalDateTime createTime;
 
     @ApiModelProperty("最后登陆时间")
     private LocalDateTime logged;
@@ -57,4 +58,7 @@ public class User extends Model<User> {
     @ApiModelProperty("盐值")
     private String salt;
 
+    @ApiModelProperty("角色id")
+    @NotNull(message = "角色id不能为空")
+    private Long roleId;
 }

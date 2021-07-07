@@ -1,7 +1,7 @@
 package com.bihell.dice.system.convert;
 
 import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
-import com.bihell.dice.system.entity.User;
+import com.bihell.dice.system.entity.SysUser;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -16,9 +16,9 @@ public interface SysUserConvert {
     /**
      * 系统用户实体对象转换成登录用户VO对象
      *
-     * @param user
+     * @param sysUser
      * @return
      */
-    LoginSysUserVo sysUserToLoginSysUserVo(User user);
+    LoginSysUserVo sysUserToLoginSysUserVo(SysUser sysUser);
 
 }

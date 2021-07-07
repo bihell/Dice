@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserMapperTests {
+public class SysUserMapperTests {
 
 
     @Resource

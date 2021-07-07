@@ -1,16 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bihell.dice.system.mapper.UserMapper">
-    <resultMap id="ResultMap" type="com.bihell.dice.system.entity.User">
+    <resultMap id="ResultMap" type="com.bihell.dice.system.entity.SysUser">
         <id column="id" property="id" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="getUserPageList" parameterType="com.bihell.dice.blog.model.params.QueryParam" resultMap="ResultMap">
-        select id,username,screen_name from user as t
-        <where>
-            <if test="param.criteria != null and param.criteria.length()>0">and (t.id = #{param.criteria} or t.username like concat("%",#{param.criteria},"%") or t.screen_name like concat("%",#{param.criteria},"%"))</if>
-            <if test="param.roleId != null">and t.id in (select distinct user_id from auth_rel_role_user where deleted=0 and role_id=#{param.roleId})</if>
-        </where>
-        ORDER BY t.id desc
+    <sql id="BaseQuerySelect">
+        select
+            u.id, u.username, u.nickname, u.avatar, u.remark, u.email,
+            u.status, u.dept_id, u.role_id, u.deleted, u.create_time, u.update_time,
+            d.dept_name as deptName,
+            r.role_name as roleName
+        from sys_user u
+                 inner join sys_department d on u.dept_id = d.id
+                 inner join sys_role r on u.role_id = r.id
+        where u.deleted = 0
+    </sql>
+
+
+    <select id="getSysUserPageList" resultType="com.bihell.dice.system.vo.SysUserQueryVo">
+        <include refid="BaseQuerySelect"/>
+        <if test="param.deptId != null">
+            and u.dept_id = #{param.deptId}
+        </if>
+        <if test="param.roleId != null">
+            and u.role_id = #{param.roleId}
+        </if>
+        <if test="param.status != null">
+            and u.status = #{param.status}
+        </if>
+        <if test="param.createTimeStart != null">
+            and date_format(u.create_time,'%Y-%m-%d') >= date_format(#{param.createTimeStart},'%Y-%m-%d')
+        </if>
+        <if test="param.createTimeEnd != null">
+            and date_format(u.create_time,'%Y-%m-%d') &lt;= date_format(#{param.createTimeEnd},'%Y-%m-%d')
+        </if>
+        <if test="param.keyword != null and param.keyword != ''">
+            and (
+            u.username like concat('%', #{param.keyword} ,'%') or
+            u.nickname like concat('%', #{param.keyword} ,'%')
+            )
+        </if>
+        <if test="param.username != null and param.username != ''">
+            and u.username like concat('%', #{param.username} ,'%')
+        </if>
+        <if test="param.nickname != null and param.nickname != ''">
+            and u.nickname like concat('%', #{param.nickname} ,'%')
+        </if>
     </select>
 
 </mapper>

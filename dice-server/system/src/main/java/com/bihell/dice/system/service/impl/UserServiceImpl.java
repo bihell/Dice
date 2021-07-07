@@ -12,12 +12,14 @@ import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.shiro.util.SaltUtil;
 import com.bihell.dice.framework.util.PasswordUtil;
+import com.bihell.dice.framework.util.PhoneUtil;
 import com.bihell.dice.system.entity.AuthRelRoleUser;
-import com.bihell.dice.system.entity.User;
+import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.mapper.UserMapper;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.AuthRelRoleUserService;
 import com.bihell.dice.system.service.UserService;
+import com.bihell.dice.system.vo.SysUserQueryVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -41,29 +43,34 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implements UserService {
 
     private final UserMapper userMapper;
     private final AuthRelRoleUserService authRelRoleUserService;
     private final DiceProperties diceProperties;
 
     @Override
-    public Paging<User> getUserPageList(UserPageParam userPageParam) {
-        Page<User> page =  new PageInfo<>(userPageParam, OrderItem.desc(getLambdaColumn(User::getLogged)));
-        LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda()
-                .select(User.class, info -> !"password".equals(info.getProperty()))
-                .like(!StringUtils.isEmpty(userPageParam.getCriteria()),User::getUsername, userPageParam.getCriteria());
-        IPage<User> iPage = userMapper.selectPage(page, wrapper);
+    public Paging<SysUserQueryVo> getUserPageList(UserPageParam userPageParam) {
+        Page<SysUserQueryVo> page = new PageInfo<>(userPageParam, OrderItem.desc(getLambdaColumn(SysUser::getCreateTime)));
+        IPage<SysUserQueryVo> iPage = userMapper.getSysUserPageList(page, userPageParam);
+
+        // 手机号码脱敏处理
+        if (iPage != null && org.apache.commons.collections4.CollectionUtils.isNotEmpty(iPage.getRecords())) {
+            iPage.getRecords().forEach(vo -> {
+                vo.setPhone(PhoneUtil.desensitize(vo.getPhone()));
+            });
+        }
+
         return new Paging(iPage);
     }
 
     @Override
-    public void assignRole(User user) {
-        user.deleteById();
-        if (!CollectionUtils.isEmpty(user.getRoles())) {
-            List<AuthRelRoleUser> authRelRoleUserList = user.getRoles().stream()
+    public void assignRole(SysUser sysUser) {
+        sysUser.deleteById();
+        if (!CollectionUtils.isEmpty(sysUser.getRoles())) {
+            List<AuthRelRoleUser> authRelRoleUserList = sysUser.getRoles().stream()
                     .filter(Objects::nonNull)
-                    .map(i -> new AuthRelRoleUser().setUserId(user.getId()).setRoleId(i))
+                    .map(i -> new AuthRelRoleUser().setUserId(sysUser.getId()).setRoleId(i))
                     .collect(Collectors.toList());
             authRelRoleUserService.saveBatch(authRelRoleUserList);
         }
@@ -71,9 +78,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addUser(User user) {
+    public boolean addUser(SysUser sysUser) {
         // 校验用户名是否存在
-        boolean isExists = user.selectCount(new QueryWrapper<User>().lambda().eq(User::getUsername, user.getUsername()).or().eq(User::getEmail, user.getEmail())) > 0;
+        boolean isExists = sysUser.selectCount(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, sysUser.getUsername()).or().eq(SysUser::getEmail, sysUser.getEmail())) > 0;
         if (isExists) {
             throw new BusinessException("用户名或邮箱已存在");
         }
@@ -83,7 +90,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
         // 生成盐值
         String salt = null;
-        String password = user.getPassword();
+        String password = sysUser.getPassword();
         // 如果密码为空，则设置默认密码
         if (StringUtils.isBlank(password)) {
             salt = diceProperties.getLoginInitSalt();
@@ -92,8 +99,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
             salt = SaltUtil.generateSalt();
         }
         // 密码加密
-        user.setSalt(salt);
-        user.setPassword(PasswordUtil.encrypt(password, salt));
+        sysUser.setSalt(salt);
+        sysUser.setPassword(PasswordUtil.encrypt(password, salt));
 
         // 如果头像为空，则设置默认头像 todo
 //        if (StringUtils.isBlank(sysUser.getHead())) {
@@ -101,32 +108,32 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 //        }
 
         // 保存系统用户
-        return user.insert();
+        return sysUser.insert();
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateUser(User user) {
-        if (user.selectCount(new QueryWrapper<User>()
-                .ne("id", user.getId())
+    public boolean updateUser(SysUser sysUser) {
+        if (sysUser.selectCount(new QueryWrapper<SysUser>()
+                .ne("id", sysUser.getId())
                 .and(field -> {
-                    field.eq("username", user.getUsername()).or().eq("email", user.getEmail());
+                    field.eq("username", sysUser.getUsername()).or().eq("email", sysUser.getEmail());
                 })) < 1) {
             String salt = SaltUtil.generateSalt();
-            user.setSalt(salt);
-            String password = user.getPassword();
-            user.setPassword(PasswordUtil.encrypt(password, salt));
-            return user.updateById();
+            sysUser.setSalt(salt);
+            String password = sysUser.getPassword();
+            sysUser.setPassword(PasswordUtil.encrypt(password, salt));
+            return sysUser.updateById();
         } else {
             throw new BusinessException("用户名或邮箱已存在");
         }
     }
 
     @Override
-    public User getUserSingle(Integer id) {
-        LambdaQueryWrapper<User> wrapper = new QueryWrapper<User>().lambda()
-                .select(User.class, info -> !"password".equals(info.getProperty()))
-                .eq(User::getId, id);
+    public SysUser getUserSingle(Integer id) {
+        LambdaQueryWrapper<SysUser> wrapper = new QueryWrapper<SysUser>().lambda()
+                .select(SysUser.class, info -> !"password".equals(info.getProperty()))
+                .eq(SysUser::getId, id);
         return userMapper.selectOne(wrapper);
     }
 
@@ -140,14 +147,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      */
     @Override
     public boolean resetUser(String oldUsername, String newUsername, String email) {
-        User user = new User().selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, oldUsername));
-        if (null == user) {
+        SysUser sysUser = new SysUser().selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, oldUsername));
+        if (null == sysUser) {
             throw new TipException("该用户名不存在");
         }
 
-        user.setUsername(newUsername);
-        user.setEmail(email);
+        sysUser.setUsername(newUsername);
+        sysUser.setEmail(email);
 
-        return user.updateById();
+        return sysUser.updateById();
     }
 }

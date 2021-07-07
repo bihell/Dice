@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserServiceTests {
+public class SysUserServiceTests {
 
     @Autowired
     private UserService userService;

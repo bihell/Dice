@@ -13,12 +13,10 @@ import com.bihell.dice.system.mapper.*;
 import com.bihell.dice.system.param.ApiPageParam;
 import com.bihell.dice.system.param.QueryParam;
 import com.bihell.dice.system.param.RolePageParam;
-import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.*;
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
@@ -50,16 +48,10 @@ public class AuthController {
      */
     @GetMapping("getUserInfo")
     @OperationLog(name = "系统用户详情", type = OperationLogType.INFO)
-    @ApiOperation(value = "系统用户详情", notes = "", response = User.class)
-    public ApiResult<User> getUser() {
-        User user = userMapper.selectById(LoginUtil.getUserId());
-        return ApiResult.ok(user);
-    }
-
-    @PostMapping("/user/list")
-    public ApiResult<Paging<User>> list(@Validated @RequestBody UserPageParam userPageParam) {
-        Paging<User> paging = userService.getUserPageList(userPageParam);
-        return ApiResult.ok(paging);
+    @ApiOperation(value = "系统用户详情", notes = "", response = SysUser.class)
+    public ApiResult<SysUser> getUser() {
+        SysUser sysUser = userMapper.selectById(LoginUtil.getUserId());
+        return ApiResult.ok(sysUser);
     }
 
     /**
@@ -67,12 +59,12 @@ public class AuthController {
      */
     @GetMapping("/user/list/all")
     public RestResponse getAllUsers(QueryParam queryParam) {
-        return RestResponse.ok(new Pagination<User>(userMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
+        return RestResponse.ok(new Pagination<SysUser>(userMapper.queryByParam(new Page<>(queryParam.getPageNum(), queryParam.getPageSize()), queryParam)));
     }
 
     @PostMapping("/user/assign/role")
-    public RestResponse assignRole(@RequestBody User user) {
-        userService.assignRole(user);
+    public RestResponse assignRole(@RequestBody SysUser sysUser) {
+        userService.assignRole(sysUser);
         return RestResponse.ok();
     }
 

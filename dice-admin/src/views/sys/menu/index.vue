@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 新增菜单 </a-button>
       </template>
@@ -27,10 +27,10 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, nextTick } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { delPermission, getMenuTreeList } from "/@/api/sys/system";
+  import { delPermission, getMenuTreeList } from '/@/api/sys/system';
 
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
@@ -42,7 +42,7 @@
     components: { BasicTable, MenuDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
+      const [registerTable, { reload, expandAll }] = useTable({
         title: '菜单列表',
         api: getMenuTreeList,
         columns,
@@ -50,6 +50,7 @@
           labelWidth: 120,
           schemas: searchFormSchema,
         },
+        isTreeTable: true,
         pagination: false,
         striped: false,
         useSearchForm: true,
@@ -88,6 +89,10 @@
         reload();
       }
 
+      function onFetchSuccess() {
+        nextTick(expandAll);
+      }
+
       return {
         registerTable,
         registerDrawer,
@@ -95,6 +100,7 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        onFetchSuccess,
       };
     },
   });

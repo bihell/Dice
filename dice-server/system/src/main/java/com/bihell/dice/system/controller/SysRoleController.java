@@ -68,7 +68,7 @@ public class SysRoleController extends BaseController {
      * 删除系统角色
      */
     @PostMapping("/delete/{id}")
-    @RequiresPermissions("sys:role:delete")
+//    @RequiresPermissions("sys:role:delete")
     @OperationLog(name = "删除系统角色", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除系统角色", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysRole(@PathVariable("id") Long id) throws Exception {
@@ -105,8 +105,8 @@ public class SysRoleController extends BaseController {
      *
      * @return
      */
-    @PostMapping("/getList")
-    @RequiresPermissions("sys:role:list")
+    @GetMapping ("/getList")
+//    @RequiresPermissions("sys:role:list")
     @OperationLog(name = "系统角色列表", type = OperationLogType.LIST)
     @ApiOperation(value = "系统角色列表", response = SysRole.class)
     public ApiResult<List<SysRole>> getRoleList() {

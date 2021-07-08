@@ -13,15 +13,22 @@ import com.bihell.dice.framework.shiro.util.SaltUtil;
 import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
 import com.bihell.dice.framework.util.PasswordUtil;
 import com.bihell.dice.system.convert.SysUserConvert;
+import com.bihell.dice.system.entity.SysDepartment;
+import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.entity.SysUser;
+import com.bihell.dice.system.enums.StateEnum;
 import com.bihell.dice.system.exception.VerificationCodeException;
 import com.bihell.dice.system.param.LoginParam;
 import com.bihell.dice.system.service.LoginService;
+import com.bihell.dice.system.service.SysDepartmentService;
+import com.bihell.dice.system.service.SysRolePermissionService;
+import com.bihell.dice.system.service.SysRoleService;
 import com.bihell.dice.system.vo.LoginSysUserTokenVo;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -35,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -58,66 +66,77 @@ public class LoginServiceImpl implements LoginService {
     @Lazy
     private final  RedisTemplate redisTemplate;
 
+    @Lazy
+    @Autowired
+    private SysDepartmentService sysDepartmentService;
+
+    @Lazy
+    @Autowired
+    private SysRolePermissionService sysRolePermissionService;
+
+    @Lazy
+    @Autowired
+    private SysRoleService sysRoleService;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public LoginSysUserTokenVo login(LoginParam loginParam) {
+    public LoginSysUserTokenVo login(LoginParam loginParam) throws Exception {
         // 校验验证码
         checkVerifyCode(loginParam.getVerifyToken(), loginParam.getCode());
 
         String username = loginParam.getUsername();
         // 从数据库中获取登录用户信息
-        SysUser sysUser = new SysUser().selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, username).or().eq(SysUser::getEmail, username));
+        SysUser sysUser = new SysUser().selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, username).or().eq(SysUser::getEmail, username));;
         if (sysUser == null) {
             log.error("登录失败,loginParam:{}", loginParam);
             throw new AuthenticationException("用户名或密码错误");
         }
-        // todo
-        // if (StateEnum.DISABLE.getCode().equals(sysUser.getState())) {
-        //     throw new AuthenticationException("账号已禁用");
-        // }
+        if (StateEnum.DISABLE.getCode().equals(sysUser.getStatus())) {
+            throw new AuthenticationException("账号已禁用");
+        }
 
         // 实际项目中，前端传过来的密码应先加密
         // 原始密码明文：123456
         // 原始密码前端加密：sha256(123456)
         // 后台加密规则：sha256(sha256(123456) + salt)
         String encryptPassword = PasswordUtil.encrypt(loginParam.getPassword(), sysUser.getSalt());
-        if (!encryptPassword.equals(sysUser.getPassword())) {
+        if (!encryptPassword.equals(sysUser.getPwd())) {
             throw new AuthenticationException("用户名或密码错误");
         }
 
         // 将系统用户对象转换成登录用户对象
         LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(sysUser);
 
-        // 获取部门 todo
-//        SysDepartment sysDepartment = sysDepartmentService.getById(sysUser.getDepartmentId());
-//        if (sysDepartment == null) {
-//            throw new AuthenticationException("部门不存在");
-//        }
-//        if (!StateEnum.ENABLE.getCode().equals(sysDepartment.getState())) {
-//            throw new AuthenticationException("部门已禁用");
-//        }
-//        loginSysUserVo.setDepartmentId(sysDepartment.getId())
-//                .setDepartmentName(sysDepartment.getName());
+        // 获取部门
+        SysDepartment sysDepartment = sysDepartmentService.getById(sysUser.getDeptId());
+        if (sysDepartment == null) {
+            throw new AuthenticationException("部门不存在");
+        }
+        if (!StateEnum.ENABLE.getCode().equals(sysDepartment.getStatus())) {
+            throw new AuthenticationException("部门已禁用");
+        }
+        loginSysUserVo.setDepartmentId(sysDepartment.getId())
+                .setDepartmentName(sysDepartment.getDeptName());
 
-        // 获取当前用户角色 todo
-//        Long roleId = sysUser.getRoleId();
-//        SysRole sysRole = sysRoleService.getById(roleId);
-//        if (sysRole == null) {
-//            throw new AuthenticationException("角色不存在");
-//        }
-//        if (StateEnum.DISABLE.getCode().equals(sysRole.getState())) {
-//            throw new AuthenticationException("角色已禁用");
-//        }
-//        loginSysUserVo.setRoleId(sysRole.getId())
-//                .setRoleName(sysRole.getName())
-//                .setRoleCode(sysRole.getCode());
+        // 获取当前用户角色
+        Long roleId = sysUser.getRoleId();
+        SysRole sysRole = sysRoleService.getById(roleId);
+        if (sysRole == null) {
+            throw new AuthenticationException("角色不存在");
+        }
+        if (StateEnum.DISABLE.getCode().equals(sysRole.getStatus())) {
+            throw new AuthenticationException("角色已禁用");
+        }
+        loginSysUserVo.setRoleId(sysRole.getId())
+                .setRoleName(sysRole.getRoleName())
+                .setRoleCode(sysRole.getCode());
 
-        // 获取当前用户权限 todo
-//        Set<String> permissionCodes = sysRolePermissionService.getPermissionCodesByRoleId(roleId);
-//        if (CollectionUtils.isEmpty(permissionCodes)) {
-//            throw new AuthenticationException("权限列表不能为空");
-//        }
-//        loginSysUserVo.setPermissionCodes(permissionCodes);
+        // 获取当前用户权限
+        Set<String> permissionCodes = sysRolePermissionService.getPermissionCodesByRoleId(roleId);
+        if (CollectionUtils.isEmpty(permissionCodes)) {
+            throw new AuthenticationException("权限列表不能为空");
+        }
+        loginSysUserVo.setPermissionCodes(permissionCodes);
 
         // 获取数据库中保存的盐值
         String newSalt = SaltUtil.getSalt(sysUser.getSalt(), jwtProperties);

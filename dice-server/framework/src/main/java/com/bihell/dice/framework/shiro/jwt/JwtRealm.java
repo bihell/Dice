@@ -15,7 +15,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 /**
- * Shiro 授权认证 todo
+ * Shiro 授权认证
  **/
 @Slf4j
 public class JwtRealm extends AuthorizingRealm {

@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * JwtToken工具类 todo
- **/
+ * JwtToken工具类
+ *
+ * @author haseochen*/
 @Slf4j
 @Component
 public class JwtTokenUtil {

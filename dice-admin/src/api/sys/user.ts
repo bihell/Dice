@@ -8,12 +8,15 @@ enum Api {
   Logout = '/auth/logout',
   GetUserInfo = '/auth/getUserInfo',
   GetPermCode = '/getPermCode',
-  USER_LIST = '/auth/user/getPageList',
+  UserList = '/auth/user/getPageList',
+  UpdateUser = '/auth/user/update',
 }
+
+export const updateUser = (params: any) => defHttp.post({ url: Api.UpdateUser, params });
 
 export function getUserList(params: any) {
   return defHttp.request({
-    url: Api.USER_LIST,
+    url: Api.UserList,
     method: 'GET',
     params,
   });

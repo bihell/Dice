@@ -36,7 +36,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'account',
+    field: 'username',
     label: '用户名',
     component: 'Input',
     colProps: { span: 8 },
@@ -51,7 +51,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const accountFormSchema: FormSchema[] = [
   {
-    field: 'account',
+    field: 'username',
     label: '用户名',
     component: 'Input',
     required: true,
@@ -65,17 +65,17 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     label: '角色',
-    field: 'role',
+    field: 'roleId',
     component: 'ApiSelect',
     componentProps: {
       api: getAllRoleList,
       labelField: 'roleName',
-      valueField: 'roleValue',
+      valueField: 'id',
     },
     required: true,
   },
   {
-    field: 'dept',
+    field: 'deptId',
     label: '所属部门',
     component: 'TreeSelect',
     componentProps: {
@@ -94,7 +94,7 @@ export const accountFormSchema: FormSchema[] = [
     component: 'Input',
     required: true,
   },
-
+  { field: 'phone', label: '手机', component: 'Input', required: true },
   {
     label: '邮箱',
     field: 'email',

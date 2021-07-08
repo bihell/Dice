@@ -20,18 +20,18 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: '排序',
+    dataIndex: 'sort',
+    width: 50,
+  },
+  {
     title: '权限标识',
     dataIndex: 'code',
-    width: 180,
+    width: 200,
   },
   {
     title: '组件',
     dataIndex: 'component',
-  },
-  {
-    title: '排序',
-    dataIndex: 'sort',
-    width: 50,
   },
   {
     title: '状态',
@@ -122,7 +122,6 @@ export const formSchema: FormSchema[] = [
     field: 'icon',
     label: '图标',
     component: 'IconPicker',
-    required: true,
     show: ({ values }) => !isButton(values.type),
   },
 
@@ -130,7 +129,6 @@ export const formSchema: FormSchema[] = [
     field: 'routePath',
     label: '路由地址',
     component: 'Input',
-    required: true,
     show: ({ values }) => !isButton(values.type),
   },
   {

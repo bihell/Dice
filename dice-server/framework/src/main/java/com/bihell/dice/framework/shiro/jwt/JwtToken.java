@@ -10,14 +10,15 @@ import org.apache.shiro.authc.HostAuthenticationToken;
 import java.util.Date;
 
 /**
- * Shiro JwtToken对象 todo
- **/
+ * Shiro JwtToken对象
+ *
+ * @author haseochen*/
 @Data
 @Accessors(chain = true)
 public class JwtToken implements HostAuthenticationToken {
-	private static final long serialVersionUID = 5101247566043093405L;
-	
-	/**
+    private static final long serialVersionUID = 5101247566043093405L;
+
+    /**
      * 登录ip
      */
     private String host;

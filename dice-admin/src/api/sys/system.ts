@@ -20,7 +20,8 @@ enum Api {
   RolePageList = '/auth/sysRole/getPageList',
   UpdateRolePermission = '/auth/sysRole/updateSysRolePermission',
   RoleAdd = '/auth/sysRole/add',
-  GetAllRoleList = '/system/getAllRoleList',
+  RoleDelete = '/auth/sysRole/delete',
+  GetAllRoleList = '/auth/sysRole/getList',
   GetThreeLevelPermissionIdsByRoleId = '/auth/sysPermission/getThreeLevelPermissionIdsByRoleId',
   PermissionAdd = '/auth/sysPermission/add',
   PermissionUpdate = '/auth/sysPermission/update',
@@ -28,6 +29,8 @@ enum Api {
   DeptAdd = '/auth/sysDepartment/add',
   DeptUpdate = '/auth/sysDepartment/update',
 }
+
+export const delRole = (params: any) => defHttp.post({ url: Api.RoleDelete + '/' + params.id });
 
 export const addDept = (params: any) => defHttp.post({ url: Api.DeptAdd, params });
 

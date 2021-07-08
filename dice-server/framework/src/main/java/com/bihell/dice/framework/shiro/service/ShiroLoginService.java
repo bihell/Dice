@@ -5,8 +5,9 @@ import com.bihell.dice.framework.shiro.jwt.JwtToken;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * todo
- **/
+ *
+ *
+ * @author haseochen*/
 public interface ShiroLoginService {
     /**
      * 如果(当前时间+倒计时) > 过期时间，则刷新token

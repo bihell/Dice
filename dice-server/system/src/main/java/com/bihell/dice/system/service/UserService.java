@@ -16,7 +16,14 @@ public interface UserService extends IService<SysUser> {
 
     boolean addUser(SysUser sysUser);
 
-    boolean updateUser(SysUser sysUser);
+    /**
+     * 修改
+     *
+     * @param sysUser
+     * @return
+     * @throws Exception
+     */
+    boolean updateUser(SysUser sysUser) throws Exception;
 
     SysUser getUserSingle(Integer id);
 
@@ -44,4 +51,13 @@ public interface UserService extends IService<SysUser> {
      * @return
      */
     Paging<SysUserQueryVo> getUserPageList(UserPageParam userPageParam);
+
+    /**
+     * 检验部门和角色是否存在并且已启用
+     *
+     * @param departmentId
+     * @param roleId
+     * @throws Exception
+     */
+    void checkDepartmentAndRole(Long departmentId, Long roleId) throws Exception;
 }

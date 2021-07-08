@@ -9,6 +9,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
   import { getDeptTreeList } from '/@/api/sys/system';
+  import { updateUser } from '/@/api/sys/user';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -46,7 +47,7 @@
             show: !unref(isUpdate),
           },
           {
-            field: 'dept',
+            field: 'deptId',
             componentProps: { treeData },
           },
         ]);
@@ -58,8 +59,12 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (isUpdate.value) {
+            values.id = rowId.value;
+            await updateUser(values);
+          } else {
+            // todo
+          }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

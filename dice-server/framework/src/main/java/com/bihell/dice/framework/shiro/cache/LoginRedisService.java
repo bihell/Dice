@@ -5,8 +5,9 @@ import com.bihell.dice.framework.shiro.vo.LoginSysUserRedisVo;
 import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
 
 /**
- * 登录信息Redis缓存操作服务 todo
- **/
+ * 登录信息Redis缓存操作服务
+ *
+ * @author haseochen*/
 public interface LoginRedisService {
 
     /**

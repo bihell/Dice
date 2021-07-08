@@ -6,8 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 
 /**
- * 盐值包装工具类 todo
- **/
+ * 盐值包装工具类
+ *
+ * @author haseochen*/
 public class SaltUtil {
 
     /**

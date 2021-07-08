@@ -5,12 +5,14 @@ import com.bihell.dice.framework.common.api.ApiCode;
 import com.bihell.dice.framework.common.exception.DiceException;
 
 /**
- * Shiro配置异常 todo
- **/
+ * Shiro配置异常
+ *
+ * @author haseochen
+ */
 public class ShiroConfigException extends DiceException {
-	private static final long serialVersionUID = -4573955712491628431L;
+    private static final long serialVersionUID = -4573955712491628431L;
 
-	public ShiroConfigException(String message) {
+    public ShiroConfigException(String message) {
         super(message);
     }
 

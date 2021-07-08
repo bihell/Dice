@@ -18,17 +18,21 @@ import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.mapper.UserMapper;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.AuthRelRoleUserService;
+import com.bihell.dice.system.service.SysDepartmentService;
+import com.bihell.dice.system.service.SysRoleService;
 import com.bihell.dice.system.service.UserService;
 import com.bihell.dice.system.vo.SysUserQueryVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -48,6 +52,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
     private final UserMapper userMapper;
     private final AuthRelRoleUserService authRelRoleUserService;
     private final DiceProperties diceProperties;
+
+    @Autowired
+    private SysDepartmentService sysDepartmentService;
+
+    @Lazy
+    @Autowired
+    private SysRoleService sysRoleService;
 
     @Override
     public Paging<SysUserQueryVo> getUserPageList(UserPageParam userPageParam) {
@@ -90,7 +101,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
         // 生成盐值
         String salt = null;
-        String password = sysUser.getPassword();
+        String password = sysUser.getPwd();
         // 如果密码为空，则设置默认密码
         if (StringUtils.isBlank(password)) {
             salt = diceProperties.getLoginInitSalt();
@@ -100,7 +111,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         }
         // 密码加密
         sysUser.setSalt(salt);
-        sysUser.setPassword(PasswordUtil.encrypt(password, salt));
+        sysUser.setPwd(PasswordUtil.encrypt(password, salt));
 
         // 如果头像为空，则设置默认头像 todo
 //        if (StringUtils.isBlank(sysUser.getHead())) {
@@ -113,20 +124,24 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateUser(SysUser sysUser) {
-        if (sysUser.selectCount(new QueryWrapper<SysUser>()
-                .ne("id", sysUser.getId())
-                .and(field -> {
-                    field.eq("username", sysUser.getUsername()).or().eq("email", sysUser.getEmail());
-                })) < 1) {
-            String salt = SaltUtil.generateSalt();
-            sysUser.setSalt(salt);
-            String password = sysUser.getPassword();
-            sysUser.setPassword(PasswordUtil.encrypt(password, salt));
-            return sysUser.updateById();
-        } else {
-            throw new BusinessException("用户名或邮箱已存在");
+    public boolean updateUser(SysUser sysUser) throws Exception {
+        // 校验部门和角色
+        checkDepartmentAndRole(sysUser.getDeptId(), sysUser.getRoleId());
+        // 获取系统用户
+        SysUser updateSysUser = getById(sysUser.getId());
+        if (updateSysUser == null) {
+            throw new BusinessException("修改的用户不存在");
         }
+
+        // 修改系统用户
+        updateSysUser.setNickname(sysUser.getNickname())
+                .setPhone(sysUser.getPhone())
+                .setRemark(sysUser.getRemark())
+                .setStatus(sysUser.getStatus())
+                .setDeptId(sysUser.getDeptId())
+                .setRoleId(sysUser.getRoleId())
+                .setUpdateTime(new Date());
+        return super.updateById(updateSysUser);
     }
 
     @Override
@@ -156,5 +171,19 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         sysUser.setEmail(email);
 
         return sysUser.updateById();
+    }
+
+    @Override
+    public void checkDepartmentAndRole(Long departmentId, Long roleId) throws Exception {
+        // 校验部门是否存在并且可用
+        boolean isEnableDepartment = sysDepartmentService.isEnableSysDepartment(departmentId);
+        if (!isEnableDepartment) {
+            throw new BusinessException("该部门不存在或已禁用");
+        }
+        // 校验角色是否存在并且可用
+        boolean isEnableRole = sysRoleService.isEnableSysRole(roleId);
+        if (!isEnableRole) {
+            throw new BusinessException("该角色不存在或已禁用");
+        }
     }
 }

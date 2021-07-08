@@ -8,7 +8,8 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 
 /**
  * JWT证书匹配
- **/
+ *
+ * @author haseochen*/
 @Slf4j
 public class JwtCredentialsMatcher implements CredentialsMatcher {
 

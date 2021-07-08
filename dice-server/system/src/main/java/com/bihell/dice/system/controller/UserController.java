@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 系统用户 前端控制器
+ * @author haseochen
  */
 @Slf4j
 @RestController
@@ -36,7 +37,7 @@ public class UserController {
      * 添加系统用户
      */
     @PostMapping("/add")
-//    @RequiresPermissions("sys:user:add") todo
+    @RequiresPermissions("sys:user:add")
     @OperationLog(name = "添加系统用户", type = OperationLogType.ADD)
     @ApiOperation(value = "添加系统用户", response = ApiResult.class)
     public ApiResult<Boolean> addSysUser(@Validated(Add.class) @RequestBody SysUser sysUser) throws Exception {
@@ -45,13 +46,13 @@ public class UserController {
     }
 
     /**
-     * 修改系统用户(具有管理权限的用户才能使用）
+     * 修改系统用户
      */
     @PostMapping("/update")
-//    @RequiresPermissions("sys:user:update") todo
+    @RequiresPermissions("sys:user:update")
     @OperationLog(name = "修改系统用户", type = OperationLogType.UPDATE)
-    @ApiOperation(value = "修改系统用户",notes = "具有管理权限的用户才能使用",response = ApiResult.class)
-    public ApiResult<Boolean> updateSysUser(@Validated(Update.class) @RequestBody SysUser sysUser) {
+    @ApiOperation(value = "修改系统用户", response = ApiResult.class)
+    public ApiResult<Boolean> updateSysUser(@Validated(Update.class) @RequestBody SysUser sysUser) throws Exception {
         boolean flag = userService.updateUser(sysUser);
         return ApiResult.result(flag);
     }

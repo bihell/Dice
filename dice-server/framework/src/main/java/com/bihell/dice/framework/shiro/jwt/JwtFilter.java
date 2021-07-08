@@ -1,4 +1,5 @@
 package com.bihell.dice.framework.shiro.jwt;
+
 import com.bihell.dice.config.properties.JwtProperties;
 import com.bihell.dice.framework.common.api.ApiCode;
 import com.bihell.dice.framework.common.api.ApiResult;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Shiro JWT授权过滤器 todo
+ * Shiro JWT授权过滤器
  **/
 @Slf4j
 public class JwtFilter extends AuthenticatingFilter {
@@ -66,9 +67,9 @@ public class JwtFilter extends AuthenticatingFilter {
 
         String username = JwtUtil.getUsername(token);
         String salt;
-        if (jwtProperties.isSaltCheck()){
+        if (jwtProperties.isSaltCheck()) {
             salt = loginRedisService.getSalt(username);
-        }else{
+        } else {
             salt = jwtProperties.getSecret();
         }
         return JwtToken.build(token, username, salt, jwtProperties.getExpireSecond());

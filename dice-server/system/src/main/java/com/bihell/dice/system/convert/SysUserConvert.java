@@ -7,7 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * 系统用户对象属性转换器
- **/
+ *
+ * @author haseochen*/
 @Mapper
 public interface SysUserConvert {
 

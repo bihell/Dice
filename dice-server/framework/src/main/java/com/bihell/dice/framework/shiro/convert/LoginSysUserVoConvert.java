@@ -6,8 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * 登录系统用户VO对象属性复制转换器 todo
- **/
+ * 登录系统用户VO对象属性复制转换器
+ *
+ * @author haseochen*/
 @Mapper
 public interface LoginSysUserVoConvert {
 

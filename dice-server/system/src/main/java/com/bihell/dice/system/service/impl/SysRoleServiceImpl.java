@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.framework.common.exception.BusinessException;
 import com.bihell.dice.framework.common.exception.DaoException;
@@ -12,6 +13,7 @@ import com.bihell.dice.framework.common.exception.DiceException;
 import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
 import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
+import com.bihell.dice.system.entity.SysPermission;
 import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.entity.SysRolePermission;
 import com.bihell.dice.system.enums.StateEnum;
@@ -35,6 +37,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -224,6 +227,14 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         }
 
         return true;
+    }
+
+    @Override
+    public List<SysPermission> listRoleMenus(String roleId) {
+        List<SysRolePermission> sysRoleMenuList = sysRolePermissionService.list(Wrappers.lambdaQuery(SysRolePermission.class).eq(SysRolePermission::getRoleId, roleId));
+        return sysRoleMenuList.stream().map(item ->
+                sysPermissionService.getById(item.getPermissionId())
+        ).collect(Collectors.toList());
     }
 
 }

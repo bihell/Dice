@@ -8,6 +8,7 @@ import com.bihell.dice.framework.core.validator.groups.Update;
 import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
+import com.bihell.dice.system.entity.SysPermission;
 import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.param.sysrole.SysRolePageParam;
 import com.bihell.dice.system.param.sysrole.UpdateSysRolePermissionParam;
@@ -123,6 +124,14 @@ public class SysRoleController extends BaseController {
     public ApiResult<Boolean> updateSysRolePermission(@Validated @RequestBody UpdateSysRolePermissionParam param) throws Exception {
         boolean flag = sysRoleService.updateSysRolePermission(param);
         return ApiResult.result(flag);
+    }
+
+    /**
+     * 查询角色关联的菜单
+     */
+    @GetMapping("/listRoleMenus")
+    public ApiResult<List<SysPermission>> listRoleMenus(@RequestParam String roleId) {
+        return ApiResult.ok(sysRoleService.listRoleMenus(roleId));
     }
 
 }

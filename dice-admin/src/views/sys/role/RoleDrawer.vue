@@ -14,6 +14,8 @@
           :treeData="treeData"
           :replaceFields="{ title: 'name', key: 'id' }"
           :checkedKeys="checkedKeys"
+          :selectedKeys="selectedKeys"
+          @check="handleCheck"
           checkable
           toolbar
           title="权限分配"
@@ -29,12 +31,9 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import {
-    addRole,
-    getMenuTreeList,
-    getThreeLevelPermissionIdsByRoleId,
-    updateRolePermission,
-  } from '/@/api/sys/system';
+  import { addRole, getMenuTreeList, updateRolePermission } from '/@/api/sys/system';
+
+  import { listRoleMenus } from '/@/api/system/sysRole';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -45,6 +44,10 @@
       const treeData = ref<TreeItem[]>([]);
       const roleId = ref(null);
       const checkedKeys = ref([]);
+      const selectedKeys = ref([]);
+      const parentIds = ref(new Set());
+      const halfCheckedKeys = ref([]);
+      const treeCheck = ref(false);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
@@ -62,16 +65,38 @@
             ...data.record,
           });
           roleId.value = data.record.id;
-          checkedKeys.value = await getThreeLevelPermissionIdsByRoleId(data.record.id);
+
+          const roleMenuList = (await listRoleMenus({ roleId: roleId.value })) as any;
+
+          // 找出菜单的所有父节点ID
+          parentIds.value = new Set(
+            roleMenuList.filter((item) => item.parentId !== null).map((item) => item.parentId)
+          );
+
+          checkedKeys.value = roleMenuList
+            .filter((item) => !parentIds.value.has(item.id))
+            .map((item) => item.id);
         }
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? '新增角色' : '编辑角色'));
 
+      function handleCheck(keys, e) {
+        if (!unref(treeCheck)) {
+          treeCheck.value = true;
+        }
+        checkedKeys.value = keys;
+        halfCheckedKeys.value = e.halfCheckedKeys;
+      }
+
       async function handleSubmit() {
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
+          const menuIds = unref(treeCheck)
+            ? [...checkedKeys.value, ...halfCheckedKeys.value]
+            : [...checkedKeys.value, ...Array.from(parentIds.value)];
+          values.permissionIds = menuIds;
           if (isUpdate.value) {
             values.roleId = roleId.value;
             await updateRolePermission(values);
@@ -90,8 +115,10 @@
         registerForm,
         getTitle,
         handleSubmit,
+        handleCheck,
         treeData,
         checkedKeys,
+        selectedKeys,
       };
     },
   });

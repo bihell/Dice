@@ -38,7 +38,7 @@
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getUserList } from '/@/api/sys/user';
+  import { delUser, getUserList } from "/@/api/sys/user";
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
 
@@ -95,7 +95,8 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
+        delUser(record);
+        reload();
       }
 
       function handleSuccess({ isUpdate, values }) {

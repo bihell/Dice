@@ -79,6 +79,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
     @Autowired
     private SysPermissionService sysPermissionService;
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean deleteSysUser(Long id) throws Exception {
+        return super.removeById(id);
+    }
+
     @Override
     public Paging<SysUserQueryVo> getUserPageList(UserPageParam userPageParam) {
         Page<SysUserQueryVo> page = new PageInfo<>(userPageParam, OrderItem.desc(getLambdaColumn(SysUser::getCreateTime)));

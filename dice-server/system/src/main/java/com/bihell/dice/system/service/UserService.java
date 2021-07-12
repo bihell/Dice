@@ -78,4 +78,13 @@ public interface UserService extends IService<SysUser> {
      * @return
      */
     List<String> getPermCode() throws Exception;
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteSysUser(Long id) throws Exception;
 }

@@ -61,12 +61,24 @@ public class UserController {
      * 系统用户分页列表
      */
     @GetMapping("/getPageList")
-//    @RequiresPermissions("sys:user:page")
+    @RequiresPermissions("sys:user:page")
     @OperationLog(name = "系统用户分页列表", type = OperationLogType.PAGE)
     @ApiOperation(value = "系统用户分页列表", response = SysUserQueryVo.class)
     public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Validated UserPageParam sysUserPageParam) throws Exception {
         Paging<SysUserQueryVo> paging = userService.getUserPageList(sysUserPageParam);
         return ApiResult.ok(paging);
+    }
+
+    /**
+     * 删除系统用户
+     */
+    @PostMapping("/delete/{id}")
+    @RequiresPermissions("sys:user:delete")
+    @OperationLog(name = "删除系统用户", type = OperationLogType.DELETE)
+    @ApiOperation(value = "删除系统用户", response = ApiResult.class)
+    public ApiResult<Boolean> deleteSysUser(@PathVariable("id") Long id) throws Exception {
+        boolean flag = userService.deleteSysUser(id);
+        return ApiResult.result(flag);
     }
 
 }

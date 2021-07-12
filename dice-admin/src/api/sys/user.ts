@@ -10,9 +10,15 @@ enum Api {
   GetPermCode = '/auth/getPermCode',
   UserList = '/auth/user/getPageList',
   UpdateUser = '/auth/user/update',
+  AddUser = '/auth/user/add',
+  DeleteUser = '/auth/user/delete',
 }
 
+export const delUser = (params: any) => defHttp.post({ url: Api.DeleteUser + '/' + params.id });
+
 export const updateUser = (params: any) => defHttp.post({ url: Api.UpdateUser, params });
+
+export const addUser = (params: any) => defHttp.post({ url: Api.AddUser, params });
 
 export function getUserList(params: any) {
   return defHttp.request({

@@ -9,7 +9,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
   import { getDeptTreeList } from '/@/api/sys/system';
-  import { updateUser } from '/@/api/sys/user';
+  import { addUser, updateUser } from '/@/api/sys/user';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -63,7 +63,7 @@
             values.id = rowId.value;
             await updateUser(values);
           } else {
-            // todo
+            await addUser(values);
           }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });

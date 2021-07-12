@@ -5,7 +5,10 @@ import com.bihell.dice.framework.log.annotation.OperationLogIgnore;
 import com.bihell.dice.framework.shiro.util.JwtTokenUtil;
 import com.bihell.dice.system.param.LoginParam;
 import com.bihell.dice.system.service.LoginService;
+import com.bihell.dice.system.service.UserService;
 import com.bihell.dice.system.vo.LoginSysUserTokenVo;
+import com.bihell.dice.system.vo.RouteItemVO;
+import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,10 @@ import com.bihell.dice.framework.log.annotation.Module;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 登录控制器
@@ -30,6 +37,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class LoginController {
     private final LoginService loginService;
+    private final UserService userService;
+
 
     @PostMapping("login")
     @OperationLogIgnore
@@ -47,5 +56,15 @@ public class LoginController {
     public ApiResult<String> logout(HttpServletRequest request) throws Exception {
         loginService.logout(request);
         return ApiResult.ok("退出成功");
+    }
+
+    @GetMapping("/getMenuList")
+    public ApiResult<List<RouteItemVO>> getMenuList() throws Exception {
+        return ApiResult.ok(userService.getMenuList());
+    }
+
+    @GetMapping("/getPermCode")
+    public ApiResult<List<String>> getPermCode() throws Exception {
+        return ApiResult.ok(userService.getPermCode());
     }
 }

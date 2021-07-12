@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.param.UserPageParam;
+import com.bihell.dice.system.vo.RouteItemVO;
 import com.bihell.dice.system.vo.SysUserQueryVo;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * User Service 接口
@@ -60,4 +64,18 @@ public interface UserService extends IService<SysUser> {
      * @throws Exception
      */
     void checkDepartmentAndRole(Long departmentId, Long roleId) throws Exception;
+
+    /**
+     * 获取菜单列表
+     *
+     * @return
+     */
+    List<RouteItemVO> getMenuList() throws Exception;
+
+    /**
+     * 获取权限标识
+     *
+     * @return
+     */
+    List<String> getPermCode() throws Exception;
 }

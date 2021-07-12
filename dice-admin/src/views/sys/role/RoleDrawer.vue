@@ -34,6 +34,7 @@
   import { addRole, getMenuTreeList, updateRolePermission } from '/@/api/sys/system';
 
   import { listRoleMenus } from '/@/api/system/sysRole';
+  import { getMenuList } from '/@/api/sys/menu';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -65,6 +66,8 @@
             ...data.record,
           });
           roleId.value = data.record.id;
+
+          console.log(getMenuList());
 
           const roleMenuList = (await listRoleMenus({ roleId: roleId.value })) as any;
 

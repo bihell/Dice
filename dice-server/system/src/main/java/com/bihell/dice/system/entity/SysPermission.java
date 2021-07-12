@@ -87,4 +87,6 @@ public class SysPermission extends Model<SysPermission> {
     private Integer isShow;
     private Integer keepAlive;
     private Integer isExt;
+    private Integer frame;
+
 }

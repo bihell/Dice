@@ -169,7 +169,7 @@ export const formSchema: FormSchema[] = [
     show: ({ values }) => !isButton(values.type),
   },
   {
-    field: 'keepalive',
+    field: 'keepAlive',
     label: '是否缓存',
     component: 'RadioButtonGroup',
     defaultValue: 1,

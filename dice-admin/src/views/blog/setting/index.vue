@@ -22,13 +22,13 @@
   import { blogSetSchemas, seoSetSchemas, mailSetSchemas } from '../tableData';
   import { BasicForm, useForm } from '/@/components/Form';
   import { store } from '../store';
-  import { Tabs, TabPane } from 'ant-design-vue';
+  import { Tabs } from 'ant-design-vue';
 
   export default defineComponent({
     components: {
       BasicForm,
       Tabs,
-      TabPane,
+      TabPane: Tabs.TabPane,
     },
     setup() {
       const [blogSetRegister, { setFieldsValue: baseSetting, getFieldsValue: getBaseSetting }] =

@@ -74,10 +74,18 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { store } from '../store';
   import moment from 'moment';
-  import { Form, FormItem, Select, SelectOption, DatePicker, Switch } from 'ant-design-vue';
+  import { Form, Select, DatePicker, Switch } from 'ant-design-vue';
 
   export default defineComponent({
-    components: { BasicDrawer, Form, FormItem, Select, SelectOption, DatePicker, Switch },
+    components: {
+      BasicDrawer,
+      Form,
+      FormItem: Form.FormItem,
+      Select,
+      SelectOption: Select.SelectOption,
+      DatePicker,
+      Switch,
+    },
     setup() {
       const [register] = useDrawerInner();
 

@@ -14,37 +14,79 @@
 </p>
 
 
-* 基于`node` `java` `spring-boot` `vue` `nuxt` 开发的个人管理系统
+* 基于`node` `java` `spring-boot` `vue` `nuxt` 开发的个人管理系统: 目前有博客、导航、权限管理三大模块.其中博客除了管理前端外还有SEO前端
 * 功能精简但齐全，界面简洁却美观，满足个人日常使用要求
 * 项目会持续更新，如果有不完善的地方，欢迎指出
 
-> 演示站点：[博客前端](https://bihell.com/) [管理前端](https://bihell.com/admin)  
-> 因管理前端改为Vue3,权限还未开发完毕，因此不提供Demo账号，有兴趣的小伙伴可自行下载源码运行
+> 演示站点：[博客前端](https://bihell.com/)  [管理前端](https://bihell.com/admin)  演示账号: demo 123456 
 > QQ交流群：787519476
 
 ## 一、部分界面
 
-![博客前端](https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png)
+<table>
+    <tr>
+        <td>
+            <img src="https://raw.githubusercontent.com/bihell/blog-img/master/dice1.png"/>
+        </td>
+        <td>
+            <img src="img/post_list.png"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="img/post_edit.png"/>
+        </td>
+        <td>
+            <img src="img/blog_setting.png"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="img/tag_list.png"/>
+        </td>
+        <td>
+            <img src="img/nav_type.png"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="img/nav_list.png"/>
+        </td>
+        <td>
+            <img src="img/system_permission.png"/>
+        </td>
+    </tr>
+</table>
 
-![文章列表](img/post_list.png)
+## 二、项目结构
 
-![文章编辑](img/post_edit.png)
+```
+Dice
+├── dice-admin        -- 	后台管理前端，基于vue-vben-admin项目开发。
+├── dice-front        --  博客SEO前端，基于vue-next项目开发
+└── dice-server       --  后端服务，Spring Boot全家桶
+    ├── admin         --  SpringBootAdmin Server模块
+    ├── blog          --  博客模块
+    ├── bootstrap     --  启动模块
+    ├── config        --  配置模块
+    ├── distribution  --  打包模块
+    ├── framework     --  框架核心模块
+    ├── generator     --  代码生成模块
+    ├── nav           --  导航模块
+    └── system        --  系统模块
+```
 
-![文章编辑](img/tag_list.png)
-
-![导航分类](img/nav_type.png)
-
-![导航列表](img/nav_list.png)
-
-## 二、参与开发
+## 三、参与开发
 
 目前管理前端刚切为vue3，很多功能细节需要完善。欢迎大家参与进来
 
 > 请确保系统中已经安装`docker`、`docker-componse`、`nodejs`、`npm`、`Java8`、`Redis`、`MySQL`等必须的依赖。
 
-### 2.1 安装依赖（MacOS）
+### 3.1 安装依赖（MacOS）
 
 #### Java
+
+Java8 及以上
 
 ```Bash
 brew tap homebrew/cask-versions
@@ -58,6 +100,13 @@ brew install mysql
 mysql.server start
 ```
 
+> 如果你的MySQL版本较新，可能会碰到无法连接的错误。可以重新设置一下账号权限，方式如下：
+
+> ```
+> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'
+> flush privileges;
+> ```
+
 #### Redis
 
 ```Bash
@@ -65,7 +114,7 @@ brew install redis
 brew services start redis
 ```
 
-### 2.2 愉快的开发吧
+### 3.2 启动运行
 
 克隆项目到本地
 
@@ -73,12 +122,12 @@ brew services start redis
    git clone https://github.com/bihell/Dice.git
    ```
 
-#### 2.2.1 `dice-server` Java后台
+#### 3.2.1 `dice-server` Java后台
 
 项目使用lombok插件，如果要在ide中调试要有lombok插件
-数据库初始语句:dice-server/bootstrap/src/main/resources/init.sql
+数据库初始语句:`dice-server/bootstrap/src/main/resources/init.sql`
 
-##### 2.2.1.1 修改相应配置
+##### 修改相应配置
 
 进入服务端文件夹`cd dice-server`,修改spring-boot配置文件`vi src/main/resources/application-dev.properties`
 
@@ -93,7 +142,7 @@ spring:
 
 将数据库的用户名和密码修改成对应你数据库的用户名密码
 
-##### 2.2.1.2 项目启动
+##### 项目启动
 
 多种启动方式：
 
@@ -108,7 +157,7 @@ mvn clean package -P docker,release
 java -jar bootstrap/target/bootstrap-2.0.jar
 ```
 
-#### 2.2.2 `dice-front` 博客前端
+#### 3.2.2 `dice-front` 博客前端
 
 进入前端文件夹`cd dice-front`，安装依赖并启动服务：
 
@@ -117,23 +166,16 @@ npm install
 npm run dev
 ```
 
-#### 2.2.3 `dice-admin` 管理前端
+#### 3.2.3 `dice-admin` 管理前端
 
 进入后端文件夹`cd dice-admin`，安装依赖和启动服务：
 
 ```Bash
-npm install
-npm run dev
+yarn install
+yarn serve
 ```
 
-> 如果你的MySQL版本较新，可能会碰到无法连接的错误。可以重新设置一下账号权限，方式如下：
-
-> ```
-> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'
-> flush privileges;
-> ```
-
-#### 2.2.4 访问
+#### 3.2.4 访问
 
 `http://localhost:3000/` 为博客前端首页
 

@@ -97,6 +97,7 @@ export const navDetailFormSchema: FormSchema[] = [
       api: uploadApi,
       multiple: false,
       maxNumber: 1,
+      maxSize: 1,
       uploadParams: { type: 'nav' },
       onDelete: (data) => {
         const params = { file: data.responseData.result, type: 'nav' };

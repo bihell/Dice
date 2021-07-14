@@ -6,7 +6,12 @@
           <a-input size="large" placeholder="请输入文章标题" :value="title" @input="setTitle" />
         </div>
 
-        <MarkDown :value="content" :height="contentHeight" @change="setContent" />
+        <MarkDown
+          v-model:value="value"
+          :height="contentHeight"
+          @change="setContent"
+          placeholder="请输入内容"
+        />
       </Col>
     </Row>
     <PageFooter>
@@ -21,9 +26,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { MarkDown } from '/@/components/Markdown';
-  import { computed, onMounted } from 'vue';
+  import { defineComponent, ref, computed, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
   import { PageFooter } from '/@/components/Page';
   import { store } from '../store';
@@ -31,15 +36,16 @@
   import ArticleDrawer from './PostDrawer.vue';
   import { Row, Col } from 'ant-design-vue';
 
-  export default {
+  export default defineComponent({
     components: { MarkDown, PageFooter, ArticleDrawer, Row, Col },
     setup() {
       const [register1, { openDrawer: openDrawer1 }] = useDrawer();
       const contentHeight = computed(() => {
         return document.documentElement.clientHeight - 150;
       });
-
       const route = useRoute();
+
+      const valueRef = ref('');
 
       // const fetchPost = async () => {
       //   if (route.query.id) {
@@ -72,15 +78,26 @@
         openDrawer1(true);
       }
 
-      onMounted(() => {
-        {
-          store.fetchPost(route.query.id);
-          // fetchPost();
-        }
+      // function getDataAsync(): Promise<string> {
+      //   return new Promise((resolve) => {
+      //     setTimeout(() => {
+      //       resolve(store.state.currentPost.content);
+      //     }, 800);
+      //   });
+      // }
+
+      onMounted(async () => {
+        await store.fetchPost(route.query.id);
+        valueRef.value = store.state.currentPost.content;
       });
 
+      // onMounted(() => {
+      //   valueRef.value = 'test';
+      // });
+
       return {
-        content: computed(() => store.state.currentPost.content),
+        // content: computed(() => store.state.currentPost.content),
+        value: valueRef,
         title: computed(() => store.state.currentPost.title),
         contentHeight,
         setContent,
@@ -92,7 +109,7 @@
         register1,
       };
     },
-  };
+  });
 </script>
 
 <style scoped>

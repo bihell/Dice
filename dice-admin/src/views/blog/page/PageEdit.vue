@@ -6,14 +6,19 @@
           <a-input size="large" placeholder="请输入页面标题" :value="title" @input="setPageTitle" />
         </div>
 
-        <MarkDown :value="content" :height="contentHeight" @change="setPageContent" />
+        <MarkDown
+          v-model:value="value"
+          :height="contentHeight"
+          @change="setPageContent"
+          placeholder="请输入内容"
+        />
       </Col>
     </Row>
     <PageFooter>
       <template #right>
         <div class="components-input-demo-size">
           开启评论
-          <a-switch
+          <Switch
             class="mr-2"
             v-model:checked="comment"
             checked-children="是"
@@ -39,22 +44,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { MarkDown } from '/@/components/Markdown';
-  import { computed, onMounted } from 'vue';
+  import { defineComponent, computed, onMounted, ref } from "vue";
   import { useRoute } from 'vue-router';
   import { PageFooter } from '/@/components/Page';
   import { store } from '../store';
-  import { Row, Col, InputNumber } from 'ant-design-vue';
+  import { Row, Col, InputNumber, Switch } from 'ant-design-vue';
 
-  export default {
-    components: { MarkDown, PageFooter, Row, Col, InputNumber },
+  export default defineComponent({
+    components: { MarkDown, PageFooter, Row, Col, InputNumber, Switch },
     setup() {
       const contentHeight = computed(() => {
         return document.documentElement.clientHeight - 185;
       });
 
       const route = useRoute();
+
+      const valueRef = ref('');
 
       const setPageTitle = (evt) => {
         store.setPageTitle(evt.target.value);
@@ -82,14 +89,16 @@
       // todo
       function media() {}
 
-      onMounted(() => {
+      onMounted(async () => {
         {
-          store.fetchPage(route.query.id);
+          await store.fetchPage(route.query.id);
+          valueRef.value = store.state.currentPage.content
         }
       });
 
       return {
-        content: computed(() => store.state.currentPage.content),
+        // content: computed(() => store.state.currentPage.content),
+        value: valueRef,
         title: computed(() => store.state.currentPage.title),
         priority: computed(() => store.state.currentPage.priority),
         comment: computed(() => store.state.currentPage.allowComment),
@@ -103,7 +112,7 @@
         media,
       };
     },
-  };
+  });
 </script>
 
 <style scoped>

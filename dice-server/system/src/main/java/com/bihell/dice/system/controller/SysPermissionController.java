@@ -47,7 +47,7 @@ public class SysPermissionController extends BaseController {
      * 添加系统权限
      */
     @PostMapping("/add")
-//    @RequiresPermissions("sys:permission:add")
+    @RequiresPermissions("sys:permission:add")
     @OperationLog(name = "添加系统权限", type = OperationLogType.ADD)
     @ApiOperation(value = "添加系统权限", response = ApiResult.class)
     public ApiResult<Boolean> addSysPermission(@Validated @RequestBody SysPermission sysPermission) throws Exception {
@@ -59,7 +59,7 @@ public class SysPermissionController extends BaseController {
      * 修改系统权限
      */
     @PostMapping("/update")
-//    @RequiresPermissions("sys:permission:update")
+    @RequiresPermissions("sys:permission:update")
     @OperationLog(name = "添加系统权限", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改系统权限", response = ApiResult.class)
     public ApiResult<Boolean> updateSysPermission(@Validated @RequestBody SysPermission sysPermission) throws Exception {
@@ -71,7 +71,7 @@ public class SysPermissionController extends BaseController {
      * 删除系统权限
      */
     @PostMapping("/delete/{id}")
-//    @RequiresPermissions("sys:permission:delete")
+    @RequiresPermissions("sys:permission:delete")
     @OperationLog(name = "删除系统权限", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除系统权限", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysPermission(@PathVariable("id") Long id) throws Exception {
@@ -108,7 +108,7 @@ public class SysPermissionController extends BaseController {
      * @return
      */
     @GetMapping("/getAllMenuList")
-//    @RequiresPermissions("sys:permission:all:menu:list")
+    @RequiresPermissions("sys:permission:all:menu:list")
     @OperationLog(name = "获取所有菜单列表", type = OperationLogType.LIST)
     @ApiOperation(value = "获取所有菜单列表", response = SysPermission.class)
     public ApiResult<List<SysPermission>> getAllMenuList() throws Exception {
@@ -121,7 +121,7 @@ public class SysPermissionController extends BaseController {
      * @return
      */
     @GetMapping("/getAllMenuTree")
-//    @RequiresPermissions("sys:permission:all:menu:tree")
+    @RequiresPermissions("sys:permission:all:menu:tree")
     @OperationLog(name = "获取获取菜单树形列表", type = OperationLogType.OTHER_QUERY)
     @ApiOperation(value = "获取获取菜单树形列表", response = SysPermissionTreeVo.class)
     public ApiResult<List<SysPermissionTreeVo>> getAllMenuTree() throws Exception {
@@ -174,7 +174,7 @@ public class SysPermissionController extends BaseController {
      * @return
      */
     @GetMapping("/getThreeLevelPermissionIdsByRoleId/{roleId}")
-//    @RequiresPermissions("sys:permission:three-ids-by-role-id")
+    @RequiresPermissions("sys:permission:three-ids-by-role-id")
     @OperationLog(name = "根据角色id获取该对应的所有三级权限ID", type = OperationLogType.OTHER_QUERY)
     @ApiOperation(value = "根据角色id获取该对应的所有三级权限ID", response = ApiResult.class)
     public ApiResult<List<Long>> getPermissionIdsByRoleId(@PathVariable("roleId") Long roleId) throws Exception {

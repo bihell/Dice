@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import java.util.List;
 
 /**
- * Shiro配置映射类 todo
+ * Shiro配置映射类
  *
  *
  * @author haseochen*/

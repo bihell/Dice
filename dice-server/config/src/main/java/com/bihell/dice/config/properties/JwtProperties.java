@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * JWT属性配置 todo
+ * JWT属性配置
  *
  * @author haseochen*/
 @Data

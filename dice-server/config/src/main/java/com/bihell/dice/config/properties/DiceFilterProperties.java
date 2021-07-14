@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
 /**
- * Filter配置属性 todo
+ * Filter配置属性
  *
  * @author haseochen*/
 @Data

@@ -43,6 +43,7 @@ public class NavTypeController extends BaseController {
     /**
      * 添加
      */
+    @RequiresPermissions("nav:type:add")
     @PostMapping("/add")
     @OperationLog(name = "添加", type = OperationLogType.ADD)
     @ApiOperation(value = "添加", response = ApiResult.class)
@@ -55,6 +56,7 @@ public class NavTypeController extends BaseController {
     /**
      * 修改
      */
+    @RequiresPermissions("nav:type:update")
     @PostMapping("/update")
     @OperationLog(name = "修改", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改", response = ApiResult.class)
@@ -67,6 +69,7 @@ public class NavTypeController extends BaseController {
     /**
      * 删除
      */
+    @RequiresPermissions("nav:type:delete")
     @PostMapping("/delete/{id}")
     @OperationLog(name = "删除", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除", response = ApiResult.class)

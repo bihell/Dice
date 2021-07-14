@@ -45,7 +45,7 @@ public class SysRoleController extends BaseController {
      * 添加系统角色
      */
     @PostMapping("/add")
-//    @RequiresPermissions("sys:role:add")
+    @RequiresPermissions("sys:role:add")
     @OperationLog(name = "添加系统角色", type = OperationLogType.ADD)
     @ApiOperation(value = "添加系统角色", response = ApiResult.class)
     public ApiResult<Boolean> addSysRole(@Validated(Add.class) @RequestBody SysRole sysRole) throws Exception {
@@ -53,23 +53,23 @@ public class SysRoleController extends BaseController {
         return ApiResult.result(flag);
     }
 
-    /**
-     * 修改系统角色
-     */
-    @PostMapping("/update")
-    @RequiresPermissions("sys:role:update")
-    @OperationLog(name = "修改系统角色", type = OperationLogType.UPDATE)
-    @ApiOperation(value = "修改系统角色", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysRole(@Validated(Update.class) @RequestBody SysRole sysRole) throws Exception {
-        boolean flag = sysRoleService.updateSysRole(sysRole);
-        return ApiResult.result(flag);
-    }
+//    /**
+//     * 修改系统角色
+//     */
+//    @PostMapping("/update")
+//    @RequiresPermissions("sys:role:update")
+//    @OperationLog(name = "修改系统角色", type = OperationLogType.UPDATE)
+//    @ApiOperation(value = "修改系统角色", response = ApiResult.class)
+//    public ApiResult<Boolean> updateSysRole(@Validated(Update.class) @RequestBody SysRole sysRole) throws Exception {
+//        boolean flag = sysRoleService.updateSysRole(sysRole);
+//        return ApiResult.result(flag);
+//    }
 
     /**
      * 删除系统角色
      */
     @PostMapping("/delete/{id}")
-//    @RequiresPermissions("sys:role:delete")
+    @RequiresPermissions("sys:role:delete")
     @OperationLog(name = "删除系统角色", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除系统角色", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysRole(@PathVariable("id") Long id) throws Exception {
@@ -116,9 +116,10 @@ public class SysRoleController extends BaseController {
 
     /**
      * 修改系统角色权限
+     * todo 只更新了权限，角色本身信息没更新，有时间补上
      */
     @PostMapping("/updateSysRolePermission")
-//    @RequiresPermissions("sys:role-permission:update")
+    @RequiresPermissions("sys:role-permission:update")
     @OperationLog(name = "修改系统角色权限", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改系统角色权限", response = ApiResult.class)
     public ApiResult<Boolean> updateSysRolePermission(@Validated @RequestBody UpdateSysRolePermissionParam param) throws Exception {

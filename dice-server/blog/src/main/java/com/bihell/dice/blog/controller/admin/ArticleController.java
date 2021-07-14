@@ -14,6 +14,7 @@ import com.bihell.dice.blog.utils.Types;
 import com.bihell.dice.blog.param.ArticlePageParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ public class ArticleController {
     /**
      * 文章分页列表
      */
+    @RequiresPermissions("blog:posts:page")
     @PostMapping("/getPageList")
     @OperationLog(name = "文章分页列表", type = OperationLogType.PAGE)
     @ApiOperation(value = "文章分页列表", response = Article.class)
@@ -63,6 +65,7 @@ public class ArticleController {
      * 新建或修改文章
      */
     @PostMapping
+    @RequiresPermissions("blog:posts:update")
     public ApiResult<Integer> saveArticle(@Valid @RequestBody Article article) {
         article.setCreator(LoginUtil.getUserId());
         Integer articleId = articleService.saveArticle(article);
@@ -75,6 +78,7 @@ public class ArticleController {
      * @return ApiResult<Boolean>
      */
     @DeleteMapping("{id}")
+    @RequiresPermissions("blog:posts:delete")
     public ApiResult<Boolean> deleteArticle(@PathVariable Integer id) {
         boolean flag = articleService.deleteArticle(id);
         return ApiResult.result(flag);

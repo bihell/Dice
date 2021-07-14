@@ -13,6 +13,7 @@ import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.framework.core.validator.groups.Add;
 import com.bihell.dice.framework.core.validator.groups.Update;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +40,7 @@ public class NavDetailController extends BaseController {
      * 添加导航明细表
      */
     @PostMapping("/add")
+    @RequiresPermissions("nav:detail:add")
     @OperationLog(name = "添加导航明细表", type = OperationLogType.ADD)
     @ApiOperation(value = "添加导航明细表", response = ApiResult.class)
     public ApiResult<Boolean> addNavDetail(@Validated(Add.class) @RequestBody NavDetail navDetail) throws Exception {
@@ -50,6 +52,7 @@ public class NavDetailController extends BaseController {
     /**
      * 修改导航明细表
      */
+    @RequiresPermissions("nav:detail:update")
     @PostMapping("/update")
     @OperationLog(name = "修改导航明细表", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改导航明细表", response = ApiResult.class)
@@ -62,6 +65,7 @@ public class NavDetailController extends BaseController {
     /**
      * 删除导航明细表
      */
+    @RequiresPermissions("nav:detail:delete")
     @PostMapping("/delete/{id}")
     @OperationLog(name = "删除导航明细表", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除导航明细表", response = ApiResult.class)

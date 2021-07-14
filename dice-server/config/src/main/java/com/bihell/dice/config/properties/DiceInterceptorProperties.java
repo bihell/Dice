@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
 /**
- * dice拦截器配置属性 todo
+ * dice拦截器配置属性
  * @author haseochen
  */
 @Data

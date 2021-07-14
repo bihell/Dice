@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 /**
- * AOP配置属性 todo
+ * AOP配置属性
  *
  * @author haseochen*/
 @Data

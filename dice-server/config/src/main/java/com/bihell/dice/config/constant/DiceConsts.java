@@ -10,26 +10,6 @@ import java.util.Map;
  * @since 2017/7/9 22:21
  */
 public interface DiceConsts {
-
-    /**
-     * Access token cache prefix.
-     */
-    String TOKEN_ACCESS_CACHE_PREFIX = "dice.admin.access.token.";
-
-    /**
-     * Refresh token cache prefix.
-     */
-    String TOKEN_REFRESH_CACHE_PREFIX = "dice.admin.refresh.token.";
-
-    String ACCESS_TOKEN_CACHE_PREFIX = "dice.admin.access_token.";
-
-    String REFRESH_TOKEN_CACHE_PREFIX = "dice.admin.refresh_token.";
-
-    /**
-     * md5加密盐值
-     */
-    String MD5_SLAT = "riopwhjrv123bnopiw234q2ec";
-
     /**
      * 默认分页大小
      */

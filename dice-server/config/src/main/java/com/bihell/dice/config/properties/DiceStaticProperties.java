@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @author haseochen
+ */
 @Slf4j
 @Data
 @Component

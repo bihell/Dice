@@ -3,7 +3,7 @@ package com.bihell.dice.config.properties;
 import lombok.Data;
 
 /**
- * Shiro权限配置映射类 todo
+ * Shiro权限配置映射类
  *
  * @author haseochen*/
 @Data

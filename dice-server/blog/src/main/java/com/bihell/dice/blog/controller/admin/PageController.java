@@ -10,6 +10,7 @@ import com.bihell.dice.blog.model.blog.Article;
 import com.bihell.dice.blog.service.blog.ArticleService;
 import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,7 @@ public class PageController {
      * @return {@see String}
      */
     @PostMapping
+    @RequiresPermissions("blog:pages:update")
     public ApiResult<Integer> savePage(@Valid  @RequestBody Article page) {
         page.setCreator(LoginUtil.getUserId());
         Integer pageId = articleService.savePage(page);
@@ -77,6 +79,7 @@ public class PageController {
      * @return {@see String}
      */
     @DeleteMapping("{id}")
+    @RequiresPermissions("blog:pages:delete")
     public ApiResult<Boolean> deletePage(@PathVariable Integer id) {
         boolean flag = articleMapper.deleteById(id) > 0;
         return ApiResult.result(flag);

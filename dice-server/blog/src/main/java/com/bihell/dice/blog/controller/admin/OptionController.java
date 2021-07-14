@@ -4,6 +4,7 @@ import com.bihell.dice.blog.service.blog.OptionService;
 import com.bihell.dice.framework.common.api.ApiResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class OptionController {
      * @return Map
      */
     @GetMapping
+    @RequiresPermissions("blog:option:list")
     public ApiResult<Map<String, String>> getAllOptions() {
         return ApiResult.ok(optionService.getAllOptionMap());
     }
@@ -39,6 +41,7 @@ public class OptionController {
      * @return {@see RestResponse.ok()}
      */
     @PostMapping
+    @RequiresPermissions("blog:option:update")
     public ApiResult<Boolean> saveAllOptions(@Valid @RequestBody Map<String, String> options) {
         optionService.save(options);
 

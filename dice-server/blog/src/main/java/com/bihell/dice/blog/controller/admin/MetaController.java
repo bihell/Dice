@@ -5,6 +5,7 @@ import com.bihell.dice.blog.model.dto.MetaDto;
 import com.bihell.dice.blog.service.blog.MetaService;
 import com.bihell.dice.framework.common.api.ApiResult;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class MetaController {
      * @return
      */
     @DeleteMapping
+    @RequiresPermissions("blog:tag:delete")
     public ApiResult<Boolean>  deleteMeta(@Valid @RequestBody Meta meta) {
         boolean flag=metaService.deleteMeta(meta.getName(), meta.getType());
         return ApiResult.result(flag);
@@ -49,6 +51,7 @@ public class MetaController {
      * @return
      */
     @PostMapping
+    @RequiresPermissions("blog:tag:add")
     public ApiResult<Boolean> saveMeta(@Valid @RequestBody Meta meta) {
         boolean flag = metaService.saveMeta(meta.getName(), meta.getType());
         return ApiResult.result(flag);
@@ -61,6 +64,7 @@ public class MetaController {
      * @return
      */
     @PostMapping("{id}")
+    @RequiresPermissions("blog:tag:update")
     public ApiResult<Boolean> updateMeta(@Valid @RequestBody Meta meta) {
         boolean flag = metaService.updateMeta(meta.getId(), meta.getName(), meta.getType());
         return ApiResult.result(flag);

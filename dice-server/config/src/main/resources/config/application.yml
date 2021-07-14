@@ -91,6 +91,8 @@ dice:
   login-init-salt: 666666
   login-init-password: admin
   login-init-head: http://${dice.server-ip}/api/resource/logo.png
+  # 实现BaseEnum接口的枚举包
+  enum-packages: com.example.foorbar.enums
   # Swagger路径
   swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v2/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
   # Filter配置

@@ -43,7 +43,7 @@ public class SysDepartmentController extends BaseController {
      * 添加部门
      */
     @PostMapping("/add")
-//    @RequiresPermissions("sys:department:add")
+    @RequiresPermissions("sys:department:add")
     @OperationLog(name = "添加部门", type = OperationLogType.ADD)
     @ApiOperation(value = "添加部门", response = ApiResult.class)
     public ApiResult<Boolean> addSysDepartment(@Validated @RequestBody SysDepartment sysDepartment) throws Exception {
@@ -55,7 +55,7 @@ public class SysDepartmentController extends BaseController {
      * 修改部门
      */
     @PostMapping("/update")
-//    @RequiresPermissions("sys:department:update")
+    @RequiresPermissions("sys:department:update")
     @OperationLog(name = "修改部门", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改部门", response = ApiResult.class)
     public ApiResult<Boolean> updateSysDepartment(@Validated @RequestBody SysDepartment sysDepartment) throws Exception {

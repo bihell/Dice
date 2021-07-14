@@ -25,7 +25,7 @@ import javax.annotation.PostConstruct;
 import java.util.Map;
 
 /**
- * WebMvc配置 todo
+ * WebMvc配置
  */
 @Slf4j
 @Configuration
@@ -174,7 +174,7 @@ public class DiceWebMvcConfig implements WebMvcConfigurer {
             }
         }
 
-        // 设置上传文件访问路径 todo
+        // 设置上传文件访问路径
         registry.addResourceHandler(diceProperties.getResourceAccessPatterns())
                 .addResourceLocations("file:" + diceProperties.getUploadFolder());
     }

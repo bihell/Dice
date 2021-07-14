@@ -218,7 +218,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         SysUser sysUser = new SysUser().selectById(LoginUtil.getUserId());
         SysRole sysRole = new SysRole().selectById(sysUser.getRoleId());
         if ("admin".equals(sysRole.getCode())) {
-            sysPermissions = sysPermissionService.list(Wrappers.lambdaQuery(SysPermission.class).in(SysPermission::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode()));
+            sysPermissions = sysPermissionService.list(Wrappers.lambdaQuery(SysPermission.class)
+                    .in(SysPermission::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
+                    .orderByAsc(SysPermission::getSort)
+            );
         } else {
             // 查询菜单
             List<SysRolePermission> sysRoleMenuList = new SysRolePermission().selectList(
@@ -230,6 +233,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
                 sysPermissions = sysPermissionService.list(Wrappers.lambdaQuery(SysPermission.class)
                         .in(SysPermission::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
                         .in(SysPermission::getId,menuIds)
+                        .orderByAsc(SysPermission::getSort)
                 );
             }
         }
@@ -281,6 +285,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
             RouteMetoVO routeMetoVO = new RouteMetoVO();
             routeMetoVO.setTitle(item.getName());
             routeMetoVO.setIcon(item.getIcon());
+            routeMetoVO.setHideMenu(item.getIsShow()==0);
             if (item.getLevel().equals(MenuLevelEnum.TWO.getCode())) {
                 routeMetoVO.setIgnoreKeepAlive(!item.getKeepAlive().equals(KeepaliveEnum.YES.getCode()));
                 if (item.getIsExt().equals(LinkExternalEnum.YES.getCode())) {

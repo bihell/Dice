@@ -10,6 +10,7 @@ import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.util.DiceUtil;
 import com.bihell.dice.framework.common.api.RestResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class CommentController {
      *
      * @return {@see Pagination<Comment>}
      */
+    @RequiresPermissions("blog:comment:list")
     @PostMapping("/getPageList")
     public ApiResult<Paging<Comment>> getCommentPageList(@Validated @RequestBody CommentPageParam commentPageParam) {
         Paging<Comment> paging = commentService.getCommentPageList(commentPageParam);

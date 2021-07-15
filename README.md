@@ -172,7 +172,7 @@ npm run dev
 
 ```Bash
 yarn install
-yarn serve
+yarn dev
 ```
 
 #### 3.2.4 访问

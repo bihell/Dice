@@ -44,17 +44,6 @@ public class AuthController {
     private final UserMapper userMapper;
 
     /**
-     * 获取用户信息
-     */
-    @GetMapping("getUserInfo")
-    @OperationLog(name = "系统用户详情", type = OperationLogType.INFO)
-    @ApiOperation(value = "系统用户详情", notes = "", response = SysUser.class)
-    public ApiResult<SysUser> getUser() {
-        SysUser sysUser = userMapper.selectById(LoginUtil.getUserId());
-        return ApiResult.ok(sysUser);
-    }
-
-    /**
      * 获取所有用户
      */
     @GetMapping("/user/list/all")

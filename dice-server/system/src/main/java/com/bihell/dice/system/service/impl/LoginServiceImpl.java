@@ -117,7 +117,6 @@ public class LoginServiceImpl implements LoginService {
         }
         loginSysUserVo.setDepartmentId(sysDepartment.getId())
                 .setDepartmentName(sysDepartment.getDeptName());
-
         // 获取当前用户角色
         Long roleId = sysUser.getRoleId();
         SysRole sysRole = sysRoleService.getById(roleId);

@@ -60,7 +60,7 @@ public class NavDetailServiceImpl extends BaseServiceImpl<NavDetailMapper, NavDe
                 .like(!StringUtils.isEmpty(navDetailPageParam.getUrl()), NavDetail::getUrl, navDetailPageParam.getUrl())
                 .orderByAsc(NavDetail::getSort);
         IPage<NavDetail> iPage = navDetailMapper.selectPage(page, wrapper);
-        return new Paging<NavDetail>(iPage);
+        return new Paging<>(iPage);
     }
 
 }

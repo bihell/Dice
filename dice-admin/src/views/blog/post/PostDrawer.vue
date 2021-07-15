@@ -80,7 +80,7 @@
     components: {
       BasicDrawer,
       Form,
-      FormItem: Form.FormItem,
+      FormItem: Form.Item,
       Select,
       SelectOption: Select.SelectOption,
       DatePicker,

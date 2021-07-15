@@ -8,6 +8,7 @@ import lombok.Data;
  * @author bihell
  * @since 2017/7/12 19:59
  */
+@Deprecated
 @Data
 public class RestResponse<T> {
 

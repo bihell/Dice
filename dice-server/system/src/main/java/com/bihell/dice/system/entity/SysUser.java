@@ -44,6 +44,9 @@ public class SysUser extends Model<SysUser> {
     @ApiModelProperty("用户显示名称")
     private String nickname;
 
+    @ApiModelProperty("姓名")
+    private String realName;
+
     @ApiModelProperty("用户创建时间")
     private LocalDateTime createTime;
 

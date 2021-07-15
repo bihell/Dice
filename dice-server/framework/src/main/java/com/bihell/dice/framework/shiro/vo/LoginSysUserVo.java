@@ -28,6 +28,9 @@ public class LoginSysUserVo implements Serializable {
     @ApiModelProperty("昵称")
     private String nickname;
 
+    @ApiModelProperty("姓名")
+    private String realName;
+
     @ApiModelProperty("性别，0：女，1：男，默认1")
     private Integer gender;
 
@@ -51,5 +54,8 @@ public class LoginSysUserVo implements Serializable {
 
     @ApiModelProperty("权限编码列表")
     private Set<String> permissionCodes;
+
+    @ApiModelProperty("头像")
+    private String avatar;
 
 }

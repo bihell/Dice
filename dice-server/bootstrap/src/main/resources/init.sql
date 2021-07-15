@@ -145,13 +145,14 @@ create table sys_user
     phone       varchar(20)                         null comment '手机号码',
     remark      int                                 null,
     update_time timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    real_name   varchar(20)                         null comment '姓名',
     constraint username
         unique (username)
 )
     charset = utf8mb4;
 
-INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, role_id, status, deleted, dept_id, phone, remark, update_time) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2021-07-07 15:47:20', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 1, 1, 0, 1, null, null, '2021-07-07 15:47:20');
-INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, role_id, status, deleted, dept_id, phone, remark, update_time) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2021-07-13 17:39:12', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 3, 1, 0, 1, '1111', null, '2021-07-12 17:04:27');
+INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, role_id, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'dice@bihell.com', 'admin', '2019-05-16 02:24:35', '2021-07-15 11:52:15', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 1, 1, 0, 1, null, null, '2021-07-15 11:52:15', '管理员');
+INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, role_id, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2021-07-15 11:50:43', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 3, 1, 0, 1, '1111', null, '2021-07-15 11:50:43', 'Demo用户');
 
 create table sys_role
 (

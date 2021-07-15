@@ -35,7 +35,9 @@
         >
           <template #more>
             <a-button shape="circle">
-              <FormOutlined />
+              <div style="margin: auto">
+                <FormOutlined />
+              </div>
             </a-button>
           </template>
         </TableAction>

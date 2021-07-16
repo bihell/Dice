@@ -21,14 +21,16 @@
     </select>
 
     <select id="getPermissionCodesByUserId" resultType="java.lang.String">
-        select p.code
+        select
+               p.code
         from sys_user u
-                 inner join sys_role r
-                            on u.role_id = r.id
-                 inner join sys_role_permission rp
-                            on r.id = rp.role_id
-                 inner join sys_permission p
-                            on rp.permission_id = p.id
+        inner join sys_user_role t1 on t1.user_id = u.id
+        inner join sys_role r
+                on t1.role_id = r.id
+        inner join sys_role_permission rp
+                on r.id = rp.role_id
+        inner join sys_permission p
+                on rp.permission_id = p.id
         where u.status = 1
           and r.status = 1
           and rp.status = 1

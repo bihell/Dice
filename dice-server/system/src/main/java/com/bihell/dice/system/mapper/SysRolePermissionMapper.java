@@ -44,10 +44,10 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
     /**
      * 根据角色id获取可用的权限编码
      *
-     * @param roleId
+     * @param roleIds
      * @return
      */
-    Set<String> getPermissionCodesByRoleId(@Param("roleId") Long roleId);
+    Set<String> getPermissionCodesByRoleId(@Param("roleIds") List<Long> roleIds);
 
     /**
      * 根据角色id获取该对应的所有三级权限ID

@@ -6,6 +6,7 @@ import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.vo.RouteItemVO;
 import com.bihell.dice.system.vo.SysUserQueryVo;
+import com.bihell.dice.system.vo.SysUserVo;
 
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.Set;
  */
 public interface UserService extends IService<SysUser> {
 
-    boolean addUser(SysUser sysUser);
+    void addUser(SysUserVo sysUserVo) throws Exception;
 
     /**
      * 修改
@@ -27,7 +28,7 @@ public interface UserService extends IService<SysUser> {
      * @return
      * @throws Exception
      */
-    boolean updateUser(SysUser sysUser) throws Exception;
+    boolean updateUser(SysUserVo sysUserVo) throws Exception;
 
     SysUser getUserSingle(Integer id);
 

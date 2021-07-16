@@ -3,7 +3,9 @@ package com.bihell.dice.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
+import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.system.entity.SysRolePermission;
+import com.bihell.dice.system.entity.SysUserRole;
 import com.bihell.dice.system.enums.StateEnum;
 import com.bihell.dice.system.mapper.SysRoleMapper;
 import com.bihell.dice.system.mapper.SysRolePermissionMapper;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -90,8 +93,9 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
     }
 
     @Override
-    public Set<String> getPermissionCodesByRoleId(Long roleId) throws Exception {
-        return sysRolePermissionMapper.getPermissionCodesByRoleId(roleId);
+    public Set<String> getPermissionCodesByRoleId(List<SysUserRole> sysUserRoleList) throws Exception {
+        List<Long> roleIds = sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+        return sysRolePermissionMapper.getPermissionCodesByRoleId(roleIds);
     }
 
     @Override

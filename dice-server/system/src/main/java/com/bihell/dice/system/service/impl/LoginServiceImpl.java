@@ -1,5 +1,6 @@
 package com.bihell.dice.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import com.bihell.dice.config.constant.CommonRedisKey;
@@ -11,18 +12,16 @@ import com.bihell.dice.framework.shiro.util.JwtTokenUtil;
 import com.bihell.dice.framework.shiro.util.JwtUtil;
 import com.bihell.dice.framework.shiro.util.SaltUtil;
 import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
+import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.framework.util.PasswordUtil;
-import com.bihell.dice.system.convert.SysUserConvert;
 import com.bihell.dice.system.entity.SysDepartment;
 import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.entity.SysUser;
+import com.bihell.dice.system.entity.SysUserRole;
 import com.bihell.dice.system.enums.StateEnum;
 import com.bihell.dice.system.exception.VerificationCodeException;
 import com.bihell.dice.system.param.LoginParam;
-import com.bihell.dice.system.service.LoginService;
-import com.bihell.dice.system.service.SysDepartmentService;
-import com.bihell.dice.system.service.SysRolePermissionService;
-import com.bihell.dice.system.service.SysRoleService;
+import com.bihell.dice.system.service.*;
 import com.bihell.dice.system.vo.LoginSysUserTokenVo;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +41,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -105,7 +106,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         // 将系统用户对象转换成登录用户对象
-        LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(sysUser);
+        LoginSysUserVo loginSysUserVo =  BeanUtil.copyProperties(sysUser,LoginSysUserVo.class);
 
         // 获取部门
         SysDepartment sysDepartment = sysDepartmentService.getById(sysUser.getDeptId());
@@ -117,21 +118,32 @@ public class LoginServiceImpl implements LoginService {
         }
         loginSysUserVo.setDepartmentId(sysDepartment.getId())
                 .setDepartmentName(sysDepartment.getDeptName());
+
         // 获取当前用户角色
-        Long roleId = sysUser.getRoleId();
-        SysRole sysRole = sysRoleService.getById(roleId);
-        if (sysRole == null) {
-            throw new AuthenticationException("角色不存在");
-        }
-        if (StateEnum.DISABLE.getCode().equals(sysRole.getStatus())) {
-            throw new AuthenticationException("角色已禁用");
-        }
-        loginSysUserVo.setRoleId(sysRole.getId())
-                .setRoleName(sysRole.getRoleName())
-                .setRoleCode(sysRole.getCode());
+        List<SysUserRole> sysUserRoles = new SysUserRole().selectList(new QueryWrapper<SysUserRole>().lambda()
+                .eq(SysUserRole::getUserId, sysUser.getId()));
+
+        List<RoleInfoVO> roleInfoVOList = sysUserRoles.stream().map(
+                item -> {
+                    SysRole sysRole = sysRoleService.getById(item.getRoleId());
+                    if (sysRole == null) {
+                        throw new AuthenticationException("角色不存在");
+                    }
+                    if (StateEnum.DISABLE.getCode().equals(sysRole.getStatus())) {
+                        throw new AuthenticationException("角色已禁用");
+                    }
+                    RoleInfoVO roleInfoVO = new RoleInfoVO();
+                    roleInfoVO.setRoleName(sysRole.getRoleName());
+                    roleInfoVO.setValue(sysRole.getCode());
+                    roleInfoVO.setId(sysRole.getId());
+                    return roleInfoVO;
+                }
+        ).collect(Collectors.toList());
+
+        loginSysUserVo.setRoles(roleInfoVOList);
 
         // 获取当前用户权限
-        Set<String> permissionCodes = sysRolePermissionService.getPermissionCodesByRoleId(roleId);
+        Set<String> permissionCodes = sysRolePermissionService.getPermissionCodesByRoleId(sysUserRoles);
         if (CollectionUtils.isEmpty(permissionCodes)) {
             throw new AuthenticationException("权限列表不能为空");
         }

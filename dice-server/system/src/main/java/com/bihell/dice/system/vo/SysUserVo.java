@@ -1,4 +1,4 @@
-package com.bihell.dice.system.entity;
+package com.bihell.dice.system.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -28,7 +28,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class SysUser extends Model<SysUser> {
+public class SysUserVo extends Model<SysUserVo> {
     @TableId
     private Long id;
 
@@ -61,6 +61,9 @@ public class SysUser extends Model<SysUser> {
 
     @ApiModelProperty("盐值")
     private String salt;
+
+    @ApiModelProperty("角色组")
+    private List<Long> roleIds;
 
     @ApiModelProperty("部门id")
     @NotNull(message = "部门id不能为空")

@@ -1,7 +1,9 @@
 package com.bihell.dice.system.service;
 
 import com.bihell.dice.framework.common.service.BaseService;
+import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.system.entity.SysRolePermission;
+import com.bihell.dice.system.entity.SysUserRole;
 import org.apache.commons.collections4.SetUtils;
 
 import java.util.List;
@@ -67,11 +69,11 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
     /**
      * 根据角色id获取可用的权限编码
      *
-     * @param roleId
+     * @param sysUserRoleList
      * @return
      * @throws Exception
      */
-    Set<String> getPermissionCodesByRoleId(Long roleId) throws Exception;
+    Set<String> getPermissionCodesByRoleId(List<SysUserRole> sysUserRoleList) throws Exception;
 
     /**
      * 通过角色id判断在角色权限表中是否有数据存在

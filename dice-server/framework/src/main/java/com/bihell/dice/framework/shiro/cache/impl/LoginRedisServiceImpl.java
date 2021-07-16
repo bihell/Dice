@@ -1,10 +1,10 @@
 package com.bihell.dice.framework.shiro.cache.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.bihell.dice.config.constant.CommonRedisKey;
 import com.bihell.dice.config.properties.JwtProperties;
 import com.bihell.dice.framework.common.bean.ClientInfo;
 import com.bihell.dice.framework.shiro.cache.LoginRedisService;
-import com.bihell.dice.framework.shiro.convert.LoginSysUserVoConvert;
 import com.bihell.dice.framework.shiro.convert.ShiroMapstructConvert;
 import com.bihell.dice.framework.shiro.jwt.JwtToken;
 import com.bihell.dice.framework.shiro.vo.JwtTokenRedisVo;
@@ -68,7 +68,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
 
         // Redis缓存登录用户信息
         // 将LoginSysUserVo对象复制到LoginSysUserRedisVo，使用mapstruct进行对象属性复制
-        LoginSysUserRedisVo loginSysUserRedisVo = LoginSysUserVoConvert.INSTANCE.voToRedisVo(loginSysUserVo);
+        LoginSysUserRedisVo loginSysUserRedisVo = BeanUtil.copyProperties(loginSysUserVo,LoginSysUserRedisVo.class);
         loginSysUserRedisVo.setSalt(salt);
         loginSysUserRedisVo.setClientInfo(clientInfo);
 

@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <pre>
@@ -49,8 +50,8 @@ public class SysUserQueryVo implements Serializable {
     @ApiModelProperty("部门id")
     private Long deptId;
 
-    @ApiModelProperty("角色id")
-    private Long roleId;
+    @ApiModelProperty("角色组")
+    private List<Long> roleIds;
 
     @ApiModelProperty("逻辑删除，0：未删除，1：已删除")
     private Integer deleted;

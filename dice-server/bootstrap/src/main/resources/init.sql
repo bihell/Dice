@@ -2,6 +2,19 @@ DROP DATABASE IF EXISTS dice;
 CREATE DATABASE dice CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 USE dice;
 
+create table sys_user_role
+(
+    id      bigint auto_increment comment '主键'
+        primary key,
+    user_id bigint null comment '用户编号',
+    role_id bigint null comment '角色编号'
+)
+    comment '用户角色表';
+
+INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (6, 3, 1);
+INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (7, 3, 3);
+INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (8, 2, 3);
+
 create table sys_role_permission
 (
     id            bigint auto_increment comment '主键'
@@ -138,7 +151,6 @@ create table sys_user
     logged      timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
     salt        varchar(32)                         null comment '盐值',
     avatar      varchar(255)                        null comment '头像',
-    role_id     int                                 not null comment '角色id',
     status      int       default 1                 not null comment '状态',
     deleted     int       default 0                 null,
     dept_id     int                                 null,
@@ -151,8 +163,9 @@ create table sys_user
 )
     charset = utf8mb4;
 
-INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, role_id, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'dice@bihell.com', 'admin', '2019-05-16 02:24:35', '2021-07-15 11:52:15', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 1, 1, 0, 1, null, null, '2021-07-15 11:52:15', '管理员');
-INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, role_id, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2021-07-15 11:50:43', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 3, 1, 0, 1, '1111', null, '2021-07-15 11:50:43', 'Demo用户');
+
+INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2021-07-15 11:52:15', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 1, 0, 1, null, null, '2021-07-15 11:52:15', '管理员');
+INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2021-07-16 17:32:54', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 1, 0, 1, '111', null, '2021-07-16 17:32:47', 'Demo用户');
 
 create table sys_role
 (

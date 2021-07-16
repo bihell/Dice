@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -43,14 +44,7 @@ public class LoginSysUserVo implements Serializable {
     @ApiModelProperty("部门名称")
     private String departmentName;
 
-    @ApiModelProperty("角色id")
-    private Long roleId;
-
-    @ApiModelProperty("角色名称")
-    private String roleName;
-
-    @ApiModelProperty("角色编码")
-    private String roleCode;
+    private List<RoleInfoVO> roles;
 
     @ApiModelProperty("权限编码列表")
     private Set<String> permissionCodes;

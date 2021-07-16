@@ -1,5 +1,6 @@
 package com.bihell.dice.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,7 +13,10 @@ import com.bihell.dice.framework.common.exception.BusinessException;
 import com.bihell.dice.framework.common.exception.TipException;
 import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
+import com.bihell.dice.framework.shiro.util.JwtTokenUtil;
 import com.bihell.dice.framework.shiro.util.SaltUtil;
+import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
+import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.framework.util.PasswordUtil;
 import com.bihell.dice.framework.util.PhoneUtil;
@@ -25,16 +29,15 @@ import com.bihell.dice.system.mapper.SysRolePermissionMapper;
 import com.bihell.dice.system.mapper.UserMapper;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.*;
-import com.bihell.dice.system.vo.RouteItemVO;
-import com.bihell.dice.system.vo.RouteMetoVO;
-import com.bihell.dice.system.vo.SysRolePermissionQueryVo;
-import com.bihell.dice.system.vo.SysUserQueryVo;
+import com.bihell.dice.system.vo.*;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -61,6 +64,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
     private final UserMapper userMapper;
     private final AuthRelRoleUserService authRelRoleUserService;
     private final DiceProperties diceProperties;
+    private final SysUserRoleService sysUserRoleService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Autowired
     private SysRolePermissionMapper sysRolePermissionMapper;
 
@@ -90,13 +98,18 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         Page<SysUserQueryVo> page = new PageInfo<>(userPageParam, OrderItem.desc(getLambdaColumn(SysUser::getCreateTime)));
         IPage<SysUserQueryVo> iPage = userMapper.getSysUserPageList(page, userPageParam);
 
-        // 手机号码脱敏处理
         if (iPage != null && org.apache.commons.collections4.CollectionUtils.isNotEmpty(iPage.getRecords())) {
+            // 手机号码脱敏处理
             iPage.getRecords().forEach(vo -> {
                 vo.setPhone(PhoneUtil.desensitize(vo.getPhone()));
             });
-        }
 
+            // 设置角色id
+            iPage.getRecords().forEach(item -> {
+                List<SysUserRole> sysUserRoleList = sysUserRoleService.list(Wrappers.lambdaQuery(SysUserRole.class).eq(SysUserRole::getUserId, item.getId()));
+                item.setRoleIds(sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList()));
+            });
+        }
         return new Paging(iPage);
     }
 
@@ -114,15 +127,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addUser(SysUser sysUser) throws Exception {
+    public void addUser(SysUserVo sysUserVo) throws Exception {
+        SysUser sysUser = BeanUtil.copyProperties(sysUserVo, SysUser.class);
+
         // 校验用户名是否存在
         boolean isExists = sysUser.selectCount(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, sysUser.getUsername()).or().eq(SysUser::getEmail, sysUser.getEmail())) > 0;
         if (isExists) {
             throw new BusinessException("用户名或邮箱已存在");
         }
 
-        // 校验部门和角色
-        checkDepartmentAndRole(sysUser.getDeptId(), sysUser.getRoleId());
         sysUser.setId(null);
 
         // 生成盐值
@@ -144,29 +157,62 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
             sysUser.setAvatar(diceProperties.getLoginInitHead());
         }
 
-        // 保存系统用户
-        return sysUser.insert();
+        sysUser.insert();
+
+        // 删除用户与角色关联
+        sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRole.class).eq(SysUserRole::getUserId, sysUser.getId()));
+
+        // 新增用户与角色关联
+        if (Objects.nonNull(sysUserVo.getRoleIds())) {
+            List<SysUserRole> sysUserRoleList = sysUserVo.getRoleIds().stream().map(item -> {
+                // 校验部门和角色 todo
+                try {
+                    checkDepartmentAndRole(sysUser.getDeptId(), item);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setUserId(sysUser.getId());
+                sysUserRole.setRoleId(item);
+                return sysUserRole;
+            }).collect(Collectors.toList());
+            sysUserRoleService.saveBatch(sysUserRoleList);
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateUser(SysUser sysUser) throws Exception {
-        // 校验部门和角色
-        checkDepartmentAndRole(sysUser.getDeptId(), sysUser.getRoleId());
+    public boolean updateUser(SysUserVo sysUserVo) throws Exception {
+
         // 获取系统用户
-        SysUser updateSysUser = getById(sysUser.getId());
+        SysUser updateSysUser = getById(sysUserVo.getId());
         if (updateSysUser == null) {
             throw new BusinessException("修改的用户不存在");
         }
 
-        // 修改系统用户
-        updateSysUser.setNickname(sysUser.getNickname())
-                .setPhone(sysUser.getPhone())
-                .setRemark(sysUser.getRemark())
-                .setStatus(sysUser.getStatus())
-                .setDeptId(sysUser.getDeptId())
-                .setRoleId(sysUser.getRoleId())
-                .setUpdateTime(new Date());
+        // 删除用户与角色关联
+        sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRole.class).eq(SysUserRole::getUserId, updateSysUser.getId()));
+
+        // 新增用户与角色关联
+        if (Objects.nonNull(sysUserVo.getRoleIds())) {
+            List<SysUserRole> sysUserRoleList = sysUserVo.getRoleIds().stream().map(item -> {
+                // 校验部门和角色 todo
+                try {
+                    checkDepartmentAndRole(sysUserVo.getDeptId(), item);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setUserId(sysUserVo.getId());
+                sysUserRole.setRoleId(item);
+                return sysUserRole;
+            }).collect(Collectors.toList());
+            sysUserRoleService.saveBatch(sysUserRoleList);
+        }
+
+        updateSysUser = BeanUtil.copyProperties(sysUserVo, SysUser.class);
+        updateSysUser.setUpdateTime(new Date());
+
         return super.updateById(updateSysUser);
     }
 
@@ -215,18 +261,22 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Override
     public List<RouteItemVO> getMenuList() throws Exception {
+        // 重复代码待抽象 todo
+        String token =  JwtTokenUtil.getToken();
+        String tokenSha256 = DigestUtils.sha256Hex(token);
+        LoginSysUserVo loginSysUserVo = (LoginSysUserVo) redisTemplate.opsForValue().get(tokenSha256);
         List<SysPermission> sysPermissions;
-        SysUser sysUser = new SysUser().selectById(LoginUtil.getUserId());
-        SysRole sysRole = new SysRole().selectById(sysUser.getRoleId());
-        if ("admin".equals(sysRole.getCode())) {
+
+        if (loginSysUserVo.getRoles().stream().anyMatch(item -> item.getValue().equals("admin"))) {
             sysPermissions = sysPermissionService.list(Wrappers.lambdaQuery(SysPermission.class)
                     .in(SysPermission::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
                     .orderByAsc(SysPermission::getSort)
             );
         } else {
             // 查询菜单
+            List<Long> roleIdList = loginSysUserVo.getRoles().stream().map(RoleInfoVO::getId).collect(Collectors.toList());
             List<SysRolePermission> sysRoleMenuList = new SysRolePermission().selectList(
-                    new QueryWrapper<SysRolePermission>().lambda().eq(SysRolePermission::getRoleId,sysUser.getRoleId()));
+                    new QueryWrapper<SysRolePermission>().lambda().in(SysRolePermission::getRoleId,roleIdList));
             if (sysRoleMenuList.isEmpty()) {
                 sysPermissions = Lists.newArrayList();
             } else {
@@ -275,7 +325,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
     }
 
     private List<RouteItemVO> getChildrenList(SysPermission root, List<SysPermission> list) {
-        System.out.println(root);
         List<RouteItemVO> childrenList = list.stream().filter(item -> item.getParentId() != null && item.getParentId().equals(root.getId())).map(item -> {
             RouteItemVO node = new RouteItemVO();
             node.setPath(item.getLevel().equals(MenuLevelEnum.ONE.getCode()) ? "/" + item.getRoutePath() : item.getRoutePath());

@@ -2,6 +2,7 @@ package com.bihell.dice.framework.shiro.jwt;
 
 import com.bihell.dice.framework.shiro.cache.LoginRedisService;
 import com.bihell.dice.framework.shiro.vo.LoginSysUserRedisVo;
+import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+
+import java.util.stream.Collectors;
 
 /**
  * Shiro 授权认证
@@ -48,7 +51,7 @@ public class JwtRealm extends AuthorizingRealm {
         LoginSysUserRedisVo loginSysUserRedisVo = loginRedisService.getLoginSysUserRedisVo(username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         // 设置角色
-        authorizationInfo.setRoles(SetUtils.hashSet(loginSysUserRedisVo.getRoleCode()));
+        authorizationInfo.setRoles(loginSysUserRedisVo.getRoles().stream().map(RoleInfoVO::getValue).collect(Collectors.toSet()));
         // 设置权限
         authorizationInfo.setStringPermissions(loginSysUserRedisVo.getPermissionCodes());
         return authorizationInfo;

@@ -30,7 +30,10 @@
         where r.status = 1
           and rp.status = 1
           and p.status = 1
-          and r.id = #{roleId};
+          and r.id in
+        <foreach item="roleId" collection="roleIds" separator="," open="(" close=")">
+            #{roleId}
+        </foreach>
     </select>
 
     <select id="getThreeLevelPermissionIdsByRoleId" resultType="long">

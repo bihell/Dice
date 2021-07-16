@@ -24,11 +24,6 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
-    title: '角色',
-    dataIndex: 'roleName',
-    width: 200,
-  },
-  {
     title: '备注',
     dataIndex: 'remark',
   },
@@ -64,11 +59,13 @@ export const accountFormSchema: FormSchema[] = [
     ifShow: false,
   },
   {
+    field: 'roleIds',
     label: '角色',
-    field: 'roleId',
     component: 'ApiSelect',
     componentProps: {
+      placeholder: '请选择角色',
       api: getAllRoleList,
+      mode: 'multiple',
       labelField: 'roleName',
       valueField: 'id',
     },
@@ -101,7 +98,6 @@ export const accountFormSchema: FormSchema[] = [
     component: 'Input',
     required: true,
   },
-
   {
     label: '备注',
     field: 'remark',

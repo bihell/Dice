@@ -114,15 +114,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addUser(SysUser sysUser) {
+    public boolean addUser(SysUser sysUser) throws Exception {
         // 校验用户名是否存在
         boolean isExists = sysUser.selectCount(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, sysUser.getUsername()).or().eq(SysUser::getEmail, sysUser.getEmail())) > 0;
         if (isExists) {
             throw new BusinessException("用户名或邮箱已存在");
         }
-        // 校验部门和角色 todo
-//        checkDepartmentAndRole(sysUser.getDepartmentId(), sysUser.getRoleId());
-//        sysUser.setId(null);
+
+        // 校验部门和角色
+        checkDepartmentAndRole(sysUser.getDeptId(), sysUser.getRoleId());
+        sysUser.setId(null);
 
         // 生成盐值
         String salt = null;
@@ -138,10 +139,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         sysUser.setSalt(salt);
         sysUser.setPwd(PasswordUtil.encrypt(password, salt));
 
-        // 如果头像为空，则设置默认头像 todo
-//        if (StringUtils.isBlank(sysUser.getHead())) {
-//            sysUser.setHead(springBootPlusProperties.getLoginInitHead());
-//        }
+        // 如果头像为空，则设置默认头像
+        if (StringUtils.isBlank(sysUser.getAvatar())) {
+            sysUser.setAvatar(diceProperties.getLoginInitHead());
+        }
 
         // 保存系统用户
         return sysUser.insert();

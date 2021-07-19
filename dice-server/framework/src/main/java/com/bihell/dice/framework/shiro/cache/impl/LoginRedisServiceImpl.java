@@ -174,6 +174,4 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         // 4. 删除登录用户盐值信息
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_SALT, username));
     }
-
-
 }

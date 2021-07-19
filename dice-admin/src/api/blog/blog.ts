@@ -93,7 +93,7 @@ export function apiSavePage(params: PostItem) {
 export function apiPostList(params: ArticleListParams) {
   return defHttp.request<ArticleListGetResultModel>({
     url: Api.ARTICLE_LIST,
-    method: 'POST',
+    method: 'GET',
     params,
   });
 }
@@ -101,7 +101,7 @@ export function apiPostList(params: ArticleListParams) {
 export function apiPageList(params: ArticleListParams) {
   return defHttp.request<ArticleListGetResultModel>({
     url: Api.PAGE_LIST,
-    method: 'POST',
+    method: 'GET',
     params,
   });
 }

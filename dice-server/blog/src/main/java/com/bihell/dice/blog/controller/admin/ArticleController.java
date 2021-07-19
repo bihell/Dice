@@ -38,10 +38,10 @@ public class ArticleController {
      * 文章分页列表
      */
     @RequiresPermissions("blog:posts:page")
-    @PostMapping("/getPageList")
+    @GetMapping("/getPageList")
     @OperationLog(name = "文章分页列表", type = OperationLogType.PAGE)
     @ApiOperation(value = "文章分页列表", response = Article.class)
-    public ApiResult<Paging<Article>> getArticlePageList(@Validated @RequestBody ArticlePageParam articlePageParam) throws Exception {
+    public ApiResult<Paging<Article>> getArticlePageList(@Validated ArticlePageParam articlePageParam) throws Exception {
         Paging<Article> paging = articleService.getArticlePageList(articlePageParam);
         return ApiResult.ok(paging);
     }

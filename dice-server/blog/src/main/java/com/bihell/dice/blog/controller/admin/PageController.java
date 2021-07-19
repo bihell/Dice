@@ -37,8 +37,8 @@ public class PageController {
      * @param articlePageParam 页面参数
      * @return ApiResult<Paging < Article>>
      */
-    @PostMapping("/getPageList")
-    public ApiResult<Paging<Article>> getPageList(@Validated @RequestBody ArticlePageParam articlePageParam) {
+    @GetMapping("/getPageList")
+    public ApiResult<Paging<Article>> getPageList(@Validated ArticlePageParam articlePageParam) {
         Paging<Article> paging = articleService.getAdminPages(articlePageParam);
         return ApiResult.ok(paging);
     }

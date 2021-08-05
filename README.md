@@ -62,7 +62,7 @@
 
 ```
 Dice
-├── dice-admin        -- 	后台管理前端，基于vue-vben-admin项目开发。
+├── dice-admin        --  后台管理前端，基于vue-vben-admin项目开发。
 ├── dice-front        --  博客SEO前端，基于vue-next项目开发
 └── dice-server       --  后端服务，Spring Boot全家桶
     ├── admin         --  SpringBootAdmin Server模块

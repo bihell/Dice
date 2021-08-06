@@ -9,7 +9,12 @@
     @keypress.enter="handleLogin"
   >
     <FormItem name="account" class="enter-x">
-      <Input size="large" v-model:value="formData.account" :placeholder="t('sys.login.userName')" />
+      <Input
+        size="large"
+        v-model:value="formData.account"
+        :placeholder="t('sys.login.userName')"
+        class="fix-auto-fill"
+      />
     </FormItem>
     <FormItem name="password" class="enter-x">
       <InputPassword
@@ -48,12 +53,12 @@
       </Button> -->
     </FormItem>
     <ARow class="enter-x">
-      <ACol :xs="24" :md="8">
+      <ACol :md="8" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
           {{ t('sys.login.mobileSignInFormTitle') }}
         </Button>
       </ACol>
-      <ACol :md="8" :xs="24" class="!my-2 md:!my-0 xs:mx-0 md:mx-2">
+      <ACol :md="8" :xs="24" class="!my-2 !md:my-0 xs:mx-0 md:mx-2">
         <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
           {{ t('sys.login.qrSignInFormTitle') }}
         </Button>
@@ -130,8 +135,8 @@
       const rememberMe = ref(false);
 
       const formData = reactive({
-        account: null,
-        password: null,
+        account: 'vben',
+        password: '123456',
       });
 
       const { validForm } = useFormValid(formRef);

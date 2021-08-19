@@ -4,7 +4,7 @@ import type { LoadingProps } from './typing';
 import type { Ref } from 'vue';
 
 export interface UseLoadingOptions {
-  target?: HTMLElement | Ref<ElRef>;
+  target?: any;
   props?: Partial<LoadingProps>;
 }
 
@@ -32,7 +32,7 @@ export function useLoading(
   const instance = createLoading(props, undefined, true);
 
   const open = (): void => {
-    const t = unref(target);
+    const t = unref(target as Ref<ElRef>);
     if (!t) return;
     instance.open(t);
   };

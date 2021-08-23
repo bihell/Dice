@@ -8,12 +8,18 @@
       v-show="editorRef"
       :disabled="disabled"
     />
-    <textarea :id="tinymceId" ref="elRef" :style="{ visibility: 'hidden' }"></textarea>
+    <textarea
+      :id="tinymceId"
+      ref="elRef"
+      :style="{ visibility: 'hidden' }"
+      v-if="!initOptions.inline"
+    ></textarea>
+    <slot v-else></slot>
   </div>
 </template>
 
 <script lang="ts">
-  import type { RawEditorSettings } from 'tinymce';
+  import type { Editor, RawEditorSettings } from 'tinymce';
   import tinymce from 'tinymce/tinymce';
   import 'tinymce/themes/silver';
   import 'tinymce/icons/default/icons';
@@ -54,8 +60,8 @@
     ref,
     unref,
     watch,
-    onUnmounted,
     onDeactivated,
+    onBeforeUnmount,
   } from 'vue';
   import ImgUpload from './ImgUpload.vue';
   import { toolbar, plugins } from './tinymce';
@@ -108,9 +114,9 @@
     components: { ImgUpload },
     inheritAttrs: false,
     props: tinymceProps,
-    emits: ['change', 'update:modelValue'],
+    emits: ['change', 'update:modelValue', 'inited', 'init-error'],
     setup(props, { emit, attrs }) {
-      const editorRef = ref();
+      const editorRef = ref<Nullable<Editor>>(null);
       const fullscreen = ref(false);
       const tinymceId = ref<string>(buildShortUUID('tiny-vue'));
       const elRef = ref<Nullable<HTMLElement>>(null);
@@ -159,7 +165,7 @@
           content_css:
             publicPath + 'resource/tinymce/skins/ui/' + skinName.value + '/content.min.css',
           ...options,
-          setup: (editor) => {
+          setup: (editor: Editor) => {
             editorRef.value = editor;
             editor.on('init', (e) => initSetup(e));
           },
@@ -188,7 +194,9 @@
       );
 
       onMountedOrActivated(() => {
-        tinymceId.value = buildShortUUID('tiny-vue');
+        if (!initOptions.value.inline) {
+          tinymceId.value = buildShortUUID('tiny-vue');
+        }
         nextTick(() => {
           setTimeout(() => {
             initEditor();
@@ -196,7 +204,7 @@
         });
       });
 
-      onUnmounted(() => {
+      onBeforeUnmount(() => {
         destory();
       });
 
@@ -206,7 +214,7 @@
 
       function destory() {
         if (tinymce !== null) {
-          tinymce?.remove?.(unref(editorRef));
+          tinymce?.remove?.(unref(initOptions).selector!);
         }
       }
 
@@ -215,7 +223,14 @@
         if (el) {
           el.style.visibility = '';
         }
-        tinymce.init(unref(initOptions));
+        tinymce
+          .init(unref(initOptions))
+          .then((editor) => {
+            emit('inited', editor);
+          })
+          .catch((err) => {
+            emit('init-error', err);
+          });
       }
 
       function initSetup(e) {

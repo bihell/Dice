@@ -1,5 +1,5 @@
 <template>
-  <div class="relative !h-full w-full overflow-hidden" ref="el"> </div>
+  <div class="relative !h-full w-full overflow-hidden" ref="el"></div>
 </template>
 
 <script lang="ts" setup>
@@ -8,6 +8,7 @@
   import { useAppStore } from '/@/store/modules/app';
   import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
   import CodeMirror from 'codemirror';
+  import { MODE } from './../typing';
   // css
   import './codemirror.css';
   import 'codemirror/theme/idea.css';
@@ -18,7 +19,14 @@
   import 'codemirror/mode/htmlmixed/htmlmixed';
 
   const props = defineProps({
-    mode: { type: String, default: 'application/json' },
+    mode: {
+      type: String as PropType<MODE>,
+      default: MODE.JSON,
+      validator(value: any) {
+        // 这个值必须匹配下列字符串中的一个
+        return Object.values(MODE).includes(value);
+      },
+    },
     value: { type: String, default: '' },
     readonly: { type: Boolean, default: false },
   });
@@ -40,7 +48,7 @@
         editor?.setValue(value ? value : '');
       }
     },
-    { flush: 'post' }
+    { flush: 'post' },
   );
 
   watchEffect(() => {
@@ -54,13 +62,13 @@
     },
     {
       immediate: true,
-    }
+    },
   );
 
   function setTheme() {
     unref(editor)?.setOption(
       'theme',
-      appStore.getDarkMode === 'light' ? 'idea' : 'material-palenight'
+      appStore.getDarkMode === 'light' ? 'idea' : 'material-palenight',
     );
   }
 

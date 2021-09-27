@@ -64,7 +64,7 @@
         menuState,
         items,
         mode as any,
-        accordion
+        accordion,
       );
 
       const getIsTopMenu = computed(() => {
@@ -114,7 +114,7 @@
           () => props.items,
           () => {
             handleMenuChange();
-          }
+          },
         );
 
       async function handleMenuClick({ key }: { key: string; keyPath: string[] }) {
@@ -126,9 +126,6 @@
         emit('menuClick', key);
 
         isClickGo.value = true;
-        // const parentPath = await getCurrentParentPath(key);
-
-        // menuState.openKeys = [parentPath];
         menuState.selectedKeys = [key];
       }
 

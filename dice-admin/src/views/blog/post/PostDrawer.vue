@@ -73,7 +73,7 @@
   import { computed, defineComponent } from 'vue';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { store } from '../store';
-  import moment from 'moment';
+  import dayjs from 'dayjs';
   import { Form, Select, DatePicker, Switch } from 'ant-design-vue';
 
   export default defineComponent({
@@ -134,8 +134,8 @@
         categoryList: computed(() => store.state.categoryList),
         priority: computed(() => store.state.currentPost.priority),
         comment: computed(() => store.state.currentPost.allowComment),
-        createTime: computed(() => moment(store.state.currentPost.createTime)),
-        updateTime: computed(() => moment(store.state.currentPost.updateTime)),
+        createTime: computed(() => dayjs(store.state.currentPost.createTime)),
+        updateTime: computed(() => dayjs(store.state.currentPost.updateTime)),
         // createTime: computed(() => moment.utc(store.state.currentPost.createTime).local()),
         // updateTime: computed(() => moment.utc(store.state.currentPost.updateTime).local()),
         setTags,

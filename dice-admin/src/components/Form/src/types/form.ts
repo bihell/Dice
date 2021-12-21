@@ -54,9 +54,9 @@ export interface FormProps {
   model?: Recordable;
   // The width of all items in the entire form
   labelWidth?: number | string;
-  //alignment
+  // alignment
   labelAlign?: 'left' | 'right';
-  //Row configuration for the entire form
+  // Row configuration for the entire form
   rowProps?: RowProps;
   // Submit form on reset
   submitOnReset?: boolean;
@@ -129,7 +129,7 @@ export interface FormSchema {
   // Variable name bound to v-model Default value
   valueField?: string;
   // Label name
-  label: string;
+  label: string | VNode;
   // Auxiliary text
   subLabel?: string;
   // Help text on the right side of the text

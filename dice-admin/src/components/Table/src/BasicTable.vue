@@ -43,7 +43,6 @@
   import { Table } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { PageWrapperFixedHeightKey } from '/@/components/Page';
-  import expandIcon from './components/ExpandIcon';
   import HeaderCell from './components/HeaderCell.vue';
   import { InnerHandlers } from './types/table';
 
@@ -222,11 +221,8 @@
       const getBindValues = computed(() => {
         const dataSource = unref(getDataSourceRef);
         let propsData: Recordable = {
-          size: 'middle',
-          // ...(dataSource.length === 0 ? { getPopupContainer: () => document.body } : {}),
           ...attrs,
           customRow,
-          expandIcon: slots.expandIcon ? null : expandIcon(),
           ...unref(getProps),
           ...unref(getHeaderProps),
           scroll: unref(getScrollRef),
@@ -358,7 +354,7 @@
       padding: 16px;
 
       .ant-form {
-        padding: 12px 10px 6px 10px;
+        padding: 12px 10px 6px;
         margin-bottom: 16px;
         background-color: @component-background;
         border-radius: 2px;
@@ -376,7 +372,7 @@
 
       .ant-table-title {
         min-height: 40px;
-        padding: 0 0 8px 0 !important;
+        padding: 0 0 8px !important;
       }
 
       .ant-table.ant-table-bordered .ant-table-title {
@@ -402,7 +398,7 @@
     }
 
     .ant-pagination {
-      margin: 10px 0 0 0;
+      margin: 10px 0 0;
     }
 
     .ant-table-footer {

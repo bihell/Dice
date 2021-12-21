@@ -6,7 +6,7 @@
       search
       :clickRowToExpand="false"
       :treeData="treeData"
-      :replaceFields="{ key: 'id', title: 'deptName' }"
+      :fieldNames="{ key: 'id', title: 'deptName' }"
       @select="handleSelect"
     />
   </div>

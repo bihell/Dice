@@ -70,7 +70,7 @@ export const navDetailFormSchema: FormSchema[] = [
     label: '所属分类',
     component: 'TreeSelect',
     componentProps: {
-      replaceFields: {
+      fieldNames: {
         title: 'name',
         key: 'id',
         value: 'id',

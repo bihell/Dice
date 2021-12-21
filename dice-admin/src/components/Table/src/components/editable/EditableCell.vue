@@ -6,7 +6,7 @@
       @click="handleEdit"
     >
       <div class="cell-content" :title="column.ellipsis ? getValues ?? '' : ''">
-        {{ getValues ? getValues : '&nbsp;' }}
+        {{ getValues || getValues === 0 ? getValues : '&nbsp;' }}
       </div>
       <FormOutlined :class="`${prefixCls}__normal-icon`" v-if="!column.editRow" />
     </div>
@@ -265,7 +265,7 @@
               result = await beforeEditSubmit({
                 record: pick(record, keys),
                 index,
-                key,
+                key: key as string,
                 value,
               });
             } catch (e) {

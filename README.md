@@ -171,8 +171,8 @@ npm run dev
 进入后端文件夹`cd dice-admin`，安装依赖和启动服务：
 
 ```Bash
-yarn install
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 #### 3.2.4 访问

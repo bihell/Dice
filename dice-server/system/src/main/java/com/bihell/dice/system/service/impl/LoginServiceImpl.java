@@ -226,5 +226,4 @@ public class LoginServiceImpl implements LoginService {
         loginRedisService.deleteLoginInfo(token, username);
         log.info("登出成功,username:{},token:{}", username, token);
     }
-
 }

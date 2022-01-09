@@ -17,7 +17,7 @@ export const actions = {
     const list = {
       data: data.list,
       totalPage: data.pages,
-      currentPage: data.pageNum || 1
+      currentPage: data.pageNum || 1,
     }
     commit('article/SET_LIST', list)
   },
@@ -55,7 +55,7 @@ export const actions = {
     )
     const pagination = {
       list: data.list,
-      total: data.total
+      total: data.total,
     }
     commit('comment/SET_LIST', pagination)
     return pagination
@@ -91,5 +91,5 @@ export const actions = {
   async nuxtServerInit({ dispatch }) {
     await dispatch('getOptions')
     await dispatch('getPageMenu')
-  }
+  },
 }

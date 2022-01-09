@@ -8,14 +8,14 @@ const Axios = axios.create({
   responseType: 'json',
   withCredentials: true, // 是否允许带cookie这些
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
   },
-  proxy: serverConfig.baseProxy
+  proxy: serverConfig.baseProxy,
 })
 
 // 请求拦截（配置发送请求的信息） 传参序列化
 Axios.interceptors.request.use(
-  config => {
+  (config) => {
     if (
       config.method === 'post' ||
       config.method === 'put' ||
@@ -26,18 +26,18 @@ Axios.interceptors.request.use(
     }
     return config
   },
-  error => {
+  (error) => {
     return Promise.reject(error)
   }
 )
 
 // 响应拦截（配置请求回来的信息）
 Axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     // 处理响应数据
     return response
   },
-  function(error) {
+  function (error) {
     // 处理响应失败
 
     return Promise.reject(error)
@@ -53,12 +53,12 @@ Axios.interceptors.response.use(
 export function get(url, params = {}) {
   return new Promise((resolve, reject) => {
     Axios.get(url, {
-      params
+      params,
     })
-      .then(response => {
+      .then((response) => {
         resolve(response.data)
       })
-      .catch(err => {
+      .catch((err) => {
         reject(err)
       })
   })
@@ -73,10 +73,10 @@ export function get(url, params = {}) {
 export function post(url, params = {}) {
   return new Promise((resolve, reject) => {
     Axios.post(url, params).then(
-      response => {
+      (response) => {
         resolve(response.data)
       },
-      err => {
+      (err) => {
         reject(err)
       }
     )
@@ -92,10 +92,10 @@ export function post(url, params = {}) {
 export function put(url, params = {}) {
   return new Promise((resolve, reject) => {
     Axios.put(url, params).then(
-      response => {
+      (response) => {
         resolve(response.data)
       },
-      err => {
+      (err) => {
         reject(err)
       }
     )
@@ -111,12 +111,12 @@ export function put(url, params = {}) {
 export function del(url, params = {}) {
   return new Promise((resolve, reject) => {
     Axios.delete(url, {
-      params
+      params,
     })
-      .then(response => {
+      .then((response) => {
         resolve(response.data)
       })
-      .catch(err => {
+      .catch((err) => {
         reject(err)
       })
   })

@@ -21,12 +21,7 @@ export default {
   components: {
     DiceHeader,
     DiceFooter,
-    DiceScrollTop
-  },
-  computed: {
-    options() {
-      return this.$store.state.option.data
-    }
+    DiceScrollTop,
   },
   head() {
     return {
@@ -38,30 +33,35 @@ export default {
           hid: 'description',
           name: 'description',
           content:
-            this.options.meta_description || defaultConfig.meta_description
+            this.options.meta_description || defaultConfig.meta_description,
         },
         {
           hid: 'keywords',
           name: 'keywords',
-          content: this.options.meta_keywords || defaultConfig.meta_keywords
+          content: this.options.meta_keywords || defaultConfig.meta_keywords,
         },
         {
           hid: 'google-site-verification',
           name: 'google-site-verification',
           content:
             this.options.google_site_verification ||
-            defaultConfig.google_site_verification
+            defaultConfig.google_site_verification,
         },
         {
           hid: 'baidu-site-verification',
           name: 'baidu-site-verification',
           content:
             this.options.baidu_site_verification ||
-            defaultConfig.baidu_site_verification
-        }
-      ]
+            defaultConfig.baidu_site_verification,
+        },
+      ],
     }
-  }
+  },
+  computed: {
+    options() {
+      return this.$store.state.option.data
+    },
+  },
 }
 </script>
 

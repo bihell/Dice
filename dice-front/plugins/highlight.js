@@ -31,7 +31,7 @@ hljs.registerLanguage(
 // export default hljs
 export function highlight(el) {
   const blocks = el.querySelectorAll('pre code')
-  blocks.forEach(block => {
+  blocks.forEach((block) => {
     hljs.highlightBlock(block)
   })
 }

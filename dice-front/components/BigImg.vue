@@ -29,15 +29,15 @@ export default {
     visible: Boolean,
     img: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
       back: {
         height: '',
-        overflow: ''
-      }
+        overflow: '',
+      },
     }
   },
   computed: {
@@ -45,7 +45,7 @@ export default {
       if (this.visible) this.lockBody()
       else this.unLockBody()
       return this.visible
-    }
+    },
   },
   methods: {
     lockBody() {
@@ -62,8 +62,8 @@ export default {
     hide() {
       this.unLockBody()
       this.$emit('update:visible', false)
-    }
-  }
+    },
+  },
 }
 </script>
 

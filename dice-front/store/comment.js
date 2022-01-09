@@ -1,8 +1,8 @@
 export const state = () => ({
   pagination: {
     list: [],
-    total: 0
-  }
+    total: 0,
+  },
 })
 
 export const mutations = {
@@ -11,7 +11,7 @@ export const mutations = {
     // 设置评论的父评论
     for (const comment of state.pagination.list) {
       if (comment.pid && comment.pid !== -1) {
-        const pComment = state.pagination.list.find(o =>
+        const pComment = state.pagination.list.find((o) =>
           Object.is(o.id, comment.pid)
         )
         if (pComment) {
@@ -21,15 +21,15 @@ export const mutations = {
     }
   },
   AGREE_COMMENT(state, commentId) {
-    const comment = state.pagination.list.find(comment =>
+    const comment = state.pagination.list.find((comment) =>
       Object.is(comment.id, commentId)
     )
     if (comment) comment.agree++
   },
   DISAGREE_COMMENT(state, commentId) {
-    const comment = state.pagination.list.find(comment =>
+    const comment = state.pagination.list.find((comment) =>
       Object.is(comment.id, commentId)
     )
     if (comment) comment.disagree++
-  }
+  },
 }

@@ -1,9 +1,9 @@
 export const state = () => ({
-  data: {}
+  data: {},
 })
 
 export const mutations = {
   SET_DATA(state, data) {
     state.data = data
-  }
+  },
 }

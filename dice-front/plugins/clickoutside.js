@@ -9,15 +9,15 @@ let startClick
 let seed = 0
 
 /* istanbul ignore next */
-export const on = (function() {
+export const on = (function () {
   if (!isServer && document.addEventListener) {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event && handler) {
         element.addEventListener(event, handler, false)
       }
     }
   } else {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event && handler) {
         element.attachEvent('on' + event, handler)
       }
@@ -25,15 +25,15 @@ export const on = (function() {
   }
 })()
 
-!isServer && on(document, 'mousedown', e => (startClick = e))
+!isServer && on(document, 'mousedown', (e) => (startClick = e))
 
 !isServer &&
-  on(document, 'mouseup', e => {
-    nodeList.forEach(node => node[ctx].documentHandler(e, startClick))
+  on(document, 'mouseup', (e) => {
+    nodeList.forEach((node) => node[ctx].documentHandler(e, startClick))
   })
 
 function createDocumentHandler(el, binding, vnode) {
-  return function(mouseup = {}, mousedown = {}) {
+  return function (mouseup = {}, mousedown = {}) {
     if (
       !vnode ||
       !vnode.context ||
@@ -77,7 +77,7 @@ export default {
       id,
       documentHandler: createDocumentHandler(el, binding, vnode),
       methodName: binding.expression,
-      bindingFn: binding.value
+      bindingFn: binding.value,
     }
   },
 
@@ -97,5 +97,5 @@ export default {
       }
     }
     delete el[ctx]
-  }
+  },
 }

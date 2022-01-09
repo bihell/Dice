@@ -9,7 +9,7 @@ const STATIC = {
   META_CATEGORY: 'category',
   META_TAG: 'tag',
   ASSESS_AGREE: 'agree',
-  ASSESS_DISAGREE: 'disagree'
+  ASSESS_DISAGREE: 'disagree',
 }
 
 /************************************************************/
@@ -123,5 +123,5 @@ export default {
   stringToTags,
   goAnchor,
   jump,
-  formatWebsite
+  formatWebsite,
 }

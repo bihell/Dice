@@ -10,7 +10,12 @@ export default {
   props: {
     error: {
       type: Error,
-      default: null
+      default: null,
+    },
+  },
+  head() {
+    return {
+      title: this.error.statusCode,
     }
   },
   computed: {
@@ -19,13 +24,8 @@ export default {
     },
     message() {
       return this.error.message || `<%= messages.client_error %>`
-    }
+    },
   },
-  head() {
-    return {
-      title: this.error.statusCode
-    }
-  }
 }
 </script>
 

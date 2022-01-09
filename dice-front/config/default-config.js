@@ -4,5 +4,5 @@ export default {
   meta_keywords: 'Hadoop, Java, Hive, Spring-Boot',
   meta_author: 'tpxcer@outlook.com',
   google_site_verification: '',
-  baidu_site_verification: ''
+  baidu_site_verification: '',
 }

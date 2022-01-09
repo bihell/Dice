@@ -10,7 +10,7 @@ Vue.prototype.$gravarar = gravarar
 
 // 引用 fiters
 const fs = filters
-Object.keys(filters).forEach(key => Vue.filter(key, fs[key]))
+Object.keys(filters).forEach((key) => Vue.filter(key, fs[key]))
 
 // 引用clickOutside
 Vue.directive('click-outside', clickOutside)

@@ -4,13 +4,13 @@ const api = {
   getArticles(page, limit) {
     const params = {
       page,
-      limit: limit || 5
+      limit: limit || 5,
     }
     return get('/article', params)
   },
   getArticle(id, token) {
     const params = {
-      token
+      token,
     }
     return get('/article/' + id, params)
   },
@@ -33,7 +33,7 @@ const api = {
     const params = {
       articleId,
       page,
-      limit: limit || 5
+      limit: limit || 5,
     }
     return get('comment', params)
   },
@@ -44,19 +44,19 @@ const api = {
       content,
       name,
       email,
-      website
+      website,
     }
     return post('/comment', params)
   },
   assessComment(commentId, assess) {
     const params = {
-      assess
+      assess,
     }
     return post('/comment/' + commentId + '/assess', params)
   },
   getOptions() {
     return get('/option')
-  }
+  },
 }
 
 export default api

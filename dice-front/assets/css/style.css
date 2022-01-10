@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  font-family: Source Sans Pro, Helvetica Neue, Arial, sans-serif;
+  font-family: 'Bree Serif', serif;
   color: #34495e;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6rem;
@@ -271,13 +271,14 @@ table tr td:last-child {
   background-color: #f2f2f2;
 }
 
-.markdown-body code, tt {
+.markdown-body :not(pre) code, tt {
   margin: 0 2px;
   padding: 2px 4px;
   border-radius: 2px;
   font-family: Consolas, Roboto, monospace !important;
   font-size: 0.92rem;
   background-color: #f7f7f7;
+  word-break: break-word;
 }
 
 /* heighlight. */

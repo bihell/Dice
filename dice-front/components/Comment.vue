@@ -19,7 +19,7 @@
                     <a @click="closeReply"><span class="icon-close"></span></a>
                   </div>
                   <div
-                    v-highlight
+                    v-prism
                     class="reply-preview markdown-body"
                     v-html="replyComment.content"
                   ></div>
@@ -95,7 +95,7 @@
                   comment.created | time('yyyy.MM.dd hh:mm')
                 }}</span>
               </div>
-              <div v-highlight class="comment-item-content markdown-body">
+              <div v-prism class="comment-item-content markdown-body">
                 <div
                   v-if="comment.pId !== -1 && comment.pComment"
                   class="comment-item-reply-box"

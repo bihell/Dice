@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import gravarar from 'gravatar'
-import util from './tools'
-import * as filters from './filters'
-import clickOutside from './clickoutside'
-import { highlight } from './highlight'
+import util from '@/plugins/tools'
+import * as filters from '@/plugins/filters'
+import clickOutside from '@/plugins/clickoutside'
+import { prism } from '@/plugins/prism'
 
 Vue.prototype.$util = util
 Vue.prototype.$gravarar = gravarar
@@ -14,5 +14,5 @@ Object.keys(filters).forEach((key) => Vue.filter(key, fs[key]))
 
 // 引用clickOutside
 Vue.directive('click-outside', clickOutside)
-// 引用highlight
-Vue.directive('highlight', highlight)
+// 引用prism
+Vue.directive('prism', prism)

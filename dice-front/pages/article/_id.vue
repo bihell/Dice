@@ -17,7 +17,7 @@
         <span class="icon-bubble2"> {{ article.commentCount }} </span>
       </p>
     </div>
-    <div v-highlight class="markdown-body" v-html="article.content"></div>
+    <div v-prism class="markdown-body" v-html="article.content"></div>
     <div class="article-tags">
       <label class="label-tags">Tags:</label>
       <span

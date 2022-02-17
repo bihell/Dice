@@ -2,15 +2,25 @@ package com.bihell.dice.config.constant;
 
 /**
  * <p>
- *     日期格式常量 todo
+ *     日期格式常量
  * </p>
  */
 public interface DatePattern {
+    /**
+     * 年-月-日
+     */
+    String YYYY_MM = "yyyy-MM";
 
     /**
      * 年-月-日
      */
     String YYYY_MM_DD = "yyyy-MM-dd";
+
+    /**
+     * 年-月-日 时
+     */
+    String YYYY_MM_DD_HH = "yyyy-MM-dd HH";
+
     /**
      * 年-月-日 时:分
      */
@@ -22,7 +32,7 @@ public interface DatePattern {
     /**
      * 年-月-日 时:分:秒:毫秒
      */
-    String YYYY_MM_DD_HH_MM_SS_S = "yyyy-MM-dd HH:mm:ss.S";
+    String YYYY_MM_DD_HH_MM_SS_S = "yyyy-MM-dd HH:mm:ss.SSS";
 
     /**
      * 时:分

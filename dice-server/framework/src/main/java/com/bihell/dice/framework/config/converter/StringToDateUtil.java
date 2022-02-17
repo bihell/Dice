@@ -1,10 +1,12 @@
 package com.bihell.dice.framework.config.converter;
 
+import com.bihell.dice.config.constant.DatePattern;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Date;
  * <pre>
  * 日期转换器,将请求参数的日期字符串转换成java.util.Date类型
  * 日期格式顺序:
- * 	1.yyyy-MM-dd HH:mm:ss:S
+ * 	1.yyyy-MM-dd HH:mm:ss.SSS
  * 	2.yyyy-MM-dd HH:mm:ss
  * 	3.yyyy-MM-dd HH:mm
  * 	4.yyyy-MM-dd HH
@@ -31,13 +33,13 @@ public class StringToDateUtil {
     /**
      * 日期格式化数组
      */
-    private static DateFormat[] dateFormats = {
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:S"),
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-            new SimpleDateFormat("yyyy-MM-dd HH:mm"),
-            new SimpleDateFormat("yyyy-MM-dd HH"),
-            new SimpleDateFormat("yyyy-MM-dd"),
-            new SimpleDateFormat("yyyy-MM")
+    private static SimpleDateFormat[] dateFormats = {
+            new SimpleDateFormat(DatePattern.YYYY_MM_DD_HH_MM_SS_S),
+            new SimpleDateFormat(DatePattern.YYYY_MM_DD_HH_MM_SS),
+            new SimpleDateFormat(DatePattern.YYYY_MM_DD_HH_MM),
+            new SimpleDateFormat(DatePattern.YYYY_MM_DD_HH),
+            new SimpleDateFormat(DatePattern.YYYY_MM_DD),
+            new SimpleDateFormat(DatePattern.YYYY_MM),
     };
 
     /**

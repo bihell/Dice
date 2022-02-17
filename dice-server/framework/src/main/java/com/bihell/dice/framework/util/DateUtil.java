@@ -3,27 +3,32 @@ package com.bihell.dice.framework.util;
 
 import com.bihell.dice.config.constant.DatePattern;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+/**
+ * @author haseochen
+ */
 public class DateUtil {
 
-    public static String getDateString(Date date){
-        if (date == null){
-            return null;
-        }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DatePattern.YYYY_MM_DD);
-        String dateString = simpleDateFormat.format(date);
-        return dateString;
+    public static String toYMDhms(Date date) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        DateTimeFormatter formater = DateTimeFormatter.ofPattern(DatePattern.YYYY_MM_DD_HH_MM_SS);
+        return formater.format(localDateTime);
     }
 
-    public static String getDateTimeString(Date date){
-        if (date == null){
-            return null;
-        }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DatePattern.YYYY_MM_DD_HH_MM_SS);
-        String dateString = simpleDateFormat.format(date);
-        return dateString;
+    public static Long toTs(String YmDHms) {
+        DateTimeFormatter formater = DateTimeFormatter.ofPattern(DatePattern.YYYY_MM_DD_HH_MM_SS);
+        LocalDateTime localDateTime = LocalDateTime.parse(YmDHms, formater);
+        return localDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+    }
+
+    public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return LocalDateTime.ofInstant(
+                dateToConvert.toInstant(), ZoneId.systemDefault());
     }
 
 }

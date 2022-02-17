@@ -275,7 +275,7 @@ public abstract class BaseLogAop {
             // 设置请求参数
             Object requestParamObject = getRequestParamObject(joinPoint, request, requestMethod, contentType, isRequestBody);
             requestInfo.setParam(requestParamObject);
-            requestInfo.setTime(DateUtil.getDateTimeString(new Date()));
+            requestInfo.setTime(DateUtil.toYMDhms(new Date()));
 
             // 获取请求头token
             String token = request.getHeader(JwtTokenUtil.getTokenName());

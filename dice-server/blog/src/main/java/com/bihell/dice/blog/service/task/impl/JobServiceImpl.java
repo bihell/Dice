@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.bihell.dice.blog.utils.DateUtil.convertToLocalDateTime;
+import static com.bihell.dice.framework.util.DateUtil.convertToLocalDateTime;
 
 /**
  * @author haseochen

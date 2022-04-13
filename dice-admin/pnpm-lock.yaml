@@ -68,6 +68,7 @@ specifiers:
   npm-run-all: ^4.1.5
   nprogress: ^0.2.0
   path-to-regexp: ^6.2.0
+  picocolors: ^1.0.0
   pinia: 2.0.12
   postcss: ^8.4.12
   postcss-html: ^1.3.0
@@ -86,8 +87,10 @@ specifiers:
   stylelint-config-html: ^1.0.0
   stylelint-config-prettier: ^9.0.3
   stylelint-config-recommended: ^7.0.0
+  stylelint-config-recommended-vue: ^1.3.0
   stylelint-config-standard: ^25.0.0
   stylelint-order: ^5.0.0
+  stylelint-processor-html: ^1.0.0
   tinymce: ^5.10.3
   ts-node: ^10.7.0
   typescript: ^4.6.2
@@ -194,6 +197,7 @@ devDependencies:
   less: 4.1.2
   lint-staged: 12.3.7
   npm-run-all: 4.1.5
+  picocolors: 1.0.0
   postcss: 8.4.12
   postcss-html: 1.3.0
   postcss-less: 6.0.0_postcss@8.4.12
@@ -205,8 +209,10 @@ devDependencies:
   stylelint-config-html: 1.0.0_50484b26a38601352aaf9ea7986ae8a8
   stylelint-config-prettier: 9.0.3_stylelint@14.6.1
   stylelint-config-recommended: 7.0.0_stylelint@14.6.1
+  stylelint-config-recommended-vue: 1.4.0_50484b26a38601352aaf9ea7986ae8a8
   stylelint-config-standard: 25.0.0_stylelint@14.6.1
   stylelint-order: 5.0.0_stylelint@14.6.1
+  stylelint-processor-html: 1.0.0
   ts-node: 10.7.0_e79e62fe450383fd2d418267dc75e645
   typescript: 4.6.2
   vite: 2.9.1_less@4.1.2
@@ -9559,6 +9565,20 @@ packages:
       stylelint: 14.6.1
     dev: true
 
+  /stylelint-config-recommended-vue/1.4.0_50484b26a38601352aaf9ea7986ae8a8:
+    resolution: {integrity: sha512-DVJqyX2KvMCn9U0+keL12r7xlsH26K4Vg8NrIZuq5MoF7g82DpMp326Om4E0Q+Il1o+bTHuUyejf2XAI0iD04Q==}
+    engines: {node: ^12 || >=14}
+    peerDependencies:
+      postcss-html: ^1.0.0
+      stylelint: '>=14.0.0'
+    dependencies:
+      postcss-html: 1.3.0
+      semver: 7.3.5
+      stylelint: 14.6.1
+      stylelint-config-html: 1.0.0_50484b26a38601352aaf9ea7986ae8a8
+      stylelint-config-recommended: 7.0.0_stylelint@14.6.1
+    dev: true
+
   /stylelint-config-recommended/7.0.0_stylelint@14.6.1:
     resolution: {integrity: sha512-yGn84Bf/q41J4luis1AZ95gj0EQwRX8lWmGmBwkwBNSkpGSpl66XcPTulxGa/Z91aPoNGuIGBmFkcM1MejMo9Q==}
     peerDependencies:
@@ -9584,6 +9604,13 @@ packages:
       postcss: 8.4.12
       postcss-sorting: 7.0.1_postcss@8.4.12
       stylelint: 14.6.1
+    dev: true
+
+  /stylelint-processor-html/1.0.0:
+    resolution: {integrity: sha1-aJK2soVaRfApHNhFGR1pCBMKKRg=}
+    deprecated: 'Please use stylelint-processor-arbitrary-tags https://github.com/mapbox/stylelint-processor-arbitrary-tags '
+    dependencies:
+      htmlparser2: 3.10.1
     dev: true
 
   /stylelint/14.6.1:

@@ -39,7 +39,8 @@ export function useFormEvents({
     Object.keys(formModel).forEach((key) => {
       const schema = unref(getSchema).find((item) => item.field === key);
       const isInput = schema?.component && defaultValueComponents.includes(schema.component);
-      formModel[key] = isInput ? defaultValueRef.value[key] || '' : defaultValueRef.value[key];
+      const defaultValue = cloneDeep(defaultValueRef.value[key]);
+      formModel[key] = isInput ? defaultValue || '' : defaultValue;
     });
     nextTick(() => clearValidate());
 
@@ -100,7 +101,7 @@ export function useFormEvents({
           } catch (e) {
             // key not exist
             if (isDef(defaultValueRef.value[nestKey])) {
-              formModel[nestKey] = defaultValueRef.value[nestKey];
+              formModel[nestKey] = cloneDeep(defaultValueRef.value[nestKey]);
             }
           }
         });
@@ -229,12 +230,14 @@ export function useFormEvents({
     }
 
     const obj: Recordable = {};
+    const currentFieldsValue = getFieldsValue();
     schemas.forEach((item) => {
       if (
         item.component != 'Divider' &&
         Reflect.has(item, 'field') &&
         item.field &&
-        !isNullOrUnDef(item.defaultValue)
+        !isNullOrUnDef(item.defaultValue) &&
+        !(item.field in currentFieldsValue)
       ) {
         obj[item.field] = item.defaultValue;
       }

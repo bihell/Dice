@@ -38,9 +38,9 @@ public class GlobalErrorController implements ErrorController {
         return ApiResult.fail(ApiCode.FAIL);
     }
 
-    @Override
-    public String getErrorPath() {
-        log.error("errorPath....");
-        return ERROR_PATH;
-    }
+//    @Override
+//    public String getErrorPath() {
+//        log.error("errorPath....");
+//        return ERROR_PATH;
+//    }
 }

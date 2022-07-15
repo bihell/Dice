@@ -213,8 +213,9 @@ dice:
     enable: true
     # CORS过滤的路径，默认：/**
     path: /**
-    # 允许访问的源
+    # 允许访问的源 (spring-boot 2.0以后allowedOrigins不能用通配符*，改用allowedOriginPatterns）
     allowed-origins: '*'
+    allowed-origin-patterns: '*'
     # 允许访问的请求头
     allowed-headers: '*'
     # 是否允许发送cookie

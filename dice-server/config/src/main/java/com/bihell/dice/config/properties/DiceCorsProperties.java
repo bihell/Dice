@@ -31,6 +31,7 @@ public class DiceCorsProperties {
      * 允许访问的源
      */
     private List<String> allowedOrigins = Collections.singletonList(CorsConfiguration.ALL);
+    private List<String> allowedOriginPatterns = Collections.singletonList(CorsConfiguration.ALL);
 
     /**
      * 允许访问的请求头

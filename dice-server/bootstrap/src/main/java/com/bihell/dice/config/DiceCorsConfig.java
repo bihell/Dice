@@ -32,7 +32,7 @@ public class DiceCorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         // 跨域配置
-        corsConfiguration.setAllowedOrigins(corsProperties.getAllowedOrigins());
+        corsConfiguration.setAllowedOriginPatterns(corsProperties.getAllowedOriginPatterns());
         corsConfiguration.setAllowedHeaders(corsProperties.getAllowedHeaders());
         corsConfiguration.setAllowedMethods(corsProperties.getAllowedMethods());
         corsConfiguration.setAllowCredentials(corsProperties.isAllowCredentials());

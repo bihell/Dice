@@ -171,6 +171,7 @@ npm run dev
 进入后端文件夹`cd dice-admin`，安装依赖和启动服务：
 
 ```Bash
+npm install -g pnpm
 pnpm install
 pnpm dev
 ```

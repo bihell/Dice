@@ -30,11 +30,11 @@
         <boot.artifact.name>bootstrap-${project.version}</boot.artifact.name>
         <assembly.name>dice-${project.version}</assembly.name>
         <admin.artifact.name>admin-${project.version}</admin.artifact.name>
-        <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.14</spring-boot.version>
         <java.version>8</java.version>
         <velocity.version>2.2</velocity.version>
-        <mybatis-plus-boot-starter.version>3.4.1</mybatis-plus-boot-starter.version>
-        <commons-pool2.version>2.8.0</commons-pool2.version>
+        <mybatis-plus-boot-starter.version>3.3.2</mybatis-plus-boot-starter.version>
+        <commons-pool2.version>2.11.1</commons-pool2.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.14</commons-codec.version>
@@ -47,8 +47,8 @@
         <ini4j.version>0.5.4</ini4j.version>
         <commons-text.version>1.8</commons-text.version>
         <reflections.version>0.9.9</reflections.version>
-        <mapstruct.version>1.3.1.Final</mapstruct.version>
-        <lombok.version>1.18.12</lombok.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <lombok.version>1.18.24</lombok.version>
         <commons-net.version>3.6</commons-net.version>
         <fastjson.version>1.2.76</fastjson.version>
 
@@ -491,7 +491,7 @@
         <repository>
             <id>aliyun</id>
             <name>aliyun-maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://maven.aliyun.com/repository/public</url>
         </repository>
         <repository>
             <id>spring-milestones</id>
@@ -499,9 +499,9 @@
             <url>https://maven.aliyun.com/repository/spring</url>
         </repository>
         <repository>
-            <id>central</id>
-            <name>maven-central</name>
-            <url>http://central.maven.org/maven2/</url>
+            <id>mvnrepository</id>
+            <name>mvnrepository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
         </repository>
     </repositories>
 </project>

@@ -19,6 +19,8 @@
 * 项目会持续更新，如果有不完善的地方，欢迎指出
 
 > 演示站点：[博客前端](https://www.bihell.com:8082/)  [管理前端](https://www.bihell.com:8082/admin/)  演示账号: demo 123456 
+
+> Discord群：https://discord.gg/rsxxPfpw8m
 > QQ交流群：787519476
 
 ## 一、部分界面

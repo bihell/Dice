@@ -5,39 +5,36 @@
         <a-button type="primary"> <FileAddOutlined /> 新建页面</a-button>
       </router-link>
     </template>
-    <template #category="{ record }">
-      <Tag color="blue">
-        {{ record.category }}
-      </Tag>
-    </template>
-    <template #status="{ record }">
-      <Tag color="blue">
-        {{ status[record.status].text }}
-      </Tag>
-    </template>
-    <template #cc="{ record }">
-      <Badge :count="record.commentCount" show-zero />
-    </template>
-    <template #action="{ record }">
-      <TableAction
-        :drop-down-actions="[
-          {
-            label: '编辑',
-            onClick: handleEditClick.bind(null, record),
-          },
-          {
-            label: '删除',
-            onClick: handleDeleteClick.bind(null, record),
-          },
-        ]"
-        :divider="false"
-      >
-        <template #more>
-          <a-button shape="circle" class="border-none">
-            <FormOutlined />
-          </a-button>
-        </template>
-      </TableAction>
+    <template #bodyCell="{ column, record }">
+      <template v-if="column.key === 'commentCount'">
+        <Badge :count="record.commentCount" show-zero />
+      </template>
+      <template v-else-if="column.key === 'status'">
+        <Tag color="blue">
+          {{ status[record.status].text }}
+        </Tag>
+      </template>
+      <template v-else-if="column.key === 'action'">
+        <TableAction
+          :dropDownActions="[
+            {
+              label: '编辑',
+              onClick: handleEditClick.bind(null, record),
+            },
+            {
+              label: '删除',
+              onClick: handleDeleteClick.bind(null, record),
+            },
+          ]"
+          :divider="false"
+        >
+          <template #more>
+            <a-button shape="circle" class="border-none">
+              <FormOutlined />
+            </a-button>
+          </template>
+        </TableAction>
+      </template>
     </template>
   </BasicTable>
 </template>
@@ -70,7 +67,7 @@
           title: '操作',
           align: 'center',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
+          // slots: { customRender: 'action' },
         },
       });
 

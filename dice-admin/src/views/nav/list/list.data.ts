@@ -13,7 +13,7 @@ export const columns: BasicColumn[] = [
     title: '图标',
     dataIndex: 'icon',
     width: 100,
-    slots: { customRender: 'avatar' },
+    // slots: { customRender: 'avatar' },
   },
   {
     title: '创建时间',
@@ -29,7 +29,7 @@ export const columns: BasicColumn[] = [
     title: '地址',
     dataIndex: 'url',
     width: 300,
-    slots: { customRender: 'link' },
+    // slots: { customRender: 'link' },
   },
   {
     title: '描述',

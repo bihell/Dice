@@ -5,29 +5,31 @@
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增导航</a-button>
       </template>
-      <template #avatar="{ record }">
-        <Avatar shape="square" :size="50" :src="record.icon" />
-      </template>
-      <template #link="{ record }">
-        <a :href="record.url" target="_blank">{{ record.url }}</a>
-      </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record),
-            },
-            {
-              icon: 'ant-design:delete-outlined',
-              color: 'error',
-              popConfirm: {
-                title: '是否确认删除',
-                confirm: handleDelete.bind(null, record),
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'clarity:note-edit-line',
+                onClick: handleEdit.bind(null, record),
               },
-            },
-          ]"
-        />
+              {
+                icon: 'ant-design:delete-outlined',
+                color: 'error',
+                popConfirm: {
+                  title: '是否确认删除',
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
+        <template v-else-if="column.key === 'icon'">
+          <Avatar shape="square" :size="50" :src="record.icon" />
+        </template>
+        <template v-else-if="column.key === 'url'">
+          <a :href="record.url" target="_blank">{{ record.url }}</a>
+        </template>
       </template>
     </BasicTable>
     <AccountModal @register="registerModal" @success="handleSuccess" />
@@ -67,7 +69,7 @@
           width: 80,
           title: '操作',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
+          // slots: { customRender: 'action' },
         },
       });
 

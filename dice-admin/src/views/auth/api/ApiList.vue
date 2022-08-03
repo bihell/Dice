@@ -4,26 +4,28 @@
       <template #form-apiAdd>
         <a-button type="primary" @click="apiAdd"> <FileAddOutlined /> 新增API </a-button>
       </template>
-      <template #action="{ record }">
-        <TableAction
-          :drop-down-actions="[
-            {
-              label: '编辑',
-              onClick: apiAdd,
-            },
-            {
-              label: '删除',
-              onClick: handleDeleteClick.bind(null, record),
-            },
-          ]"
-          :divider="false"
-        >
-          <template #more>
-            <a-button shape="circle" class="border-none">
-              <FormOutlined />
-            </a-button>
-          </template>
-        </TableAction>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :drop-down-actions="[
+              {
+                label: '编辑',
+                onClick: apiAdd,
+              },
+              {
+                label: '删除',
+                onClick: handleDeleteClick.bind(null, record),
+              },
+            ]"
+            :divider="false"
+          >
+            <template #more>
+              <a-button shape="circle" class="border-none">
+                <FormOutlined />
+              </a-button>
+            </template>
+          </TableAction>
+        </template>
       </template>
     </BasicTable>
     <Modal1 @register="register1" />
@@ -59,7 +61,7 @@
           title: '操作',
           align: 'center',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
+          // slots: { customRender: 'action' },
         },
       });
 

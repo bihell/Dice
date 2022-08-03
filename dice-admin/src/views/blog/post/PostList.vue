@@ -6,42 +6,45 @@
           <a-button type="primary"> <FileAddOutlined /> 写文章 </a-button>
         </router-link>
       </template>
-      <template #category="{ record }">
-        <Tag color="blue">
-          {{ record.category }}
-        </Tag>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :dropDownActions="[
+              {
+                label: '编辑',
+                onClick: handleEditClick.bind(null, record),
+              },
+              {
+                label: '删除',
+                onClick: handleDeleteClick.bind(null, record),
+              },
+            ]"
+            :divider="false"
+          >
+            <template #more>
+              <a-button shape="circle">
+                <div style="margin: auto">
+                  <FormOutlined />
+                </div>
+              </a-button>
+            </template>
+          </TableAction>
+        </template>
+        <template v-else-if="column.key === 'category'">
+          <Tag color="blue">
+            {{ record.category }}
+          </Tag>
+        </template>
+        <template v-else-if="column.key === 'status'">
+          <Tag color="blue">
+            {{ status[record.status].text }}
+          </Tag>
+        </template>
+        <template v-else-if="column.key === 'commentCount'">
+          <Badge :count="record.commentCount" show-zero />
+        </template>
       </template>
-      <template #status="{ record }">
-        <Tag color="blue">
-          {{ status[record.status].text }}
-        </Tag>
-      </template>
-      <template #cc="{ record }">
-        <Badge :count="record.commentCount" show-zero />
-      </template>
-      <template #action="{ record }">
-        <TableAction
-          :drop-down-actions="[
-            {
-              label: '编辑',
-              onClick: handleEditClick.bind(null, record),
-            },
-            {
-              label: '删除',
-              onClick: handleDeleteClick.bind(null, record),
-            },
-          ]"
-          :divider="false"
-        >
-          <template #more>
-            <a-button shape="circle">
-              <div style="margin: auto">
-                <FormOutlined />
-              </div>
-            </a-button>
-          </template>
-        </TableAction>
-      </template>
+
       <!--    <template #toolbar>-->
       <!--      <router-link :to="{ name: 'PostEdit' }">-->
       <!--        <a-button type="primary"> <FileAddOutlined />写文章</a-button>-->
@@ -79,7 +82,7 @@
           title: '操作',
           align: 'center',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
+          // slots: { customRender: 'action' },
         },
       });
 

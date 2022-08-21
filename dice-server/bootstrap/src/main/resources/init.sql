@@ -11,8 +11,8 @@ create table sys_user_role
 )
     comment '用户角色表';
 
-INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (6, 3, 1);
-INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (7, 3, 3);
+INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (6, 1, 1);
+INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (7, 1, 3);
 INSERT INTO dice.sys_user_role (id, user_id, role_id) VALUES (8, 2, 3);
 
 create table sys_role_permission

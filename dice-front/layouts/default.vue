@@ -25,9 +25,9 @@ export default {
   },
   head() {
     return {
-      title: `${this.options.meta_title}` || defaultConfig.meta_title,
+      title: `${this.options.meta_title || defaultConfig.meta_title}`,
       titleTemplate:
-        '%s - ' + this.options.meta_title || defaultConfig.meta_title,
+        `${this.options.meta_title || defaultConfig.meta_title}` + ' - %s',
       meta: [
         {
           hid: 'description',

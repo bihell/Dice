@@ -9,7 +9,6 @@ export default {
    */
   head: {
     title: defaultConfig.meta_title,
-    titleTemplate: '%s - BIHell',
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'cleartype', content: 'on' },

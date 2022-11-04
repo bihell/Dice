@@ -1,8 +1,7 @@
 package com.bihell.dice.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
+import com.bihell.dice.framework.common.entity.BaseEntity;
 import com.bihell.dice.framework.core.validator.groups.Update;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -33,7 +32,7 @@ public class SysRole extends Model<SysRole> {
     private String roleName;
 
     @ApiModelProperty("角色唯一编码")
-    private String code;
+    private String roleCode;
 
     @ApiModelProperty("角色类型")
     private Integer type;
@@ -41,8 +40,8 @@ public class SysRole extends Model<SysRole> {
     @ApiModelProperty("角色状态，0：禁用，1：启用")
     private Integer status;
 
-    @ApiModelProperty("备注")
-    private String remark;
+    @ApiModelProperty("描述")
+    private String description;
 
     @ApiModelProperty("版本")
     @Null(message = "版本不用传")
@@ -57,4 +56,8 @@ public class SysRole extends Model<SysRole> {
     @Null(message = "修改时间不用传")
     private LocalDateTime updateTime;
 
+    @ApiModelProperty("逻辑删除")
+    // 逻辑删除 默认效果 0 没有删除 1 已经删除
+    @TableLogic
+    private Integer isDeleted;
 }

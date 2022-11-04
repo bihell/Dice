@@ -3,7 +3,6 @@ package com.bihell.dice.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
-import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.system.entity.SysRolePermission;
 import com.bihell.dice.system.entity.SysUserRole;
 import com.bihell.dice.system.enums.StateEnum;

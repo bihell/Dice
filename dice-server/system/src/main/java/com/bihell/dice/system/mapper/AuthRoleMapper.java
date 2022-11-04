@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.system.entity.AuthRole;
-import com.bihell.dice.system.param.QueryParam;
 import com.bihell.dice.system.param.RolePageParam;
 import org.apache.ibatis.annotations.Param;
 

@@ -17,8 +17,8 @@ dice:
 spring:
   datasource:
     username: root
-    password: 123456
-    url: jdbc:mysql://k8s-master:30054/dice?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    password: root
+    url: jdbc:mysql://dice-mysql:3306/dice?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
   output:
     ansi:

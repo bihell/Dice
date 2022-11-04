@@ -7,7 +7,6 @@ import com.bihell.dice.framework.core.validator.groups.Update;
 import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
-import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.UserService;
 import com.bihell.dice.system.vo.SysUserQueryVo;

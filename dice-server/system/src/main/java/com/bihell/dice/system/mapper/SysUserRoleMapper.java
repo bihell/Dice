@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bihell.dice.system.entity.SysUserRole;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
-
 /**
  * <pre>
  * 系统角色 Mapper 接口

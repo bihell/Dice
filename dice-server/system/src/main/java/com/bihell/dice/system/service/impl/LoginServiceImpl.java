@@ -134,7 +134,7 @@ public class LoginServiceImpl implements LoginService {
                     }
                     RoleInfoVO roleInfoVO = new RoleInfoVO();
                     roleInfoVO.setRoleName(sysRole.getRoleName());
-                    roleInfoVO.setValue(sysRole.getCode());
+                    roleInfoVO.setValue(sysRole.getRoleCode());
                     roleInfoVO.setId(sysRole.getId());
                     return roleInfoVO;
                 }

@@ -1,7 +1,6 @@
 package com.bihell.dice.system.service;
 
 import com.bihell.dice.framework.common.service.BaseService;
-import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.system.entity.SysRolePermission;
 import com.bihell.dice.system.entity.SysUserRole;
 import org.apache.commons.collections4.SetUtils;

@@ -172,20 +172,21 @@ create table sys_role
     id          bigint auto_increment comment '主键'
         primary key,
     role_name   varchar(32)                         not null comment '角色名称',
-    code        varchar(100)                        null comment '角色唯一编码',
+    role_code   varchar(100)                        null comment '角色唯一编码',
     type        int                                 null comment '角色类型',
     status      int       default 1                 not null comment '角色状态，0：禁用，1：启用',
-    remark      varchar(200)                        null comment '备注',
+    description varchar(200)                        null comment '描述',
     version     int       default 0                 not null comment '版本',
     create_time timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
     update_time timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP comment '更新时间',
+    is_deleted  int       default 0                 null comment '逻辑删除 默认效果 0 没有删除 1 已经删除',
     constraint sys_role_name_uindex
         unique (role_name)
 )
     comment '系统角色';
 
-INSERT INTO dice.sys_role (id, role_name, code, type, status, remark, version, create_time, update_time) VALUES (1, '管理员', 'admin', null, 1, '神的存在', 0, '2021-07-01 18:53:59', '2021-07-01 18:57:54');
-INSERT INTO dice.sys_role (id, role_name, code, type, status, remark, version, create_time, update_time) VALUES (3, 'Demo用户', 'Demo', null, 1, null, 0, '2021-07-07 15:48:20', '2021-07-07 15:48:20');
+INSERT INTO dice.sys_role (id, role_name, role_code, type, status, description, version, create_time, update_time, is_deleted) VALUES (1, '管理员', 'admin', null, 1, '神的存在', 0, '2021-07-01 18:53:59', '2021-07-01 18:57:54', 0);
+INSERT INTO dice.sys_role (id, role_name, role_code, type, status, description, version, create_time, update_time, is_deleted) VALUES (3, 'Demo用户', 'Demo', null, 1, null, 0, '2021-07-07 15:48:20', '2021-07-07 15:48:20', 0);
 
 create table sys_permission
 (

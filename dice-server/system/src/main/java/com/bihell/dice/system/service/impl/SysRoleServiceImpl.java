@@ -67,7 +67,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveSysRole(SysRole sysRole) throws Exception {
-        String code = sysRole.getCode();
+        String code = sysRole.getRoleCode();
         // 校验角色标识code唯一性
         if (isExistsByCode(code)) {
             throw new BusinessException("角色编码已存在");
@@ -148,13 +148,13 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
             lambdaQueryWrapper
                     .like(SysRole::getRoleName, keyword)
                     .or()
-                    .like(SysRole::getCode, keyword);
+                    .like(SysRole::getRoleCode, keyword);
         }
         if (StringUtils.isNotBlank(name)) {
             lambdaQueryWrapper.like(SysRole::getRoleName, name);
         }
         if (StringUtils.isNotBlank(code)) {
-            lambdaQueryWrapper.like(SysRole::getCode, code);
+            lambdaQueryWrapper.like(SysRole::getRoleCode, code);
         }
         if (state != null) {
             lambdaQueryWrapper.eq(SysRole::getStatus, state);
@@ -174,7 +174,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
     @Override
     public boolean isExistsByCode(String code) throws Exception {
-        SysRole sysRole = new SysRole().setCode(code);
+        SysRole sysRole = new SysRole().setRoleCode(code);
         return sysRoleMapper.selectCount(new QueryWrapper<>(sysRole)) > 0;
     }
 

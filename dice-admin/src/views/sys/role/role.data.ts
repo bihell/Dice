@@ -13,7 +13,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '角色值',
-    dataIndex: 'code',
+    dataIndex: 'roleCode',
     width: 180,
   },
   {
@@ -54,8 +54,8 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
-    title: '备注',
-    dataIndex: 'remark',
+    title: '描述',
+    dataIndex: 'description',
   },
 ];
 
@@ -88,7 +88,7 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    field: 'code',
+    field: 'roleCode',
     label: '角色值',
     required: true,
     component: 'Input',
@@ -106,8 +106,8 @@ export const formSchema: FormSchema[] = [
     },
   },
   {
-    label: '备注',
-    field: 'remark',
+    label: '描述',
+    field: 'description',
     component: 'InputTextArea',
   },
   {

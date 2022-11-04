@@ -4,7 +4,6 @@ import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.common.controller.BaseController;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.core.validator.groups.Add;
-import com.bihell.dice.framework.core.validator.groups.Update;
 import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;

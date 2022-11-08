@@ -12,7 +12,7 @@
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
-          :replaceFields="{ title: 'name', key: 'id' }"
+          :fieldNames="{ title: 'name', key: 'id' }"
           :checkedKeys="checkedKeys"
           :selectedKeys="selectedKeys"
           @check="handleCheck"
@@ -52,6 +52,7 @@
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
+        baseColProps: { span: 24 },
         schemas: formSchema,
         showActionButtonGroup: false,
       });
@@ -73,7 +74,7 @@
 
           // 找出菜单的所有父节点ID
           parentIds.value = new Set(
-            roleMenuList.filter((item) => item.parentId !== null).map((item) => item.parentId)
+            roleMenuList.filter((item) => item.parentId !== null).map((item) => item.parentId),
           );
 
           checkedKeys.value = roleMenuList

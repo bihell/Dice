@@ -28,6 +28,8 @@
 
 > 管理员：dice 123456
 
+> 数据库每日零点重制
+
 > Discord群：https://discord.gg/rsxxPfpw8m
 
 > QQ交流群：787519476

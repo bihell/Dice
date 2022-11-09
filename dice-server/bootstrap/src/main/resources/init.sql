@@ -621,25 +621,32 @@ create table auth_rel_role_item
 create index IDX_ROLE_ITEM
     on auth_rel_role_item (role_id, item_id);
 
-CREATE TABLE `task` (
-    `id` bigint NOT NULL AUTO_INCREMENT,
-    `concurrent` tinyint DEFAULT NULL COMMENT '是否允许并发',
-    `cron` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '定时规则',
-    `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '执行参数',
-    `exec_at` datetime DEFAULT NULL COMMENT '执行时间',
-    `exec_result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '执行结果',
-    `job_class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '执行类',
-    `job_group` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务组名',
-    `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务名',
-    `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务说明',
-    `status` int DEFAULT NULL COMMENT '状态（0无效1有效）',
-    `creator` int DEFAULT NULL COMMENT '创建人',
-    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间/注册时间',
-    `modifier` int DEFAULT NULL COMMENT '最后更新人',
-    `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    `deleted` int DEFAULT '0' COMMENT '逻辑删除标识(0.未删除,1.已删除)',
-    PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='定时任务';
+create table task
+(
+    id          bigint auto_increment
+        primary key,
+    concurrent  tinyint                             null comment '是否允许并发',
+    cron        varchar(50)                         null comment '定时规则',
+    data        text                                null comment '执行参数',
+    exec_at     datetime                            null comment '执行时间',
+    exec_result text                                null comment '执行结果',
+    job_class   varchar(255)                        null comment '执行类',
+    job_group   varchar(50)                         null comment '任务组名',
+    name        varchar(50)                         null comment '任务名',
+    note        varchar(255)                        null comment '任务说明',
+    status      int                                 null comment '状态（0无效1有效）',
+    creator     int                                 null comment '创建人',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间/注册时间',
+    modifier    int                                 null comment '最后更新人',
+    update_time timestamp default CURRENT_TIMESTAMP null comment '最后更新时间',
+    is_deleted  int       default 0                 null comment '逻辑删除标识(0.未删除,1.已删除)'
+)
+    comment '定时任务';
+
+INSERT INTO dice.task (id, concurrent, cron, data, exec_at, exec_result, job_class, job_group, name, note, status, creator, create_time, modifier, update_time, is_deleted) VALUES (1, 0, '0/6 * * * * ?', '{
+"appname": "dice",
+"version":2
+}', '2020-01-27 14:54:24', '执行成功', 'com.bihell.dice.service.task.job.HelloJob', 'default', '测试任务1', '测试任务1', 0, 1, '2018-12-28 09:54:00', -1, '2019-03-27 11:47:11', 0);
 
 CREATE TABLE `task_log` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -785,11 +792,6 @@ create table sys_login_log
     deleted     tinyint   default 0                 null comment '逻辑删除标识（0.未删除,1.已删除）'
 )
     comment '系统登录日志';
-
-INSERT INTO dice.task (id, concurrent, cron, data, exec_at, exec_result, job_class, job_group, name, note, status, creator, create_time, modifier, update_time, deleted) VALUES (1, 0, '0/6 * * * * ?', '{
-"appname": "dice",
-"version":2
-}', '2020-01-27 14:54:24', '执行成功', 'com.bihell.dice.service.task.job.HelloJob', 'default', '测试任务1', '测试任务1', 0, 1, '2018-12-28 09:54:00', -1, '2019-03-27 11:47:11', 0);
 
 INSERT INTO article (title, create_time, update_time, content, creator, hits, tags, category, status, type)
 VALUES ('Hello world', now(), now(), '

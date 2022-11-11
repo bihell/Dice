@@ -49,10 +49,12 @@ public class SysRole extends Model<SysRole> {
     private Integer version;
 
     @ApiModelProperty("创建时间")
+    @TableField(fill = FieldFill.INSERT)
     @Null(message = "创建时间不用传")
     private LocalDateTime createTime;
 
     @ApiModelProperty("修改时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @Null(message = "修改时间不用传")
     private LocalDateTime updateTime;
 

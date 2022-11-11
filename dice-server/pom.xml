@@ -7,7 +7,6 @@
         <module>blog</module>
         <module>generator</module>
         <module>framework</module>
-        <module>admin</module>
         <module>system</module>
         <module>distribution</module>
         <module>nav</module>
@@ -39,7 +38,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.14</commons-codec.version>
         <commons-io.version>2.7</commons-io.version>
-        <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
+<!--        <spring-boot-admin.version>2.3.0</spring-boot-admin.version>-->
         <knife4j.version>2.0.2</knife4j.version>
         <hutool.version>5.6.2</hutool.version>
         <shiro.version>1.5.1</shiro.version>

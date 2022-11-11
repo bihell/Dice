@@ -7,6 +7,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -25,10 +27,9 @@ import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.Parameter;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -78,26 +79,63 @@ public class SwaggerConfig {
             ApiIgnore.class
     };
 
+    /**
+     * 创建API
+     */
     @Bean
     public Docket createRestApi() {
-        // 获取需要扫描的包
-        String[] basePackages = getBasePackages();
-        ApiSelectorBuilder apiSelectorBuilder = new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select();
-        // 如果扫描的包为空，则默认扫描类上有@Api注解的类
-        if (ArrayUtils.isEmpty(basePackages)) {
-            apiSelectorBuilder.apis(RequestHandlerSelectors.withClassAnnotation(Api.class));
-        } else {
-            // 扫描指定的包
-            apiSelectorBuilder.apis(basePackage(basePackages));
-        }
-        Docket docket = apiSelectorBuilder.paths(PathSelectors.any())
-                .build()
+        return new Docket(DocumentationType.OAS_30)
+                // 是否启用Swagger
                 .enable(swaggerProperties.isEnable())
-                .ignoredParameterTypes(ignoredParameterTypes)
-                .globalOperationParameters(getParameters());
-        return docket;
+                // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
+                .apiInfo(apiInfo())
+                // 设置哪些接口暴露给Swagger展示
+                .select()
+                // 扫描所有有注解的api，用这种方式更灵活
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                // 扫描指定包中的swagger注解
+                // .apis(RequestHandlerSelectors.basePackage("com.dice.project.tool.swagger"))
+                // 扫描所有 .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build()
+                /* 设置安全模式，swagger可以设置访问token */
+                .securitySchemes(securitySchemes())
+                .securityContexts(securityContexts())
+                .pathMapping(swaggerProperties.getPathMapping());
+    }
+
+    /**
+     * 安全模式，这里指定token通过Authorization头请求头传递
+     */
+    private List<SecurityScheme> securitySchemes() {
+        List<SecurityScheme> apiKeyList = new ArrayList<SecurityScheme>();
+        apiKeyList.add(new ApiKey("Authorization", "Authorization", In.HEADER.toValue()));
+        return apiKeyList;
+    }
+
+    /**
+     * 安全上下文
+     */
+    private List<SecurityContext> securityContexts() {
+        List<SecurityContext> securityContexts = new ArrayList<>();
+        securityContexts.add(
+                SecurityContext.builder()
+                        .securityReferences(defaultAuth())
+                        .operationSelector(o -> o.requestMappingPattern().matches("/.*"))
+                        .build());
+        return securityContexts;
+    }
+
+    /**
+     * 默认的安全上引用
+     */
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        List<SecurityReference> securityReferences = new ArrayList<>();
+        securityReferences.add(new SecurityReference("Authorization", authorizationScopes));
+        return securityReferences;
     }
 
     /**
@@ -114,74 +152,5 @@ public class SwaggerConfig {
                 .version(swaggerProperties.getVersion())
                 .license("MIT")
                 .build();
-    }
-
-    /**
-     * 获取扫描的包
-     *
-     * @return
-     */
-    public String[] getBasePackages() {
-        log.debug("swaggerProperties = " + swaggerProperties);
-        String basePackage = swaggerProperties.getBasePackage();
-        if (StringUtils.isBlank(basePackage)) {
-            throw new DiceConfigException("Swagger basePackage不能为空");
-        }
-        String[] basePackages = null;
-        if (basePackage.contains(SPLIT_COMMA)) {
-            basePackages = basePackage.split(SPLIT_COMMA);
-        } else if (basePackage.contains(SPLIT_SEMICOLON)) {
-            basePackages = basePackage.split(SPLIT_SEMICOLON);
-        }
-        log.info("swagger scan basePackages:" + Arrays.toString(basePackages));
-        return basePackages;
-    }
-
-    /**
-     * 添加额外参数
-     *
-     * @return
-     */
-    private List<Parameter> getParameters() {
-        // 获取自定义参数配置
-        List<SwaggerProperties.ParameterConfig> parameterConfig = swaggerProperties.getParameterConfig();
-        if (CollectionUtils.isEmpty(parameterConfig)) {
-            return null;
-        }
-        List<Parameter> parameters = new ArrayList<>();
-        parameterConfig.forEach(parameter -> {
-            // 设置自定义参数
-            parameters.add(new ParameterBuilder()
-                    .name(parameter.getName())
-                    .description(parameter.getDescription())
-                    .modelRef(new ModelRef(parameter.getDataType()))
-                    .parameterType(parameter.getType())
-                    .required(parameter.isRequired())
-                    .defaultValue(parameter.getDefaultValue())
-                    .build());
-        });
-        return parameters;
-    }
-
-    public static Predicate<RequestHandler> basePackage(final String[] basePackages) {
-        return input -> declaringClass(input).transform(handlerPackage(basePackages)).or(true);
-    }
-
-    @SuppressWarnings("deprecation")
-    private static Optional<? extends Class<?>> declaringClass(RequestHandler input) {
-        return Optional.fromNullable(input.declaringClass());
-    }
-
-    private static Function<Class<?>, Boolean> handlerPackage(final String[] basePackages) {
-        return input -> {
-            // 循环判断匹配
-            for (String strPackage : basePackages) {
-                boolean isMatch = input.getPackage().getName().startsWith(strPackage);
-                if (isMatch) {
-                    return true;
-                }
-            }
-            return false;
-        };
     }
 }

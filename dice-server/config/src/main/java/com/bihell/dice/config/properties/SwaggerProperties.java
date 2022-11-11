@@ -17,6 +17,9 @@ import java.util.List;
 @ConfigurationProperties(prefix = "dice.swagger")
 public class SwaggerProperties {
 
+    /** 设置请求的统一前缀 */
+    private String pathMapping;
+
     /**
      * 是否启用Swagger
      */

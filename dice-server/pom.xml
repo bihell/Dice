@@ -38,8 +38,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.14</commons-codec.version>
         <commons-io.version>2.7</commons-io.version>
-<!--        <spring-boot-admin.version>2.3.0</spring-boot-admin.version>-->
-        <knife4j.version>2.0.2</knife4j.version>
+        <knife4j.version>3.0.3</knife4j.version>
         <hutool.version>5.6.2</hutool.version>
         <shiro.version>1.5.1</shiro.version>
         <jwt.version>3.10.1</jwt.version>
@@ -288,19 +287,6 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
-        </dependency>
         <!-- mysql连接 -->
         <dependency>
             <groupId>mysql</groupId>

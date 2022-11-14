@@ -57,7 +57,7 @@ public class Comment extends Model<Comment> {
     /**
      * 评论时间
      */
-    private LocalDateTime created;
+    private LocalDateTime createTime;
 
     /**
      * 赞

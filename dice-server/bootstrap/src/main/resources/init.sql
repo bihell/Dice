@@ -340,23 +340,24 @@ create table article
 )
 charset = UTF8MB4;
 
-CREATE TABLE comment
+create table comment
 (
-    id         INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    article_id INT             NOT NULL,
-    p_id       INT,
-    content    TEXT            NOT NULL,
-    name       VARCHAR(255),
-    email      VARCHAR(255),
-    website    VARCHAR(255),
-    agree      INT             NOT NULL DEFAULT 0,
-    disagree   INT             NOT NULL DEFAULT 0,
-    ip         VARCHAR(255),
-    agent      VARCHAR(255),
-    status     INT                      DEFAULT 0 NOT NULL,
-    created    TIMESTAMP       NOT NULL DEFAULT current_timestamp
-) ENGINE = InnoDB
-  DEFAULT CHARSET = UTF8MB4;
+    id          int auto_increment
+        primary key,
+    article_id  int                                 not null,
+    p_id        int                                 null,
+    content     text                                not null,
+    name        varchar(255)                        null,
+    email       varchar(255)                        null,
+    website     varchar(255)                        null,
+    agree       int       default 0                 not null,
+    disagree    int       default 0                 not null,
+    ip          varchar(255)                        null,
+    agent       varchar(255)                        null,
+    status      int       default 0                 not null,
+    create_time timestamp default CURRENT_TIMESTAMP not null
+)
+    charset = utf8mb4;
 
 CREATE TABLE meta
 (

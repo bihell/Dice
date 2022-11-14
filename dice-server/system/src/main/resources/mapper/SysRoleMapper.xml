@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bihell.dice.system.mapper.SysRoleMapper">
+
+    <resultMap id="RoleMap" type="com.bihell.dice.system.entity.SysRole" autoMapping="true"></resultMap>
+    <!--条件分页查询，id写mapping中方法的名称，resultMap中天写上面定义的返回结果"RoleMap"-->
+    <select id="selectPage" resultMap="RoleMap">
+        SELECT id,role_name,role_code,description,create_time,update_time,is_deleted
+        FROM sys_role
+        <where>
+            <if test="vo.roleName != null and vo.roleName != ''">
+                and role_name LIKE CONCAT('%',#{vo.roleName},'%')
+            </if>
+            and is_deleted = 0
+        </where>
+        order by id desc
+    </select>
+</mapper>

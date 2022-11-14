@@ -117,7 +117,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
     @Override
     public Paging<Article> getArticlePageList(ArticlePageParam articlePageParam) throws Exception {
-        Page<Article> page = new PageInfo<>(articlePageParam, OrderItem.desc(getLambdaColumn(Article::getUpdateTime)));
+        Page<Article> page = new PageInfo<>(articlePageParam, OrderItem.desc("update_time"));
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))
                 .eq(Article::getType, Types.POST)
@@ -285,7 +285,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public Paging<Article> getAdminPages(ArticlePageParam articlePageParam) {
 
-        Page<Article> page = new PageInfo<>(articlePageParam, OrderItem.desc(getLambdaColumn(Article::getUpdateTime)));
+        Page<Article> page = new PageInfo<>(articlePageParam, OrderItem.desc("update_time"));
 
         LambdaQueryWrapper<Article> wrapper = new QueryWrapper<Article>().lambda()
                 .select(Article.class, info -> !"content".equals(info.getColumn()))

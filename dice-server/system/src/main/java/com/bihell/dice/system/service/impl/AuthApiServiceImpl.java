@@ -56,7 +56,7 @@ public class AuthApiServiceImpl extends BaseServiceImpl<AuthApiMapper, AuthApi> 
 
     @Override
     public Paging<AuthApi> getApiPageList(ApiPageParam apiPageParam) {
-        Page<AuthApi> page = new PageInfo<>(apiPageParam, OrderItem.desc(getLambdaColumn(AuthApi::getUpdateTime)));
+        Page<AuthApi> page = new PageInfo<>(apiPageParam, OrderItem.desc("update_time"));
         IPage<AuthApi> iPage = authApiMapper.queryByParam(page,apiPageParam);
         return new Paging(iPage);
     }

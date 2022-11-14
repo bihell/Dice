@@ -52,7 +52,7 @@ public class NavDetailServiceImpl extends BaseServiceImpl<NavDetailMapper, NavDe
 
     @Override
     public Paging<NavDetail> getNavDetailPageList(NavDetailPageParam navDetailPageParam) throws Exception {
-        Page<NavDetail> page = new PageInfo<>(navDetailPageParam, OrderItem.desc(getLambdaColumn(NavDetail::getCreateTime)));
+        Page<NavDetail> page = new PageInfo<>(navDetailPageParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<NavDetail> wrapper = new QueryWrapper<NavDetail>().lambda()
                 .eq(!StringUtils.isEmpty(navDetailPageParam.getTypeId()), NavDetail::getTypeId, navDetailPageParam.getTypeId())
                 .like(!StringUtils.isEmpty(navDetailPageParam.getName()), NavDetail::getName, navDetailPageParam.getName())

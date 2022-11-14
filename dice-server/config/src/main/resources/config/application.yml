@@ -94,7 +94,7 @@ dice:
   # 实现BaseEnum接口的枚举包
   enum-packages: com.example.foorbar.enums
   # Swagger路径
-  swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v3/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
+  swagger-paths: /swagger-ui.html,/favicon.ico,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v3/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
   # Filter配置
   filter:
     request:
@@ -331,7 +331,7 @@ dice:
     contact:
       email: tpxcer@outlook.com
       name: 胖哥
-      url: https://bihell.com
+      url: https://github.com/bihell/Dice
     description: 个人管理系统API操作文档
     title: ${spring.application.name} API Documents
     url: https://github.com/bihell/Dice

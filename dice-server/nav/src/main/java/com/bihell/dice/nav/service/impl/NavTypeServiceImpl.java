@@ -57,7 +57,7 @@ public class NavTypeServiceImpl extends BaseServiceImpl<NavTypeMapper, NavType> 
 
     @Override
     public Paging<NavType> getNavTypePageList(NavTypePageParam navDetailPageParam) throws Exception {
-        Page<NavType> page = new PageInfo<>(navDetailPageParam, OrderItem.desc(getLambdaColumn(NavType::getCreateTime)));
+        Page<NavType> page = new PageInfo<>(navDetailPageParam, OrderItem.desc("create_time"));
         LambdaQueryWrapper<NavType> wrapper = new LambdaQueryWrapper<>();
         IPage<NavType> iPage = navTypeMapper.selectPage(page, wrapper);
         return new Paging<NavType>(iPage);

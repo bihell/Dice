@@ -131,7 +131,7 @@ public class AuthRoleServiceImpl extends BaseServiceImpl<AuthRoleMapper, AuthRol
 
     @Override
     public Paging<AuthRole> getRolePageList(RolePageParam rolePageParam) {
-        Page<AuthRole> page = new PageInfo<>(rolePageParam, OrderItem.desc(getLambdaColumn(AuthRole::getUpdateTime)));
+        Page<AuthRole> page = new PageInfo<>(rolePageParam, OrderItem.desc("update_time"));
         IPage<AuthRole> iPage = authRoleMapper.queryByParam(page,rolePageParam);
         return new Paging(iPage);
     }

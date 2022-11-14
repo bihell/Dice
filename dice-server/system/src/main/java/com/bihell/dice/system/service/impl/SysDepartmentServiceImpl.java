@@ -67,7 +67,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
 
     @Override
     public Paging<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
-        Page<SysDepartmentQueryVo> page = new PageInfo<>(sysDepartmentPageParam, OrderItem.desc(getLambdaColumn(SysDepartment::getCreateTime)));
+        Page<SysDepartmentQueryVo> page = new PageInfo<>(sysDepartmentPageParam, OrderItem.desc("create_time"));
         IPage<SysDepartmentQueryVo> iPage = sysDepartmentMapper.getSysDepartmentPageList(page, sysDepartmentPageParam);
         return new Paging(iPage);
     }
@@ -77,7 +77,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
         SysDepartment sysDepartment = new SysDepartment()
                 .setId(id)
                 .setStatus(StateEnum.ENABLE.getCode());
-        int count = sysDepartmentMapper.selectCount(new QueryWrapper<>(sysDepartment));
+        Long count = sysDepartmentMapper.selectCount(new QueryWrapper<>(sysDepartment));
         return count > 0;
     }
 

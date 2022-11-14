@@ -1,6 +1,6 @@
 package com.bihell.dice.blog.enums;
 
-import com.baomidou.mybatisplus.core.enums.IEnum;
+import com.baomidou.mybatisplus.annotation.IEnum;
 
 /**
  * @author haseochen

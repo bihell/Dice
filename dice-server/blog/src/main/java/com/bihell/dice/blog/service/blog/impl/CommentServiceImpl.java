@@ -117,7 +117,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
 
     @Override
     public Paging<Comment> getCommentPageList(CommentPageParam commentPageParam) {
-        Page<Comment> page = new PageInfo<>(commentPageParam, OrderItem.desc(getLambdaColumn(Comment::getCreated)));
+        Page<Comment> page = new PageInfo<>(commentPageParam, OrderItem.desc("create_time"));
 
         LambdaQueryWrapper<Comment> wrapper = new QueryWrapper<Comment>().lambda()
                 .eq(Comment::getStatus, Types.COMMENT_STATUS_NORMAL);
@@ -219,7 +219,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
      */
     @Override
     @Cacheable(value = COMMENT_CACHE_NAME, key = "'comment_count'")
-    public int count() {
+    public long count() {
         return commentMapper.selectCount(new QueryWrapper<Comment>().lambda().eq(Comment::getStatus, Types.COMMENT_STATUS_NORMAL));
     }
 

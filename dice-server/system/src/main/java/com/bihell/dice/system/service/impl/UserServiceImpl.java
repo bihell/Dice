@@ -95,7 +95,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Override
     public Paging<SysUserQueryVo> getUserPageList(UserPageParam userPageParam) {
-        Page<SysUserQueryVo> page = new PageInfo<>(userPageParam, OrderItem.desc(getLambdaColumn(SysUser::getCreateTime)));
+        Page<SysUserQueryVo> page = new PageInfo<>(userPageParam, OrderItem.desc("create_time"));
         IPage<SysUserQueryVo> iPage = userMapper.getSysUserPageList(page, userPageParam);
 
         if (iPage != null && org.apache.commons.collections4.CollectionUtils.isNotEmpty(iPage.getRecords())) {

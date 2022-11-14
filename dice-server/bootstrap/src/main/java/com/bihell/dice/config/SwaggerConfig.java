@@ -1,83 +1,32 @@
 package com.bihell.dice.config;
 
 import com.bihell.dice.config.properties.SwaggerProperties;
-import com.bihell.dice.framework.common.exception.DiceConfigException;
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.RequestHandler;
 import springfox.documentation.annotations.ApiIgnore;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author haseochen
  */
-@Slf4j
 @Configuration
-@EnableSwagger2
-@EnableKnife4j
-@Import(BeanValidatorPluginsConfiguration.class)
-@ConditionalOnProperty(value = {"knife4j.enable"}, matchIfMissing = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SwaggerConfig {
 
     private final SwaggerProperties swaggerProperties;
-
-    /**
-     * 扫描多包时，包路径的拆分符,分号
-     */
-    private static final String SPLIT_COMMA = ",";
-
-    /**
-     * 扫描多包时，包路径的拆分符,逗号
-     */
-    private static final String SPLIT_SEMICOLON = ";";
-
-    /**
-     * Swagger忽略的参数类型
-     */
-    private Class<?>[] ignoredParameterTypes = new Class[]{
-            ServletRequest.class,
-            ServletResponse.class,
-            HttpServletRequest.class,
-            HttpServletResponse.class,
-            HttpSession.class,
-            ApiIgnore.class
-    };
 
     /**
      * 创建API

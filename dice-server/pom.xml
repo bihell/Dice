@@ -32,7 +32,7 @@
         <spring-boot.version>2.5.14</spring-boot.version>
         <java.version>8</java.version>
         <velocity.version>2.2</velocity.version>
-        <mybatis-plus-boot-starter.version>3.3.2</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>

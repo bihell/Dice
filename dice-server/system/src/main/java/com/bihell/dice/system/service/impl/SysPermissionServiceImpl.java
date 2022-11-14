@@ -83,7 +83,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public Paging<SysPermissionQueryVo> getSysPermissionPageList(SysPermissionPageParam sysPermissionPageParam) throws Exception {
-        Page<SysPermissionQueryVo> page = new PageInfo<>(sysPermissionPageParam, OrderItem.desc(getLambdaColumn(SysPermission::getCreateTime)));
+        Page<SysPermissionQueryVo> page = new PageInfo<>(sysPermissionPageParam, OrderItem.desc("create_time"));
         IPage<SysPermissionQueryVo> iPage = sysPermissionMapper.getSysPermissionPageList(page, sysPermissionPageParam);
         return new Paging(iPage);
     }

@@ -46,7 +46,7 @@ public class SysOperationLogServiceImpl extends BaseServiceImpl<SysOperationLogM
 
     @Override
     public Paging<SysOperationLog> getSysOperationLogPageList(SysOperationLogPageParam sysOperationLogPageParam) throws Exception {
-        Page<SysOperationLog> page = new PageInfo<>(sysOperationLogPageParam,OrderItem.desc(getLambdaColumn(SysOperationLog::getCreateTime)));
+        Page<SysOperationLog> page = new PageInfo<>(sysOperationLogPageParam,OrderItem.desc("create_time"));
         LambdaQueryWrapper<SysOperationLog> wrapper = new LambdaQueryWrapper<>();
         IPage<SysOperationLog> iPage = sysOperationLogMapper.selectPage(page, wrapper);
         return new Paging<SysOperationLog>(iPage);

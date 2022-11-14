@@ -68,5 +68,5 @@ public interface CommentService {
      *
      * @return 数量
      */
-    int count();
+    long count();
 }

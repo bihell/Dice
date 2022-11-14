@@ -322,7 +322,7 @@ info:
 dice:
   swagger:
     # 请求前缀
-    pathMapping: /v1/api/
+    pathMapping: /
     # 是否启用
     enable: true
     base:

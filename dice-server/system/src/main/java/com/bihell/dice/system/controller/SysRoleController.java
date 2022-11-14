@@ -134,5 +134,16 @@ public class SysRoleController extends BaseController {
         return ApiResult.ok(sysRoleService.listRoleMenus(roleId));
     }
 
+    // 批量删除
+    // 多个id值 [1,2,3]
+    // json数组格式 --- java的list集合
+    //    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
+    @ApiOperation("批量删除")
+    @DeleteMapping("batchRemove")
+    public ApiResult batchRemove(@RequestBody List<Long> ids) {
+        sysRoleService.removeByIds(ids);
+        return ApiResult.ok();
+    }
+
 }
 

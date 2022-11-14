@@ -3,7 +3,7 @@ package com.bihell.dice.framework.common.exception;
 import com.bihell.dice.framework.common.api.ApiCode;
 
 /**
- * 业务异常 todo
+ * 业务异常
  */
 public class BusinessException extends DiceException {
 	private static final long serialVersionUID = -2303357122330162359L;

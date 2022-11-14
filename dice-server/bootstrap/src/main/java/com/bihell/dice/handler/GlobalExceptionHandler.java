@@ -31,9 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * todo
- */
 @ControllerAdvice
 @RestController
 @Slf4j

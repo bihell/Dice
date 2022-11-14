@@ -4,7 +4,7 @@ package com.bihell.dice.framework.common.exception;
 import com.bihell.dice.framework.common.api.ApiCode;
 
 /**
- * DAO异常 todo
+ * DAO异常
  */
 public class DaoException extends DiceException {
 	private static final long serialVersionUID = -6912618737345878854L;

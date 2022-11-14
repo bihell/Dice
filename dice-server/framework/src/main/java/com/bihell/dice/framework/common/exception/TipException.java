@@ -1,12 +1,12 @@
 package com.bihell.dice.framework.common.exception;
 
 /**
- * Tip 提示异常 todo 需要整合
+ * Tip 提示异常
  *
  * @author bihell
  * @since 2017/7/12 21:29
  */
-public class TipException extends RuntimeException{
+public class TipException extends DiceException{
 
     public TipException() {
     }

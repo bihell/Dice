@@ -4,7 +4,7 @@ import com.bihell.dice.framework.common.api.ApiCode;
 import com.bihell.dice.framework.common.exception.DiceException;
 
 /**
- * 系统登录异常 todo
+ * 系统登录异常
  */
 public class SysLoginException extends DiceException {
 	private static final long serialVersionUID = -3157438982569715170L;

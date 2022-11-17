@@ -6,7 +6,7 @@
 
     <resultMap id="RoleMap" type="com.bihell.dice.system.entity.SysRole" autoMapping="true"></resultMap>
     <!--条件分页查询，id写mapping中方法的名称，resultMap中天写上面定义的返回结果"RoleMap"-->
-    <select id="selectPage" resultMap="RoleMap">
+    <select id="selectPageDemo" resultMap="RoleMap">
         SELECT id,role_name,role_code,description,create_time,update_time,is_deleted
         FROM sys_role
         <where>

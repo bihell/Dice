@@ -5,7 +5,6 @@
         <module>bootstrap</module>
         <module>config</module>
         <module>blog</module>
-        <module>generator</module>
         <module>framework</module>
         <module>system</module>
         <module>distribution</module>
@@ -215,11 +214,6 @@
             <dependency>
                 <groupId>com.bihell</groupId>
                 <artifactId>blog</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.bihell</groupId>
-                <artifactId>generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

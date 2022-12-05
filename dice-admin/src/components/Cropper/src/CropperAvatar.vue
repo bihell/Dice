@@ -22,7 +22,7 @@
 
     <CopperModal
       @register="register"
-      @uploadSuccess="handleUploadSuccess"
+      @upload-success="handleUploadSuccess"
       :uploadApi="uploadApi"
       :src="sourceValue"
     />
@@ -91,9 +91,9 @@
         },
       );
 
-      function handleUploadSuccess({ source }) {
+      function handleUploadSuccess({ source, data }) {
         sourceValue.value = source;
-        emit('change', source);
+        emit('change', { source, data });
         createMessage.success(t('component.cropper.uploadSuccess'));
       }
 
@@ -135,15 +135,14 @@
     }
 
     &-image-mask {
-      opacity: 0;
+      opacity: 0%;
       position: absolute;
       width: inherit;
       height: inherit;
       border-radius: inherit;
       border: inherit;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgb(0 0 0 / 40%);
       cursor: pointer;
-      -webkit-transition: opacity 0.4s;
       transition: opacity 0.4s;
 
       ::v-deep(svg) {
@@ -152,7 +151,7 @@
     }
 
     &-image-mask:hover {
-      opacity: 40;
+      opacity: 4000%;
     }
 
     &-upload-btn {

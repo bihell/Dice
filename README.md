@@ -30,10 +30,6 @@
 
 > 数据库每日零点重制
 
-> Discord群：https://discord.gg/rsxxPfpw8m
-
-> QQ交流群：787519476
-
 ## 一、部分界面
 
 <table>

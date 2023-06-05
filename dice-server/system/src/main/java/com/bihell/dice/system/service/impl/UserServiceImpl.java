@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.config.properties.DiceProperties;
 import com.bihell.dice.framework.common.exception.BusinessException;
 import com.bihell.dice.framework.common.exception.TipException;
+import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
 import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.shiro.util.JwtTokenUtil;
@@ -20,7 +21,10 @@ import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.framework.util.PasswordUtil;
 import com.bihell.dice.framework.util.PhoneUtil;
-import com.bihell.dice.system.entity.*;
+import com.bihell.dice.system.entity.SysPermission;
+import com.bihell.dice.system.entity.SysRolePermission;
+import com.bihell.dice.system.entity.SysUser;
+import com.bihell.dice.system.entity.SysUserRole;
 import com.bihell.dice.system.enums.FrameEnum;
 import com.bihell.dice.system.enums.KeepaliveEnum;
 import com.bihell.dice.system.enums.LinkExternalEnum;
@@ -29,7 +33,10 @@ import com.bihell.dice.system.mapper.SysRolePermissionMapper;
 import com.bihell.dice.system.mapper.UserMapper;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.*;
-import com.bihell.dice.system.vo.*;
+import com.bihell.dice.system.vo.RouteItemVO;
+import com.bihell.dice.system.vo.RouteMetoVO;
+import com.bihell.dice.system.vo.SysUserQueryVo;
+import com.bihell.dice.system.vo.SysUserVo;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +47,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -62,7 +67,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implements UserService {
 
     private final UserMapper userMapper;
-    private final AuthRelRoleUserService authRelRoleUserService;
     private final DiceProperties diceProperties;
     private final SysUserRoleService sysUserRoleService;
 
@@ -111,18 +115,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
             });
         }
         return new Paging(iPage);
-    }
-
-    @Override
-    public void assignRole(SysUser sysUser) {
-        sysUser.deleteById();
-        if (!CollectionUtils.isEmpty(sysUser.getRoles())) {
-            List<AuthRelRoleUser> authRelRoleUserList = sysUser.getRoles().stream()
-                    .filter(Objects::nonNull)
-                    .map(i -> new AuthRelRoleUser().setUserId(sysUser.getId()).setRoleId(i))
-                    .collect(Collectors.toList());
-            authRelRoleUserService.saveBatch(authRelRoleUserList);
-        }
     }
 
     @Transactional(rollbackFor = Exception.class)

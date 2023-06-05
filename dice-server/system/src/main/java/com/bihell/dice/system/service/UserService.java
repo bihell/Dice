@@ -41,14 +41,6 @@ public interface UserService extends IService<SysUser> {
      */
     boolean resetUser(String oldUsername, String newUsername, String email);
 
-//    /**
-//     * 获取用户列表
-//     * @return
-//     */
-//    IPage<User> getUserList(QueryParam queryParam);
-
-    void assignRole(SysUser sysUser);
-
     /**
      * 获取用户列表
      * @param userPageParam

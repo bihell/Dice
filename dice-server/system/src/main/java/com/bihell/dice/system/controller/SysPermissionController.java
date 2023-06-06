@@ -10,7 +10,7 @@ import com.bihell.dice.system.entity.SysPermission;
 import com.bihell.dice.system.param.SysPermissionPageParam;
 import com.bihell.dice.system.service.SysPermissionService;
 import com.bihell.dice.system.service.SysRolePermissionService;
-import com.bihell.dice.system.vo.SysPermissionQueryVo;
+import com.bihell.dice.system.vo.SysPermissionVo;
 import com.bihell.dice.system.vo.SysPermissionTreeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -85,10 +85,10 @@ public class SysPermissionController extends BaseController {
     @GetMapping("/info/{id}")
     @RequiresPermissions("sys:permission:info")
     @OperationLog(name = "系统权限详情", type = OperationLogType.INFO)
-    @ApiOperation(value = "系统权限详情", notes = "", response = SysPermissionQueryVo.class)
-    public ApiResult<SysPermissionQueryVo> getSysPermission(@PathVariable("id") Long id) throws Exception {
-        SysPermissionQueryVo sysPermissionQueryVo = sysPermissionService.getSysPermissionById(id);
-        return ApiResult.ok(sysPermissionQueryVo);
+    @ApiOperation(value = "系统权限详情", notes = "", response = SysPermissionVo.class)
+    public ApiResult<SysPermissionVo> getSysPermission(@PathVariable("id") Long id) throws Exception {
+        SysPermissionVo sysPermissionVo = sysPermissionService.getSysPermissionById(id);
+        return ApiResult.ok(sysPermissionVo);
     }
 
     /**
@@ -97,9 +97,9 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:permission:page")
     @OperationLog(name = "系统权限分页列表", type = OperationLogType.PAGE)
-    @ApiOperation(value = "系统权限分页列表", response = SysPermissionQueryVo.class)
-    public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Validated @RequestBody SysPermissionPageParam sysPermissionPageParam) throws Exception {
-        Paging<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionPageParam);
+    @ApiOperation(value = "系统权限分页列表", response = SysPermissionVo.class)
+    public ApiResult<Paging<SysPermissionVo>> getSysPermissionPageList(@Validated @RequestBody SysPermissionPageParam sysPermissionPageParam) throws Exception {
+        Paging<SysPermissionVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionPageParam);
         return ApiResult.ok(paging);
     }
 

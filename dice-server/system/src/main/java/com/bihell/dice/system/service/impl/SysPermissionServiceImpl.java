@@ -17,7 +17,7 @@ import com.bihell.dice.system.mapper.SysPermissionMapper;
 import com.bihell.dice.system.param.SysPermissionPageParam;
 import com.bihell.dice.system.service.SysPermissionService;
 import com.bihell.dice.system.service.SysRolePermissionService;
-import com.bihell.dice.system.vo.SysPermissionQueryVo;
+import com.bihell.dice.system.vo.SysPermissionVo;
 import com.bihell.dice.system.vo.SysPermissionTreeVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -77,14 +77,14 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
     }
 
     @Override
-    public SysPermissionQueryVo getSysPermissionById(Serializable id) throws Exception {
+    public SysPermissionVo getSysPermissionById(Serializable id) throws Exception {
         return sysPermissionMapper.getSysPermissionById(id);
     }
 
     @Override
-    public Paging<SysPermissionQueryVo> getSysPermissionPageList(SysPermissionPageParam sysPermissionPageParam) throws Exception {
-        Page<SysPermissionQueryVo> page = new PageInfo<>(sysPermissionPageParam, OrderItem.desc("create_time"));
-        IPage<SysPermissionQueryVo> iPage = sysPermissionMapper.getSysPermissionPageList(page, sysPermissionPageParam);
+    public Paging<SysPermissionVo> getSysPermissionPageList(SysPermissionPageParam sysPermissionPageParam) throws Exception {
+        Page<SysPermissionVo> page = new PageInfo<>(sysPermissionPageParam, OrderItem.desc("create_time"));
+        IPage<SysPermissionVo> iPage = sysPermissionMapper.getSysPermissionPageList(page, sysPermissionPageParam);
         return new Paging(iPage);
     }
 

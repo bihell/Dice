@@ -5,7 +5,7 @@ import com.bihell.dice.framework.common.service.BaseService;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.system.entity.SysPermission;
 import com.bihell.dice.system.param.SysPermissionPageParam;
-import com.bihell.dice.system.vo.SysPermissionQueryVo;
+import com.bihell.dice.system.vo.SysPermissionVo;
 import com.bihell.dice.system.vo.SysPermissionTreeVo;
 
 import java.io.Serializable;
@@ -55,7 +55,7 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @return
      * @throws Exception
      */
-    SysPermissionQueryVo getSysPermissionById(Serializable id) throws Exception;
+    SysPermissionVo getSysPermissionById(Serializable id) throws Exception;
 
     /**
      * 获取分页对象
@@ -64,7 +64,7 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @return
      * @throws Exception
      */
-    Paging<SysPermissionQueryVo> getSysPermissionPageList(SysPermissionPageParam sysPermissionPageParam) throws Exception;
+    Paging<SysPermissionVo> getSysPermissionPageList(SysPermissionPageParam sysPermissionPageParam) throws Exception;
 
     /**
      * 判断权限id是否存在

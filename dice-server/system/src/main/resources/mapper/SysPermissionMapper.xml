@@ -8,13 +8,13 @@
         id, name, parent_id, url, code, icon, type, level, status, sort, remark, version, create_time, update_time
     </sql>
 
-    <select id="getSysPermissionById" resultType="com.bihell.dice.system.vo.SysPermissionQueryVo">
+    <select id="getSysPermissionById" resultType="com.bihell.dice.system.vo.SysPermissionVo">
         select
         <include refid="Base_Column_List"/>
         from sys_permission where id = #{id}
     </select>
 
-    <select id="getSysPermissionPageList" resultType="com.bihell.dice.system.vo.SysPermissionQueryVo">
+    <select id="getSysPermissionPageList" resultType="com.bihell.dice.system.vo.SysPermissionVo">
         select
         <include refid="Base_Column_List"/>
         from sys_permission

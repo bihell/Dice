@@ -9,7 +9,7 @@ import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.system.entity.SysDepartment;
 import com.bihell.dice.system.param.SysDepartmentPageParam;
 import com.bihell.dice.system.service.SysDepartmentService;
-import com.bihell.dice.system.vo.SysDepartmentQueryVo;
+import com.bihell.dice.system.vo.SysDepartmentVo;
 import com.bihell.dice.system.vo.SysDepartmentTreeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -81,10 +81,10 @@ public class SysDepartmentController extends BaseController {
     @GetMapping("/info/{id}")
     @RequiresPermissions("sys:department:info")
     @OperationLog(name = "部门详情", type = OperationLogType.INFO)
-    @ApiOperation(value = "部门详情", response = SysDepartmentQueryVo.class)
-    public ApiResult<SysDepartmentQueryVo> getSysDepartment(@PathVariable("id") Long id) throws Exception {
-        SysDepartmentQueryVo sysDepartmentQueryVo = sysDepartmentService.getSysDepartmentById(id);
-        return ApiResult.ok(sysDepartmentQueryVo);
+    @ApiOperation(value = "部门详情", response = SysDepartmentVo.class)
+    public ApiResult<SysDepartmentVo> getSysDepartment(@PathVariable("id") Long id) throws Exception {
+        SysDepartmentVo sysDepartmentVo = sysDepartmentService.getSysDepartmentById(id);
+        return ApiResult.ok(sysDepartmentVo);
     }
 
     /**
@@ -93,9 +93,9 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:department:page")
     @OperationLog(name = "部门分页列表", type = OperationLogType.PAGE)
-    @ApiOperation(value = "部门分页列表", response = SysDepartmentQueryVo.class)
-    public ApiResult<Paging<SysDepartmentQueryVo>> getSysDepartmentPageList(@Validated @RequestBody SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
-        Paging<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentPageParam);
+    @ApiOperation(value = "部门分页列表", response = SysDepartmentVo.class)
+    public ApiResult<Paging<SysDepartmentVo>> getSysDepartmentPageList(@Validated @RequestBody SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
+        Paging<SysDepartmentVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentPageParam);
         return ApiResult.ok(paging);
     }
 

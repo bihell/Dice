@@ -10,7 +10,7 @@ import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.UserService;
 import com.bihell.dice.system.vo.SysUserQueryVo;
-import com.bihell.dice.system.vo.SysUserVo;
+import com.bihell.dice.system.dto.SysUserDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +40,8 @@ public class UserController {
     @RequiresPermissions("sys:user:add")
     @OperationLog(name = "添加系统用户", type = OperationLogType.ADD)
     @ApiOperation(value = "添加系统用户", response = ApiResult.class)
-    public ApiResult<String> addSysUser(@Validated(Add.class) @RequestBody SysUserVo sysUserVo) throws Exception {
-        userService.addUser(sysUserVo);
+    public ApiResult<String> addSysUser(@Validated(Add.class) @RequestBody SysUserDto sysUserDto) throws Exception {
+        userService.addUser(sysUserDto);
         return ApiResult.ok("创建成功");
     }
 
@@ -52,8 +52,8 @@ public class UserController {
     @RequiresPermissions("sys:user:update")
     @OperationLog(name = "修改系统用户", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改系统用户", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysUser(@Validated(Update.class) @RequestBody SysUserVo sysUserVo) throws Exception {
-        boolean flag = userService.updateUser(sysUserVo);
+    public ApiResult<Boolean> updateSysUser(@Validated(Update.class) @RequestBody SysUserDto sysUserDto) throws Exception {
+        boolean flag = userService.updateUser(sysUserDto);
         return ApiResult.result(flag);
     }
 

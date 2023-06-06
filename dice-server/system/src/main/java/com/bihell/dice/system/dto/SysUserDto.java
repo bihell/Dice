@@ -1,4 +1,4 @@
-package com.bihell.dice.system.vo;
+package com.bihell.dice.system.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -28,7 +28,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-public class SysUserVo extends Model<SysUserVo> {
+public class SysUserDto extends Model<SysUserDto> {
     @TableId
     private Long id;
 

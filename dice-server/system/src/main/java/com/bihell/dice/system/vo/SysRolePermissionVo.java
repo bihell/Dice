@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * <pre>
- * 部门 查询结果对象
+ * 角色权限关系 查询结果对象
  * </pre>
  *
  * @author geekidea
@@ -18,24 +18,21 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SysDepartmentQueryVo对象", description = "部门查询参数")
-public class SysDepartmentQueryVo implements Serializable {
+@ApiModel(value = "SysRolePermissionQueryVo对象", description = "角色权限关系查询参数")
+public class SysRolePermissionVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")
     private Long id;
 
-    @ApiModelProperty("部门名称")
-    private String name;
+    @ApiModelProperty("角色id")
+    private Long roleId;
 
-    @ApiModelProperty("父id")
-    private Long parentId;
+    @ApiModelProperty("权限id")
+    private Long permissionId;
 
     @ApiModelProperty("状态，0：禁用，1：启用")
     private Integer state;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
 
     @ApiModelProperty("备注")
     private String remark;

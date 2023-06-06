@@ -13,7 +13,7 @@ import com.bihell.dice.system.enums.StateEnum;
 import com.bihell.dice.system.mapper.SysDepartmentMapper;
 import com.bihell.dice.system.param.SysDepartmentPageParam;
 import com.bihell.dice.system.service.SysDepartmentService;
-import com.bihell.dice.system.vo.SysDepartmentQueryVo;
+import com.bihell.dice.system.vo.SysDepartmentVo;
 import com.bihell.dice.system.vo.SysDepartmentTreeVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -61,14 +61,14 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     }
 
     @Override
-    public SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception {
+    public SysDepartmentVo getSysDepartmentById(Serializable id) throws Exception {
         return sysDepartmentMapper.getSysDepartmentById(id);
     }
 
     @Override
-    public Paging<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
-        Page<SysDepartmentQueryVo> page = new PageInfo<>(sysDepartmentPageParam, OrderItem.desc("create_time"));
-        IPage<SysDepartmentQueryVo> iPage = sysDepartmentMapper.getSysDepartmentPageList(page, sysDepartmentPageParam);
+    public Paging<SysDepartmentVo> getSysDepartmentPageList(SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
+        Page<SysDepartmentVo> page = new PageInfo<>(sysDepartmentPageParam, OrderItem.desc("create_time"));
+        IPage<SysDepartmentVo> iPage = sysDepartmentMapper.getSysDepartmentPageList(page, sysDepartmentPageParam);
         return new Paging(iPage);
     }
 

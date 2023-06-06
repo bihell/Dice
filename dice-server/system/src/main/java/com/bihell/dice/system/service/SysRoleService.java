@@ -6,7 +6,7 @@ import com.bihell.dice.system.entity.SysPermission;
 import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.param.sysrole.SysRolePageParam;
 import com.bihell.dice.system.param.sysrole.UpdateSysRolePermissionParam;
-import com.bihell.dice.system.vo.SysRoleQueryVo;
+import com.bihell.dice.system.vo.SysRoleVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -55,7 +55,7 @@ public interface SysRoleService extends BaseService<SysRole> {
      * @return
      * @throws Exception
      */
-    SysRoleQueryVo getSysRoleById(Serializable id) throws Exception;
+    SysRoleVo getSysRoleById(Serializable id) throws Exception;
 
     /**
      * 获取分页对象

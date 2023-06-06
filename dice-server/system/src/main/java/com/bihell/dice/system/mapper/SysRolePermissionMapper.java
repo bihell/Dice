@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.system.entity.SysRolePermission;
 import com.bihell.dice.system.param.sysrole.SysRolePermissionPageParam;
-import com.bihell.dice.system.vo.SysRolePermissionQueryVo;
+import com.bihell.dice.system.vo.SysRolePermissionVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +30,7 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
      * @param id
      * @return
      */
-    SysRolePermissionQueryVo getSysRolePermissionById(Serializable id);
+    SysRolePermissionVo getSysRolePermissionById(Serializable id);
 
     /**
      * 获取分页对象
@@ -39,7 +39,7 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
      * @param sysRolePermissionPageParam
      * @return
      */
-    IPage<SysRolePermissionQueryVo> getSysRolePermissionPageList(@Param("page") Page page, @Param("param") SysRolePermissionPageParam sysRolePermissionPageParam);
+    IPage<SysRolePermissionVo> getSysRolePermissionPageList(@Param("page") Page page, @Param("param") SysRolePermissionPageParam sysRolePermissionPageParam);
 
     /**
      * 根据角色id获取可用的权限编码

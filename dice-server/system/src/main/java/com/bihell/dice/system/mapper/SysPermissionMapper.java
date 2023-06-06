@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.system.entity.SysPermission;
 import com.bihell.dice.system.param.SysPermissionPageParam;
-import com.bihell.dice.system.vo.SysPermissionQueryVo;
+import com.bihell.dice.system.vo.SysPermissionVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +29,7 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @param id
      * @return
      */
-    SysPermissionQueryVo getSysPermissionById(Serializable id);
+    SysPermissionVo getSysPermissionById(Serializable id);
 
     /**
      * 获取分页对象
@@ -38,7 +38,7 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @param sysPermissionPageParam
      * @return
      */
-    IPage<SysPermissionQueryVo> getSysPermissionPageList(@Param("page") Page page, @Param("param") SysPermissionPageParam sysPermissionPageParam);
+    IPage<SysPermissionVo> getSysPermissionPageList(@Param("page") Page page, @Param("param") SysPermissionPageParam sysPermissionPageParam);
 
     /**
      * 根据用户id获取该用户所有权限编码

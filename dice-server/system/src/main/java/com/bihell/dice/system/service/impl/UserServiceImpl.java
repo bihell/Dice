@@ -36,7 +36,7 @@ import com.bihell.dice.system.service.*;
 import com.bihell.dice.system.vo.RouteItemVO;
 import com.bihell.dice.system.vo.RouteMetoVO;
 import com.bihell.dice.system.vo.SysUserQueryVo;
-import com.bihell.dice.system.vo.SysUserVo;
+import com.bihell.dice.system.dto.SysUserDto;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -119,8 +119,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void addUser(SysUserVo sysUserVo) throws Exception {
-        SysUser sysUser = BeanUtil.copyProperties(sysUserVo, SysUser.class);
+    public void addUser(SysUserDto sysUserDto) throws Exception {
+        SysUser sysUser = BeanUtil.copyProperties(sysUserDto, SysUser.class);
 
         // 校验用户名是否存在
         boolean isExists = sysUser.selectCount(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, sysUser.getUsername()).or().eq(SysUser::getEmail, sysUser.getEmail())) > 0;
@@ -155,8 +155,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRole.class).eq(SysUserRole::getUserId, sysUser.getId()));
 
         // 新增用户与角色关联
-        if (Objects.nonNull(sysUserVo.getRoleIds())) {
-            List<SysUserRole> sysUserRoleList = sysUserVo.getRoleIds().stream().map(item -> {
+        if (Objects.nonNull(sysUserDto.getRoleIds())) {
+            List<SysUserRole> sysUserRoleList = sysUserDto.getRoleIds().stream().map(item -> {
                 // 校验部门和角色 todo
                 try {
                     checkDepartmentAndRole(sysUser.getDeptId(), item);
@@ -174,10 +174,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateUser(SysUserVo sysUserVo) throws Exception {
+    public boolean updateUser(SysUserDto sysUserDto) throws Exception {
 
         // 获取系统用户
-        SysUser updateSysUser = getById(sysUserVo.getId());
+        SysUser updateSysUser = getById(sysUserDto.getId());
         if (updateSysUser == null) {
             throw new BusinessException("修改的用户不存在");
         }
@@ -186,23 +186,23 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRole.class).eq(SysUserRole::getUserId, updateSysUser.getId()));
 
         // 新增用户与角色关联
-        if (Objects.nonNull(sysUserVo.getRoleIds())) {
-            List<SysUserRole> sysUserRoleList = sysUserVo.getRoleIds().stream().map(item -> {
+        if (Objects.nonNull(sysUserDto.getRoleIds())) {
+            List<SysUserRole> sysUserRoleList = sysUserDto.getRoleIds().stream().map(item -> {
                 // 校验部门和角色 todo
                 try {
-                    checkDepartmentAndRole(sysUserVo.getDeptId(), item);
+                    checkDepartmentAndRole(sysUserDto.getDeptId(), item);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 SysUserRole sysUserRole = new SysUserRole();
-                sysUserRole.setUserId(sysUserVo.getId());
+                sysUserRole.setUserId(sysUserDto.getId());
                 sysUserRole.setRoleId(item);
                 return sysUserRole;
             }).collect(Collectors.toList());
             sysUserRoleService.saveBatch(sysUserRoleList);
         }
 
-        updateSysUser = BeanUtil.copyProperties(sysUserVo, SysUser.class);
+        updateSysUser = BeanUtil.copyProperties(sysUserDto, SysUser.class);
         updateSysUser.setUpdateTime(new Date());
 
         return super.updateById(updateSysUser);

@@ -7,10 +7,11 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * <pre>
- * 角色权限关系 查询结果对象
+ * 系统角色 查询结果对象
  * </pre>
  *
  * @author geekidea
@@ -18,20 +19,23 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SysRolePermissionQueryVo对象", description = "角色权限关系查询参数")
-public class SysRolePermissionQueryVo implements Serializable {
+@ApiModel(value = "SysRoleQueryVo对象", description = "系统角色查询参数")
+public class SysRoleVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")
     private Long id;
 
-    @ApiModelProperty("角色id")
-    private Long roleId;
+    @ApiModelProperty("角色名称")
+    private String name;
 
-    @ApiModelProperty("权限id")
-    private Long permissionId;
+    @ApiModelProperty("角色唯一编码")
+    private String code;
 
-    @ApiModelProperty("状态，0：禁用，1：启用")
+    @ApiModelProperty("角色类型")
+    private Integer type;
+
+    @ApiModelProperty("角色状态，0：禁用，1：启用")
     private Integer state;
 
     @ApiModelProperty("备注")
@@ -45,5 +49,8 @@ public class SysRolePermissionQueryVo implements Serializable {
 
     @ApiModelProperty("修改时间")
     private Date updateTime;
+
+    @ApiModelProperty("权限集合")
+    private Set<Long> permissions;
 
 }

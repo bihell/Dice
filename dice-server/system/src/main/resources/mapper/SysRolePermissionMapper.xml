@@ -7,14 +7,14 @@
         id, role_id, permission_id, status, remark, version, create_time, update_time
     </sql>
 
-    <select id="getSysRolePermissionById" resultType="com.bihell.dice.system.vo.SysRolePermissionQueryVo">
+    <select id="getSysRolePermissionById" resultType="com.bihell.dice.system.vo.SysRolePermissionVo">
         select
         <include refid="Base_Column_List"/>
         from sys_role_permission where id = #{id}
     </select>
 
     <select id="getSysRolePermissionPageList"
-            resultType="com.bihell.dice.system.vo.SysRolePermissionQueryVo">
+            resultType="com.bihell.dice.system.vo.SysRolePermissionVo">
         select
         <include refid="Base_Column_List"/>
         from sys_role_permission

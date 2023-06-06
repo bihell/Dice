@@ -4,7 +4,7 @@ import com.bihell.dice.framework.common.service.BaseService;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.system.entity.SysDepartment;
 import com.bihell.dice.system.param.SysDepartmentPageParam;
-import com.bihell.dice.system.vo.SysDepartmentQueryVo;
+import com.bihell.dice.system.vo.SysDepartmentVo;
 import com.bihell.dice.system.vo.SysDepartmentTreeVo;
 
 import java.io.Serializable;
@@ -54,7 +54,7 @@ public interface SysDepartmentService extends BaseService<SysDepartment> {
      * @return
      * @throws Exception
      */
-    SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception;
+    SysDepartmentVo getSysDepartmentById(Serializable id) throws Exception;
 
     /**
      * 获取分页对象
@@ -63,7 +63,7 @@ public interface SysDepartmentService extends BaseService<SysDepartment> {
      * @return
      * @throws Exception
      */
-    Paging<SysDepartmentQueryVo> getSysDepartmentPageList(SysDepartmentPageParam sysDepartmentPageParam) throws Exception;
+    Paging<SysDepartmentVo> getSysDepartmentPageList(SysDepartmentPageParam sysDepartmentPageParam) throws Exception;
 
     /**
      * 根据id校验部门是否存在并且已启用

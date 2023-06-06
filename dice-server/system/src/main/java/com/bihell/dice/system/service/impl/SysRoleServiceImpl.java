@@ -23,7 +23,7 @@ import com.bihell.dice.system.param.sysrole.UpdateSysRolePermissionParam;
 import com.bihell.dice.system.service.SysPermissionService;
 import com.bihell.dice.system.service.SysRolePermissionService;
 import com.bihell.dice.system.service.SysRoleService;
-import com.bihell.dice.system.vo.SysRoleQueryVo;
+import com.bihell.dice.system.vo.SysRoleVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.SetUtils;
@@ -125,14 +125,14 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     }
 
     @Override
-    public SysRoleQueryVo getSysRoleById(Serializable id) throws Exception {
-        SysRoleQueryVo sysRoleQueryVo = sysRoleMapper.getSysRoleById(id);
-        if (sysRoleQueryVo == null) {
+    public SysRoleVo getSysRoleById(Serializable id) throws Exception {
+        SysRoleVo sysRoleVo = sysRoleMapper.getSysRoleById(id);
+        if (sysRoleVo == null) {
             throw new DiceException("角色不存在");
         }
         List<Long> permissionIds = sysRolePermissionService.getPermissionIdsByRoleId((Long) id);
-        sysRoleQueryVo.setPermissions(new HashSet<>(permissionIds));
-        return sysRoleQueryVo;
+        sysRoleVo.setPermissions(new HashSet<>(permissionIds));
+        return sysRoleVo;
     }
 
     @Override

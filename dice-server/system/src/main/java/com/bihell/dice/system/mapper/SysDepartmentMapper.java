@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bihell.dice.system.entity.SysDepartment;
 import com.bihell.dice.system.param.SysDepartmentPageParam;
-import com.bihell.dice.system.vo.SysDepartmentQueryVo;
+import com.bihell.dice.system.vo.SysDepartmentVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +28,7 @@ public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
      * @param id
      * @return
      */
-    SysDepartmentQueryVo getSysDepartmentById(Serializable id);
+    SysDepartmentVo getSysDepartmentById(Serializable id);
 
     /**
      * 获取分页对象
@@ -37,6 +37,6 @@ public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
      * @param sysDepartmentPageParam
      * @return
      */
-    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(@Param("page") Page page, @Param("param") SysDepartmentPageParam sysDepartmentPageParam);
+    IPage<SysDepartmentVo> getSysDepartmentPageList(@Param("page") Page page, @Param("param") SysDepartmentPageParam sysDepartmentPageParam);
 
 }

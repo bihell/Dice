@@ -7,11 +7,10 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * <pre>
- * 系统角色 查询结果对象
+ * 系统权限 查询结果对象
  * </pre>
  *
  * @author geekidea
@@ -19,24 +18,39 @@ import java.util.Set;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SysRoleQueryVo对象", description = "系统角色查询参数")
-public class SysRoleQueryVo implements Serializable {
+@ApiModel(value = "SysPermissionQueryVo对象", description = "系统权限查询参数")
+public class SysPermissionVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")
     private Long id;
 
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty("权限名称")
     private String name;
 
-    @ApiModelProperty("角色唯一编码")
+    @ApiModelProperty("父id")
+    private Long parentId;
+
+    @ApiModelProperty("路径")
+    private String url;
+
+    @ApiModelProperty("唯一编码")
     private String code;
 
-    @ApiModelProperty("角色类型")
+    @ApiModelProperty("图标")
+    private String icon;
+
+    @ApiModelProperty("类型，1：菜单，2：按钮")
     private Integer type;
 
-    @ApiModelProperty("角色状态，0：禁用，1：启用")
+    @ApiModelProperty("层级，1：第一级，2：第二级，N：第N级")
+    private Integer level;
+
+    @ApiModelProperty("状态，0：禁用，1：启用")
     private Integer state;
+
+    @ApiModelProperty("排序")
+    private Integer sort;
 
     @ApiModelProperty("备注")
     private String remark;
@@ -49,8 +63,5 @@ public class SysRoleQueryVo implements Serializable {
 
     @ApiModelProperty("修改时间")
     private Date updateTime;
-
-    @ApiModelProperty("权限集合")
-    private Set<Long> permissions;
 
 }

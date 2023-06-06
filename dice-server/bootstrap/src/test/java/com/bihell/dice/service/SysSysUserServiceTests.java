@@ -1,6 +1,6 @@
 package com.bihell.dice.service;
 
-import com.bihell.dice.system.service.UserService;
+import com.bihell.dice.system.service.SysUserService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SysUserServiceTests {
+public class SysSysUserServiceTests {
 
     @Autowired
-    private UserService userService;
+    private SysUserService sysUserService;
 
     @Test
     public void resetUser(){
-        userService.resetUser("dice","dice","tpxcer@outlook.com");
+        sysUserService.resetUser("dice","dice","tpxcer@outlook.com");
     }
 }

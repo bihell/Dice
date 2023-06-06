@@ -18,7 +18,7 @@ import java.util.Map;
  * @author bihell
  * @since 2017/7/12 21:34
  */
-public interface UserMapper extends BaseMapper<SysUser> {
+public interface SysUserMapper extends BaseMapper<SysUser> {
 
     IPage<SysUser> queryByParam(@Param("pg") Page<SysUser> page, @Param("queryParam") QueryParam queryParam);
 

@@ -3,7 +3,7 @@ package com.bihell.dice.system.service;
 
 import com.bihell.dice.framework.common.service.BaseService;
 import com.bihell.dice.framework.core.pagination.Paging;
-import com.bihell.dice.system.entity.SysPermission;
+import com.bihell.dice.system.entity.SysMenu;
 import com.bihell.dice.system.param.SysPermissionPageParam;
 import com.bihell.dice.system.vo.SysPermissionVo;
 import com.bihell.dice.system.vo.SysPermissionTreeVo;
@@ -19,25 +19,25 @@ import java.util.List;
  * @author geekidea
  * @since 2019-10-24
  */
-public interface SysPermissionService extends BaseService<SysPermission> {
+public interface SysMenuService extends BaseService<SysMenu> {
 
     /**
      * 保存
      *
-     * @param sysPermission
+     * @param sysMenu
      * @return
      * @throws Exception
      */
-    boolean saveSysPermission(SysPermission sysPermission) throws Exception;
+    boolean saveSysPermission(SysMenu sysMenu) throws Exception;
 
     /**
      * 修改
      *
-     * @param sysPermission
+     * @param sysMenu
      * @return
      * @throws Exception
      */
-    boolean updateSysPermission(SysPermission sysPermission) throws Exception;
+    boolean updateSysPermission(SysMenu sysMenu) throws Exception;
 
     /**
      * 删除
@@ -81,16 +81,16 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @return
      * @throws Exception
      */
-    List<SysPermission> getAllMenuList() throws Exception;
+    List<SysMenu> getAllMenuList() throws Exception;
 
     /**
      * 转换权限列表为树形菜单
      *
-     * @param sysPermissions
+     * @param sysMenus
      * @return
      * @throws Exception
      */
-    List<SysPermissionTreeVo> convertSysPermissionTreeVoList(List<SysPermission> sysPermissions) throws Exception;
+    List<SysPermissionTreeVo> convertSysPermissionTreeVoList(List<SysMenu> sysMenus) throws Exception;
 
     /**
      * 获取获取菜单树形列表
@@ -116,7 +116,7 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @return
      * @throws Exception
      */
-    List<SysPermission> getMenuListByUserId(Long userId) throws Exception;
+    List<SysMenu> getMenuListByUserId(Long userId) throws Exception;
 
     /**
      * 根据用户id获取菜单树形列表

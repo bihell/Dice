@@ -1,7 +1,7 @@
 package com.bihell.dice.system.service;
 
 import com.bihell.dice.framework.common.service.BaseService;
-import com.bihell.dice.system.entity.SysRolePermission;
+import com.bihell.dice.system.entity.SysRoleMenu;
 import com.bihell.dice.system.entity.SysUserRole;
 import org.apache.commons.collections4.SetUtils;
 
@@ -16,7 +16,7 @@ import java.util.Set;
  * @author geekidea
  * @since 2019-10-24
  */
-public interface SysRolePermissionService extends BaseService<SysRolePermission> {
+public interface SysRoleMenuService extends BaseService<SysRoleMenu> {
 
     /**
      * 保存

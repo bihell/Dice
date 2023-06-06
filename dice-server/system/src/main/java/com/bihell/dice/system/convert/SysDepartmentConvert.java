@@ -1,6 +1,6 @@
 package com.bihell.dice.system.convert;
 
-import com.bihell.dice.system.entity.SysDepartment;
+import com.bihell.dice.system.entity.SysDept;
 import com.bihell.dice.system.vo.SysDepartmentTreeVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -21,10 +21,10 @@ public interface SysDepartmentConvert {
     /**
      * SysDepartment转换成SysDepartmentTreeVo对象
      *
-     * @param sysDepartment
+     * @param sysDept
      * @return
      */
-    SysDepartmentTreeVo entityToTreeVo(SysDepartment sysDepartment);
+    SysDepartmentTreeVo entityToTreeVo(SysDept sysDept);
 
     /**
      * SysDepartment列表转换成SysDepartmentTreeVo列表
@@ -32,6 +32,6 @@ public interface SysDepartmentConvert {
      * @param list
      * @return
      */
-    List<SysDepartmentTreeVo> listToTreeVoList(List<SysDepartment> list);
+    List<SysDepartmentTreeVo> listToTreeVoList(List<SysDept> list);
 
 }

@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SysRolePermission对象", description = "角色权限关系")
-public class SysRolePermission extends Model<SysRolePermission> {
+public class SysRoleMenu extends Model<SysRoleMenu> {
 
     private static final long serialVersionUID = 1L;
 

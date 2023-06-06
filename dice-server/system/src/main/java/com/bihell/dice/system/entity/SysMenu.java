@@ -25,8 +25,8 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysPermission对象", description = "系统权限")
-public class SysPermission extends Model<SysPermission> {
+@ApiModel(value = "SysMenu对象", description = "菜单权限")
+public class SysMenu extends Model<SysMenu> {
 
     private static final long serialVersionUID = 1L;
 

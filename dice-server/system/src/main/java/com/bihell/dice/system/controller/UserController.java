@@ -8,7 +8,7 @@ import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
 import com.bihell.dice.system.param.UserPageParam;
-import com.bihell.dice.system.service.UserService;
+import com.bihell.dice.system.service.SysUserService;
 import com.bihell.dice.system.vo.SysUserQueryVo;
 import com.bihell.dice.system.dto.SysUserDto;
 import io.swagger.annotations.Api;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/api/admin/auth/user")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserController {
-    private final UserService userService;
+    private final SysUserService sysUserService;
 
     /**
      * 添加系统用户
@@ -41,7 +41,7 @@ public class UserController {
     @OperationLog(name = "添加系统用户", type = OperationLogType.ADD)
     @ApiOperation(value = "添加系统用户", response = ApiResult.class)
     public ApiResult<String> addSysUser(@Validated(Add.class) @RequestBody SysUserDto sysUserDto) throws Exception {
-        userService.addUser(sysUserDto);
+        sysUserService.addUser(sysUserDto);
         return ApiResult.ok("创建成功");
     }
 
@@ -53,7 +53,7 @@ public class UserController {
     @OperationLog(name = "修改系统用户", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改系统用户", response = ApiResult.class)
     public ApiResult<Boolean> updateSysUser(@Validated(Update.class) @RequestBody SysUserDto sysUserDto) throws Exception {
-        boolean flag = userService.updateUser(sysUserDto);
+        boolean flag = sysUserService.updateUser(sysUserDto);
         return ApiResult.result(flag);
     }
 
@@ -65,7 +65,7 @@ public class UserController {
     @OperationLog(name = "系统用户分页列表", type = OperationLogType.PAGE)
     @ApiOperation(value = "系统用户分页列表", response = SysUserQueryVo.class)
     public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Validated UserPageParam sysUserPageParam) throws Exception {
-        Paging<SysUserQueryVo> paging = userService.getUserPageList(sysUserPageParam);
+        Paging<SysUserQueryVo> paging = sysUserService.getUserPageList(sysUserPageParam);
         return ApiResult.ok(paging);
     }
 
@@ -77,7 +77,7 @@ public class UserController {
     @OperationLog(name = "删除系统用户", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除系统用户", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysUser(@PathVariable("id") Long id) throws Exception {
-        boolean flag = userService.deleteSysUser(id);
+        boolean flag = sysUserService.deleteSysUser(id);
         return ApiResult.result(flag);
     }
 

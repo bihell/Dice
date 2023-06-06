@@ -26,7 +26,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SysDepartment对象", description = "部门")
-public class SysDepartment extends Model<SysDepartment> {
+public class SysDept extends Model<SysDept> {
 
     private static final long serialVersionUID = 1L;
 

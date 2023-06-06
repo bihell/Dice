@@ -3,12 +3,12 @@ package com.bihell.dice.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
-import com.bihell.dice.system.entity.SysRolePermission;
+import com.bihell.dice.system.entity.SysRoleMenu;
 import com.bihell.dice.system.entity.SysUserRole;
 import com.bihell.dice.system.enums.StateEnum;
 import com.bihell.dice.system.mapper.SysRoleMapper;
-import com.bihell.dice.system.mapper.SysRolePermissionMapper;
-import com.bihell.dice.system.service.SysRolePermissionService;
+import com.bihell.dice.system.mapper.SysRoleMenuMapper;
+import com.bihell.dice.system.service.SysRoleMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermissionMapper, SysRolePermission> implements SysRolePermissionService {
+public class SysRoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
 
     @Autowired
-    private SysRolePermissionMapper sysRolePermissionMapper;
+    private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
@@ -42,13 +42,13 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveSysRolePermission(Long roleId, List<Long> permissionIds) throws Exception {
-        List<SysRolePermission> list = new ArrayList<>();
+        List<SysRoleMenu> list = new ArrayList<>();
         permissionIds.forEach(permissionId -> {
-            SysRolePermission sysRolePermission = new SysRolePermission()
+            SysRoleMenu sysRoleMenu = new SysRoleMenu()
                     .setRoleId(roleId)
                     .setPermissionId(permissionId)
                     .setStatus(StateEnum.ENABLE.getCode());
-            list.add(sysRolePermission);
+            list.add(sysRoleMenu);
         });
         // 批量保存角色权限中间表
         return saveBatch(list, 20);
@@ -57,59 +57,59 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
     @Override
     public List<Long> getPermissionIdsByRoleId(Long roleId) throws Exception {
         Wrapper wrapper = lambdaQuery()
-                .select(SysRolePermission::getPermissionId)
-                .eq(SysRolePermission::getRoleId,roleId)
-                .eq(SysRolePermission::getStatus,StateEnum.ENABLE.getCode())
+                .select(SysRoleMenu::getPermissionId)
+                .eq(SysRoleMenu::getRoleId,roleId)
+                .eq(SysRoleMenu::getStatus,StateEnum.ENABLE.getCode())
                 .getWrapper();
-        return sysRolePermissionMapper.selectObjs(wrapper);
+        return sysRoleMenuMapper.selectObjs(wrapper);
     }
 
     @Override
     public List<Long> getThreeLevelPermissionIdsByRoleId(Long roleId) throws Exception {
-        return sysRolePermissionMapper.getThreeLevelPermissionIdsByRoleId(roleId);
+        return sysRoleMenuMapper.getThreeLevelPermissionIdsByRoleId(roleId);
     }
 
     @Override
     public boolean saveSysRolePermissionBatch(Long roleId, SetUtils.SetView addSet) {
-        List<SysRolePermission> list = new ArrayList<>();
+        List<SysRoleMenu> list = new ArrayList<>();
         addSet.forEach(id -> {
-            SysRolePermission sysRolePermission = new SysRolePermission();
+            SysRoleMenu sysRoleMenu = new SysRoleMenu();
             Long permissionId = (Long) id;
-            sysRolePermission
+            sysRoleMenu
                     .setRoleId(roleId)
                     .setPermissionId(permissionId)
                     .setStatus(StateEnum.ENABLE.getCode());
-            list.add(sysRolePermission);
+            list.add(sysRoleMenu);
         });
         return saveBatch(list, 20);
     }
 
     @Override
     public boolean deleteSysRolePermissionByRoleId(Long roleId) throws Exception {
-        SysRolePermission sysRolePermission = new SysRolePermission()
+        SysRoleMenu sysRoleMenu = new SysRoleMenu()
                 .setRoleId(roleId);
-        return remove(new QueryWrapper<>(sysRolePermission));
+        return remove(new QueryWrapper<>(sysRoleMenu));
     }
 
     @Override
     public Set<String> getPermissionCodesByRoleId(List<SysUserRole> sysUserRoleList) throws Exception {
         List<Long> roleIds = sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
-        return sysRolePermissionMapper.getPermissionCodesByRoleId(roleIds);
+        return sysRoleMenuMapper.getPermissionCodesByRoleId(roleIds);
     }
 
     @Override
     public boolean isExistsByPermissionId(Long permissionId) throws Exception {
         // 判断角色权限表是否有关联存在，如果存在，则不能删除
-        SysRolePermission sysRolePermission = new SysRolePermission()
+        SysRoleMenu sysRoleMenu = new SysRoleMenu()
                 .setPermissionId(permissionId);
-        return count(new QueryWrapper<SysRolePermission>(sysRolePermission)) > 0;
+        return count(new QueryWrapper<SysRoleMenu>(sysRoleMenu)) > 0;
     }
 
     @Override
     public boolean hasPermission(Long roleId) throws Exception {
-        SysRolePermission sysRolePermission = new SysRolePermission()
+        SysRoleMenu sysRoleMenu = new SysRoleMenu()
                 .setRoleId(roleId);
-        return count(new QueryWrapper<SysRolePermission>(sysRolePermission)) > 0;
+        return count(new QueryWrapper<SysRoleMenu>(sysRoleMenu)) > 0;
     }
 
 }

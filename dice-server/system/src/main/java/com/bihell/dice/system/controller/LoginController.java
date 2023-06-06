@@ -1,17 +1,15 @@
 package com.bihell.dice.system.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.bihell.dice.framework.common.api.ApiResult;
 import com.bihell.dice.framework.log.annotation.OperationLogIgnore;
 import com.bihell.dice.framework.shiro.util.JwtTokenUtil;
 import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
 import com.bihell.dice.system.param.LoginParam;
 import com.bihell.dice.system.service.LoginService;
-import com.bihell.dice.system.service.UserService;
+import com.bihell.dice.system.service.SysUserService;
 import com.bihell.dice.system.vo.LoginSysUserTokenVo;
 import com.bihell.dice.system.vo.RouteItemVO;
 import com.bihell.dice.system.vo.SysUserQueryVo;
-import com.google.common.collect.Sets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +23,7 @@ import com.bihell.dice.framework.log.annotation.Module;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 登录控制器
@@ -42,7 +37,7 @@ import java.util.Set;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class LoginController {
     private final LoginService loginService;
-    private final UserService userService;
+    private final SysUserService sysUserService;
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -66,12 +61,12 @@ public class LoginController {
 
     @GetMapping("/getMenuList")
     public ApiResult<List<RouteItemVO>> getMenuList() throws Exception {
-        return ApiResult.ok(userService.getMenuList());
+        return ApiResult.ok(sysUserService.getMenuList());
     }
 
     @GetMapping("/getPermCode")
     public ApiResult<List<String>> getPermCode() throws Exception {
-        return ApiResult.ok(userService.getPermCode());
+        return ApiResult.ok(sysUserService.getPermCode());
     }
 
     /**

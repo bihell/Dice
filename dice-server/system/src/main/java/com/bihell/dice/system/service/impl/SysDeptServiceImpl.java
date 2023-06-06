@@ -8,11 +8,11 @@ import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
 import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.system.convert.SysDepartmentConvert;
-import com.bihell.dice.system.entity.SysDepartment;
+import com.bihell.dice.system.entity.SysDept;
 import com.bihell.dice.system.enums.StateEnum;
-import com.bihell.dice.system.mapper.SysDepartmentMapper;
+import com.bihell.dice.system.mapper.SysDeptMapper;
 import com.bihell.dice.system.param.SysDepartmentPageParam;
-import com.bihell.dice.system.service.SysDepartmentService;
+import com.bihell.dice.system.service.SysDeptService;
 import com.bihell.dice.system.vo.SysDepartmentVo;
 import com.bihell.dice.system.vo.SysDepartmentTreeVo;
 import lombok.extern.slf4j.Slf4j;
@@ -36,22 +36,22 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMapper, SysDepartment> implements SysDepartmentService {
+public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
 
     @Autowired
-    private SysDepartmentMapper sysDepartmentMapper;
+    private SysDeptMapper sysDeptMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean saveSysDepartment(SysDepartment sysDepartment) throws Exception {
-        sysDepartment.setId(null);
-        return super.save(sysDepartment);
+    public boolean saveSysDepartment(SysDept sysDept) throws Exception {
+        sysDept.setId(null);
+        return super.save(sysDept);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysDepartment(SysDepartment sysDepartment) throws Exception {
-        return super.updateById(sysDepartment);
+    public boolean updateSysDepartment(SysDept sysDept) throws Exception {
+        return super.updateById(sysDept);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -62,39 +62,39 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
 
     @Override
     public SysDepartmentVo getSysDepartmentById(Serializable id) throws Exception {
-        return sysDepartmentMapper.getSysDepartmentById(id);
+        return sysDeptMapper.getSysDepartmentById(id);
     }
 
     @Override
     public Paging<SysDepartmentVo> getSysDepartmentPageList(SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
         Page<SysDepartmentVo> page = new PageInfo<>(sysDepartmentPageParam, OrderItem.desc("create_time"));
-        IPage<SysDepartmentVo> iPage = sysDepartmentMapper.getSysDepartmentPageList(page, sysDepartmentPageParam);
+        IPage<SysDepartmentVo> iPage = sysDeptMapper.getSysDepartmentPageList(page, sysDepartmentPageParam);
         return new Paging(iPage);
     }
 
     @Override
     public boolean isEnableSysDepartment(Long id) throws Exception {
-        SysDepartment sysDepartment = new SysDepartment()
+        SysDept sysDept = new SysDept()
                 .setId(id)
                 .setStatus(StateEnum.ENABLE.getCode());
-        Long count = sysDepartmentMapper.selectCount(new QueryWrapper<>(sysDepartment));
+        Long count = sysDeptMapper.selectCount(new QueryWrapper<>(sysDept));
         return count > 0;
     }
 
     @Override
-    public List<SysDepartment> getAllDepartmentList() {
-        SysDepartment sysDepartment = new SysDepartment().setStatus(StateEnum.ENABLE.getCode());
+    public List<SysDept> getAllDepartmentList() {
+        SysDept sysDept = new SysDept().setStatus(StateEnum.ENABLE.getCode());
         // 获取所有已启用的部门列表
-        return sysDepartmentMapper.selectList(new QueryWrapper(sysDepartment));
+        return sysDeptMapper.selectList(new QueryWrapper(sysDept));
     }
 
     @Override
     public List<SysDepartmentTreeVo> getDepartmentTree() {
-        List<SysDepartment> sysDepartmentList = getAllDepartmentList();
-        if (CollectionUtils.isEmpty(sysDepartmentList)) {
+        List<SysDept> sysDeptList = getAllDepartmentList();
+        if (CollectionUtils.isEmpty(sysDeptList)) {
             return null;
         }
-        List<SysDepartmentTreeVo> list = SysDepartmentConvert.INSTANCE.listToTreeVoList(sysDepartmentList);
+        List<SysDepartmentTreeVo> list = SysDepartmentConvert.INSTANCE.listToTreeVoList(sysDeptList);
         List<SysDepartmentTreeVo> treeVos = new ArrayList<>();
         for (SysDepartmentTreeVo treeVo : list) {
             if (treeVo.getParentId() == null) {

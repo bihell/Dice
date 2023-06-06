@@ -14,7 +14,7 @@ import com.bihell.dice.framework.shiro.util.SaltUtil;
 import com.bihell.dice.framework.shiro.vo.LoginSysUserVo;
 import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.framework.util.PasswordUtil;
-import com.bihell.dice.system.entity.SysDepartment;
+import com.bihell.dice.system.entity.SysDept;
 import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.entity.SysUserRole;
@@ -69,11 +69,11 @@ public class LoginServiceImpl implements LoginService {
 
     @Lazy
     @Autowired
-    private SysDepartmentService sysDepartmentService;
+    private SysDeptService sysDeptService;
 
     @Lazy
     @Autowired
-    private SysRolePermissionService sysRolePermissionService;
+    private SysRoleMenuService sysRoleMenuService;
 
     @Lazy
     @Autowired
@@ -109,15 +109,15 @@ public class LoginServiceImpl implements LoginService {
         LoginSysUserVo loginSysUserVo =  BeanUtil.copyProperties(sysUser,LoginSysUserVo.class);
 
         // 获取部门
-        SysDepartment sysDepartment = sysDepartmentService.getById(sysUser.getDeptId());
-        if (sysDepartment == null) {
+        SysDept sysDept = sysDeptService.getById(sysUser.getDeptId());
+        if (sysDept == null) {
             throw new AuthenticationException("部门不存在");
         }
-        if (!StateEnum.ENABLE.getCode().equals(sysDepartment.getStatus())) {
+        if (!StateEnum.ENABLE.getCode().equals(sysDept.getStatus())) {
             throw new AuthenticationException("部门已禁用");
         }
-        loginSysUserVo.setDepartmentId(sysDepartment.getId())
-                .setDepartmentName(sysDepartment.getDeptName());
+        loginSysUserVo.setDepartmentId(sysDept.getId())
+                .setDepartmentName(sysDept.getDeptName());
 
         // 获取当前用户角色
         List<SysUserRole> sysUserRoles = new SysUserRole().selectList(new QueryWrapper<SysUserRole>().lambda()
@@ -143,7 +143,7 @@ public class LoginServiceImpl implements LoginService {
         loginSysUserVo.setRoles(roleInfoVOList);
 
         // 获取当前用户权限
-        Set<String> permissionCodes = sysRolePermissionService.getPermissionCodesByRoleId(sysUserRoles);
+        Set<String> permissionCodes = sysRoleMenuService.getPermissionCodesByRoleId(sysUserRoles);
         if (CollectionUtils.isEmpty(permissionCodes)) {
             throw new AuthenticationException("权限列表不能为空");
         }

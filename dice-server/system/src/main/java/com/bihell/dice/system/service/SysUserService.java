@@ -16,7 +16,7 @@ import java.util.List;
  * @author bihell
  * @since 2017/7/12 21:25
  */
-public interface UserService extends IService<SysUser> {
+public interface SysUserService extends IService<SysUser> {
 
     void addUser(SysUserDto sysUserDto) throws Exception;
 

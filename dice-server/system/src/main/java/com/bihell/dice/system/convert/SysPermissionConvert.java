@@ -1,6 +1,6 @@
 package com.bihell.dice.system.convert;
 
-import com.bihell.dice.system.entity.SysPermission;
+import com.bihell.dice.system.entity.SysMenu;
 import com.bihell.dice.system.vo.SysPermissionTreeVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -19,9 +19,9 @@ public interface SysPermissionConvert {
     /**
      * SysPermission对象转换成SysPermissionTreeVo对象
      *
-     * @param sysPermission
+     * @param sysMenu
      * @return
      */
-    SysPermissionTreeVo permissionToTreeVo(SysPermission sysPermission);
+    SysPermissionTreeVo permissionToTreeVo(SysMenu sysMenu);
 
 }

@@ -2,7 +2,7 @@ package com.bihell.dice.system.service;
 
 import com.bihell.dice.framework.common.service.BaseService;
 import com.bihell.dice.framework.core.pagination.Paging;
-import com.bihell.dice.system.entity.SysDepartment;
+import com.bihell.dice.system.entity.SysDept;
 import com.bihell.dice.system.param.SysDepartmentPageParam;
 import com.bihell.dice.system.vo.SysDepartmentVo;
 import com.bihell.dice.system.vo.SysDepartmentTreeVo;
@@ -18,25 +18,25 @@ import java.util.List;
  * @author geekidea
  * @since 2019-10-24
  */
-public interface SysDepartmentService extends BaseService<SysDepartment> {
+public interface SysDeptService extends BaseService<SysDept> {
 
     /**
      * 保存
      *
-     * @param sysDepartment
+     * @param sysDept
      * @return
      * @throws Exception
      */
-    boolean saveSysDepartment(SysDepartment sysDepartment) throws Exception;
+    boolean saveSysDepartment(SysDept sysDept) throws Exception;
 
     /**
      * 修改
      *
-     * @param sysDepartment
+     * @param sysDept
      * @return
      * @throws Exception
      */
-    boolean updateSysDepartment(SysDepartment sysDepartment) throws Exception;
+    boolean updateSysDepartment(SysDept sysDept) throws Exception;
 
     /**
      * 删除
@@ -78,7 +78,7 @@ public interface SysDepartmentService extends BaseService<SysDepartment> {
      * 获取所有可用的部门列表
      * @return
      */
-    List<SysDepartment> getAllDepartmentList();
+    List<SysDept> getAllDepartmentList();
 
     /**
      * 获取所有可用的部门树形列表

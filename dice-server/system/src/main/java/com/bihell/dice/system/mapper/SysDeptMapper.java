@@ -3,7 +3,7 @@ package com.bihell.dice.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bihell.dice.system.entity.SysDepartment;
+import com.bihell.dice.system.entity.SysDept;
 import com.bihell.dice.system.param.SysDepartmentPageParam;
 import com.bihell.dice.system.vo.SysDepartmentVo;
 import org.apache.ibatis.annotations.Param;
@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @since 2019-10-24
  */
 @Repository
-public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
+public interface SysDeptMapper extends BaseMapper<SysDept> {
 
     /**
      * 根据ID获取查询对象

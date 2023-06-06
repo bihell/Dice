@@ -2,7 +2,7 @@ package com.bihell.dice.system.service;
 
 import com.bihell.dice.framework.common.service.BaseService;
 import com.bihell.dice.framework.core.pagination.Paging;
-import com.bihell.dice.system.entity.SysPermission;
+import com.bihell.dice.system.entity.SysMenu;
 import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.param.sysrole.SysRolePageParam;
 import com.bihell.dice.system.param.sysrole.UpdateSysRolePermissionParam;
@@ -98,5 +98,5 @@ public interface SysRoleService extends BaseService<SysRole> {
      *
      * @return
      */
-    List<SysPermission> listRoleMenus(String roleId);
+    List<SysMenu> listRoleMenus(String roleId);
 }

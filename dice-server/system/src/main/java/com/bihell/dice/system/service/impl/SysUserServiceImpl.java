@@ -21,16 +21,16 @@ import com.bihell.dice.framework.shiro.vo.RoleInfoVO;
 import com.bihell.dice.framework.util.LoginUtil;
 import com.bihell.dice.framework.util.PasswordUtil;
 import com.bihell.dice.framework.util.PhoneUtil;
-import com.bihell.dice.system.entity.SysPermission;
-import com.bihell.dice.system.entity.SysRolePermission;
+import com.bihell.dice.system.entity.SysMenu;
+import com.bihell.dice.system.entity.SysRoleMenu;
 import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.entity.SysUserRole;
 import com.bihell.dice.system.enums.FrameEnum;
 import com.bihell.dice.system.enums.KeepaliveEnum;
 import com.bihell.dice.system.enums.LinkExternalEnum;
 import com.bihell.dice.system.enums.MenuLevelEnum;
-import com.bihell.dice.system.mapper.SysRolePermissionMapper;
-import com.bihell.dice.system.mapper.UserMapper;
+import com.bihell.dice.system.mapper.SysRoleMenuMapper;
+import com.bihell.dice.system.mapper.SysUserMapper;
 import com.bihell.dice.system.param.UserPageParam;
 import com.bihell.dice.system.service.*;
 import com.bihell.dice.system.vo.RouteItemVO;
@@ -64,9 +64,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional(rollbackFor = Throwable.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implements UserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-    private final UserMapper userMapper;
+    private final SysUserMapper sysUserMapper;
     private final DiceProperties diceProperties;
     private final SysUserRoleService sysUserRoleService;
 
@@ -74,10 +74,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private SysRolePermissionMapper sysRolePermissionMapper;
+    private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Autowired
-    private SysDepartmentService sysDepartmentService;
+    private SysDeptService sysDeptService;
 
     @Lazy
     @Autowired
@@ -85,11 +85,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Lazy
     @Autowired
-    private SysRolePermissionService sysRolePermissionService;
+    private SysRoleMenuService sysRoleMenuService;
 
     @Lazy
     @Autowired
-    private SysPermissionService sysPermissionService;
+    private SysMenuService sysMenuService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -100,7 +100,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
     @Override
     public Paging<SysUserQueryVo> getUserPageList(UserPageParam userPageParam) {
         Page<SysUserQueryVo> page = new PageInfo<>(userPageParam, OrderItem.desc("create_time"));
-        IPage<SysUserQueryVo> iPage = userMapper.getSysUserPageList(page, userPageParam);
+        IPage<SysUserQueryVo> iPage = sysUserMapper.getSysUserPageList(page, userPageParam);
 
         if (iPage != null && org.apache.commons.collections4.CollectionUtils.isNotEmpty(iPage.getRecords())) {
             // 手机号码脱敏处理
@@ -213,7 +213,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         LambdaQueryWrapper<SysUser> wrapper = new QueryWrapper<SysUser>().lambda()
                 .select(SysUser.class, info -> !"password".equals(info.getProperty()))
                 .eq(SysUser::getId, id);
-        return userMapper.selectOne(wrapper);
+        return sysUserMapper.selectOne(wrapper);
     }
 
     /**
@@ -240,7 +240,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
     @Override
     public void checkDepartmentAndRole(Long departmentId, Long roleId) throws Exception {
         // 校验部门是否存在并且可用
-        boolean isEnableDepartment = sysDepartmentService.isEnableSysDepartment(departmentId);
+        boolean isEnableDepartment = sysDeptService.isEnableSysDepartment(departmentId);
         if (!isEnableDepartment) {
             throw new BusinessException("该部门不存在或已禁用");
         }
@@ -257,31 +257,31 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         String token =  JwtTokenUtil.getToken();
         String tokenSha256 = DigestUtils.sha256Hex(token);
         LoginSysUserVo loginSysUserVo = (LoginSysUserVo) redisTemplate.opsForValue().get(tokenSha256);
-        List<SysPermission> sysPermissions;
+        List<SysMenu> sysMenus;
 
         if (loginSysUserVo.getRoles().stream().anyMatch(item -> item.getValue().equals("admin"))) {
-            sysPermissions = sysPermissionService.list(Wrappers.lambdaQuery(SysPermission.class)
-                    .in(SysPermission::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
-                    .orderByAsc(SysPermission::getSort)
+            sysMenus = sysMenuService.list(Wrappers.lambdaQuery(SysMenu.class)
+                    .in(SysMenu::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
+                    .orderByAsc(SysMenu::getSort)
             );
         } else {
             // 查询菜单
             List<Long> roleIdList = loginSysUserVo.getRoles().stream().map(RoleInfoVO::getId).collect(Collectors.toList());
-            List<SysRolePermission> sysRoleMenuList = new SysRolePermission().selectList(
-                    new QueryWrapper<SysRolePermission>().lambda().in(SysRolePermission::getRoleId,roleIdList));
+            List<SysRoleMenu> sysRoleMenuList = new SysRoleMenu().selectList(
+                    new QueryWrapper<SysRoleMenu>().lambda().in(SysRoleMenu::getRoleId,roleIdList));
             if (sysRoleMenuList.isEmpty()) {
-                sysPermissions = Lists.newArrayList();
+                sysMenus = Lists.newArrayList();
             } else {
-                Set<Long> menuIds = sysRoleMenuList.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toSet());
-                sysPermissions = sysPermissionService.list(Wrappers.lambdaQuery(SysPermission.class)
-                        .in(SysPermission::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
-                        .in(SysPermission::getId,menuIds)
-                        .orderByAsc(SysPermission::getSort)
+                Set<Long> menuIds = sysRoleMenuList.stream().map(SysRoleMenu::getPermissionId).collect(Collectors.toSet());
+                sysMenus = sysMenuService.list(Wrappers.lambdaQuery(SysMenu.class)
+                        .in(SysMenu::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
+                        .in(SysMenu::getId,menuIds)
+                        .orderByAsc(SysMenu::getSort)
                 );
             }
         }
 
-        List<RouteItemVO> routeItemVOList = sysPermissions.stream().filter(item -> item.getParentId() == null).map(item -> {
+        List<RouteItemVO> routeItemVOList = sysMenus.stream().filter(item -> item.getParentId() == null).map(item -> {
             RouteItemVO node = new RouteItemVO();
             node.setPath(item.getLevel().equals(MenuLevelEnum.ONE.getCode()) ? "/" + item.getRoutePath() : item.getRoutePath());
 
@@ -305,7 +305,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
                 }
             }
             node.setMeta(routeMetoVO);
-            node.setChildren(getChildrenList(item, sysPermissions));
+            node.setChildren(getChildrenList(item, sysMenus));
             return node;
         }).collect(Collectors.toList());
         return routeItemVOList;
@@ -313,10 +313,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
     @Override
     public List<String> getPermCode() throws Exception {
-        return sysPermissionService.getPermissionCodesByUserId(LoginUtil.getUserId());
+        return sysMenuService.getPermissionCodesByUserId(LoginUtil.getUserId());
     }
 
-    private List<RouteItemVO> getChildrenList(SysPermission root, List<SysPermission> list) {
+    private List<RouteItemVO> getChildrenList(SysMenu root, List<SysMenu> list) {
         List<RouteItemVO> childrenList = list.stream().filter(item -> item.getParentId() != null && item.getParentId().equals(root.getId())).map(item -> {
             RouteItemVO node = new RouteItemVO();
             node.setPath(item.getLevel().equals(MenuLevelEnum.ONE.getCode()) ? "/" + item.getRoutePath() : item.getRoutePath());

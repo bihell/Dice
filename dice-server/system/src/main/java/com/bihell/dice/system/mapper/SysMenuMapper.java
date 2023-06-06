@@ -3,7 +3,7 @@ package com.bihell.dice.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bihell.dice.system.entity.SysPermission;
+import com.bihell.dice.system.entity.SysMenu;
 import com.bihell.dice.system.param.SysPermissionPageParam;
 import com.bihell.dice.system.vo.SysPermissionVo;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +21,7 @@ import java.util.List;
  * @since 2019-10-24
  */
 @Repository
-public interface SysPermissionMapper extends BaseMapper<SysPermission> {
+public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
      * 根据ID获取查询对象
@@ -55,5 +55,5 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @param userId
      * @return
      */
-    List<SysPermission> getMenuListByUserId(@Param("userId") Long userId);
+    List<SysMenu> getMenuListByUserId(@Param("userId") Long userId);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bihell.dice.system.mapper.SysPermissionMapper">
+<mapper namespace="com.bihell.dice.system.mapper.SysMenuMapper">
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -11,13 +11,13 @@
     <select id="getSysPermissionById" resultType="com.bihell.dice.system.vo.SysPermissionVo">
         select
         <include refid="Base_Column_List"/>
-        from sys_permission where id = #{id}
+        from sys_menu where id = #{id}
     </select>
 
     <select id="getSysPermissionPageList" resultType="com.bihell.dice.system.vo.SysPermissionVo">
         select
         <include refid="Base_Column_List"/>
-        from sys_permission
+        from sys_menu
     </select>
 
     <select id="getPermissionCodesByUserId" resultType="java.lang.String">
@@ -27,9 +27,9 @@
         inner join sys_user_role t1 on t1.user_id = u.id
         inner join sys_role r
                 on t1.role_id = r.id
-        inner join sys_role_permission rp
+        inner join sys_role_menu rp
                 on r.id = rp.role_id
-        inner join sys_permission p
+        inner join sys_menu p
                 on rp.permission_id = p.id
         where u.status = 1
           and r.status = 1
@@ -39,14 +39,14 @@
           and u.id = #{userId};
     </select>
 
-    <select id="getMenuListByUserId" resultType="com.bihell.dice.system.entity.SysPermission">
+    <select id="getMenuListByUserId" resultType="com.bihell.dice.system.entity.SysMenu">
         select p.*
         from sys_user u
                  inner join sys_role r
                             on u.role_id = r.id
-                 inner join sys_role_permission rp
+                 inner join sys_role_menu rp
                             on r.id = rp.role_id
-                 inner join sys_permission p
+                 inner join sys_menu p
                             on rp.permission_id = p.id
         where u.status = 1
           and u.deleted = 0

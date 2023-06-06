@@ -1,6 +1,6 @@
 package com.bihell.dice.service;
 
-import com.bihell.dice.system.mapper.UserMapper;
+import com.bihell.dice.system.mapper.SysUserMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +14,11 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SysUserMapperTests {
+public class SysSysUserMapperTests {
 
 
     @Resource
-    private UserMapper userMapper;
+    private SysUserMapper sysUserMapper;
 
     @Transactional
     @Test
@@ -27,7 +27,7 @@ public class SysUserMapperTests {
         Map<String, Object> map = new HashMap<>();
         map.put("username", "test");
         map.put("password", "test");
-        userMapper.insertByMap(map);
+        sysUserMapper.insertByMap(map);
     }
 
 }

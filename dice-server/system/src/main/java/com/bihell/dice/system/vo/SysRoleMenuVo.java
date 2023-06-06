@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "SysRolePermissionQueryVo对象", description = "角色权限关系查询参数")
-public class SysRolePermissionVo implements Serializable {
+public class SysRoleMenuVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")

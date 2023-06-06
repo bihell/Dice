@@ -13,15 +13,15 @@ import com.bihell.dice.framework.common.exception.DiceException;
 import com.bihell.dice.framework.common.service.impl.BaseServiceImpl;
 import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
-import com.bihell.dice.system.entity.SysPermission;
+import com.bihell.dice.system.entity.SysMenu;
 import com.bihell.dice.system.entity.SysRole;
-import com.bihell.dice.system.entity.SysRolePermission;
+import com.bihell.dice.system.entity.SysRoleMenu;
 import com.bihell.dice.system.enums.StateEnum;
 import com.bihell.dice.system.mapper.SysRoleMapper;
 import com.bihell.dice.system.param.sysrole.SysRolePageParam;
 import com.bihell.dice.system.param.sysrole.UpdateSysRolePermissionParam;
-import com.bihell.dice.system.service.SysPermissionService;
-import com.bihell.dice.system.service.SysRolePermissionService;
+import com.bihell.dice.system.service.SysMenuService;
+import com.bihell.dice.system.service.SysRoleMenuService;
 import com.bihell.dice.system.service.SysRoleService;
 import com.bihell.dice.system.vo.SysRoleVo;
 import lombok.extern.slf4j.Slf4j;
@@ -56,10 +56,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     private SysRoleMapper sysRoleMapper;
 
     @Autowired
-    private SysPermissionService sysPermissionService;
+    private SysMenuService sysMenuService;
 
     @Autowired
-    private SysRolePermissionService sysRolePermissionService;
+    private SysRoleMenuService sysRoleMenuService;
 // todo
 //    @Autowired
 //    private SysUserService sysUserService;
@@ -113,10 +113,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         }
 
         // 判断角色是否有权限，如果有，则删除
-        boolean hasPermission = sysRolePermissionService.hasPermission(id);
+        boolean hasPermission = sysRoleMenuService.hasPermission(id);
         if (hasPermission) {
             // 角色权限关系真实删除
-            boolean deletePermissionResult = sysRolePermissionService.deleteSysRolePermissionByRoleId(id);
+            boolean deletePermissionResult = sysRoleMenuService.deleteSysRolePermissionByRoleId(id);
             if (!deletePermissionResult) {
                 throw new DaoException("删除角色权限关系失败");
             }
@@ -130,7 +130,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         if (sysRoleVo == null) {
             throw new DiceException("角色不存在");
         }
-        List<Long> permissionIds = sysRolePermissionService.getPermissionIdsByRoleId((Long) id);
+        List<Long> permissionIds = sysRoleMenuService.getPermissionIdsByRoleId((Long) id);
         sysRoleVo.setPermissions(new HashSet<>(permissionIds));
         return sysRoleVo;
     }
@@ -189,12 +189,12 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         }
         if (CollectionUtils.isNotEmpty(permissionIds)) {
             // 校验权限列表是否存在
-            if (!sysPermissionService.isExistsByPermissionIds(permissionIds)) {
+            if (!sysMenuService.isExistsByPermissionIds(permissionIds)) {
                 throw new BusinessException("权限列表id匹配失败");
             }
         }
         // 获取之前的权限id集合
-        List<Long> beforeList = sysRolePermissionService.getPermissionIdsByRoleId(roleId);
+        List<Long> beforeList = sysRoleMenuService.getPermissionIdsByRoleId(roleId);
         // 差集计算
         // before：1,2,3,4,5,6
         // after： 1,2,3,4,7,8
@@ -209,10 +209,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
         if (CollectionUtils.isNotEmpty(deleteSet)) {
             // 删除权限关联
-            LambdaUpdateWrapper<SysRolePermission> updateWrapper = new LambdaUpdateWrapper<>();
-            updateWrapper.eq(SysRolePermission::getRoleId, roleId);
-            updateWrapper.in(SysRolePermission::getPermissionId, deleteSet);
-            boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
+            LambdaUpdateWrapper<SysRoleMenu> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.eq(SysRoleMenu::getRoleId, roleId);
+            updateWrapper.in(SysRoleMenu::getPermissionId, deleteSet);
+            boolean deleteResult = sysRoleMenuService.remove(updateWrapper);
             if (!deleteResult) {
                 throw new DaoException("删除角色权限关系失败");
             }
@@ -220,7 +220,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
         if (CollectionUtils.isNotEmpty(addSet)) {
             // 新增权限关联
-            boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);
+            boolean addResult = sysRoleMenuService.saveSysRolePermissionBatch(roleId, addSet);
             if (!addResult) {
                 throw new DaoException("新增角色权限关系失败");
             }
@@ -230,10 +230,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     }
 
     @Override
-    public List<SysPermission> listRoleMenus(String roleId) {
-        List<SysRolePermission> sysRoleMenuList = sysRolePermissionService.list(Wrappers.lambdaQuery(SysRolePermission.class).eq(SysRolePermission::getRoleId, roleId));
+    public List<SysMenu> listRoleMenus(String roleId) {
+        List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.list(Wrappers.lambdaQuery(SysRoleMenu.class).eq(SysRoleMenu::getRoleId, roleId));
         return sysRoleMenuList.stream().map(item ->
-                sysPermissionService.getById(item.getPermissionId())
+                sysMenuService.getById(item.getPermissionId())
         ).collect(Collectors.toList());
     }
 

@@ -3,6 +3,7 @@ package com.bihell.dice.system.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +16,6 @@ import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-
 
 /**
  * 用户 Model
@@ -35,14 +35,14 @@ public class SysUser extends Model<SysUser> {
     @ApiModelProperty("账号")
     private String username;
 
+    @ApiModelProperty("用户显示名称")
+    private String nickname;
+
     @ApiModelProperty("用户密码")
-    private String pwd;
+    private String password;
 
     @ApiModelProperty("用户邮箱")
     private String email;
-
-    @ApiModelProperty("用户显示名称")
-    private String nickname;
 
     @ApiModelProperty("姓名")
     private String realName;
@@ -51,7 +51,8 @@ public class SysUser extends Model<SysUser> {
     private LocalDateTime createTime;
 
     @ApiModelProperty("最后登陆时间")
-    private LocalDateTime logged;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime loginDate;
 
     @ApiModelProperty("头像")
     private String avatar;
@@ -79,4 +80,9 @@ public class SysUser extends Model<SysUser> {
     @ApiModelProperty("修改时间")
     @Null(message = "修改时间不用传")
     private Date updateTime;
+
+    // todo
+    private String gender;
+    // todo
+    private String loginIp;
 }

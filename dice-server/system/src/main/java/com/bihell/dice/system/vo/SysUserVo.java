@@ -36,7 +36,7 @@ public class SysUserVo extends Model<SysUserVo> {
     private String username;
 
     @ApiModelProperty("用户密码")
-    private String pwd;
+    private String password;
 
     @ApiModelProperty("用户邮箱")
     private String email;

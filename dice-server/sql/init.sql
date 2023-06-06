@@ -143,29 +143,32 @@ create table sys_user
 (
     id          int auto_increment
         primary key,
-    username    varchar(45)                         not null,
-    pwd         varchar(64)                         not null,
-    email       varchar(45)                         null,
-    nickname    varchar(45)                         null,
-    create_time timestamp default CURRENT_TIMESTAMP not null,
-    logged      timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    salt        varchar(32)                         null comment '盐值',
-    avatar      varchar(255)                        null comment '头像',
-    status      int       default 1                 not null comment '状态',
-    deleted     int       default 0                 null,
-    dept_id     int                                 null,
-    phone       varchar(20)                         null comment '手机号码',
-    remark      int                                 null,
-    update_time timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    real_name   varchar(20)                         null comment '姓名',
+    dept_id     int                                null,
+    username    varchar(32)                        not null comment '用户名',
+    real_name   varchar(32)                        null comment '真名',
+    nickname    varchar(32)                        null comment '昵称',
+    email       varchar(45)                        null,
+    phone       varchar(20)                        null comment '手机号码',
+    gender      tinyint  default 0                 null comment '性别{0=保密, 1=男, 2=女}',
+    avatar      varchar(255)                       null comment '头像',
+    password    varchar(64)                        not null,
+    status      int      default 1                 not null comment '状态',
+    salt        varchar(32)                        null comment '盐值',
+    deleted     tinyint  default 0                 null comment '删除标志{0=正常, 1=删除}',
+    login_ip    varchar(128)                       null comment '最后登录IP',
+    login_date  datetime                           null comment '最后登录时间',
+    remark      int                                null,
+    create_ty   varchar(32)                        null comment '创建者',
+    create_time datetime default CURRENT_TIMESTAMP not null,
+    update_by   varchar(32)                        null comment '更新者',
+    update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
     constraint username
         unique (username)
 )
     charset = utf8mb4;
 
-
-INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (1, 'dice', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'tpxcer@outlook.com', 'admin', '2019-05-16 02:24:35', '2021-07-15 11:52:15', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 1, 0, 1, null, null, '2021-07-15 11:52:15', '管理员');
-INSERT INTO dice.sys_user (id, username, pwd, email, nickname, create_time, logged, salt, avatar, status, deleted, dept_id, phone, remark, update_time, real_name) VALUES (2, 'demo', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 'demo@bihell.com', 'demo用户', '2019-12-27 15:34:01', '2021-07-16 17:32:54', '66666', 'https://avatars.githubusercontent.com/u/19926035?v=4', 1, 0, 1, '111', null, '2021-07-16 17:32:47', 'Demo用户');
+INSERT INTO dice.sys_user (id, dept_id, username, real_name, nickname, email, phone, gender, avatar, password, status, salt, deleted, login_ip, login_date, remark, create_ty, create_time, update_by, update_time) VALUES (1, 1, 'dice', null, null, 'tpxcer@outlook.com', null, 0, 'https://avatars.githubusercontent.com/u/19926035?v=4', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 1, '66666', 0, null, null, null, null, '2019-05-16 02:24:35', null, '2021-07-15 11:52:15');
+INSERT INTO dice.sys_user (id, dept_id, username, real_name, nickname, email, phone, gender, avatar, password, status, salt, deleted, login_ip, login_date, remark, create_ty, create_time, update_by, update_time) VALUES (2, 1, 'demo', null, null, 'demo@bihell.com', '111', 0, 'https://avatars.githubusercontent.com/u/19926035?v=4', 'dab6458f688b27c04d86b6f99757e2ce70d533f0092a85e4fbd9668261b1092b', 1, '66666', 0, null, '2023-06-06 14:40:59', null, null, '2019-12-27 15:34:01', null, '2021-07-16 17:32:47');
 
 create table sys_role
 (

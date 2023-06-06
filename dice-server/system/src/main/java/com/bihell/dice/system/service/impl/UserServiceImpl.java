@@ -132,7 +132,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
 
         // 生成盐值
         String salt = null;
-        String password = sysUser.getPwd();
+        String password = sysUser.getPassword();
         // 如果密码为空，则设置默认密码
         if (StringUtils.isBlank(password)) {
             salt = diceProperties.getLoginInitSalt();
@@ -142,7 +142,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, SysUser> implem
         }
         // 密码加密
         sysUser.setSalt(salt);
-        sysUser.setPwd(PasswordUtil.encrypt(password, salt));
+        sysUser.setPassword(PasswordUtil.encrypt(password, salt));
 
         // 如果头像为空，则设置默认头像
         if (StringUtils.isBlank(sysUser.getAvatar())) {

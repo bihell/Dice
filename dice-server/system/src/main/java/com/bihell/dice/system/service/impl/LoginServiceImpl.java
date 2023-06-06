@@ -101,7 +101,7 @@ public class LoginServiceImpl implements LoginService {
         // 原始密码前端加密：sha256(123456)
         // 后台加密规则：sha256(sha256(123456) + salt)
         String encryptPassword = PasswordUtil.encrypt(loginParam.getPassword(), sysUser.getSalt());
-        if (!encryptPassword.equals(sysUser.getPwd())) {
+        if (!encryptPassword.equals(sysUser.getPassword())) {
             throw new AuthenticationException("用户名或密码错误");
         }
 
@@ -175,7 +175,7 @@ public class LoginServiceImpl implements LoginService {
         log.debug("登录成功,username:{}", username);
 
         // 更新最后登陆时间
-        sysUser.setLogged(LocalDateTime.now());
+        sysUser.setLoginDate(LocalDateTime.now());
         sysUser.updateById();
 
         // 缓存登录信息到redis

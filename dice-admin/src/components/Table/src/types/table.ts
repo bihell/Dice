@@ -116,6 +116,7 @@ export interface TableActionType {
   setShowPagination: (show: boolean) => Promise<void>;
   getShowPagination: () => boolean;
   setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
+  setCacheColumns?: (columns: BasicColumn[]) => void;
 }
 
 export interface FetchSetting {
@@ -310,7 +311,7 @@ export interface BasicTableProps<T = any> {
    * you need to add style .ant-table td { white-space: nowrap; }.
    * @type object
    */
-  scroll?: { x?: number | true; y?: number };
+  scroll?: { x?: number | string | true; y?: number | string };
 
   /**
    * Whether to show table header

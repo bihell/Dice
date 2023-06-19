@@ -33,7 +33,7 @@
 
   import { addRole, getMenuTreeList, updateRolePermission } from '/@/api/sys/system';
 
-  import { listRoleMenus } from '/@/api/system/sysRole';
+  import { listRoleMenus } from '/@/api/auth/sysRole';
   import { getMenuList } from '/@/api/sys/menu';
 
   export default defineComponent({

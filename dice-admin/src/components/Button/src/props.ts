@@ -1,5 +1,5 @@
-const validColors = ['error', 'warning', 'success', ''] as const;
-type ButtonColorType = typeof validColors[number];
+const validColors = ['primary', 'error', 'warning', 'success', ''] as const;
+type ButtonColorType = (typeof validColors)[number];
 
 export const buttonProps = {
   color: {

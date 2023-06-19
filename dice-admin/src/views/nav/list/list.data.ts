@@ -1,5 +1,4 @@
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '/@/components/Table';
 import { uploadApi } from '/@/api/sys/upload';
 import { deleteFile } from '/@/api/sys/deleteFile';
 

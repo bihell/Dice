@@ -36,19 +36,19 @@ export const useAppStore = defineStore({
     beforeMiniInfo: {},
   }),
   getters: {
-    getPageLoading(): boolean {
-      return this.pageLoading;
+    getPageLoading(state): boolean {
+      return state.pageLoading;
     },
-    getDarkMode(): 'light' | 'dark' | string {
-      return this.darkMode || localStorage.getItem(APP_DARK_MODE_KEY_) || darkMode;
-    },
-
-    getBeforeMiniInfo(): BeforeMiniState {
-      return this.beforeMiniInfo;
+    getDarkMode(state): 'light' | 'dark' | string {
+      return state.darkMode || localStorage.getItem(APP_DARK_MODE_KEY_) || darkMode;
     },
 
-    getProjectConfig(): ProjectConfig {
-      return this.projectConfig || ({} as ProjectConfig);
+    getBeforeMiniInfo(state): BeforeMiniState {
+      return state.beforeMiniInfo;
+    },
+
+    getProjectConfig(state): ProjectConfig {
+      return state.projectConfig || ({} as ProjectConfig);
     },
 
     getHeaderSetting(): HeaderSetting {
@@ -80,6 +80,10 @@ export const useAppStore = defineStore({
 
     setProjectConfig(config: DeepPartial<ProjectConfig>): void {
       this.projectConfig = deepMerge(this.projectConfig || {}, config);
+      Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig);
+    },
+    setMenuSetting(setting: Partial<MenuSetting>): void {
+      this.projectConfig.menuSetting = deepMerge(this.projectConfig.menuSetting, setting);
       Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig);
     },
 

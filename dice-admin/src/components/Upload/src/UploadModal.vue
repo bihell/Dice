@@ -180,7 +180,7 @@
         }
         try {
           item.status = UploadResultStatus.UPLOADING;
-          const { data } = await props.api?.(
+          const ret = await props.api?.(
             {
               data: {
                 ...(props.uploadParams || {}),
@@ -194,6 +194,7 @@
               item.percent = complete;
             },
           );
+          const { data } = ret;
           item.status = UploadResultStatus.SUCCESS;
           item.responseData = data;
           return {
@@ -251,7 +252,7 @@
         for (const item of fileListRef.value) {
           const { status, responseData } = item;
           if (status === UploadResultStatus.SUCCESS && responseData) {
-            fileList.push(responseData.result);
+            fileList.push(responseData.url);
           }
         }
         // 存在一个上传成功的即可保存
@@ -313,9 +314,9 @@
       margin-bottom: 8px;
 
       &__btn {
+        flex: 1;
         margin-left: 8px;
         text-align: right;
-        flex: 1;
       }
     }
   }

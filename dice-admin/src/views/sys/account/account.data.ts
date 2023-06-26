@@ -51,7 +51,7 @@ export const accountFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'pwd',
+    field: 'password',
     label: '密码',
     component: 'InputPassword',
     required: true,

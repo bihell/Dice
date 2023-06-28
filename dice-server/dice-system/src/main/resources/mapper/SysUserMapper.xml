@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bihell.dice.system.mapper.SysUserMapper">
+    <resultMap id="ResultMap" type="com.bihell.dice.system.entity.SysUser">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="SysUserMap" type="com.bihell.dice.system.vo.SysUserSecurityVo">
+        <result property="userId" column="user_id" />
+        <result property="deptId" column="dept_id" />
+        <result property="username" column="username" />
+        <result property="nickname" column="nickname" />
+        <result property="email" column="email" />
+        <result property="phone" column="phone" />
+        <result property="gender" column="gender" />
+        <result property="avatar" column="avatar" />
+        <result property="password" column="password" />
+        <result property="status" column="status" />
+        <result property="isDeleted" column="is_deleted" />
+        <result property="loginIp" column="login_ip" />
+        <result property="loginDate" column="login_date" />
+        <result property="createBy" column="create_by" />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy" column="update_by" />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+        <association property="dept" javaType="com.bihell.dice.system.vo.SysDeptSecurityVo" resultMap="SysDeptMap" />
+    </resultMap>
+
+    <resultMap id="SysDeptMap" type="com.bihell.dice.system.vo.SysDeptSecurityVo">
+        <result property="deptId" column="d_dept_id" />
+        <result property="parentId" column="parent_id" />
+        <result property="deptName" column="dept_name" />
+        <result property="sort" column="sort" />
+        <result property="status" column="d_status" />
+        <result property="createTime" column="d_create_time" />
+        <result property="updateTime" column="d_update_time" />
+        <result property="remark" column="d_remark" />
+    </resultMap>
+
+    <sql id="SysUserVo">
+        select u.id          as user_id,
+               u.dept_id,
+               u.username,
+               u.nickname,
+               u.email,
+               u.phone,
+               u.gender,
+               u.avatar,
+               u.password,
+               u.status,
+               u.is_deleted,
+               u.login_ip,
+               u.login_date,
+               u.create_time,
+               u.update_by,
+               u.update_time,
+               u.remark,
+               d.id          as d_dept_id,
+               d.parent_id,
+               d.dept_name,
+               d.sort,
+               d.status      as d_status,
+               d.create_time as d_create_time,
+               d.update_time as d_update_time,
+               d.remark      as d_remark
+        from sys_user u
+                 left join sys_dept d on d.id = u.dept_id
+    </sql>
+
+    <select id="selectUserByUsername" resultMap="SysUserMap">
+        <include refid="SysUserVo" />
+        where u.username = #{username}
+        and u.is_deleted = 0
+    </select>
+
+    <update id="updateAvatarByUserId">
+        update sys_user set avatar = #{avatarPath} where user_id = #{userId}
+    </update>
+
+    <sql id="BaseQuerySelect">
+        select
+            u.id, u.username, u.nickname, u.avatar, u.remark, u.email,
+            u.status, u.dept_id, u.is_deleted, u.create_time, u.update_time,
+            d.dept_name as deptName
+        from sys_user u
+                 inner join sys_dept d on u.dept_id = d.id
+        where u.is_deleted = 0
+    </sql>
+
+
+    <select id="getSysUserPageList" resultType="com.bihell.dice.system.vo.SysUserQueryVo">
+        <include refid="BaseQuerySelect"/>
+        <if test="param.deptId != null">
+            and u.dept_id = #{param.deptId}
+        </if>
+        <if test="param.status != null">
+            and u.status = #{param.status}
+        </if>
+        <if test="param.createTimeStart != null">
+            and date_format(u.create_time,'%Y-%m-%d') >= date_format(#{param.createTimeStart},'%Y-%m-%d')
+        </if>
+        <if test="param.createTimeEnd != null">
+            and date_format(u.create_time,'%Y-%m-%d') &lt;= date_format(#{param.createTimeEnd},'%Y-%m-%d')
+        </if>
+        <if test="param.keyword != null and param.keyword != ''">
+            and (
+            u.username like concat('%', #{param.keyword} ,'%') or
+            u.nickname like concat('%', #{param.keyword} ,'%')
+            )
+        </if>
+        <if test="param.username != null and param.username != ''">
+            and u.username like concat('%', #{param.username} ,'%')
+        </if>
+        <if test="param.nickname != null and param.nickname != ''">
+            and u.nickname like concat('%', #{param.nickname} ,'%')
+        </if>
+    </select>
+
+</mapper>

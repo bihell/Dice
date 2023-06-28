@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bihell.dice.system.mapper.SysLogLoginMapper">
+
+    <resultMap id="SysLogLoginMap" type="com.bihell.dice.system.entity.SysLogLogin">
+        <result property="loginId" column="login_id" />
+        <result property="userId" column="user_id" />
+        <result property="account" column="account" />
+        <result property="loginType" column="login_type" />
+        <result property="os" column="os" />
+        <result property="browser" column="browser" />
+        <result property="ip" column="ip" />
+        <result property="location" column="location" />
+        <result property="loginTime" column="login_time" />
+        <result property="success" column="success" />
+        <result property="message" column="message" />
+    </resultMap>
+
+    <sql id="SysLogLoginVo">
+        select ll.login_id, ll.user_id, ll.account, ll.login_type, ll.os, ll.browser, ll.ip, ll.location, ll.login_time, ll.success, ll.message
+        from sys_log_login ll
+    </sql>
+
+    <select id="selectSysLogLoginList" resultMap="SysLogLoginMap">
+        <include refid="SysLogLoginVo" />
+        <where>
+            <if test="account != null and account != ''">
+                and ll.account = #{account}
+            </if>
+            <if test="success != null and success != ''">
+                and ll.success = #{success}
+            </if>
+        </where>
+        order by ll.login_time desc
+    </select>
+
+    <select id="selectSysLogLoginListByUser" resultMap="SysLogLoginMap">
+        <include refid="SysLogLoginVo" />
+        where ll.user_id = #{userId}
+        <if test="account != null and account != ''">
+            and ll.account = #{account}
+        </if>
+        <if test="success != null and success != ''">
+            and ll.success = #{success}
+        </if>
+        order by ll.login_time desc
+    </select>
+
+    <select id="selectSysLogLoginByLoginId" resultMap="SysLogLoginMap">
+        <include refid="SysLogLoginVo" />
+        where ll.login_id = #{loginId}
+    </select>
+
+    <insert id="insertSysLogLogin" useGeneratedKeys="true" keyProperty="loginId">
+        insert into sys_log_login (
+            <trim suffixOverrides=",">
+                <if test="loginId != null">login_id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="account != null and account != ''">account,</if>
+                <if test="loginType != null and loginType != ''">login_type,</if>
+                <if test="os != null and os != ''">os,</if>
+                <if test="browser != null and browser != ''">browser,</if>
+                <if test="ip != null and ip != ''">ip,</if>
+                <if test="location != null and location != ''">location,</if>
+                <if test="loginTime != null">login_time,</if>
+                <if test="success != null and success != ''">success,</if>
+                <if test="message != null and message != ''">message,</if>
+            </trim>
+        ) values (
+            <trim suffixOverrides=",">
+                <if test="loginId != null">#{loginId},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="account != null and account != ''">#{account},</if>
+                <if test="loginType != null and loginType != ''">#{loginType},</if>
+                <if test="os != null and os != ''">#{os},</if>
+                <if test="browser != null and browser != ''">#{browser},</if>
+                <if test="ip != null and ip != ''">#{ip},</if>
+                <if test="location != null and location != ''">#{location},</if>
+                <if test="loginTime != null">#{loginTime},</if>
+                <if test="success != null and success != ''">#{success},</if>
+                <if test="message != null and message != ''">#{message},</if>
+            </trim>
+        )
+    </insert>
+
+    <update id="updateSysLogLoginByLoginId">
+        update sys_log_login
+        <set>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="account != null and account != ''">account = #{account},</if>
+            <if test="loginType != null and loginType != ''">login_type = #{loginType},</if>
+            <if test="os != null and os != ''">os = #{os},</if>
+            <if test="browser != null and browser != ''">browser = #{browser},</if>
+            <if test="ip != null and ip != ''">ip = #{ip},</if>
+            <if test="location != null and location != ''">location = #{location},</if>
+            <if test="loginTime != null">login_time = #{loginTime},</if>
+            <if test="success != null and success != ''">success = #{success},</if>
+            <if test="message != null and message != ''">message = #{message},</if>
+        </set>
+        where login_id = #{loginId}
+    </update>
+
+    <delete id="deleteSysLogLoginByLoginId">
+        delete from sys_log_login where login_id = #{loginId}
+    </delete>
+
+    <delete id="deleteSysLogLoginByLoginIds">
+        delete from sys_log_login where login_id in
+        <foreach item="loginId" collection="array" open="(" separator="," close=")">
+            #{loginId}
+        </foreach>
+    </delete>
+
+</mapper>

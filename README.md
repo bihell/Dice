@@ -4,8 +4,8 @@
 <p align="center">
     <a href="https://codebeat.co/projects/github-com-bihell-dice-master"><img alt="codebeat badge" src="https://codebeat.co/badges/eb0bdd65-dad1-45e6-aea6-371c64d4d943" /></a>
     <a href="https://github.com/bihell/Dice/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/bihell/Dice"></a>
-    <a alt="spring boot"><img src="https://img.shields.io/badge/java-8-yellow.svg"/></a>
-    <a alt="spring boot"><img src="https://img.shields.io/badge/spring%20boot-2.3.3.RELEASE-blue"/></a>
+    <a alt="java"><img src="https://img.shields.io/badge/java-17-yellow.svg"/></a>
+    <a alt="spring boot"><img src="https://img.shields.io/badge/spring%20boot-3-blue"/></a>
     <a alt="vue2"><img src="https://img.shields.io/badge/vue-2-ff69b4.svg"></a>
     <a alt="vue3"><img src="https://img.shields.io/badge/vue-3-orange.svg"></a>
     <a alt="nuxt"><img src="https://img.shields.io/badge/nuxt-2.11.0-yellowgreen.svg"></a>
@@ -13,7 +13,8 @@
 
 
 
-* 基于`node` `java` `spring-boot` `vue2` `vue3` `nuxt2` 开发的个人管理系统: 目前有博客、导航、权限管理三大模块.其中博客除了管理前端外还有SEO前端
+
+* 基于`java17` `spring-boot3` `spring-security ` `node` `vue2` `vue3` `nuxt2`  开发的个人管理系统: 目前有博客、导航、权限管理三大模块.其中博客除了管理前端外还有SEO前端
 * 功能精简但齐全，界面简洁却美观，满足个人日常使用要求
 * 项目会持续更新，如果有不完善的地方，欢迎指出
 
@@ -29,9 +30,10 @@
 
 > 数据库每日零点重制
 >
-> QQ聊天群：787519476
+> Discord群：https://discord.gg/rsxxPfpw8m
 >
-> Discord：https://discord.gg/QuE5dGSV
+> QQ群：787519476
+>
 
 ## 一、部分界面
 
@@ -77,33 +79,24 @@ Dice
 ├── dice-admin        --  后台管理前端，基于vue-vben-admin项目开发。
 ├── dice-front        --  博客SEO前端，基于vue-next项目开发
 └── dice-server       --  后端服务，Spring Boot全家桶
-    ├── admin         --  SpringBootAdmin Server模块
-    ├── blog          --  博客模块
-    ├── bootstrap     --  启动模块
-    ├── config        --  配置模块
-    ├── distribution  --  打包模块
-    ├── framework     --  框架核心模块
-    ├── generator     --  代码生成模块
-    ├── nav           --  导航模块
-    └── system        --  系统模块
+    ├── dice-blog          --  博客模块
+    ├── dice-bootstrap     --  启动模块
+    ├── dice-framework     --  框架核心模块
+    ├── dice-nav           --  导航模块
+    └── dice-system        --  系统模块
 ```
 
 ## 三、参与开发
 
-目前管理前端刚切为vue3，很多功能细节需要完善。欢迎大家参与进来
+目前后端刚切`SpringBoot3`和`SpringSecurity`，一些细节还未调整，欢迎各位参与进来。
 
-> 请确保系统中已经安装`docker`、`docker-componse`、`nodejs`、`npm`、`Java8`、`Redis`、`MySQL`等必须的依赖。
+> 请确保系统中已经安装`docker`、`docker-componse`、`nodejs`、`npm`、`Java17`、`Redis`、`MySQL`等必须的依赖。
 
 ### 3.1 安装依赖（MacOS）
 
 #### Java
 
-Java8 及以上
-
-```Bash
-brew tap homebrew/cask-versions
-brew cask install java11
-```
+[Oracle官方](https://www.oracle.com/hk/java/technologies/downloads/#java17)直接下载安装
 
 #### MySQL
 
@@ -153,11 +146,11 @@ brew install node
 #### 3.2.1 `dice-server` Java后台
 
 项目使用lombok插件，如果要在ide中调试要有lombok插件
-数据库初始语句:`dice-server/sql/init.sql`
+数据库初始语句:`dice-server/misc/init.sql`
 
 ##### 修改相应配置
 
-进入服务端文件夹`cd dice-server`,修改spring-boot配置文件`vi src/main/resources/application-dev.properties`
+进入服务端文件夹`cd dice-server`,修改spring-boot配置文件`vi dice-server/dice-bootstrap/src/main/resources/config/application-dev.yml`
 
 ```
 spring:
@@ -176,14 +169,16 @@ spring:
 
 1. 直接运行main方法
 
-直接在IDE中运行`bootstrap`模块的`DiceApplication`启动类的main方法就可以看到项目启动了。
+直接在IDE中运行`dice-bootstrap`模块的`DiceApplication`启动类的main方法就可以看到项目启动了。
 
 2. 打包启动
 
 ```Bash
-mvn clean package -P docker,release
-java -jar bootstrap/target/bootstrap-2.0.jar
+mvn clean package -Dmaven.test.skip=true -Pdev
+java -jar dice-bootstrap/target/dice.jar
 ```
+
+> 注意：Maven版本要>=3.2.5
 
 #### 3.2.2 `dice-front` 博客前端
 

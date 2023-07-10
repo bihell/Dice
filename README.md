@@ -98,6 +98,8 @@ Dice
 
 [Oracle官方](https://www.oracle.com/hk/java/technologies/downloads/#java17)直接下载安装
 
+> 注：spring-boot 3开始支持Java17以上版本
+
 #### MySQL
 
 ```Bash

@@ -11,7 +11,7 @@ import com.bihell.dice.framework.model.SysDeptModel;
 import com.bihell.dice.framework.model.SysUserModel;
 import com.bihell.dice.framework.model.UserModel;
 import com.bihell.dice.framework.vo.RoleInfoVO;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import com.bihell.dice.system.entity.SysRole;
 import com.bihell.dice.system.entity.SysUserRole;
 import com.bihell.dice.system.service.SysLogLoginService;
@@ -59,7 +59,7 @@ public class AuthenticationService implements UserModelProvider {
             if (user == null) {
                 throw new UserNotFoundException("用户不存在");
             }
-            if (!SecurityUtils.matchesPassword(password, user.getPassword())) {
+            if (!SecurityUtil.matchesPassword(password, user.getPassword())) {
                 throw new PasswordMismatchException("密码错误");
             }
             if (user.getStatus().equals(Status.DISABLED)) {

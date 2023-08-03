@@ -3,7 +3,7 @@ package com.bihell.dice.auth.web.service;
 import com.bihell.dice.auth.security.authentication.username.UsernameAuthenticationToken;
 import com.bihell.dice.framework.model.LoginModel;
 import com.bihell.dice.framework.model.UserModel;
-import com.bihell.dice.framework.utils.LogUtils;
+import com.bihell.dice.framework.utils.LogUtil;
 import com.bihell.dice.system.service.SysLogLoginService;
 import org.slf4j.Logger;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginService {
 
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LogUtil.getLogger();
 
     private final AuthenticationManager authenticationManager;
 

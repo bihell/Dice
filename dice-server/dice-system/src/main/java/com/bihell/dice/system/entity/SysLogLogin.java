@@ -18,7 +18,7 @@ public class SysLogLogin implements Serializable {
     /**
      * 日志ID
      */
-    private Long loginId;
+    private Long id;
 
     /**
      * 用户ID
@@ -72,12 +72,12 @@ public class SysLogLogin implements Serializable {
     private String message;
 
 
-    public Long getLoginId() {
-        return loginId;
+    public Long getId() {
+        return id;
     }
 
-    public void setLoginId(Long loginId) {
-        this.loginId = loginId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getUserId() {

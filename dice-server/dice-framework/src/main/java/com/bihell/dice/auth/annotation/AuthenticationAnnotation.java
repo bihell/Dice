@@ -2,7 +2,7 @@ package com.bihell.dice.auth.annotation;
 
 import org.springframework.stereotype.Component;
 
-import static com.bihell.dice.framework.utils.SecurityUtils.*;
+import static com.bihell.dice.framework.utils.SecurityUtil.*;
 
 
 /**

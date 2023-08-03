@@ -1,7 +1,7 @@
 package com.bihell.dice.system.service.impl;
 
 import com.bihell.dice.framework.model.UserModel;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import com.bihell.dice.system.entity.SysLogLogin;
 import com.bihell.dice.system.mapper.SysLogLoginMapper;
 import com.bihell.dice.system.service.SysLogLoginService;
@@ -42,7 +42,7 @@ public class SysLogLoginServiceImpl implements SysLogLoginService {
      */
     @Override
     public List<SysLogLogin> selectSysLogLoginListByUser(SysLogLogin logLogin) {
-        logLogin.setUserId(SecurityUtils.getUser().getUserId());
+        logLogin.setUserId(SecurityUtil.getUser().getUserId());
         return sysLogLoginMapper.selectSysLogLoginListByUser(logLogin);
     }
 

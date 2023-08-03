@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Tang
  */
-public class LogUtils {
+public class LogUtil {
 
-    private LogUtils() {
+    private LogUtil() {
     }
 
     /**

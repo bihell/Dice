@@ -7,9 +7,9 @@ import java.util.UUID;
  *
  * @author Tang
  */
-public class IdUtils {
+public class IdUtil {
 
-    private IdUtils() {
+    private IdUtil() {
     }
 
     /**

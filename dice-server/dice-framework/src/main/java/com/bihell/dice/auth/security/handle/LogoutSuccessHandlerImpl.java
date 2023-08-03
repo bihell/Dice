@@ -2,7 +2,7 @@ package com.bihell.dice.auth.security.handle;
 
 import com.bihell.dice.auth.web.service.TokenService;
 import com.bihell.dice.framework.api.ApiResult;
-import com.bihell.dice.framework.utils.ServletUtils;
+import com.bihell.dice.framework.utils.ServletUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,7 +41,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         var objectMapper = new ObjectMapper();
         var objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
         var json = objectWriter.writeValueAsString(apiResult);
-        ServletUtils.renderString(response, json);
+        ServletUtil.renderString(response, json);
     }
 
 }

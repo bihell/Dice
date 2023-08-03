@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
-public class IpUtils {
+public class IpUtil {
     private static Searcher searcher;
 
     /**

@@ -2,7 +2,7 @@ package com.bihell.dice.auth.security.handle;
 
 import com.bihell.dice.framework.constant.HttpStatus;
 import com.bihell.dice.framework.api.ApiResult;
-import com.bihell.dice.framework.utils.ServletUtils;
+import com.bihell.dice.framework.utils.ServletUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +30,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         var objectMapper = new ObjectMapper();
         var objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
         var json = objectWriter.writeValueAsString(apiResult);
-        ServletUtils.renderString(response, json);
+        ServletUtil.renderString(response, json);
     }
 
 }

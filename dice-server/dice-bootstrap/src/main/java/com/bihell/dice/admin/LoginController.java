@@ -5,7 +5,7 @@ import com.bihell.dice.framework.api.ApiResult;
 import com.bihell.dice.framework.model.LoginModel;
 import com.bihell.dice.framework.vo.RoleInfoVO;
 import com.bihell.dice.framework.log.annotation.Module;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import com.bihell.dice.system.service.SysUserService;
 import com.bihell.dice.system.vo.RouteItemVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,7 +64,7 @@ public class LoginController {
     @GetMapping("/getSysUserInfo")
     @Operation(summary = "根据token获取系统登录用户信息")
     public ApiResult<Map<String, Object>> getSysUser() throws Exception {
-        List<RoleInfoVO> roles = SecurityUtils.getRoles();
+        List<RoleInfoVO> roles = SecurityUtil.getRoles();
         return ApiResult.okMap("roles", roles);
     }
 }

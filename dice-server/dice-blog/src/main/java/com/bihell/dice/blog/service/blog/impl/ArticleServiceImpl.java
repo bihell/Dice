@@ -22,7 +22,7 @@ import com.bihell.dice.framework.service.impl.BaseServiceImpl;
 import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.utils.DiceUtil;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +103,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
             Article article = new Article().selectOne(new QueryWrapper<Article>().lambda()
                     .eq(Article::getId, id)
                     .eq(Article::getType, Types.POST)
-                    .eq(Article::getCreator, SecurityUtils.getUser().getUserId()));
+                    .eq(Article::getCreator, SecurityUtil.getUser().getUserId()));
             if (article != null) {
                 String content = DiceUtil.contentTransform(article.getContent(), false, true);
                 article.setContent(content);

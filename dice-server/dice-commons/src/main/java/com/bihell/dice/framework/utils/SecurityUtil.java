@@ -14,9 +14,9 @@ import java.util.Set;
  *
  * @author Tang
  */
-public class SecurityUtils {
+public class SecurityUtil {
 
-    private SecurityUtils() {
+    private SecurityUtil() {
     }
 
     /**

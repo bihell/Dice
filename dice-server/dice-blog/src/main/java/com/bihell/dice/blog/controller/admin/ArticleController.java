@@ -11,7 +11,7 @@ import com.bihell.dice.framework.api.RestResponse;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -66,7 +66,7 @@ public class ArticleController {
     @PostMapping
     @PreAuthorize("@auth.hasPermission('blog:posts:update')")
     public ApiResult<Integer> saveArticle(@Valid @RequestBody Article article) {
-        article.setCreator(SecurityUtils.getUser().getUserId());
+        article.setCreator(SecurityUtil.getUser().getUserId());
         Integer articleId = articleService.saveArticle(article);
         return ApiResult.ok(articleId);
     }

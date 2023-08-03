@@ -6,7 +6,7 @@ import com.bihell.dice.framework.api.ApiResult;
 import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ public class FileDeleteController {
     @Operation(summary = "删除单个文件")
     public ApiResult<Boolean> upload(@RequestParam("file") String filePath,
                                      @RequestParam("type") String type) throws Exception {
-        String fileDeletePath = diceProperties.getUploadFolder() + SecurityUtils.getUser().getUserId() + '/' + StringUtils.substringAfterLast(filePath, "/");
+        String fileDeletePath = diceProperties.getUploadFolder() + SecurityUtil.getUser().getUserId() + '/' + StringUtils.substringAfterLast(filePath, "/");
         log.info("fileDeletePath:{}", fileDeletePath);
         return ApiResult.ok(FileUtil.del(fileDeletePath));
     }

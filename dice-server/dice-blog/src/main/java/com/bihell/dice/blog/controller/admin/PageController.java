@@ -7,7 +7,7 @@ import com.bihell.dice.blog.service.blog.ArticleService;
 import com.bihell.dice.framework.api.ApiCode;
 import com.bihell.dice.framework.api.ApiResult;
 import com.bihell.dice.framework.core.pagination.Paging;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class PageController {
     @PostMapping
     @PreAuthorize("@auth.hasPermission('blog:pages:update')")
     public ApiResult<Integer> savePage(@Valid  @RequestBody Article page) {
-        page.setCreator(SecurityUtils.getUser().getUserId());
+        page.setCreator(SecurityUtil.getUser().getUserId());
         Integer pageId = articleService.savePage(page);
         return ApiResult.ok(pageId);
     }

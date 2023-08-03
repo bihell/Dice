@@ -8,7 +8,7 @@ import com.bihell.dice.framework.core.validator.groups.Update;
 import com.bihell.dice.framework.log.annotation.Module;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import com.bihell.dice.nav.entity.NavDetail;
 import com.bihell.dice.nav.param.NavDetailPageParam;
 import com.bihell.dice.nav.service.NavDetailService;
@@ -44,7 +44,7 @@ public class NavDetailController extends BaseController {
     @OperationLog(name = "添加导航明细表", type = OperationLogType.ADD)
     @Operation(summary = "添加导航明细表")
     public ApiResult<Boolean> addNavDetail(@Validated(Add.class) @RequestBody NavDetail navDetail) throws Exception {
-        navDetail.setCreator(SecurityUtils.getUser().getUserId());
+        navDetail.setCreator(SecurityUtil.getUser().getUserId());
         boolean flag = navDetailService.saveNavDetail(navDetail);
         return ApiResult.result(flag);
     }
@@ -57,7 +57,7 @@ public class NavDetailController extends BaseController {
     @OperationLog(name = "修改导航明细表", type = OperationLogType.UPDATE)
     @Operation(summary = "修改导航明细表")
     public ApiResult<Boolean> updateNavDetail(@Validated(Update.class) @RequestBody NavDetail navDetail) throws Exception {
-        navDetail.setModifier(SecurityUtils.getUser().getUserId());
+        navDetail.setModifier(SecurityUtil.getUser().getUserId());
         boolean flag = navDetailService.updateNavDetail(navDetail);
         return ApiResult.result(flag);
     }

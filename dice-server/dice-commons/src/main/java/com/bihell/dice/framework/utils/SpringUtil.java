@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author Tang
  */
 @Component
-public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
+public final class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextAware {
 
     /**
      * Spring Bean 工厂
@@ -32,7 +32,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
      * @param beanFactory Spring Bean 工厂
      */
     private static void setBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-        SpringUtils.beanFactory = beanFactory;
+        SpringUtil.beanFactory = beanFactory;
     }
 
     /**
@@ -41,17 +41,17 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
      * @param applicationContext Spring 上下文
      */
     private static void setAppCtx(ApplicationContext applicationContext) {
-        SpringUtils.applicationContext = applicationContext;
+        SpringUtil.applicationContext = applicationContext;
     }
 
     @Override
     public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) {
-        SpringUtils.setBeanFactory(beanFactory);
+        SpringUtil.setBeanFactory(beanFactory);
     }
 
     @Override
     public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
-        SpringUtils.setAppCtx(applicationContext);
+        SpringUtil.setAppCtx(applicationContext);
     }
 
     /**

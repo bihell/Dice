@@ -7,7 +7,7 @@ import com.bihell.dice.framework.core.validator.groups.Add;
 import com.bihell.dice.framework.core.validator.groups.Update;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import com.bihell.dice.nav.entity.NavType;
 import com.bihell.dice.nav.param.NavTypePageParam;
 import com.bihell.dice.nav.service.NavTypeService;
@@ -43,7 +43,7 @@ public class NavTypeController extends BaseController {
     @OperationLog(name = "添加", type = OperationLogType.ADD)
     @Operation(summary = "添加")
     public ApiResult<Boolean> addNavType(@Validated(Add.class) @RequestBody NavType navType) throws Exception {
-        navType.setCreator(SecurityUtils.getUser().getUserId());
+        navType.setCreator(SecurityUtil.getUser().getUserId());
         boolean flag = navDetailService.saveNavType(navType);
         return ApiResult.result(flag);
     }
@@ -56,7 +56,7 @@ public class NavTypeController extends BaseController {
     @OperationLog(name = "修改", type = OperationLogType.UPDATE)
     @Operation(summary = "修改")
     public ApiResult<Boolean> updateNavType(@Validated(Update.class) @RequestBody NavType navType) throws Exception {
-        navType.setModifier(SecurityUtils.getUser().getUserId());
+        navType.setModifier(SecurityUtil.getUser().getUserId());
         boolean flag = navDetailService.updateNavType(navType);
         return ApiResult.result(flag);
     }

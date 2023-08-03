@@ -322,33 +322,22 @@ CREATE TABLE `sys_dept` (
 
 INSERT INTO `sys_dept` (`id`, `dept_name`, `parent_id`, `level`, `status`, `sort`, `remark`, `version`, `create_time`, `update_time`) VALUES (1,'管理组',NULL,NULL,1,1,'拥有至高无上的权利',0,'2021-07-06 08:51:04',NULL);
 
---
--- Table structure for table `sys_log_login`
---
-
-DROP TABLE IF EXISTS `sys_log_login`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sys_log_login` (
-                                 `login_id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志ID',
-                                 `user_id` bigint DEFAULT NULL COMMENT '用户ID',
-                                 `account` varchar(128) COLLATE utf8mb4_bin DEFAULT '' COMMENT '登陆账号',
-                                 `login_type` varchar(32) COLLATE utf8mb4_bin DEFAULT '' COMMENT '登陆类型',
-                                 `os` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '操作系统',
-                                 `browser` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '浏览器类型',
-                                 `ip` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '登录IP地址',
-                                 `location` varchar(64) COLLATE utf8mb4_bin DEFAULT '' COMMENT '登录地点',
-                                 `login_time` datetime DEFAULT NULL COMMENT '登录时间',
-                                 `success` char(2) COLLATE utf8mb4_bin DEFAULT '' COMMENT '是否成功',
-                                 `message` varchar(128) COLLATE utf8mb4_bin DEFAULT '' COMMENT '返回消息',
-                                 PRIMARY KEY (`login_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='登陆日志表';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sys_log_login`
---
-
+create table sys_log_login
+(
+    id         bigint auto_increment comment '日志ID'
+        primary key,
+    user_id    bigint                  null comment '用户ID',
+    account    varchar(128) default '' null comment '登陆账号',
+    login_type varchar(32)  default '' null comment '登陆类型',
+    os         varchar(64)  default '' null comment '操作系统',
+    browser    varchar(64)  default '' null comment '浏览器类型',
+    ip         varchar(64)  default '' null comment '登录IP地址',
+    location   varchar(64)  default '' null comment '登录地点',
+    login_time datetime                null comment '登录时间',
+    success    char(2)      default '' null comment '是否成功',
+    message    varchar(128) default '' null comment '返回消息'
+)
+    comment '登陆日志表';
 
 --
 -- Table structure for table `sys_login_log`

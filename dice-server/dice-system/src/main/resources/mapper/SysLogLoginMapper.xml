@@ -3,7 +3,7 @@
 <mapper namespace="com.bihell.dice.system.mapper.SysLogLoginMapper">
 
     <resultMap id="SysLogLoginMap" type="com.bihell.dice.system.entity.SysLogLogin">
-        <result property="loginId" column="login_id" />
+        <result property="id" column="id" />
         <result property="userId" column="user_id" />
         <result property="account" column="account" />
         <result property="loginType" column="login_type" />
@@ -17,7 +17,7 @@
     </resultMap>
 
     <sql id="SysLogLoginVo">
-        select ll.login_id, ll.user_id, ll.account, ll.login_type, ll.os, ll.browser, ll.ip, ll.location, ll.login_time, ll.success, ll.message
+        select ll.id, ll.user_id, ll.account, ll.login_type, ll.os, ll.browser, ll.ip, ll.location, ll.login_time, ll.success, ll.message
         from sys_log_login ll
     </sql>
 
@@ -48,13 +48,13 @@
 
     <select id="selectSysLogLoginByLoginId" resultMap="SysLogLoginMap">
         <include refid="SysLogLoginVo" />
-        where ll.login_id = #{loginId}
+        where ll.id = #{loginId}
     </select>
 
-    <insert id="insertSysLogLogin" useGeneratedKeys="true" keyProperty="loginId">
+    <insert id="insertSysLogLogin" useGeneratedKeys="true" keyProperty="id">
         insert into sys_log_login (
             <trim suffixOverrides=",">
-                <if test="loginId != null">login_id,</if>
+                <if test="id != null">id,</if>
                 <if test="userId != null">user_id,</if>
                 <if test="account != null and account != ''">account,</if>
                 <if test="loginType != null and loginType != ''">login_type,</if>
@@ -68,7 +68,7 @@
             </trim>
         ) values (
             <trim suffixOverrides=",">
-                <if test="loginId != null">#{loginId},</if>
+                <if test="id != null">#{id},</if>
                 <if test="userId != null">#{userId},</if>
                 <if test="account != null and account != ''">#{account},</if>
                 <if test="loginType != null and loginType != ''">#{loginType},</if>
@@ -97,17 +97,17 @@
             <if test="success != null and success != ''">success = #{success},</if>
             <if test="message != null and message != ''">message = #{message},</if>
         </set>
-        where login_id = #{loginId}
+        where id = #{id}
     </update>
 
     <delete id="deleteSysLogLoginByLoginId">
-        delete from sys_log_login where login_id = #{loginId}
+        delete from sys_log_login where id = #{id}
     </delete>
 
     <delete id="deleteSysLogLoginByLoginIds">
-        delete from sys_log_login where login_id in
+        delete from sys_log_login where id in
         <foreach item="loginId" collection="array" open="(" separator="," close=")">
-            #{loginId}
+            #{id}
         </foreach>
     </delete>
 

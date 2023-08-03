@@ -16,7 +16,7 @@ import com.bihell.dice.framework.vo.RoleInfoVO;
 import com.bihell.dice.framework.core.pagination.PageInfo;
 import com.bihell.dice.framework.core.pagination.Paging;
 import com.bihell.dice.framework.utils.PhoneUtil;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import com.bihell.dice.system.dto.SysUserDto;
 import com.bihell.dice.system.entity.SysMenu;
 import com.bihell.dice.system.entity.SysRoleMenu;
@@ -119,7 +119,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
             password = diceProperties.getLoginInitPassword();
         }
         // 密码加密
-        sysUser.setPassword(SecurityUtils.encryptPassword(password));
+        sysUser.setPassword(SecurityUtil.encryptPassword(password));
 
         // 如果头像为空，则设置默认头像
         if (StringUtils.isBlank(sysUser.getAvatar())) {
@@ -237,14 +237,14 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
     public List<RouteItemVO> getMenuList() throws Exception {
         List<SysMenu> sysMenus;
 
-        if (SecurityUtils.getRoles().stream().anyMatch(item -> item.getValue().equals("admin"))) {
+        if (SecurityUtil.getRoles().stream().anyMatch(item -> item.getValue().equals("admin"))) {
             sysMenus = sysMenuService.list(Wrappers.lambdaQuery(SysMenu.class)
                     .in(SysMenu::getLevel, MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode())
                     .orderByAsc(SysMenu::getSort)
             );
         } else {
             // 查询菜单
-            List<Long> roleIdList = SecurityUtils.getRoles().stream().map(RoleInfoVO::getId).collect(Collectors.toList());
+            List<Long> roleIdList = SecurityUtil.getRoles().stream().map(RoleInfoVO::getId).collect(Collectors.toList());
             List<SysRoleMenu> sysRoleMenuList = new SysRoleMenu().selectList(
                     new QueryWrapper<SysRoleMenu>().lambda().in(SysRoleMenu::getRoleId,roleIdList));
             if (sysRoleMenuList.isEmpty()) {
@@ -291,7 +291,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
 
     @Override
     public Set<String> getPermCode() throws Exception {
-        return sysMenuService.getPermissionCodesByUserId(SecurityUtils.getUser().getUserId());
+        return sysMenuService.getPermissionCodesByUserId(SecurityUtil.getUser().getUserId());
     }
 
     private List<RouteItemVO> getChildrenList(SysMenu root, List<SysMenu> list) {

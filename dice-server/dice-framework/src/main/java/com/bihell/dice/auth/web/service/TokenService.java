@@ -4,10 +4,10 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.bihell.dice.framework.constant.CachePrefix;
 import com.bihell.dice.framework.properties.TokenProperties;
 import com.bihell.dice.framework.model.UserModel;
-import com.bihell.dice.framework.utils.IdUtils;
-import com.bihell.dice.framework.utils.IpUtils;
-import com.bihell.dice.framework.utils.RedisUtils;
-import com.bihell.dice.framework.utils.ServletUtils;
+import com.bihell.dice.framework.utils.IdUtil;
+import com.bihell.dice.framework.utils.IpUtil;
+import com.bihell.dice.framework.utils.RedisUtil;
+import com.bihell.dice.framework.utils.ServletUtil;
 import com.bihell.dice.system.entity.SysUser;
 import com.bihell.dice.system.mapper.SysUserMapper;
 import io.jsonwebtoken.Claims;
@@ -37,14 +37,14 @@ public class TokenService {
 
     private static final String TOKEN_PREFIX = "Bearer ";
 
-    private final RedisUtils redisUtils;
+    private final RedisUtil redisUtil;
 
     private final TokenProperties tokenProperties;
 
     private final SysUserMapper userMapper;
 
-    public TokenService(RedisUtils redisUtils, TokenProperties tokenProperties, SysUserMapper userMapper) {
-        this.redisUtils = redisUtils;
+    public TokenService(RedisUtil redisUtil, TokenProperties tokenProperties, SysUserMapper userMapper) {
+        this.redisUtil = redisUtil;
         this.tokenProperties = tokenProperties;
         this.userMapper = userMapper;
     }
@@ -63,7 +63,7 @@ public class TokenService {
             // 解析对应的权限以及登陆用户信息
             var uuid = (String) claims.get(LOGIN_USER_KEY);
             var userKey = getTokenKey(uuid);
-            var userModel = redisUtils.get(userKey);
+            var userModel = redisUtil.get(userKey);
             return (UserModel) userModel;
         }
         return null;
@@ -77,7 +77,7 @@ public class TokenService {
     public void delete(String token) {
         if (StringUtils.isNotEmpty(token)) {
             var userKey = getTokenKey(token);
-            redisUtils.delete(userKey);
+            redisUtil.delete(userKey);
         }
     }
 
@@ -88,7 +88,7 @@ public class TokenService {
      * @return 令牌
      */
     public String createToken(@NonNull UserModel userModel) {
-        var token = IdUtils.getUUID();
+        var token = IdUtil.getUUID();
         userModel.setToken(token);
         setUserAgent(userModel);
         set(userModel);
@@ -126,7 +126,7 @@ public class TokenService {
         userModel.setExpireTime(LocalDateTime.now().plus(Duration.ofMillis(tokenProperties.getExpireTimeLong())));
         // 缓存登陆信息
         var userKey = getTokenKey(userModel.getToken());
-        redisUtils.set(userKey, userModel, tokenProperties.getExpireTime(), tokenProperties.getTimeUnit());
+        redisUtil.set(userKey, userModel, tokenProperties.getExpireTime(), tokenProperties.getTimeUnit());
     }
 
     /**
@@ -135,9 +135,9 @@ public class TokenService {
      * @param userModel 登陆用户信息
      */
     public void setUserAgent(@NonNull UserModel userModel) {
-        var userAgent = UserAgentUtil.parse(ServletUtils.getRequest().getHeader("User-Agent"));
-        userModel.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
-        userModel.setLocation(IpUtils.getCity(userModel.getIp()));
+        var userAgent = UserAgentUtil.parse(ServletUtil.getRequest().getHeader("User-Agent"));
+        userModel.setIp(IpUtil.getIpAddr(ServletUtil.getRequest()));
+        userModel.setLocation(IpUtil.getCity(userModel.getIp()));
         userModel.setMobile(userAgent.isMobile());
         userModel.setBrowser(userAgent.getBrowser().getName());
         userModel.setVersion(userAgent.getVersion());
@@ -157,9 +157,9 @@ public class TokenService {
      */
     public UserModel getUserAgent() {
         var userModel = new UserModel();
-        var userAgent = UserAgentUtil.parse(ServletUtils.getRequest().getHeader("User-Agent"));
-        userModel.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
-        userModel.setLocation(IpUtils.getCity(userModel.getIp()));
+        var userAgent = UserAgentUtil.parse(ServletUtil.getRequest().getHeader("User-Agent"));
+        userModel.setIp(IpUtil.getIpAddr(ServletUtil.getRequest()));
+        userModel.setLocation(IpUtil.getCity(userModel.getIp()));
         userModel.setMobile(userAgent.isMobile());
         userModel.setBrowser(userAgent.getBrowser().getName());
         userModel.setVersion(userAgent.getVersion());

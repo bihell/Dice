@@ -4,7 +4,7 @@ import com.bihell.dice.framework.properties.DiceProperties;
 import com.bihell.dice.framework.api.ApiResult;
 import com.bihell.dice.framework.log.annotation.OperationLog;
 import com.bihell.dice.framework.log.enums.OperationLogType;
-import com.bihell.dice.framework.utils.SecurityUtils;
+import com.bihell.dice.framework.utils.SecurityUtil;
 import com.bihell.dice.framework.utils.UploadUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,7 +53,7 @@ public class UploadController {
         log.info("type = " + type);
 
         // 上传文件，返回保存的文件名称
-        String saveFileName = UploadUtil.upload(diceProperties.getUploadFolder() + '/' + SecurityUtils.getUser().getUserId(), multipartFile, originalFilename -> {
+        String saveFileName = UploadUtil.upload(diceProperties.getUploadFolder() + '/' + SecurityUtil.getUser().getUserId(), multipartFile, originalFilename -> {
 
             // 文件后缀
             String fileExtension = FilenameUtils.getExtension(originalFilename);
@@ -65,7 +65,7 @@ public class UploadController {
         });
 
         // 上传成功之后，返回访问路径，请根据实际情况设置
-        String fileAccessPath = diceProperties.getResourceAccessUrl() + SecurityUtils.getUser().getUserId() + '/' + saveFileName;
+        String fileAccessPath = diceProperties.getResourceAccessUrl() + SecurityUtil.getUser().getUserId() + '/' + saveFileName;
         log.info("fileAccessPath:{}", fileAccessPath);
 
         return ApiResult.ok(fileAccessPath);

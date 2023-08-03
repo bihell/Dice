@@ -15,12 +15,12 @@ import java.util.Objects;
  *
  * @author Tang
  */
-public class UploadsUtils {
+public class UploadsUtil {
 
-    private UploadsUtils() {
+    private UploadsUtil() {
     }
 
-    private static final DiceProperties DICE_PROPERTIES = SpringUtils.getBean(DiceProperties.class);
+    private static final DiceProperties DICE_PROPERTIES = SpringUtil.getBean(DiceProperties.class);
 
     /**
      * 文件名最大长度

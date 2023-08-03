@@ -137,6 +137,14 @@ brew install pnpm
 brew install node
 ```
 
+#### Git
+
+版本\>= 2.x
+
+```Bash
+brew install git
+```
+
 ### 3.2 启动运行
 
 克隆项目到本地

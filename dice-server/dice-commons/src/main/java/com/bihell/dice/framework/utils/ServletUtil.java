@@ -15,9 +15,9 @@ import java.nio.charset.StandardCharsets;
  *
  * @author Tang
  */
-public class ServletUtils {
+public class ServletUtil {
 
-    private ServletUtils() {
+    private ServletUtil() {
     }
 
     /**

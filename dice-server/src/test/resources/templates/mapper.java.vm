@@ -1,0 +1,39 @@
+package $!{package.Mapper};
+
+import $!{superMapperClassPackage};
+import $!{package.Entity}.$!{entity};
+import $!{cfg.queryPath};
+import $!{cfg.infoVoPath};
+import $!{cfg.voPath};
+import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.util.List;
+
+/**
+ * $!{table.comment} Mapper 接口
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Mapper
+public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
+
+    /**
+     * $!{table.comment}详情
+     *
+     * @param $!{cfg.pkIdName}
+     * @return
+     */
+    $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName});
+
+    /**
+     * $!{table.comment}分页列表
+     *
+     * @param $!{cfg.queryObjectName}
+     * @return
+     */
+    IPage<$!{cfg.voName}> get$!{entity}List(Page page, $!{cfg.queryName} $!{cfg.queryObjectName});
+
+}

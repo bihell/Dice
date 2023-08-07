@@ -2,6 +2,93 @@ DROP DATABASE IF EXISTS dice;
 CREATE DATABASE dice CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 USE dice;
 
+create table foo_bar
+(
+    id          bigint                               not null comment '主键'
+        primary key,
+    name        varchar(20)                          not null comment '名称',
+    foo         varchar(100)                         null comment 'Foo',
+    bar         varchar(100)                         null comment 'Bar',
+    remark      varchar(200)                         null comment '备注',
+    status      tinyint(1) default 1                 not null comment '状态，0：禁用，1：启用',
+    create_time timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp                            null comment '修改时间'
+)
+    comment 'FooBar';
+
+-- auto-generated definition
+create table sys_log
+(
+    id                bigint                             not null comment '主键'
+        primary key,
+    trace_id          varchar(36)                        null comment '日志链路ID',
+    request_time      varchar(30)                        null comment '请求时间',
+    request_url       varchar(1000)                      null comment '全路径',
+    permission_code   varchar(200)                       null comment '权限编码',
+    log_name          varchar(200)                       null comment '日志名称',
+    request_method    varchar(10)                        null comment '请求方式，GET/POST',
+    content_type      varchar(200)                       null comment '内容类型',
+    is_request_body   tinyint(1)                         null comment '是否是JSON请求映射参数',
+    token             varchar(256)                       null comment 'token',
+    module_name       varchar(100)                       null comment '模块名称',
+    class_name        varchar(200)                       null comment 'controller类名称',
+    method_name       varchar(200)                       null comment 'controller方法名称',
+    request_param     text                               null comment '请求参数',
+    user_id           bigint                             null comment '用户ID',
+    username          varchar(100)                       null comment '用户名',
+    request_ip        varchar(15)                        null comment '请求ip',
+    ip_country        varchar(100)                       null comment 'IP国家',
+    ip_province       varchar(100)                       null comment 'IP省份',
+    ip_city           varchar(100)                       null comment 'IP城市',
+    ip_area_desc      varchar(100)                       null comment 'IP区域描述',
+    ip_isp            varchar(100)                       null comment 'IP运营商',
+    log_type          int      default 0                 not null comment '0:其它,1:新增,2:修改,3:删除,4:详情查询,5:所有列表,6:分页列表,7:其它查询,8:上传文件',
+    response_time     varchar(100)                       null comment '响应时间',
+    response_success  tinyint(1)                         null comment '0:失败,1:成功',
+    response_code     int                                null comment '响应结果状态码',
+    response_message  text                               null comment '响应结果消息',
+    response_data     text                               null comment '响应数据',
+    exception_name    varchar(200)                       null comment '异常类名称',
+    exception_message text                               null comment '异常信息',
+    diff_time         bigint                             null comment '耗时，单位：毫秒',
+    diff_time_desc    varchar(100)                       null comment '耗时描述',
+    referer           varchar(1000)                      null comment '请求来源地址',
+    origin            varchar(1000)                      null comment '请求来源服务名',
+    source_type       varchar(100)                       null comment '请求来源类型',
+    is_mobile         tinyint(1)                         null comment '是否手机 0：否，1：是',
+    platform_name     varchar(100)                       null comment '平台名称',
+    browser_name      varchar(100)                       null comment '浏览器名称',
+    user_agent        varchar(1000)                      null comment '用户环境',
+    remark            varchar(200)                       null comment '备注',
+    create_time       datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time       datetime                           null comment '修改时间'
+)
+    comment '系统日志';
+
+create index sys_log_log_name_index
+    on sys_log (log_name);
+
+create index sys_log_log_type_index
+    on sys_log (log_type);
+
+create index sys_log_module_name_index
+    on sys_log (module_name);
+
+create index sys_log_permission_code_index
+    on sys_log (permission_code);
+
+create index sys_log_request_ip_index
+    on sys_log (request_ip);
+
+create index sys_log_response_success_index
+    on sys_log (response_success);
+
+create index sys_log_trace_id_index
+    on sys_log (trace_id);
+
+create index sys_log_username_index
+    on sys_log (username);
+
 -- MySQL dump 10.13  Distrib 8.0.33, for macos13.3 (arm64)
 --
 -- Host: 127.0.0.1    Database: dice
@@ -489,59 +576,6 @@ INSERT INTO `sys_menu` (`id`, `name`, `parent_id`, `route_path`, `code`, `icon`,
 INSERT INTO `sys_menu` (`id`, `name`, `parent_id`, `route_path`, `code`, `icon`, `type`, `level`, `status`, `sort`, `remark`, `version`, `component`, `create_time`, `update_time`, `is_show`, `keep_alive`, `is_ext`, `frame`) VALUES (94,'页面新增',72,NULL,'blog:pages:add',NULL,3,3,1,2,NULL,0,NULL,'2021-07-13 07:32:41','2021-07-13 07:32:41',1,1,0,NULL);
 INSERT INTO `sys_menu` (`id`, `name`, `parent_id`, `route_path`, `code`, `icon`, `type`, `level`, `status`, `sort`, `remark`, `version`, `component`, `create_time`, `update_time`, `is_show`, `keep_alive`, `is_ext`, `frame`) VALUES (95,'页面删除',72,NULL,'blog:pages:delete',NULL,3,3,1,3,NULL,0,NULL,'2021-07-13 07:33:02','2021-07-13 07:33:02',1,1,0,NULL);
 INSERT INTO `sys_menu` (`id`, `name`, `parent_id`, `route_path`, `code`, `icon`, `type`, `level`, `status`, `sort`, `remark`, `version`, `component`, `create_time`, `update_time`, `is_show`, `keep_alive`, `is_ext`, `frame`) VALUES (96,'页面更新',72,NULL,'blog:pages:update',NULL,3,3,1,4,NULL,0,NULL,'2021-07-13 07:33:23','2021-07-13 07:33:23',1,1,0,NULL);
-
---
--- Table structure for table `sys_operation_log`
---
-
-DROP TABLE IF EXISTS `sys_operation_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sys_operation_log` (
-                                     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                     `request_id` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求ID',
-                                     `user_id` bigint DEFAULT NULL COMMENT '用户ID',
-                                     `user_name` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户名称',
-                                     `name` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '日志名称',
-                                     `ip` varchar(15) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'IP',
-                                     `area` varchar(45) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '区域',
-                                     `operator` varchar(6) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '运营商',
-                                     `path` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '全路径',
-                                     `module` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '模块名称',
-                                     `class_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '类名',
-                                     `method_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '方法名称',
-                                     `request_method` varchar(10) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方式，GET/POST',
-                                     `content_type` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容类型',
-                                     `request_body` tinyint(1) DEFAULT NULL COMMENT '是否是JSON请求映射参数',
-                                     `param` text COLLATE utf8mb4_bin COMMENT '请求参数',
-                                     `token` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'tokenMd5值',
-                                     `type` int DEFAULT NULL COMMENT '0:其它,1:新增,2:修改,3:删除,4:详情查询,5:所有列表,6:分页列表,7:其它查询,8:上传文件',
-                                     `success` tinyint(1) DEFAULT NULL COMMENT '0:失败,1:成功',
-                                     `code` int DEFAULT NULL COMMENT '响应结果状态码',
-                                     `message` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '响应结果消息',
-                                     `exception_name` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '异常类名称',
-                                     `exception_message` varchar(300) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '异常信息',
-                                     `browser_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '浏览器名称',
-                                     `browser_version` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '浏览器版本',
-                                     `engine_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '浏览器引擎名称',
-                                     `engine_version` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '浏览器引擎版本',
-                                     `os_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '系统名称',
-                                     `platform_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '平台名称',
-                                     `mobile` tinyint(1) DEFAULT NULL COMMENT '是否是手机,0:否,1:是',
-                                     `device_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '移动端设备名称',
-                                     `device_model` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '移动端设备型号',
-                                     `remark` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
-                                     `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                     `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-                                     `deleted` int DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
-                                     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统操作日志';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sys_operation_log`
---
-
 
 --
 -- Table structure for table `sys_option`

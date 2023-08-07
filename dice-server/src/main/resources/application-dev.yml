@@ -1,0 +1,44 @@
+dice:
+  # 当前环境服务IP地址
+  server-ip: 127.0.0.1
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/dice?useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    # redis配置
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+
+mybatis-plus:
+  configuration:
+    # 打印SQL语句和结果集，本地开发环境可开启，线上注释掉
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.bihell.dice
+  default-flat-param-object: true
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: ${dice.swagger.enable}
+  setting:
+    language: zh_cn
+    # 自定义底部
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: MIT License | Copyright © 2019-2023 [bihell](https://github.com/bihell/Dice)

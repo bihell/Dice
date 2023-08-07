@@ -1,0 +1,86 @@
+package $!{package.ServiceImpl};
+
+import $!{cfg.businessException};
+import $!{cfg.orderByItem};
+import $!{cfg.paging};
+import $!{superServiceImplClassPackage};
+import $!{cfg.addDtoPath};
+import $!{cfg.updateDtoPath};
+import $!{package.Entity}.$!{entity};
+import $!{package.Mapper}.$!{table.mapperName};
+import $!{cfg.queryPath};
+import $!{package.Service}.$!{table.serviceName};
+import $!{cfg.infoVoPath};
+import $!{cfg.voPath};
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bihell.dice.commons.pagination.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * $!{table.comment} 服务实现类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Slf4j
+@Service
+public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}> implements $!{table.serviceName} {
+
+    @Autowired
+    private $!{table.mapperName} $!{cfg.mapperObjectName};
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean add$!{entity}($!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception {
+        $!{entity} $!{cfg.entityObjectName} = new $!{entity}();
+        BeanUtils.copyProperties($!{cfg.addDtoObjectName}, $!{cfg.entityObjectName});
+        return save($!{cfg.entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean update$!{entity}($!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception {
+        Long $!{cfg.pkIdName} = $!{cfg.updateDtoObjectName}.get$!{cfg.pascalPkIdName}();
+        $!{entity} $!{cfg.entityObjectName} = getById($!{cfg.pkIdName});
+        if ($!{cfg.entityObjectName} == null) {
+            throw new BusinessException("$!{table.comment}不存在");
+        }
+        BeanUtils.copyProperties($!{cfg.updateDtoObjectName}, $!{cfg.entityObjectName});
+    #if($!{cfg.pascalUpdateTimeColumnName})
+        $!{cfg.entityObjectName}.set$!{cfg.pascalUpdateTimeColumnName}(new Date());
+    #end
+        return updateById($!{cfg.entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean delete$!{entity}(Long $!{cfg.pkIdName}) throws Exception {
+        return removeById($!{cfg.pkIdName});
+    }
+
+    @Override
+    public $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception {
+        return $!{cfg.mapperObjectName}.get$!{entity}ById($!{cfg.pkIdName});
+    }
+
+    @Override
+    public Paging<$!{cfg.voName}> get$!{entity}List($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
+        #if($!{cfg.defaultOrderColumnName})
+        Page<$!{cfg.voName}> page = new PageInfo<>($!{cfg.queryObjectName}, OrderItem.desc("$!{cfg.defaultOrderColumnName}"));
+        #else
+        Page<$!{cfg.voName}> page = new PageInfo<>($!{cfg.queryObjectName});
+        #end
+        IPage<$!{cfg.voName}> iPage = $!{cfg.entityObjectName}Mapper.get$!{entity}List(page,$!{cfg.queryObjectName});
+        return new Paging(iPage);
+    }
+
+}

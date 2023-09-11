@@ -41,7 +41,7 @@ public class UsernameAuthenticationProvider implements AuthenticationProvider {
         // TODO: 2023/6/26 这里登录方式以后增加邮件
         UserModel userModel = null;
 
-            userModel = authenticationService.createUserModel(user, password, username, "username");
+        userModel = authenticationService.createUserModel(user, password, username, "username");
 
         authenticationToken = new UsernameAuthenticationToken(userModel, Collections.emptyList());
 

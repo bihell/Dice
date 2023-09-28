@@ -30,10 +30,9 @@
 
 > 数据库每日零点重制
 >
-> Discord群：https://discord.gg/rsxxPfpw8m
->
 > QQ群：787519476
 >
+> 微信群：加微信：digital-review，请注明来意
 
 ## 一、部分界面
 

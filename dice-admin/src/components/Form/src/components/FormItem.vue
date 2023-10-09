@@ -3,7 +3,7 @@
   import type { PropType, Ref } from 'vue';
   import { computed, defineComponent, toRefs, unref } from 'vue';
   import type { FormActionType, FormProps, FormSchema } from '../types/form';
-  import type { ValidationRule } from 'ant-design-vue/lib/form/Form';
+  import type { Rule as ValidationRule } from 'ant-design-vue/lib/form/interface';
   import type { TableActionType } from '/@/components/Table';
   import { Col, Divider, Form } from 'ant-design-vue';
   import { componentMap } from '../componentMap';
@@ -220,10 +220,6 @@
             rule.required = false;
           }
           if (component) {
-            if (!Reflect.has(rule, 'type')) {
-              rule.type = component === 'InputNumber' ? 'number' : 'string';
-            }
-
             rule.message = rule.message || defaultMsg;
 
             if (component.includes('Input') || component.includes('Textarea')) {

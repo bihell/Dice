@@ -1,5 +1,5 @@
 <template>
-  <a-tree v-bind="getAttrs" @change="handleChange">
+  <a-tree v-bind="getAttrs" v-model:selectedKeys="state">
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data || {}"></slot>
     </template>
@@ -9,11 +9,12 @@
 <script lang="ts">
   import { type Recordable, type AnyFunction } from '@vben/types';
   import { type PropType, computed, defineComponent, watch, ref, onMounted, unref } from 'vue';
-  import { Tree } from 'ant-design-vue';
+  import { Tree, TreeProps } from 'ant-design-vue';
   import { isArray, isFunction } from '/@/utils/is';
   import { get } from 'lodash-es';
   import { propTypes } from '/@/utils/propTypes';
   import { DataNode } from 'ant-design-vue/es/tree';
+  import { useRuleFormItem } from '/@/hooks/component/useFormItem';
 
   export default defineComponent({
     name: 'ApiTree',
@@ -24,12 +25,18 @@
       immediate: { type: Boolean, default: true },
       resultField: propTypes.string.def(''),
       afterFetch: { type: Function as PropType<AnyFunction> },
+      value: {
+        type: Array as PropType<TreeProps['selectedKeys']>,
+      },
     },
-    emits: ['options-change', 'change'],
+    emits: ['options-change', 'change', 'update:value'],
     setup(props, { attrs, emit }) {
       const treeData = ref<DataNode[]>([]);
       const isFirstLoaded = ref<Boolean>(false);
       const loading = ref(false);
+      const emitData = ref<any[]>([]);
+
+      const [state] = useRuleFormItem(props, 'value', 'change', emitData);
       const getAttrs = computed(() => {
         return {
           ...(props.api ? { treeData: unref(treeData) } : {}),
@@ -37,9 +44,12 @@
         };
       });
 
-      function handleChange(...args) {
-        emit('change', ...args);
-      }
+      watch(
+        () => state.value,
+        (v) => {
+          emit('update:value', v);
+        },
+      );
 
       watch(
         () => props.params,
@@ -79,11 +89,11 @@
         if (!isArray(result)) {
           result = get(result, props.resultField);
         }
-        treeData.value = (result as Recordable<any>[]) || [];
+        treeData.value = (result as (Recordable & { key: string | number })[]) || [];
         isFirstLoaded.value = true;
         emit('options-change', treeData.value);
       }
-      return { getAttrs, loading, handleChange };
+      return { getAttrs, loading, state };
     },
   });
 </script>

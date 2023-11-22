@@ -1,13 +1,14 @@
 <template>
-  <a-input
-    disabled
+  <Input
+    readonly
     :style="{ width }"
     :placeholder="t('component.icon.placeholder')"
     :class="prefixCls"
     v-model:value="currentSelect"
+    @click="triggerPopover"
   >
     <template #addonAfter>
-      <a-popover
+      <Popover
         placement="bottomLeft"
         trigger="click"
         v-model="visible"
@@ -15,7 +16,7 @@
       >
         <template #title>
           <div class="flex justify-between">
-            <a-input
+            <Input
               :placeholder="t('component.icon.search')"
               @change="debounceHandleSearchChange"
               allowClear
@@ -35,14 +36,13 @@
                   @click="handleClick(icon)"
                   :title="icon"
                 >
-                  <!-- <Icon :icon="icon" :prefix="prefix" /> -->
                   <SvgIcon v-if="isSvgMode" :name="icon" />
                   <Icon :icon="icon" v-else />
                 </li>
               </ul>
             </ScrollContainer>
             <div class="flex py-2 items-center justify-center" v-if="getTotal >= pageSize">
-              <a-pagination
+              <Pagination
                 showLessItems
                 size="small"
                 :pageSize="pageSize"
@@ -51,49 +51,46 @@
               />
             </div>
           </div>
-          <template v-else
-            ><div class="p-5"><a-empty /></div>
+          <template v-else>
+            <div class="p-5"><Empty /> </div>
           </template>
         </template>
 
-        <span class="cursor-pointer px-2 py-1 flex items-center" v-if="isSvgMode && currentSelect">
-          <SvgIcon :name="currentSelect" />
-        </span>
-        <Icon :icon="currentSelect || 'ion:apps-outline'" class="cursor-pointer px-2 py-1" v-else />
-      </a-popover>
+        <div ref="trigger">
+          <span
+            class="cursor-pointer px-2 py-1 flex items-center"
+            v-if="isSvgMode && currentSelect"
+          >
+            <SvgIcon :name="currentSelect" />
+          </span>
+          <Icon
+            :icon="currentSelect || 'ion:apps-outline'"
+            class="cursor-pointer px-2 py-1"
+            v-else
+          />
+        </div>
+      </Popover>
     </template>
-  </a-input>
+  </Input>
 </template>
 <script lang="ts" setup>
   import { ref, watchEffect, watch } from 'vue';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { ScrollContainer } from '/@/components/Container';
+  import { useDesign } from '@/hooks/web/useDesign';
+  import { ScrollContainer } from '@/components/Container';
   import { Input, Popover, Pagination, Empty } from 'ant-design-vue';
   import Icon from '../Icon.vue';
   import SvgIcon from './SvgIcon.vue';
 
   import iconsData from '../data/icons.data';
-  import { usePagination } from '/@/hooks/web/usePagination';
+  import { usePagination } from '@/hooks/web/usePagination';
   import { useDebounceFn } from '@vueuse/core';
-  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useI18n } from '@/hooks/web/useI18n';
   import svgIcons from 'virtual:svg-icons-names';
-  import { copyText } from '/@/utils/copyTextToClipboard';
-  // 没有使用别名引入，是因为WebStorm当前版本还不能正确识别，会报unused警告
-  const AInput = Input;
-  const APopover = Popover;
-  const APagination = Pagination;
-  const AEmpty = Empty;
+  import { copyText } from '@/utils/copyTextToClipboard';
 
   function getIcons() {
-    const data = iconsData as any;
-    const prefix: string = data?.prefix ?? '';
-    let result: string[] = [];
-    if (prefix) {
-      result = (data?.icons ?? []).map((item) => `${prefix}:${item}`);
-    } else if (Array.isArray(iconsData)) {
-      result = iconsData as string[];
-    }
-    return result;
+    const prefix = iconsData.prefix;
+    return iconsData.icons.map((icon) => `${prefix}:${icon}`);
   }
 
   function getSvgIcons() {
@@ -116,6 +113,11 @@
     mode: 'iconify',
   });
 
+  // Don't inherit FormItem disabled、placeholder...
+  defineOptions({
+    inheritAttrs: false,
+  });
+
   const emit = defineEmits(['change', 'update:value']);
 
   const isSvgMode = props.mode === 'svg';
@@ -124,6 +126,13 @@
   const currentSelect = ref('');
   const visible = ref(false);
   const currentList = ref(icons);
+  const trigger = ref<HTMLDivElement>();
+
+  const triggerPopover = () => {
+    if (trigger.value) {
+      trigger.value.click();
+    }
+  };
 
   const { t } = useI18n();
   const { prefixCls } = useDesign('icon-picker');
@@ -143,10 +152,9 @@
     () => currentSelect.value,
     (v) => {
       emit('update:value', v);
-      return emit('change', v);
+      emit('change', v);
     },
   );
-
   function handlePageChange(page: number) {
     setCurrentPage(page);
   }
@@ -175,6 +183,10 @@
   .@{prefix-cls} {
     .ant-input-group-addon {
       padding: 0;
+    }
+
+    .ant-input {
+      cursor: pointer;
     }
 
     &-popover {

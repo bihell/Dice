@@ -1,7 +1,25 @@
 import type { PropType } from 'vue';
-import { FileBasicColumn } from './typing';
+import { FileBasicColumn } from './types/typing';
+
+import type { Options } from 'sortablejs';
+
+import { Merge } from '@/utils/types';
+
+type SortableOptions = Merge<
+  Omit<Options, 'onEnd'>,
+  {
+    onAfterEnd?: <T = any, R = any>(params: T) => R;
+    // ...可扩展
+  }
+>;
+
+type ListType = 'text' | 'picture' | 'picture-card';
 
 export const basicProps = {
+  listType: {
+    type: String as PropType<ListType>,
+    default: 'picture-card',
+  },
   helpText: {
     type: String as PropType<string>,
     default: '',
@@ -42,6 +60,15 @@ export const basicProps = {
     type: String as PropType<string>,
     default: null,
   },
+  fileListOpenDrag: {
+    type: Boolean,
+    default: true,
+  },
+
+  fileListDragOptions: {
+    type: Object as PropType<SortableOptions>,
+    default: () => ({}),
+  },
 };
 
 export const uploadContainerProps = {
@@ -79,5 +106,13 @@ export const fileListProps = {
   dataSource: {
     type: Array as PropType<any[]>,
     default: null,
+  },
+  openDrag: {
+    type: Boolean,
+    default: false,
+  },
+  dragOptions: {
+    type: Object as PropType<SortableOptions>,
+    default: () => ({}),
   },
 };

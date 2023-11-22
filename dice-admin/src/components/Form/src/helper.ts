@@ -1,8 +1,8 @@
 import type { Rule as ValidationRule } from 'ant-design-vue/lib/form/interface';
-import type { ComponentType } from './types/index';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { dateUtil } from '/@/utils/dateUtil';
-import { isNumber, isObject } from '/@/utils/is';
+import type { ComponentType } from './types';
+import { useI18n } from '@/hooks/web/useI18n';
+import { dateUtil } from '@/utils/dateUtil';
+import { isNumber, isObject } from '@/utils/is';
 
 const { t } = useI18n();
 
@@ -61,9 +61,17 @@ export function processDateValue(attr: Recordable, component: string) {
   }
 }
 
+export const defaultValueComponents = [
+  'Input',
+  'InputPassword',
+  'InputNumber',
+  'InputSearch',
+  'InputTextArea',
+];
+
 export function handleInputNumberValue(component?: ComponentType, val?: any) {
   if (!component) return val;
-  if (['Input', 'InputPassword', 'InputSearch', 'InputTextArea'].includes(component)) {
+  if (defaultValueComponents.includes(component)) {
     return val && isNumber(val) ? `${val}` : val;
   }
   return val;
@@ -73,8 +81,6 @@ export function handleInputNumberValue(component?: ComponentType, val?: any) {
  * 时间字段
  */
 export const dateItemType = genType();
-
-export const defaultValueComponents = ['Input', 'InputPassword', 'InputSearch', 'InputTextArea'];
 
 // TODO 自定义组件封装会出现验证问题，因此这里目前改成手动触发验证
 export const NO_AUTO_LINK_COMPONENTS: ComponentType[] = [

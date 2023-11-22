@@ -1,6 +1,6 @@
 import type { VNodeChild } from 'vue';
 import type { PaginationProps } from './pagination';
-import type { FormProps } from '/@/components/Form';
+import type { FormProps } from '@/components/Form';
 import type {
   TableRowSelection as ITableRowSelection,
   Key,
@@ -9,8 +9,8 @@ import type {
 import type { ColumnProps } from 'ant-design-vue/lib/table';
 
 import { ComponentType } from './componentType';
-import { VueNode } from '/@/utils/propTypes';
-import { RoleEnum } from '/@/enums/roleEnum';
+import { VueNode } from '@/utils/propTypes';
+import { RoleEnum } from '@/enums/roleEnum';
 
 export declare type SortOrder = 'ascend' | 'descend';
 
@@ -440,7 +440,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   defaultHidden?: boolean;
 
   // Help text for table column header
-  helpMessage?: string | string[];
+  helpMessage?: string | string[] | VNodeChild | JSX.Element;
 
   format?: CellFormat;
 

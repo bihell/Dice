@@ -20,7 +20,7 @@
 
 > 演示站点： 
 
-> [博客前端](https://www.bihell.com:8082/)  [管理前端](https://www.bihell.com:8082/admin/) 
+> [博客前端](https://dice.bihell.com)  [管理前端](https://dice.bihell.com/admin/) 
 
 > 演示账号：
 
@@ -29,8 +29,6 @@
 > 管理员：dice 123456
 
 > 数据库每日零点重制
->
-> QQ群：787519476
 >
 > 微信群：加微信：digital-review，请注明来意
 

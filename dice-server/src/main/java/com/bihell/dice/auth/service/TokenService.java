@@ -134,7 +134,7 @@ public class TokenService {
     public void setUserAgent(@NonNull UserModel userModel) {
         var userAgent = UserAgentUtil.parse(ServletUtil.getRequest().getHeader("User-Agent"));
         userModel.setIp(IpUtil.getRequestIp(ServletUtil.getRequest()));
-        userModel.setLocation(IpRegionUtil.getIpRegion(userModel.getIp()).getCity());
+        userModel.setLocation(IpRegionUtil.getIpRegion(userModel.getIp().split(",")[0]).getCity());
         userModel.setMobile(userAgent.isMobile());
         userModel.setBrowser(userAgent.getBrowser().getName());
         userModel.setVersion(userAgent.getVersion());
@@ -156,7 +156,7 @@ public class TokenService {
         var userModel = new UserModel();
         var userAgent = UserAgentUtil.parse(ServletUtil.getRequest().getHeader("User-Agent"));
         userModel.setIp(IpUtil.getRequestIp(ServletUtil.getRequest()));
-        userModel.setLocation(IpRegionUtil.getIpRegion((userModel.getIp())).getCity());
+        userModel.setLocation(IpRegionUtil.getIpRegion((userModel.getIp().split(",")[0])).getCity());
         userModel.setMobile(userAgent.isMobile());
         userModel.setBrowser(userAgent.getBrowser().getName());
         userModel.setVersion(userAgent.getVersion());

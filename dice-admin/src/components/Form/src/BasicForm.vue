@@ -47,7 +47,7 @@
   import FormItem from './components/FormItem.vue';
   import FormAction from './components/FormAction.vue';
 
-  import { dateItemType } from './helper';
+  import { dateItemType, isIncludeSimpleComponents } from './helper';
   import { dateUtil } from '@/utils/dateUtil';
 
   import { deepMerge } from '@/utils';
@@ -63,6 +63,7 @@
   import { basicProps } from './props';
   import { useDesign } from '@/hooks/web/useDesign';
   import { cloneDeep } from 'lodash-es';
+  import { TableActionType } from '@/components/Table';
 
   defineOptions({ name: 'BasicForm' });
 
@@ -124,7 +125,12 @@
   const getSchema = computed((): FormSchema[] => {
     const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
     for (const schema of schemas) {
-      const { defaultValue, component, componentProps, isHandleDateDefaultValue = true } = schema;
+      const {
+        defaultValue,
+        component,
+        componentProps = {},
+        isHandleDateDefaultValue = true,
+      } = schema;
       // handle date type
       if (
         isHandleDateDefaultValue &&
@@ -132,7 +138,17 @@
         component &&
         dateItemType.includes(component)
       ) {
-        const valueFormat = componentProps ? componentProps['valueFormat'] : null;
+        const opt = {
+          schema,
+          tableAction: props.tableAction ?? ({} as TableActionType),
+          formModel,
+          formActionType: {} as FormActionType,
+        };
+        const valueFormat = componentProps
+          ? typeof componentProps === 'function'
+            ? componentProps(opt)['valueFormat']
+            : componentProps['valueFormat']
+          : null;
         if (!Array.isArray(defaultValue)) {
           schema.defaultValue = valueFormat
             ? dateUtil(defaultValue).format(valueFormat)
@@ -147,7 +163,9 @@
       }
     }
     if (unref(getProps).showAdvancedButton) {
-      return cloneDeep(schemas.filter((schema) => schema.component !== 'Divider') as FormSchema[]);
+      return cloneDeep(
+        schemas.filter((schema) => !isIncludeSimpleComponents(schema.component)) as FormSchema[],
+      );
     } else {
       return cloneDeep(schemas as FormSchema[]);
     }
@@ -218,7 +236,7 @@
   );
 
   watch(
-    () => unref(getProps).schemas,
+    () => props.schemas,
     (schemas) => {
       resetSchema(schemas ?? []);
     },

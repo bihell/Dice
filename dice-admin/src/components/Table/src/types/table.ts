@@ -92,8 +92,9 @@ export interface TableActionType {
   getSelectRows: <T = Recordable>() => T[];
   clearSelectedRowKeys: () => void;
   expandAll: () => void;
-  expandRows: (keys: (string | number)[]) => void;
   collapseAll: () => void;
+  expandRows: (keys: (string | number)[]) => void;
+  collapseRows: (keys: (string | number)[]) => void;
   scrollTo: (pos: string) => void; // pos: id | "top" | "bottom"
   getSelectRowKeys: () => Key[];
   deleteSelectRowByKey: (key: string) => void;
@@ -401,7 +402,7 @@ export interface BasicTableProps<T = any> {
    * @param expanded
    * @param record
    */
-  onExpand?: (expande: boolean, record: T) => void;
+  onExpand?: (expanded: boolean, record: T) => void;
 
   /**
    * Callback executed when the expanded rows change

@@ -22,8 +22,10 @@ export function useRowSelection(
 
     return {
       selectedRowKeys: unref(selectedRowKeysRef),
-      onChange: (selectedRowKeys: Key[]) => {
+      onChange: (selectedRowKeys: Key[], selectedRows: any[]) => {
         setSelectedRowKeys(selectedRowKeys);
+        // 维持外部定义的onChange回调
+        rowSelection.onChange?.(selectedRowKeys, selectedRows);
       },
       ...omit(rowSelection, ['onChange']),
     };
@@ -81,7 +83,12 @@ export function useRowSelection(
   }
 
   function setSelectedRows(rows: Recordable[]) {
+    const { rowKey } = unref(propsRef);
     selectedRowRef.value = rows;
+    selectedRowKeysRef.value = selectedRowRef.value.map((o) => {
+      const key = (isFunction(rowKey) ? rowKey(o) : rowKey) || 'key';
+      return o[key];
+    });
   }
 
   function clearSelectedRowKeys() {

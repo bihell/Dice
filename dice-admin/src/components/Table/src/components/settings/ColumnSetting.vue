@@ -111,8 +111,9 @@
   import { useDesign } from '@/hooks/web/useDesign';
   import { isFunction, isNil } from '@/utils/is';
   import { getPopupContainer as getParentContainer } from '@/utils';
-  import { cloneDeep } from 'lodash-es';
+  import { cloneDeep, omit } from 'lodash-es';
   import Sortablejs from 'sortablejs';
+  import { INDEX_COLUMN_FLAG } from '@/components/Table/src/const';
 
   // 列表设置缓存
   import { useTableSettingStore } from '@/store/modules/tableSetting';
@@ -131,6 +132,18 @@
 
   const attrs = useAttrs();
   const table = useTableContext();
+
+  const props = withDefaults(
+    defineProps<{
+      /**
+       * 是否缓存列的设置
+       */
+      cache?: boolean;
+    }>(),
+    {
+      cache: () => false,
+    },
+  );
 
   const getPopupContainer = () => {
     return isFunction(attrs.getPopupContainer) ? attrs.getPopupContainer() : getParentContainer();
@@ -168,7 +181,7 @@
       // 列表列更新
       tableColumnsUpdate();
       // 更新列缓存
-      columnOptionsSave();
+      props.cache && columnOptionsSave();
     }
   });
 
@@ -197,23 +210,9 @@
     // 更新 showIndexColumn
     showIndexColumnUpdate(e.target.checked);
     // 更新 showIndexColumn 缓存
-    tableSettingStore.setShowIndexColumn(e.target.checked);
-    // 从无到有需要处理
-    if (e.target.checked) {
-      const columns = cloneDeep(table?.getColumns());
-      const idx = columns.findIndex((o) => o.flag === 'INDEX');
-      // 找到序号列
-      if (idx > -1) {
-        const cache = columns[idx];
-        // 强制左fix
-        cache.fixed = 'left';
-        // 强制移动到 第一/选择列后
-        columns.splice(idx, 1);
-        columns.splice(0, 0, cache);
-        // 设置列表列
-        tableColumnsSet(columns);
-      }
-    }
+    props.cache &&
+      typeof route.name === 'string' &&
+      tableSettingStore.setShowIndexColumn(route.name, e.target.checked);
   };
 
   // 是否显示选择列
@@ -223,7 +222,9 @@
     // 更新 showRowSelection
     showRowSelectionUpdate(e.target.checked);
     // 更新 showRowSelection 缓存
-    tableSettingStore.setShowRowSelection(e.target.checked);
+    props.cache &&
+      typeof route.name === 'string' &&
+      tableSettingStore.setShowRowSelection(route.name, e.target.checked);
   };
 
   // 更新列缓存
@@ -273,7 +274,7 @@
     // 列表列更新
     tableColumnsUpdate();
     // 更新列缓存
-    columnOptionsSave();
+    props.cache && columnOptionsSave();
   };
 
   // 沿用逻辑
@@ -328,8 +329,15 @@
     // 考虑了所有列
     const columns = cloneDeep(table.getColumns());
 
-    // 从左 fixed 最一列开始排序
-    let count = columns.filter((o) => o.fixed === 'left' || o.fixed === true).length;
+    // 从左 fixed 最一列开始排序（除了 序号列）
+    let count = columns.filter(
+      (o) => o.flag !== INDEX_COLUMN_FLAG && (o.fixed === 'left' || o.fixed === true),
+    ).length;
+
+    // 序号列提前
+    if (isIndexColumnShow.value) {
+      count++;
+    }
 
     // 按 columnOptions 的排序 调整 table.getColumns() 的顺序和值
     for (const opt of columnOptions.value) {
@@ -342,6 +350,13 @@
         columns.splice(colIdx, 1);
         columns.splice(count++, 0, target); // 递增插入
       }
+    }
+
+    // 是否存在 action
+    const actionIndex = columns.findIndex((o) => o.dataIndex === 'action');
+    if (actionIndex > -1) {
+      const actionCol = columns.splice(actionIndex, 1);
+      columns.push(actionCol[0]);
     }
 
     // 设置列表列
@@ -384,7 +399,7 @@
           // 列表列更新
           tableColumnsUpdate();
           // 更新列缓存
-          columnOptionsSave();
+          props.cache && columnOptionsSave();
         },
       });
     }
@@ -424,14 +439,19 @@
 
   // 从缓存恢复
   const restore = () => {
-    // 设置过才恢复
-    if (typeof tableSettingStore.getShowIndexColumn === 'boolean') {
-      isIndexColumnShow.value = tableSettingStore.getShowIndexColumn;
-    }
-    if (typeof tableSettingStore.getShowRowSelection === 'boolean') {
-      isRowSelectionShow.value = defaultIsRowSelectionShow && tableSettingStore.getShowRowSelection;
-    }
+    if (typeof route.name === 'string') {
+      const isIndexColumnShowCache = tableSettingStore.getShowIndexColumn(route.name);
+      // 设置过才恢复
+      if (typeof isIndexColumnShowCache === 'boolean') {
+        isIndexColumnShow.value = defaultIsIndexColumnShow && isIndexColumnShowCache;
+      }
 
+      const isRowSelectionShowCache = tableSettingStore.getShowRowSelection(route.name);
+      // 设置过才恢复
+      if (typeof isRowSelectionShowCache === 'boolean') {
+        isRowSelectionShow.value = defaultIsRowSelectionShow && isRowSelectionShowCache;
+      }
+    }
     // 序号列更新
     onIndexColumnShowChange({
       target: { checked: isIndexColumnShow.value },
@@ -473,7 +493,7 @@
     table.setProps({
       rowSelection: showRowSelection
         ? {
-            ...defaultRowSelection,
+            ...omit(defaultRowSelection, ['selectedRowKeys']),
             fixed: true,
           }
         : undefined,
@@ -548,10 +568,10 @@
       columnOptions.value = cloneDeep(options);
 
       // remove消失的列、push新出现的列
-      diff();
+      props.cache && diff();
 
       // 从缓存恢复
-      restore();
+      props.cache && restore();
 
       // 更新表单状态
       formUpdate();

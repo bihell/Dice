@@ -190,9 +190,9 @@ public class TokenService {
      */
     private String createToken(Map<String, Object> claims) {
         return Jwts.builder()
-            .setClaims(claims)
-            .signWith(getSecretKey())
-            .compact();
+                .claims(claims)
+                .signWith(getSecretKey())
+                .compact();
     }
 
     /**
@@ -202,11 +202,11 @@ public class TokenService {
      * @return 数据声明
      */
     public Claims parseToken(String token) {
-        return Jwts.parserBuilder()
-            .setSigningKey(getSecretKey())
-            .build()
-            .parseClaimsJws(token)
-            .getBody();
+        return Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     /**

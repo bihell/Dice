@@ -8,7 +8,7 @@ import {
 enum Api {
   ARTICLE_LIST = '/article/getPageList',
   COMMENT_LIST = '/comment/getPageList',
-  POST = '/article/',
+  POST = '/article',
   PAGE = '/page/',
   PAGE_LIST = '/page/getPageList',
   COMMENT = '/comment/',
@@ -33,7 +33,7 @@ export function saveBlogSetting(setting: any) {
 }
 export function apiGetPost(id: number) {
   return defHttp.request<PostItem>({
-    url: Api.POST + id,
+    url: Api.POST + '/' + id,
     method: 'GET',
   });
 }

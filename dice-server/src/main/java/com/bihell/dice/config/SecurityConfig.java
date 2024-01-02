@@ -31,6 +31,12 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    private final List<AuthenticationProvider> providers;
+
+    public SecurityConfig(List<AuthenticationProvider> providers) {
+        this.providers = providers;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationEntryPoint authenticationEntryPoint,
                                                    JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter, LogoutSuccessHandler logoutSuccessHandler) throws Exception {
@@ -55,8 +61,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationProvider usernameAuthenticationProvider, AuthenticationProvider emailAuthenticationProvider) {
-        var providers = List.of(usernameAuthenticationProvider, emailAuthenticationProvider);
+    public AuthenticationManager authenticationManager() {
         return new ProviderManager(providers);
     }
 

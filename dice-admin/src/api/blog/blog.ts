@@ -47,7 +47,7 @@ export function apiGetPage(id: number) {
 
 export function apiDeletePost(id: number) {
   return defHttp.request({
-    url: Api.POST + id,
+    url: Api.POST + '/' + id,
     method: 'DELETE',
   });
 }

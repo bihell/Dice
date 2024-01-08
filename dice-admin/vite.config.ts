@@ -15,7 +15,6 @@ export default defineApplicationConfig({
       ],
     },
     server: {
-      port: 3100,
       proxy: {
         '/basic-api': {
           target: 'http://localhost:3000',
@@ -31,6 +30,9 @@ export default defineApplicationConfig({
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/upload`), ''),
         },
+      },
+      warmup: {
+        clientFiles: ['./index.html', './src/{views,components}/*'],
       },
     },
   },

@@ -1,6 +1,6 @@
-import { defHttp } from '/@/utils/http/axios';
-import { BasicPageParams } from '/@/api/model/baseModel';
-import { NavTypeItem } from '/@/api/nav/model/navModel';
+import { defHttp } from '@/utils/http/axios';
+import { BasicPageParams } from '@/api/model/baseModel';
+import { NavTypeItem } from '@/api/nav/model/navModel';
 // import { NavTypeItem } from './model/navModel';
 
 enum Api {

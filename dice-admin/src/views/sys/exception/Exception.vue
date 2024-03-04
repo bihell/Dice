@@ -2,14 +2,14 @@
   import type { PropType } from 'vue';
   import { Result, Button } from 'ant-design-vue';
   import { defineComponent, ref, computed, unref } from 'vue';
-  import { ExceptionEnum } from '/@/enums/exceptionEnum';
-  import notDataSvg from '/@/assets/svg/no-data.svg';
-  import netWorkSvg from '/@/assets/svg/net-error.svg';
+  import { ExceptionEnum } from '@/enums/exceptionEnum';
+  import notDataSvg from '@/assets/svg/no-data.svg';
+  import netWorkSvg from '@/assets/svg/net-error.svg';
   import { useRoute } from 'vue-router';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useGo, useRedo } from '/@/hooks/web/usePage';
-  import { PageEnum } from '/@/enums/pageEnum';
+  import { useDesign } from '@/hooks/web/useDesign';
+  import { useI18n } from '@/hooks/web/useI18n';
+  import { useGo, useRedo } from '@/hooks/web/usePage';
+  import { PageEnum } from '@/enums/pageEnum';
 
   interface MapValue {
     title: string;
@@ -122,7 +122,13 @@
                     {() => btnText}
                   </Button>
                 ),
-              icon: () => (icon ? <img src={icon} /> : null),
+              // antv 原来支持 status 可选： success | error | info | warning | 404 | 403 | 500
+              // 上面 ExceptionEnum 覆盖了 404 | 403 | 500，并增加其他状态值
+              // 增加下面判断，继续支持 success | error | info | warning
+              icon:
+                status && ExceptionEnum[status] === void 0
+                  ? () => (icon ? <img src={icon} /> : null)
+                  : undefined,
             }}
           </Result>
         );

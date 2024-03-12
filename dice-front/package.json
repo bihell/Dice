@@ -13,7 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/feed": "1.1.0",
+    "@nuxtjs/feed": "2.0.0",
     "@nuxtjs/sitemap": "2.0.1",
     "axios": "^0.21.1",
     "cross-env": "7.0.2",

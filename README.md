@@ -20,7 +20,7 @@
 
 > 演示站点： 
 
-> [博客前端](https://dice.bihell.com)  [管理前端](https://dice.bihell.com/admin/) 
+> [博客前端](https://dice.bigdata.icu)  [管理前端](https://dice.bigdata.icu/admin/) 
 
 > 演示账号：
 

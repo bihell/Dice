@@ -36,7 +36,7 @@ create table sys_log
     request_param     text                               null comment '请求参数',
     user_id           bigint                             null comment '用户ID',
     username          varchar(100)                       null comment '用户名',
-    request_ip        varchar(15)                        null comment '请求ip',
+    request_ip        varchar(256)                        null comment '请求ip',
     ip_country        varchar(100)                       null comment 'IP国家',
     ip_province       varchar(100)                       null comment 'IP省份',
     ip_city           varchar(100)                       null comment 'IP城市',
@@ -139,7 +139,7 @@ CREATE TABLE `article` (
 --
 
 INSERT INTO `article` (`id`, `title`, `content`, `hits`, `tags`, `category`, `status`, `type`, `allow_comment`, `comment_count`, `priority`, `create_time`, `update_time`, `creator`, `modifier`, `deleted`) VALUES (1,'Hello world','\n欢迎使用[Dice](https://github.com/bihell/Dice)! 这是你的第一篇博客。快点来写点什么吧\n\n```java\npublic static void main(String[] args){\n    System.out.println(\"Hello world\");\n}\n```\n\n> 想要了解更多详细信息，可以查看[文档](https://github.com/bihell/Dice/blob/master/README.md)。',0,'First','New',0,'post',1,0,0,'2023-06-06 03:10:30','2023-06-06 03:10:30',1,NULL,0);
-INSERT INTO `article` (`id`, `title`, `content`, `hits`, `tags`, `category`, `status`, `type`, `allow_comment`, `comment_count`, `priority`, `create_time`, `update_time`, `creator`, `modifier`, `deleted`) VALUES (2,'关于','# About me\n### Hello word\n这是关于我的页面\n\n* [Github](https://github.com/bihell)\n* [哔哩哔哩](https://space.bilibili.com/88900889)\n\n### 也可以设置别的页面\n* 比如友链页面',0,NULL,NULL,0,'page',1,0,0,'2023-06-06 03:10:30','2023-06-06 03:10:30',1,NULL,0);
+INSERT INTO `article` (`id`, `title`, `content`, `hits`, `tags`, `category`, `status`, `type`, `allow_comment`, `comment_count`, `priority`, `create_time`, `update_time`, `creator`, `modifier`, `deleted`) VALUES (2,'关于','# About me\n### Hello word\n这是关于我的页面\n\n* [Github](https://github.com/bihell)\n* [哔哩哔哩-数码乱炖](https://space.bilibili.com/88900889)\n* [YouTube-数码乱炖](https://www.youtube.com/channel/UCINmrFonh6v0VTyWhudSQ2w)\n\n### 也可以设置别的页面\n* 比如友链页面',0,NULL,NULL,0,'page',1,0,0,'2023-06-06 03:10:30','2023-06-06 03:10:30',1,NULL,0);
 
 --
 -- Table structure for table `comment`
@@ -418,7 +418,7 @@ create table sys_log_login
     login_type varchar(32)  default '' null comment '登陆类型',
     os         varchar(64)  default '' null comment '操作系统',
     browser    varchar(64)  default '' null comment '浏览器类型',
-    ip         varchar(64)  default '' null comment '登录IP地址',
+    ip         varchar(256)  default '' null comment '登录IP地址',
     location   varchar(64)  default '' null comment '登录地点',
     login_time datetime                null comment '登录时间',
     success    char(2)      default '' null comment '是否成功',

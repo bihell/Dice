@@ -128,4 +128,11 @@ public class IpRegionUtil {
         }
     }
 
+    public static void main(String[] args) {
+
+        IpRegionUtil.init();
+        System.out.println(getIpRegion("240e:389:3500:6d00:b9fd:c20b:a704:37d"));
+    }
+
 }
+

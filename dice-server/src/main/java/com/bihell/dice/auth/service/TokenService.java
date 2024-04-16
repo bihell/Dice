@@ -2,6 +2,7 @@ package com.bihell.dice.auth.service;
 
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.bihell.dice.commons.constant.CachePrefix;
+import com.bihell.dice.commons.vo.IpRegion;
 import com.bihell.dice.config.properties.TokenProperties;
 import com.bihell.dice.commons.model.UserModel;
 import com.bihell.dice.commons.utils.*;
@@ -21,6 +22,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * token 验证处理
@@ -134,7 +136,10 @@ public class TokenService {
     public void setUserAgent(@NonNull UserModel userModel) {
         var userAgent = UserAgentUtil.parse(ServletUtil.getRequest().getHeader("User-Agent"));
         userModel.setIp(IpUtil.getRequestIp(ServletUtil.getRequest()));
-        userModel.setLocation(IpRegionUtil.getIpRegion(userModel.getIp().split(",")[0]).getCity());
+        IpRegion ipRegion = IpRegionUtil.getIpRegion(userModel.getIp());
+        if (Objects.nonNull(ipRegion)) {
+            userModel.setLocation(ipRegion.getCity());
+        }
         userModel.setMobile(userAgent.isMobile());
         userModel.setBrowser(userAgent.getBrowser().getName());
         userModel.setVersion(userAgent.getVersion());
@@ -156,7 +161,10 @@ public class TokenService {
         var userModel = new UserModel();
         var userAgent = UserAgentUtil.parse(ServletUtil.getRequest().getHeader("User-Agent"));
         userModel.setIp(IpUtil.getRequestIp(ServletUtil.getRequest()));
-        userModel.setLocation(IpRegionUtil.getIpRegion((userModel.getIp().split(",")[0])).getCity());
+        IpRegion ipRegion = IpRegionUtil.getIpRegion(userModel.getIp());
+        if (Objects.nonNull(ipRegion)) {
+            userModel.setLocation(ipRegion.getCity());
+        }
         userModel.setMobile(userAgent.isMobile());
         userModel.setBrowser(userAgent.getBrowser().getName());
         userModel.setVersion(userAgent.getVersion());

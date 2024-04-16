@@ -15,12 +15,10 @@
           <a href="/feed.xml">RSS订阅</a>
         </li>
         <li class="tab-item">
-          <a href="https://bigdata.bihell.com">大数据</a>
+          <a href="https://bigdata.icu/">大数据</a>
         </li>
         <li class="tab-item">
-          <a href="https://bigdata.bihell.com/tools/liqi/soft/li-qi.html"
-            >利器</a
-          >
+          <a href="https://bigdata.icu/tools/vps.html">VPS整理</a>
         </li>
       </ul>
       <div class="header-menu">
@@ -47,10 +45,10 @@
 import _ from 'underscore'
 
 const staticMenu = [
-    { path: '/', name: '首页' },
-    { path: '/category', name: '分类' },
-    { path: '/tag', name: '标签' },
-    { path: '/archive', name: '归档' }
+  { path: '/', name: '首页' },
+  { path: '/category', name: '分类' },
+  { path: '/tag', name: '标签' },
+  { path: '/archive', name: '归档' }
 ]
 
 export default {
@@ -91,21 +89,21 @@ export default {
     options() {
       return this.$store.state.option.data
     },
-      pageMenu() {
-          return this.$store.state.article.pageMenu
-      }
+    pageMenu() {
+      return this.$store.state.article.pageMenu
+    }
   },
-    mounted() {
-        this.initMenu()
-    },
+  mounted() {
+    this.initMenu()
+  },
   methods: {
-      initMenu() {
-          const links = staticMenu
-          this.pageMenu.forEach(menu => {
-              links.push({ path: '/page/' + menu.id, name: menu.title })
-          })
-          this.links = links
-      },
+    initMenu() {
+      const links = staticMenu
+      this.pageMenu.forEach(menu => {
+        links.push({ path: '/page/' + menu.id, name: menu.title })
+      })
+      this.links = links
+    },
     toggle() {
       this.menuOpen = !this.menuOpen
     },

@@ -1,7 +1,12 @@
 <template>
   <div>
     <Space>
-      <a-button type="primary" @click="openUploadModal" preIcon="carbon:cloud-upload">
+      <a-button
+        type="primary"
+        @click="openUploadModal"
+        preIcon="carbon:cloud-upload"
+        :disabled="disabled"
+      >
         {{ t('component.upload.upload') }}
       </a-button>
       <Tooltip placement="bottom" v-if="showPreview">
@@ -34,8 +39,8 @@
       @register="registerPreviewModal"
       @list-change="handlePreviewChange"
       @delete="handlePreviewDelete"
-      v-bind:preview-columns="props.previewColumns"
-      v-bind:before-preview-data="props.beforePreviewData"
+      :preview-columns="props.previewColumns"
+      :before-preview-data="props.beforePreviewData"
     />
   </div>
 </template>

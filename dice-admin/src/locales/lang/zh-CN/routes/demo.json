@@ -37,7 +37,7 @@
   },
   "editor": {
     "editor": "编辑器",
-    "jsonEditor": "Json编辑器",
+    "codeEditor": "代码编辑器",
     "markdown": "markdown编辑器",
     "tinymce": "富文本",
     "tinymceBasic": "基础使用",
@@ -53,6 +53,7 @@
   "feat": {
     "feat": "功能",
     "icon": "图标",
+    "screenShot": "截图",
     "sessionTimeout": "登录过期",
     "tabs": "标签页操作",
     "tabDetail": "标签详情页",

@@ -37,7 +37,7 @@
   },
   "editor": {
     "editor": "Editor",
-    "jsonEditor": "Json editor",
+    "codeEditor": "Code editor",
     "markdown": "Markdown editor",
     "tinymce": "Rich text",
     "tinymceBasic": "Basic",
@@ -53,6 +53,7 @@
   "feat": {
     "feat": "Page Function",
     "icon": "Icon",
+    "screenShot": "Screen Shot",
     "tabs": "Tabs",
     "tabDetail": "Tab Detail",
     "sessionTimeout": "Session Timeout",

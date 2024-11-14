@@ -4,6 +4,7 @@ import { computed, reactive, ref } from 'vue';
 import { LockKeyhole } from '@vben/icons';
 import { $t, useI18n } from '@vben/locales';
 import { storeToRefs, useLockStore } from '@vben/stores';
+import { useScrollLock } from '@vben-core/composables';
 import { useVbenForm, z } from '@vben-core/form-ui';
 import { VbenAvatar, VbenButton } from '@vben-core/shadcn-ui';
 
@@ -45,7 +46,7 @@ const [Form, { form, validate }] = useVbenForm(
       {
         component: 'VbenInputPassword' as const,
         componentProps: {
-          placeholder: $t('widgets.lockScreen.placeholder'),
+          placeholder: $t('ui.widgets.lockScreen.placeholder'),
         },
         fieldName: 'password',
         label: $t('authentication.password'),
@@ -74,6 +75,8 @@ async function handleSubmit() {
 function toggleUnlockForm() {
   showUnlockForm.value = !showUnlockForm.value;
 }
+
+useScrollLock();
 </script>
 
 <template>
@@ -87,7 +90,7 @@ function toggleUnlockForm() {
           <LockKeyhole
             class="size-5 transition-all duration-300 group-hover:scale-125"
           />
-          <span>{{ $t('widgets.lockScreen.unlock') }}</span>
+          <span>{{ $t('ui.widgets.lockScreen.unlock') }}</span>
         </div>
         <div class="flex h-full justify-center px-[10%]">
           <div
@@ -120,14 +123,14 @@ function toggleUnlockForm() {
             <Form />
           </div>
           <VbenButton class="enter-x w-full" @click="handleSubmit">
-            {{ $t('widgets.lockScreen.entry') }}
+            {{ $t('ui.widgets.lockScreen.entry') }}
           </VbenButton>
           <VbenButton
             class="enter-x my-2 w-full"
             variant="ghost"
             @click="$emit('toLogin')"
           >
-            {{ $t('widgets.lockScreen.backToLogin') }}
+            {{ $t('ui.widgets.lockScreen.backToLogin') }}
           </VbenButton>
           <VbenButton
             class="enter-x mr-2 w-full"

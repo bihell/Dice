@@ -6,7 +6,12 @@ import { bindMethods, isFunction } from '@vben-core/shared/utils';
 export class ModalApi {
   private api: Pick<
     ModalApiOptions,
-    'onBeforeClose' | 'onCancel' | 'onConfirm' | 'onOpenChange'
+    | 'onBeforeClose'
+    | 'onCancel'
+    | 'onClosed'
+    | 'onConfirm'
+    | 'onOpenChange'
+    | 'onOpened'
   >;
   // private prevState!: ModalState;
   private state!: ModalState;
@@ -23,24 +28,32 @@ export class ModalApi {
       connectedComponent: _,
       onBeforeClose,
       onCancel,
+      onClosed,
       onConfirm,
       onOpenChange,
+      onOpened,
       ...storeState
     } = options;
 
     const defaultState: ModalState = {
+      bordered: true,
       centered: false,
+      class: '',
       closeOnClickModal: true,
       closeOnPressEscape: true,
       confirmLoading: false,
+      contentClass: '',
       draggable: false,
       footer: true,
+      footerClass: '',
       fullscreen: false,
       fullscreenButton: true,
       header: true,
+      headerClass: '',
       isOpen: false,
       loading: false,
       modal: true,
+      openAutoFocus: false,
       showCancelButton: true,
       showConfirmButton: true,
       title: '',
@@ -71,8 +84,10 @@ export class ModalApi {
     this.api = {
       onBeforeClose,
       onCancel,
+      onClosed,
       onConfirm,
       onOpenChange,
+      onOpened,
     };
     bindMethods(this);
   }
@@ -110,10 +125,28 @@ export class ModalApi {
   }
 
   /**
+   * 弹窗关闭动画播放完毕后的回调
+   */
+  onClosed() {
+    if (!this.state.isOpen) {
+      this.api.onClosed?.();
+    }
+  }
+
+  /**
    * 确认操作
    */
   onConfirm() {
     this.api.onConfirm?.();
+  }
+
+  /**
+   * 弹窗打开动画播放完毕后的回调
+   */
+  onOpened() {
+    if (this.state.isOpen) {
+      this.api.onOpened?.();
+    }
   }
 
   open() {

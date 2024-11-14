@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ClassType } from '@vben-core/typings';
 import type {
   PopoverContentProps,
   PopoverRootEmits,
@@ -13,11 +14,11 @@ import {
   PopoverContent,
   Popover as PopoverRoot,
   PopoverTrigger,
-} from '../ui/popover';
+} from '../../ui';
 
 interface Props extends PopoverRootProps {
-  class?: any;
-  contentClass?: any;
+  class?: ClassType;
+  contentClass?: ClassType;
   contentProps?: PopoverContentProps;
 }
 

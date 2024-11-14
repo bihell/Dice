@@ -1,11 +1,9 @@
 import type { Config } from 'tailwindcss';
 
-import fs from 'node:fs';
 import path from 'node:path';
 
-import { getPackagesSync } from '@vben/node-utils';
-
 import { addDynamicIconSelectors } from '@iconify/tailwind';
+import { getPackagesSync } from '@manypkg/get-packages';
 import typographyPlugin from '@tailwindcss/typography';
 import animate from 'tailwindcss-animate';
 
@@ -13,15 +11,15 @@ import { enterAnimationPlugin } from './plugins/entry';
 
 // import defaultTheme from 'tailwindcss/defaultTheme';
 
-const { packages } = getPackagesSync();
+const { packages } = getPackagesSync(process.cwd());
 
 const tailwindPackages: string[] = [];
 
 packages.forEach((pkg) => {
   // apps目录下和 @vben-core/tailwind-ui 包需要使用到 tailwindcss ui
-  if (fs.existsSync(path.join(pkg.dir, 'tailwind.config.mjs'))) {
-    tailwindPackages.push(pkg.dir);
-  }
+  // if (fs.existsSync(path.join(pkg.dir, 'tailwind.config.mjs'))) {
+  tailwindPackages.push(pkg.dir);
+  // }
 });
 
 const shadcnUiColors = {
@@ -29,6 +27,7 @@ const shadcnUiColors = {
     DEFAULT: 'hsl(var(--accent))',
     foreground: 'hsl(var(--accent-foreground))',
     hover: 'hsl(var(--accent-hover))',
+    lighter: 'has(val(--accent-lighter))',
   },
   background: {
     deep: 'hsl(var(--background-deep))',
@@ -90,7 +89,10 @@ const customColors = {
   main: {
     DEFAULT: 'hsl(var(--main))',
   },
-  overlay: 'hsl(var(--overlay))',
+  overlay: {
+    content: 'hsl(var(--overlay-content))',
+    DEFAULT: 'hsl(var(--overlay))',
+  },
   red: {
     ...createColorsPalette('red'),
     foreground: 'hsl(var(--destructive-foreground))',

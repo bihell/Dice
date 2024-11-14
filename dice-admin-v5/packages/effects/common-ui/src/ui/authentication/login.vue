@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Recordable } from '@vben/types';
 import type { VbenFormSchema } from '@vben-core/form-ui';
 
-import type { AuthenticationProps, LoginEmits } from './types';
+import type { AuthenticationProps } from './types';
 
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -34,15 +35,16 @@ const props = withDefaults(defineProps<Props>(), {
   showRegister: true,
   showRememberMe: true,
   showThirdPartyLogin: true,
+  submitButtonText: '',
   subTitle: '',
   title: '',
 });
 
 const emit = defineEmits<{
-  submit: LoginEmits['submit'];
+  submit: [Recordable<any>];
 }>();
 
-const [Form, { setFieldValue, validate }] = useVbenForm(
+const [Form, formApi] = useVbenForm(
   reactive({
     commonConfig: {
       hideLabel: true,
@@ -61,13 +63,14 @@ const localUsername = localStorage.getItem(REMEMBER_ME_KEY) || '';
 const rememberMe = ref(!!localUsername);
 
 async function handleSubmit() {
-  const { valid, values } = await validate();
+  const { valid } = await formApi.validate();
+  const values = await formApi.getValues();
   if (valid) {
     localStorage.setItem(
       REMEMBER_ME_KEY,
       rememberMe.value ? values?.username : '',
     );
-    emit('submit', values as { password: string; username: string });
+    emit('submit', values);
   }
 }
 
@@ -77,8 +80,12 @@ function handleGo(path: string) {
 
 onMounted(() => {
   if (localUsername) {
-    setFieldValue('username', localUsername);
+    formApi.setFieldValue('username', localUsername);
   }
+});
+
+defineExpose({
+  getFormApi: () => formApi,
 });
 </script>
 
@@ -86,10 +93,14 @@ onMounted(() => {
   <div @keydown.enter.prevent="handleSubmit">
     <slot name="title">
       <Title>
-        {{ title || `${$t('authentication.welcomeBack')} 👋🏻` }}
+        <slot name="title">
+          {{ title || `${$t('authentication.welcomeBack')} 👋🏻` }}
+        </slot>
         <template #desc>
           <span class="text-muted-foreground">
-            {{ subTitle || $t('authentication.loginSubtitle') }}
+            <slot name="subTitle">
+              {{ subTitle || $t('authentication.loginSubtitle') }}
+            </slot>
           </span>
         </template>
       </Title>
@@ -101,22 +112,34 @@ onMounted(() => {
       v-if="showRememberMe || showForgetPassword"
       class="mb-6 flex justify-between"
     >
-      <div v-if="showRememberMe" class="flex-center">
-        <VbenCheckbox v-model:checked="rememberMe" name="rememberMe">
+      <div class="flex-center">
+        <VbenCheckbox
+          v-if="showRememberMe"
+          v-model:checked="rememberMe"
+          name="rememberMe"
+        >
           {{ $t('authentication.rememberMe') }}
         </VbenCheckbox>
       </div>
 
       <span
         v-if="showForgetPassword"
-        class="text-primary hover:text-primary-hover active:text-primary-active cursor-pointer text-sm font-normal"
+        class="vben-link text-sm font-normal"
         @click="handleGo(forgetPasswordPath)"
       >
         {{ $t('authentication.forgetPassword') }}
       </span>
     </div>
-    <VbenButton :loading="loading" class="w-full" @click="handleSubmit">
-      {{ $t('common.login') }}
+    <VbenButton
+      :class="{
+        'cursor-wait': loading,
+      }"
+      :loading="loading"
+      aria-label="login"
+      class="w-full"
+      @click="handleSubmit"
+    >
+      {{ submitButtonText || $t('common.login') }}
     </VbenButton>
 
     <div
@@ -150,7 +173,7 @@ onMounted(() => {
       <div v-if="showRegister" class="mt-3 text-center text-sm">
         {{ $t('authentication.accountTip') }}
         <span
-          class="text-primary hover:text-primary-hover active:text-primary-active cursor-pointer text-sm font-normal"
+          class="vben-link text-sm font-normal"
           @click="handleGo(registerPath)"
         >
           {{ $t('authentication.createAccount') }}

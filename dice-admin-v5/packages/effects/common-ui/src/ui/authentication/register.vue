@@ -1,7 +1,6 @@
 <script setup lang="ts">
+import type { Recordable } from '@vben/types';
 import type { VbenFormSchema } from '@vben-core/form-ui';
-
-import type { RegisterEmits } from './types';
 
 import { computed, reactive } from 'vue';
 import { useRouter } from 'vue-router';
@@ -19,9 +18,21 @@ interface Props {
    */
   loading?: boolean;
   /**
-   * @zh_CN 登陆路径
+   * @zh_CN 登录路径
    */
   loginPath?: string;
+  /**
+   * @zh_CN 标题
+   */
+  title?: string;
+  /**
+   * @zh_CN 描述
+   */
+  subTitle?: string;
+  /**
+   * @zh_CN 按钮文本
+   */
+  submitButtonText?: string;
 }
 
 defineOptions({
@@ -32,13 +43,16 @@ const props = withDefaults(defineProps<Props>(), {
   formSchema: () => [],
   loading: false,
   loginPath: '/auth/login',
+  submitButtonText: '',
+  subTitle: '',
+  title: '',
 });
 
 const emit = defineEmits<{
-  submit: RegisterEmits['submit'];
+  submit: [Recordable<any>];
 }>();
 
-const [Form, { validate }] = useVbenForm(
+const [Form, formApi] = useVbenForm(
   reactive({
     commonConfig: {
       hideLabel: true,
@@ -52,7 +66,8 @@ const [Form, { validate }] = useVbenForm(
 const router = useRouter();
 
 async function handleSubmit() {
-  const { valid, values } = await validate();
+  const { valid } = await formApi.validate();
+  const values = await formApi.getValues();
   if (valid) {
     emit('submit', values as { password: string; username: string });
   }
@@ -61,25 +76,42 @@ async function handleSubmit() {
 function goToLogin() {
   router.push(props.loginPath);
 }
+
+defineExpose({
+  getFormApi: () => formApi,
+});
 </script>
 
 <template>
   <div>
     <Title>
-      {{ $t('authentication.createAnAccount') }} 🚀
-      <template #desc> {{ $t('authentication.signUpSubtitle') }} </template>
+      <slot name="title">
+        {{ title || $t('authentication.createAnAccount') }} 🚀
+      </slot>
+      <template #desc>
+        <slot name="subTitle">
+          {{ subTitle || $t('authentication.signUpSubtitle') }}
+        </slot>
+      </template>
     </Title>
     <Form />
 
-    <VbenButton :loading="loading" class="mt-2 w-full" @click="handleSubmit">
-      {{ $t('authentication.signUp') }}
+    <VbenButton
+      :class="{
+        'cursor-wait': loading,
+      }"
+      :loading="loading"
+      aria-label="register"
+      class="mt-2 w-full"
+      @click="handleSubmit"
+    >
+      <slot name="submitButtonText">
+        {{ submitButtonText || $t('authentication.signUp') }}
+      </slot>
     </VbenButton>
     <div class="mt-4 text-center text-sm">
       {{ $t('authentication.alreadyHaveAccount') }}
-      <span
-        class="text-primary hover:text-primary-hover cursor-pointer text-sm font-normal"
-        @click="goToLogin()"
-      >
+      <span class="vben-link text-sm font-normal" @click="goToLogin()">
         {{ $t('authentication.goToLogin') }}
       </span>
     </div>

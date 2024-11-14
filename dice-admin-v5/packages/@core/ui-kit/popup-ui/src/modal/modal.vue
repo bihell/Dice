@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ExtendedModalApi, ModalProps } from './modal';
 
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, nextTick, provide, ref, useId, watch } from 'vue';
 
 import {
   useIsMobile,
@@ -22,25 +22,20 @@ import {
   VbenLoading,
   VisuallyHidden,
 } from '@vben-core/shadcn-ui';
+import { globalShareState } from '@vben-core/shared/global-state';
 import { cn } from '@vben-core/shared/utils';
 
 import { useModalDraggable } from './use-modal-draggable';
 
 interface Props extends ModalProps {
-  class?: string;
-  contentClass?: string;
-  footerClass?: string;
-  headerClass?: string;
   modalApi?: ExtendedModalApi;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  class: '',
-  contentClass: '',
-  footerClass: '',
-  headerClass: '',
   modalApi: undefined,
 });
+
+const components = globalShareState.getComponents();
 
 const contentRef = ref();
 const wrapperRef = ref<HTMLElement>();
@@ -48,26 +43,36 @@ const dialogRef = ref();
 const headerRef = ref();
 const footerRef = ref();
 
+const id = useId();
+
+provide('DISMISSABLE_MODAL_ID', id);
+
 const { $t } = useSimpleLocale();
 const { isMobile } = useIsMobile();
 const state = props.modalApi?.useStore?.();
 
 const {
+  bordered,
   cancelText,
   centered,
+  class: modalClass,
   closable,
   closeOnClickModal,
   closeOnPressEscape,
   confirmLoading,
   confirmText,
+  contentClass,
   description,
   draggable,
   footer: showFooter,
+  footerClass,
   fullscreen,
   fullscreenButton,
   header,
+  headerClass,
   loading: showLoading,
   modal,
+  openAutoFocus,
   showCancelButton,
   showConfirmButton,
   title,
@@ -126,6 +131,7 @@ function handleFullscreen() {
 function interactOutside(e: Event) {
   if (!closeOnClickModal.value) {
     e.preventDefault();
+    e.stopPropagation();
   }
 }
 function escapeKeyDown(e: KeyboardEvent) {
@@ -133,18 +139,31 @@ function escapeKeyDown(e: KeyboardEvent) {
     e.preventDefault();
   }
 }
+
+function handerOpenAutoFocus(e: Event) {
+  if (!openAutoFocus.value) {
+    e?.preventDefault();
+  }
+}
+
 // pointer-down-outside
 function pointerDownOutside(e: Event) {
   const target = e.target as HTMLElement;
-  const isDismissableModal = !!target?.dataset.dismissableModal;
-  if (!closeOnClickModal.value || !isDismissableModal) {
+  const isDismissableModal = target?.dataset.dismissableModal;
+  if (!closeOnClickModal.value || isDismissableModal !== id) {
     e.preventDefault();
+    e.stopPropagation();
   }
+}
+
+function handleFocusOutside(e: Event) {
+  e.preventDefault();
+  e.stopPropagation();
 }
 </script>
 <template>
   <Dialog
-    :modal="modal"
+    :modal="false"
     :open="state?.isOpen"
     @update:open="() => modalApi?.close()"
   >
@@ -152,9 +171,11 @@ function pointerDownOutside(e: Event) {
       ref="contentRef"
       :class="
         cn(
-          'border-border left-0 right-0 top-[10vh] mx-auto flex max-h-[80%] w-[520px] flex-col border p-0',
-          props.class,
+          'left-0 right-0 top-[10vh] mx-auto flex max-h-[80%] w-[520px] flex-col p-0 sm:rounded-2xl',
+          modalClass,
           {
+            'border-border border': bordered,
+            'shadow-3xl': !bordered,
             'left-0 top-0 size-full max-h-full !translate-x-0 !translate-y-0':
               shouldFullscreen,
             'top-1/2 !-translate-y-1/2': centered && !shouldFullscreen,
@@ -162,22 +183,30 @@ function pointerDownOutside(e: Event) {
           },
         )
       "
+      :modal="modal"
+      :open="state?.isOpen"
       :show-close="closable"
       close-class="top-3"
+      @close-auto-focus="handleFocusOutside"
+      @closed="() => modalApi?.onClosed()"
       @escape-key-down="escapeKeyDown"
+      @focus-outside="handleFocusOutside"
       @interact-outside="interactOutside"
+      @open-auto-focus="handerOpenAutoFocus"
+      @opened="() => modalApi?.onOpened()"
       @pointer-down-outside="pointerDownOutside"
     >
       <DialogHeader
         ref="headerRef"
         :class="
           cn(
-            'border-b px-5 py-4',
+            'px-5 py-4',
             {
+              'border-b': bordered,
               hidden: !header,
               'cursor-move select-none': shouldDraggable,
             },
-            props.headerClass,
+            headerClass,
           )
         "
       >
@@ -232,14 +261,18 @@ function pointerDownOutside(e: Event) {
         ref="footerRef"
         :class="
           cn(
-            'flex-row items-center justify-end border-t p-2',
-            props.footerClass,
+            'flex-row items-center justify-end p-2',
+            {
+              'border-t': bordered,
+            },
+            footerClass,
           )
         "
       >
         <slot name="prepend-footer"></slot>
         <slot name="footer">
-          <VbenButton
+          <component
+            :is="components.DefaultButton || VbenButton"
             v-if="showCancelButton"
             variant="ghost"
             @click="() => modalApi?.onCancel()"
@@ -247,8 +280,10 @@ function pointerDownOutside(e: Event) {
             <slot name="cancelText">
               {{ cancelText || $t('cancel') }}
             </slot>
-          </VbenButton>
-          <VbenButton
+          </component>
+
+          <component
+            :is="components.PrimaryButton || VbenButton"
             v-if="showConfirmButton"
             :loading="confirmLoading"
             @click="() => modalApi?.onConfirm()"
@@ -256,7 +291,7 @@ function pointerDownOutside(e: Event) {
             <slot name="confirmText">
               {{ confirmText || $t('confirm') }}
             </slot>
-          </VbenButton>
+          </component>
         </slot>
         <slot name="append-footer"></slot>
       </DialogFooter>

@@ -45,18 +45,21 @@ const typeWithClass = computed(() => {
   return typeClasses[props.styleType || 'plain'] || { content: '' };
 });
 
-const tabsView = computed((): TabConfig[] => {
+const tabsView = computed(() => {
   return props.tabs.map((tab) => {
+    const { fullPath, meta, name, path } = tab || {};
+    const { affixTab, icon, newTabTitle, tabClosable, title } = meta || {};
     return {
-      ...tab,
-      affixTab: !!tab.meta?.affixTab,
-      closable: Reflect.has(tab.meta, 'tabClosable')
-        ? !!tab.meta.tabClosable
-        : true,
-      icon: tab.meta.icon as string,
-      key: tab.fullPath || tab.path,
-      title: (tab.meta?.newTabTitle || tab.meta?.title || tab.name) as string,
-    };
+      affixTab: !!affixTab,
+      closable: Reflect.has(meta, 'tabClosable') ? !!tabClosable : true,
+      fullPath,
+      icon: icon as string,
+      key: fullPath || path,
+      meta,
+      name,
+      path,
+      title: (newTabTitle || title || name) as string,
+    } as TabConfig;
   });
 });
 </script>
@@ -64,16 +67,17 @@ const tabsView = computed((): TabConfig[] => {
 <template>
   <div
     :class="contentClass"
-    class="relative !flex h-full w-max items-center overflow-y-hidden pr-6"
+    class="relative !flex h-full w-max items-center overflow-hidden pr-6"
   >
-    <TransitionGroup name="slide-down">
+    <TransitionGroup name="slide-left">
       <div
         v-for="(tab, i) in tabsView"
         :key="tab.key"
         :class="[
           {
             'is-active dark:bg-accent bg-primary/15': tab.key === active,
-            dragable: !tab.affixTab,
+            draggable: !tab.affixTab,
+            'affix-tab': tab.affixTab,
           },
           typeWithClass.content,
         ]"

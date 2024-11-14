@@ -88,6 +88,8 @@ interface CopyrightPreferences {
   icp: string;
   /** 备案号链接 */
   icpLink: string;
+  /** 设置面板是否显示*/
+  settingShow?: boolean;
 }
 
 interface FooterPreferences {
@@ -154,7 +156,7 @@ interface ShortcutKeyPreferences {
 
 interface TabbarPreferences {
   /** 是否开启多标签页拖拽 */
-  dragable: boolean;
+  draggable: boolean;
   /** 是否开启多标签页 */
   enable: boolean;
   /** 标签页高度 */
@@ -169,8 +171,6 @@ interface TabbarPreferences {
   showMaximize: boolean;
   /** 显示更多按钮 */
   showMore: boolean;
-  /** 显示刷新按钮 */
-  showRefresh: boolean;
   /** 标签页风格 */
   styleType: TabsStyleType;
 }
@@ -218,6 +218,8 @@ interface WidgetPreferences {
   lockScreen: boolean;
   /** 是否显示通知部件 */
   notification: boolean;
+  /** 显示刷新按钮 */
+  refresh: boolean;
   /** 是否显示侧边栏显示/隐藏部件 */
   sidebarToggle: boolean;
   /** 是否显示主题切换部件 */

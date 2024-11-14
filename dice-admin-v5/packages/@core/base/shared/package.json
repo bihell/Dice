@@ -1,6 +1,6 @@
 {
   "name": "@vben-core/shared",
-  "version": "5.3.0-beta.2",
+  "version": "5.4.6",
   "homepage": "https://github.com/vbenjs/vue-vben-admin",
   "bugs": "https://github.com/vbenjs/vue-vben-admin/issues",
   "repository": {
@@ -11,7 +11,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "pnpm unbuild"
+    "build": "pnpm unbuild",
+    "stub": "pnpm unbuild --stub"
   },
   "files": [
     "dist"
@@ -42,6 +43,11 @@
       "types": "./src/store.ts",
       "development": "./src/store.ts",
       "default": "./dist/store.mjs"
+    },
+    "./global-state": {
+      "types": "./dist/global-state.d.ts",
+      "development": "./src/global-state.ts",
+      "default": "./dist/global-state.mjs"
     }
   },
   "publishConfig": {
@@ -63,24 +69,31 @@
         "default": "./dist/cache/index.mjs"
       },
       "./store": {
-        "types": "./dist/store/index.d.ts",
+        "types": "./dist/store.d.ts",
         "default": "./dist/store.mjs"
+      },
+      "./global-state": {
+        "types": "./dist/global-state.d.ts",
+        "default": "./dist/global-state.mjs"
       }
     }
   },
   "dependencies": {
-    "@ctrl/tinycolor": "^4.1.0",
-    "@tanstack/vue-store": "^0.5.5",
-    "@vue/shared": "^3.5.4",
-    "clsx": "^2.1.1",
-    "defu": "^6.1.4",
-    "lodash.clonedeep": "^4.5.0",
-    "nprogress": "^0.2.0",
-    "tailwind-merge": "^2.5.2",
-    "theme-colors": "^0.1.0"
+    "@ctrl/tinycolor": "catalog:",
+    "@tanstack/vue-store": "catalog:",
+    "@types/lodash.get": "catalog:",
+    "@vue/shared": "catalog:",
+    "clsx": "catalog:",
+    "dayjs": "catalog:",
+    "defu": "catalog:",
+    "lodash.clonedeep": "catalog:",
+    "lodash.get": "catalog:",
+    "nprogress": "catalog:",
+    "tailwind-merge": "catalog:",
+    "theme-colors": "catalog:"
   },
   "devDependencies": {
-    "@types/lodash.clonedeep": "^4.5.9",
-    "@types/nprogress": "^0.2.3"
+    "@types/lodash.clonedeep": "catalog:",
+    "@types/nprogress": "catalog:"
   }
 }

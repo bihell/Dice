@@ -61,35 +61,10 @@ interface AuthenticationProps {
    * @zh_CN 登录框标题
    */
   title?: string;
+  /**
+   * @zh_CN 提交按钮文本
+   */
+  submitButtonText?: string;
 }
 
-interface LoginAndRegisterParams {
-  password: string;
-  username: string;
-}
-
-interface LoginCodeParams {
-  code: string;
-  phoneNumber: string;
-}
-
-interface LoginEmits {
-  submit: [LoginAndRegisterParams];
-}
-
-interface LoginCodeEmits {
-  submit: [LoginCodeParams];
-}
-
-interface RegisterEmits {
-  submit: [LoginAndRegisterParams];
-}
-
-export type {
-  AuthenticationProps,
-  LoginAndRegisterParams,
-  LoginCodeEmits,
-  LoginCodeParams,
-  LoginEmits,
-  RegisterEmits,
-};
+export type { AuthenticationProps };

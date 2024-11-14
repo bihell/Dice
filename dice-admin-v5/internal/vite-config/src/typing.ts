@@ -123,14 +123,13 @@ interface ApplicationPluginOptions extends CommonPluginOptions {
   pwa?: boolean;
   /** pwa 插件配置 */
   pwaOptions?: Partial<PwaPluginOptions>;
+  /** 是否开启vxe-table懒加载 */
+  vxeTableLazyImport?: boolean;
 }
 
 interface LibraryPluginOptions extends CommonPluginOptions {
   /** 开启 dts 输出 */
   dts?: boolean | PluginOptions;
-
-  /** 是否注入lib css */
-  injectLibCss?: boolean;
 }
 
 type ApplicationOptions = ApplicationPluginOptions;

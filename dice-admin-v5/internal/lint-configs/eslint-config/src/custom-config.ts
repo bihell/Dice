@@ -15,10 +15,17 @@ const customConfig: Linter.Config[] = [
     },
   },
   {
-    files: ['packages/effects/**/**', 'packages/types/**/**'],
+    files: [
+      'apps/**/**',
+      'packages/effects/**/**',
+      'packages/utils/**/**',
+      'packages/types/**/**',
+      'packages/locales/**/**',
+    ],
     ignores: restrictedImportIgnores,
     rules: {
       'perfectionist/sort-interfaces': 'off',
+      'perfectionist/sort-objects': 'off',
     },
   },
   {
@@ -94,6 +101,7 @@ const customConfig: Linter.Config[] = [
       ],
     },
   },
+
   {
     // 不能引入@vben/*里面的包
     files: [
@@ -135,7 +143,15 @@ const customConfig: Linter.Config[] = [
     },
   },
   {
-    files: ['internal/**/**'],
+    files: ['**/**/playwright.config.ts'],
+    rules: {
+      'n/prefer-global/buffer': 'off',
+      'n/prefer-global/process': 'off',
+      'no-console': 'off',
+    },
+  },
+  {
+    files: ['internal/**/**', 'scripts/**/**'],
     rules: {
       'no-console': 'off',
     },

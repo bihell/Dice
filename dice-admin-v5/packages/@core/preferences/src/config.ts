@@ -10,7 +10,7 @@ const defaultPreferences: Preferences = {
     compact: false,
     contentCompact: 'wide',
     defaultAvatar:
-      'https://unpkg.com/@vbenjs/static-source@0.1.6/source/avatar-v1.webp',
+      'https://unpkg.com/@vbenjs/static-source@0.1.7/source/avatar-v1.webp',
     dynamicTitle: true,
     enableCheckUpdates: true,
     enablePreferences: true,
@@ -37,9 +37,10 @@ const defaultPreferences: Preferences = {
     enable: true,
     icp: '',
     icpLink: '',
+    settingShow: true,
   },
   footer: {
-    enable: true,
+    enable: false,
     fixed: false,
   },
   header: {
@@ -49,7 +50,7 @@ const defaultPreferences: Preferences = {
   },
   logo: {
     enable: true,
-    source: 'https://unpkg.com/@vbenjs/static-source@0.1.6/source/logo-v1.webp',
+    source: 'https://unpkg.com/@vbenjs/static-source@0.1.7/source/logo-v1.webp',
   },
   navigation: {
     accordion: true,
@@ -73,7 +74,7 @@ const defaultPreferences: Preferences = {
     width: 224,
   },
   tabbar: {
-    dragable: true,
+    draggable: true,
     enable: true,
     height: 38,
     keepAlive: true,
@@ -81,7 +82,6 @@ const defaultPreferences: Preferences = {
     showIcon: true,
     showMaximize: true,
     showMore: true,
-    showRefresh: true,
     styleType: 'chrome',
   },
   theme: {
@@ -93,7 +93,7 @@ const defaultPreferences: Preferences = {
     mode: 'dark',
     radius: '0.5',
     semiDarkHeader: false,
-    semiDarkSidebar: true,
+    semiDarkSidebar: false,
   },
   transition: {
     enable: true,
@@ -107,6 +107,7 @@ const defaultPreferences: Preferences = {
     languageToggle: true,
     lockScreen: true,
     notification: true,
+    refresh: true,
     sidebarToggle: true,
     themeToggle: true,
   },

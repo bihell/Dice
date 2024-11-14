@@ -1,3 +1,5 @@
+import type { ClassType } from '@vben-core/typings';
+
 import type { DrawerApi } from './drawer-api';
 
 import type { Component, Ref } from 'vue';
@@ -7,6 +9,7 @@ export interface DrawerProps {
    * 取消按钮文字
    */
   cancelText?: string;
+  class?: ClassType;
   /**
    * 是否显示右上角的关闭按钮
    * @default true
@@ -31,6 +34,7 @@ export interface DrawerProps {
    * 确定按钮文字
    */
   confirmText?: string;
+  contentClass?: string;
   /**
    * 弹窗描述
    */
@@ -41,6 +45,20 @@ export interface DrawerProps {
    */
   footer?: boolean;
   /**
+   * 弹窗底部样式
+   */
+  footerClass?: ClassType;
+  /**
+   * 是否显示顶栏
+   * @default true
+   */
+  header?: boolean;
+  /**
+   * 弹窗头部样式
+   */
+  headerClass?: ClassType;
+
+  /**
    * 弹窗是否显示
    * @default false
    */
@@ -50,6 +68,10 @@ export interface DrawerProps {
    * @default true
    */
   modal?: boolean;
+  /**
+   * 是否自动聚焦
+   */
+  openAutoFocus?: boolean;
   /**
    * 是否显示取消按钮
    * @default true

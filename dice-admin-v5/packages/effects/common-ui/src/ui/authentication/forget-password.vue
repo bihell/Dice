@@ -11,16 +11,27 @@ import { VbenButton } from '@vben-core/shadcn-ui';
 import Title from './auth-title.vue';
 
 interface Props {
+  formSchema: VbenFormSchema[];
   /**
    * @zh_CN 是否处于加载处理状态
    */
   loading?: boolean;
   /**
-   * @zh_CN 登陆路径
+   * @zh_CN 登录路径
    */
   loginPath?: string;
-
-  formSchema: VbenFormSchema[];
+  /**
+   * @zh_CN 标题
+   */
+  title?: string;
+  /**
+   * @zh_CN 描述
+   */
+  subTitle?: string;
+  /**
+   * @zh_CN 按钮文本
+   */
+  submitButtonText?: string;
 }
 
 defineOptions({
@@ -30,13 +41,16 @@ defineOptions({
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
   loginPath: '/auth/login',
+  submitButtonText: '',
+  subTitle: '',
+  title: '',
 });
 
 const emit = defineEmits<{
-  submit: [string];
+  submit: [Record<string, any>];
 }>();
 
-const [Form, { validate }] = useVbenForm(
+const [Form, formApi] = useVbenForm(
   reactive({
     commonConfig: {
       hideLabel: true,
@@ -50,31 +64,48 @@ const [Form, { validate }] = useVbenForm(
 const router = useRouter();
 
 async function handleSubmit() {
-  const { valid, values } = await validate();
-
+  const { valid } = await formApi.validate();
+  const values = await formApi.getValues();
   if (valid) {
-    emit('submit', values?.email);
+    emit('submit', values);
   }
 }
 
 function goToLogin() {
   router.push(props.loginPath);
 }
+
+defineExpose({
+  getFormApi: () => formApi,
+});
 </script>
 
 <template>
   <div>
     <Title>
-      {{ $t('authentication.forgetPassword') }} 🤦🏻‍♂️
+      <slot name="title">
+        {{ title || $t('authentication.forgetPassword') }} 🤦🏻‍♂️
+      </slot>
       <template #desc>
-        {{ $t('authentication.forgetPasswordSubtitle') }}
+        <slot name="subTitle">
+          {{ subTitle || $t('authentication.forgetPasswordSubtitle') }}
+        </slot>
       </template>
     </Title>
     <Form />
 
     <div>
-      <VbenButton class="mt-2 w-full" @click="handleSubmit">
-        {{ $t('authentication.sendResetLink') }}
+      <VbenButton
+        :class="{
+          'cursor-wait': loading,
+        }"
+        aria-label="submit"
+        class="mt-2 w-full"
+        @click="handleSubmit"
+      >
+        <slot name="submitButtonText">
+          {{ submitButtonText || $t('authentication.sendResetLink') }}
+        </slot>
       </VbenButton>
       <VbenButton class="mt-4 w-full" variant="outline" @click="goToLogin()">
         {{ $t('common.back') }}

@@ -42,8 +42,8 @@ export function useTabsDrag(props: TabsProps, emit: EmitType) {
     const { initializeSortable } = useSortable(el, {
       filter: (_evt, target: HTMLElement) => {
         const parent = findParentElement(target);
-        const dragable = parent?.classList.contains('dragable');
-        return !dragable || !props.dragable;
+        const draggable = parent?.classList.contains('draggable');
+        return !draggable || !props.draggable;
       },
       onEnd(evt) {
         const { newIndex, oldIndex } = evt;
@@ -62,7 +62,7 @@ export function useTabsDrag(props: TabsProps, emit: EmitType) {
           return;
         }
 
-        if (!srcParent.classList.contains('dragable')) {
+        if (!srcParent.classList.contains('draggable')) {
           resetElState();
 
           return;
@@ -81,7 +81,14 @@ export function useTabsDrag(props: TabsProps, emit: EmitType) {
       },
       onMove(evt) {
         const parent = findParentElement(evt.related);
-        return parent?.classList.contains('dragable') && props.dragable;
+        if (parent?.classList.contains('draggable') && props.draggable) {
+          const isCurrentAffix = evt.dragged.classList.contains('affix-tab');
+          const isRelatedAffix = evt.related.classList.contains('affix-tab');
+          // 不允许在固定的tab和非固定的tab之间互相拖拽
+          return isCurrentAffix === isRelatedAffix;
+        } else {
+          return false;
+        }
       },
       onStart: () => {
         el.style.cursor = 'grabbing';

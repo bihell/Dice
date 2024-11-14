@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-import { DEFAULT_HOME_PATH } from '@vben/constants';
+import { DEFAULT_HOME_PATH, LOGIN_PATH } from '@vben/constants';
 
 import { AuthPageLayout } from '#/layouts';
 import { $t } from '#/locales';
@@ -32,17 +32,19 @@ const coreRoutes: RouteRecordRaw[] = [
   {
     component: AuthPageLayout,
     meta: {
+      hideInTab: true,
       title: 'Authentication',
     },
     name: 'Authentication',
     path: '/auth',
+    redirect: LOGIN_PATH,
     children: [
       {
         name: 'Login',
         path: 'login',
         component: Login,
         meta: {
-          title: $t('page.core.login'),
+          title: $t('page.auth.login'),
         },
       },
       {
@@ -50,7 +52,7 @@ const coreRoutes: RouteRecordRaw[] = [
         path: 'code-login',
         component: () => import('#/views/_core/authentication/code-login.vue'),
         meta: {
-          title: $t('page.core.codeLogin'),
+          title: $t('page.auth.codeLogin'),
         },
       },
       {
@@ -59,7 +61,7 @@ const coreRoutes: RouteRecordRaw[] = [
         component: () =>
           import('#/views/_core/authentication/qrcode-login.vue'),
         meta: {
-          title: $t('page.core.qrcodeLogin'),
+          title: $t('page.auth.qrcodeLogin'),
         },
       },
       {
@@ -68,7 +70,7 @@ const coreRoutes: RouteRecordRaw[] = [
         component: () =>
           import('#/views/_core/authentication/forget-password.vue'),
         meta: {
-          title: $t('page.core.forgetPassword'),
+          title: $t('page.auth.forgetPassword'),
         },
       },
       {
@@ -76,7 +78,7 @@ const coreRoutes: RouteRecordRaw[] = [
         path: 'register',
         component: () => import('#/views/_core/authentication/register.vue'),
         meta: {
-          title: $t('page.core.register'),
+          title: $t('page.auth.register'),
         },
       },
     ],

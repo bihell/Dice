@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Recordable } from '@vben/types';
+
 import { computed, reactive } from 'vue';
 
 import { $t } from '@vben/locales';
@@ -11,14 +13,6 @@ interface Props {
   text?: string;
 }
 
-interface LockAndRegisterParams {
-  lockScreenPassword: string;
-}
-
-interface RegisterEmits {
-  submit: [LockAndRegisterParams];
-}
-
 defineOptions({
   name: 'LockScreenModal',
 });
@@ -29,10 +23,10 @@ withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  submit: RegisterEmits['submit'];
+  submit: [Recordable<any>];
 }>();
 
-const [Form, { resetForm, validate }] = useVbenForm(
+const [Form, { resetForm, validate, getValues }] = useVbenForm(
   reactive({
     commonConfig: {
       hideLabel: true,
@@ -42,14 +36,14 @@ const [Form, { resetForm, validate }] = useVbenForm(
       {
         component: 'VbenInputPassword' as const,
         componentProps: {
-          placeholder: $t('widgets.lockScreen.placeholder'),
+          placeholder: $t('ui.widgets.lockScreen.placeholder'),
         },
         fieldName: 'lockScreenPassword',
         formFieldProps: { validateOnBlur: false },
         label: $t('authentication.password'),
         rules: z
           .string()
-          .min(1, { message: $t('widgets.lockScreen.placeholder') }),
+          .min(1, { message: $t('ui.widgets.lockScreen.placeholder') }),
       },
     ]),
     showDefaultActions: false,
@@ -68,7 +62,8 @@ const [Modal] = useVbenModal({
 });
 
 async function handleSubmit() {
-  const { valid, values } = await validate();
+  const { valid } = await validate();
+  const values = await getValues();
   if (valid) {
     emit('submit', values?.lockScreenPassword);
   }
@@ -79,7 +74,7 @@ async function handleSubmit() {
   <Modal
     :footer="false"
     :fullscreen-button="false"
-    :title="$t('widgets.lockScreen.title')"
+    :title="$t('ui.widgets.lockScreen.title')"
   >
     <div
       class="mb-10 flex w-full flex-col items-center px-10"
@@ -98,7 +93,7 @@ async function handleSubmit() {
         </div>
         <Form />
         <VbenButton class="mt-1 w-full" @click="handleSubmit">
-          {{ $t('widgets.lockScreen.screenButton') }}
+          {{ $t('ui.widgets.lockScreen.screenButton') }}
         </VbenButton>
       </div>
     </div>

@@ -99,9 +99,17 @@ interface RouteMeta {
    */
   menuVisibleWithForbidden?: boolean;
   /**
+   * 在新窗口打开
+   */
+  openInNewWindow?: boolean;
+  /**
    * 用于路由->菜单排序
    */
   order?: number;
+  /**
+   * 菜单所携带的参数
+   */
+  query?: Recordable;
   /**
    * 标题名称
    */

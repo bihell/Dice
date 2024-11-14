@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ClassType } from '@vben-core/typings';
 import type {
   HoverCardContentProps,
   HoverCardRootEmits,
@@ -9,15 +10,11 @@ import { computed } from 'vue';
 
 import { useForwardPropsEmits } from 'radix-vue';
 
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '../ui/hover-card';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../ui';
 
 interface Props extends HoverCardRootProps {
-  class?: any;
-  contentClass?: any;
+  class?: ClassType;
+  contentClass?: ClassType;
   contentProps?: HoverCardContentProps;
 }
 

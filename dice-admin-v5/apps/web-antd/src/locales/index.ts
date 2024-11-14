@@ -4,7 +4,11 @@ import type { Locale } from 'ant-design-vue/es/locale';
 import type { App } from 'vue';
 import { ref } from 'vue';
 
-import { $t, setupI18n as coreSetup, loadLocalesMap } from '@vben/locales';
+import {
+  $t,
+  setupI18n as coreSetup,
+  loadLocalesMapFromDir,
+} from '@vben/locales';
 import { preferences } from '@vben/preferences';
 
 import antdEnLocale from 'ant-design-vue/es/locale/en_US';
@@ -13,10 +17,12 @@ import dayjs from 'dayjs';
 
 const antdLocale = ref<Locale>(antdDefaultLocale);
 
-const modules = import.meta.glob('./langs/*.json');
+const modules = import.meta.glob('./langs/**/*.json');
 
-const localesMap = loadLocalesMap(modules);
-
+const localesMap = loadLocalesMapFromDir(
+  /\.\/langs\/([^/]+)\/(.*)\.json$/,
+  modules,
+);
 /**
  * 加载应用特有的语言包
  * 这里也可以改造为从服务端获取翻译数据
@@ -45,12 +51,12 @@ async function loadThirdPartyMessage(lang: SupportedLanguagesType) {
 async function loadDayjsLocale(lang: SupportedLanguagesType) {
   let locale;
   switch (lang) {
-    case 'zh-CN': {
-      locale = await import('dayjs/locale/zh-cn');
-      break;
-    }
     case 'en-US': {
       locale = await import('dayjs/locale/en');
+      break;
+    }
+    case 'zh-CN': {
+      locale = await import('dayjs/locale/zh-cn');
       break;
     }
     // 默认使用英语
@@ -71,12 +77,12 @@ async function loadDayjsLocale(lang: SupportedLanguagesType) {
  */
 async function loadAntdLocale(lang: SupportedLanguagesType) {
   switch (lang) {
-    case 'zh-CN': {
-      antdLocale.value = antdDefaultLocale;
-      break;
-    }
     case 'en-US': {
       antdLocale.value = antdEnLocale;
+      break;
+    }
+    case 'zh-CN': {
+      antdLocale.value = antdDefaultLocale;
       break;
     }
   }

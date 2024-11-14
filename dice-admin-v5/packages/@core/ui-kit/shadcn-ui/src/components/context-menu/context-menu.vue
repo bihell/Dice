@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ClassType } from '@vben-core/typings';
 import type {
   ContextMenuContentProps,
   ContextMenuRootEmits,
@@ -18,15 +19,15 @@ import {
   ContextMenuSeparator,
   ContextMenuShortcut,
   ContextMenuTrigger,
-} from '../ui/context-menu';
+} from '../../ui/context-menu';
 
 const props = defineProps<
   {
-    class?: any;
-    contentClass?: any;
+    class?: ClassType;
+    contentClass?: ClassType;
     contentProps?: ContextMenuContentProps;
     handlerData?: Record<string, any>;
-    itemClass?: any;
+    itemClass?: ClassType;
     menus: (data: any) => IContextMenuItem[];
   } & ContextMenuRootProps
 >();

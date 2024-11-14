@@ -1,7 +1,8 @@
+import type { ModalState } from '../modal';
+
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ModalApi } from '../modal-api'; // 假设 ModalApi 位于同一目录
-import type { ModalState } from '../modal';
+import { ModalApi } from '../modal-api';
 
 vi.mock('@vben-core/shared/store', () => {
   return {
@@ -108,5 +109,20 @@ describe('modalApi', () => {
     expect(batchSpy).toHaveBeenCalled();
     expect(modalApi.store.state.title).toBe('Batch Title');
     expect(modalApi.store.state.confirmText).toBe('Batch Confirm');
+  });
+
+  it('should call onClosed callback when provided', () => {
+    const onClosed = vi.fn();
+    const modalApiWithHook = new ModalApi({ onClosed });
+    modalApiWithHook.onClosed();
+    expect(onClosed).toHaveBeenCalled();
+  });
+
+  it('should call onOpened callback when provided', () => {
+    const onOpened = vi.fn();
+    const modalApiWithHook = new ModalApi({ onOpened });
+    modalApiWithHook.open();
+    modalApiWithHook.onOpened();
+    expect(onOpened).toHaveBeenCalled();
   });
 });

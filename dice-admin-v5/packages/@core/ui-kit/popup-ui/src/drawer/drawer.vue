@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { DrawerProps, ExtendedDrawerApi } from './drawer';
 
-import { ref, watch } from 'vue';
+import { provide, ref, useId, watch } from 'vue';
 
 import {
   useIsMobile,
@@ -23,36 +23,45 @@ import {
   VbenLoading,
   VisuallyHidden,
 } from '@vben-core/shadcn-ui';
+import { globalShareState } from '@vben-core/shared/global-state';
 import { cn } from '@vben-core/shared/utils';
 
 interface Props extends DrawerProps {
-  class?: string;
-  contentClass?: string;
   drawerApi?: ExtendedDrawerApi;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  class: '',
-  contentClass: '',
   drawerApi: undefined,
 });
+
+const components = globalShareState.getComponents();
+
+const id = useId();
+provide('DISMISSABLE_DRAWER_ID', id);
 
 const wrapperRef = ref<HTMLElement>();
 const { $t } = useSimpleLocale();
 const { isMobile } = useIsMobile();
+
 const state = props.drawerApi?.useStore?.();
 
 const {
   cancelText,
+  class: drawerClass,
   closable,
   closeOnClickModal,
   closeOnPressEscape,
   confirmLoading,
   confirmText,
+  contentClass,
   description,
   footer: showFooter,
+  footerClass,
+  header: showHeader,
+  headerClass,
   loading: showLoading,
   modal,
+  openAutoFocus,
   showCancelButton,
   showConfirmButton,
   title,
@@ -84,33 +93,54 @@ function escapeKeyDown(e: KeyboardEvent) {
 // pointer-down-outside
 function pointerDownOutside(e: Event) {
   const target = e.target as HTMLElement;
-  const isDismissableModal = !!target?.dataset.dismissableModal;
-  if (!closeOnClickModal.value || !isDismissableModal) {
+  const dismissableDrawer = target?.dataset.dismissableDrawer;
+  if (!closeOnClickModal.value || dismissableDrawer !== id) {
     e.preventDefault();
   }
+}
+
+function handerOpenAutoFocus(e: Event) {
+  if (!openAutoFocus.value) {
+    e?.preventDefault();
+  }
+}
+
+function handleFocusOutside(e: Event) {
+  e.preventDefault();
+  e.stopPropagation();
 }
 </script>
 <template>
   <Sheet
-    :modal="modal"
+    :modal="false"
     :open="state?.isOpen"
     @update:open="() => drawerApi?.close()"
   >
     <SheetContent
       :class="
-        cn('flex w-[520px] flex-col', props.class, {
+        cn('flex w-[520px] flex-col', drawerClass, {
           '!w-full': isMobile,
         })
       "
+      :modal="modal"
+      :open="state?.isOpen"
+      @close-auto-focus="handleFocusOutside"
       @escape-key-down="escapeKeyDown"
+      @focus-outside="handleFocusOutside"
       @interact-outside="interactOutside"
+      @open-auto-focus="handerOpenAutoFocus"
       @pointer-down-outside="pointerDownOutside"
     >
       <SheetHeader
+        v-if="showHeader"
         :class="
-          cn('!flex flex-row items-center justify-between border-b px-6 py-5', {
-            'px-4 py-3': closable,
-          })
+          cn(
+            '!flex flex-row items-center justify-between border-b px-6 py-5',
+            headerClass,
+            {
+              'px-4 py-3': closable,
+            },
+          )
         "
       >
         <div>
@@ -148,7 +178,12 @@ function pointerDownOutside(e: Event) {
           </SheetClose>
         </div>
       </SheetHeader>
-
+      <template v-else>
+        <VisuallyHidden>
+          <SheetTitle />
+          <SheetDescription />
+        </VisuallyHidden>
+      </template>
       <div
         ref="wrapperRef"
         :class="
@@ -164,11 +199,17 @@ function pointerDownOutside(e: Event) {
 
       <SheetFooter
         v-if="showFooter"
-        class="w-full flex-row items-center justify-end border-t p-2 px-3"
+        :class="
+          cn(
+            'w-full flex-row items-center justify-end border-t p-2 px-3',
+            footerClass,
+          )
+        "
       >
         <slot name="prepend-footer"></slot>
         <slot name="footer">
-          <VbenButton
+          <component
+            :is="components.DefaultButton || VbenButton"
             v-if="showCancelButton"
             variant="ghost"
             @click="() => drawerApi?.onCancel()"
@@ -176,8 +217,10 @@ function pointerDownOutside(e: Event) {
             <slot name="cancelText">
               {{ cancelText || $t('cancel') }}
             </slot>
-          </VbenButton>
-          <VbenButton
+          </component>
+
+          <component
+            :is="components.PrimaryButton || VbenButton"
             v-if="showConfirmButton"
             :loading="confirmLoading"
             @click="() => drawerApi?.onConfirm()"
@@ -185,7 +228,7 @@ function pointerDownOutside(e: Event) {
             <slot name="confirmText">
               {{ confirmText || $t('confirm') }}
             </slot>
-          </VbenButton>
+          </component>
         </slot>
         <slot name="append-footer"></slot>
       </SheetFooter>

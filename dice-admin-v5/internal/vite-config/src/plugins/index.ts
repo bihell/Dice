@@ -14,7 +14,6 @@ import { visualizer as viteVisualizerPlugin } from 'rollup-plugin-visualizer';
 import viteCompressPlugin from 'vite-plugin-compression';
 import viteDtsPlugin from 'vite-plugin-dts';
 import { createHtmlPlugin as viteHtmlPlugin } from 'vite-plugin-html';
-import { libInjectCss as viteLibInjectCss } from 'vite-plugin-lib-inject-css';
 import { VitePWA } from 'vite-plugin-pwa';
 import viteVueDevTools from 'vite-plugin-vue-devtools';
 
@@ -26,6 +25,7 @@ import { viteMetadataPlugin } from './inject-metadata';
 import { viteLicensePlugin } from './license';
 import { viteNitroMockPlugin } from './nitro-mock';
 import { vitePrintPlugin } from './print';
+import { viteVxeTableImportsPlugin } from './vxe-table';
 
 /**
  * 获取条件成立的 vite 插件
@@ -110,6 +110,7 @@ async function loadApplicationPlugins(
     printInfoMap,
     pwa,
     pwaOptions,
+    vxeTableLazyImport,
     ...commonOptions
   } = options;
 
@@ -133,6 +134,12 @@ async function loadApplicationPlugins(
       condition: print,
       plugins: async () => {
         return [await vitePrintPlugin({ infoMap: printInfoMap })];
+      },
+    },
+    {
+      condition: vxeTableLazyImport,
+      plugins: async () => {
+        return [await viteVxeTableImportsPlugin()];
       },
     },
     {
@@ -217,17 +224,13 @@ async function loadLibraryPlugins(
 ): Promise<PluginOption[]> {
   // 单独取，否则commonOptions拿不到
   const isBuild = options.isBuild;
-  const { dts, injectLibCss, ...commonOptions } = options;
+  const { dts, ...commonOptions } = options;
   const commonPlugins = await loadCommonPlugins(commonOptions);
   return await loadConditionPlugins([
     ...commonPlugins,
     {
       condition: isBuild && !!dts,
       plugins: () => [viteDtsPlugin({ logLevel: 'error' })],
-    },
-    {
-      condition: injectLibCss,
-      plugins: () => [viteLibInjectCss()],
     },
   ]);
 }
@@ -240,4 +243,5 @@ export {
   viteDtsPlugin,
   viteHtmlPlugin,
   viteVisualizerPlugin,
+  viteVxeTableImportsPlugin,
 };

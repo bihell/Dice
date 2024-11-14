@@ -16,7 +16,12 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "dist.zip"]
+      "outputs": [
+        "dist/**",
+        "dist.zip",
+        ".vitepress/dist.zip",
+        ".vitepress/dist/**"
+      ]
     },
     "preview": {
       "dependsOn": ["^build"],
@@ -30,9 +35,7 @@
       "dependsOn": ["^build"],
       "outputs": [".nitro/**", ".output/**"]
     },
-    "stub": {
-      "cache": false
-    },
+    "test:e2e": {},
     "dev": {
       "dependsOn": [],
       "outputs": [],

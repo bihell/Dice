@@ -1,3 +1,4 @@
+export * from './api-component';
 export * from './captcha';
 export * from './ellipsis-text';
 export * from './icon-picker';

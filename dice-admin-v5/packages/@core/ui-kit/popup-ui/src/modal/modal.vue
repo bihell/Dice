@@ -22,6 +22,7 @@ import {
   VbenLoading,
   VisuallyHidden,
 } from '@vben-core/shadcn-ui';
+import { ELEMENT_ID_MAIN_CONTENT } from '@vben-core/shared/constants';
 import { globalShareState } from '@vben-core/shared/global-state';
 import { cn } from '@vben-core/shared/utils';
 
@@ -32,6 +33,7 @@ interface Props extends ModalProps {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  appendToMain: false,
   modalApi: undefined,
 });
 
@@ -52,6 +54,7 @@ const { isMobile } = useIsMobile();
 const state = props.modalApi?.useStore?.();
 
 const {
+  appendToMain,
   bordered,
   cancelText,
   centered,
@@ -59,6 +62,7 @@ const {
   closable,
   closeOnClickModal,
   closeOnPressEscape,
+  confirmDisabled,
   confirmLoading,
   confirmText,
   contentClass,
@@ -77,6 +81,7 @@ const {
   showConfirmButton,
   title,
   titleTooltip,
+  zIndex,
 } = usePriorityValues(props, state);
 
 const shouldFullscreen = computed(
@@ -160,6 +165,9 @@ function handleFocusOutside(e: Event) {
   e.preventDefault();
   e.stopPropagation();
 }
+const getAppendTo = computed(() => {
+  return appendToMain.value ? `#${ELEMENT_ID_MAIN_CONTENT}` : undefined;
+});
 </script>
 <template>
   <Dialog
@@ -169,9 +177,10 @@ function handleFocusOutside(e: Event) {
   >
     <DialogContent
       ref="contentRef"
+      :append-to="getAppendTo"
       :class="
         cn(
-          'left-0 right-0 top-[10vh] mx-auto flex max-h-[80%] w-[520px] flex-col p-0 sm:rounded-2xl',
+          'left-0 right-0 top-[10vh] mx-auto flex max-h-[80%] w-[520px] flex-col p-0 sm:rounded-[var(--radius)]',
           modalClass,
           {
             'border-border border': bordered,
@@ -186,6 +195,7 @@ function handleFocusOutside(e: Event) {
       :modal="modal"
       :open="state?.isOpen"
       :show-close="closable"
+      :z-index="zIndex"
       close-class="top-3"
       @close-auto-focus="handleFocusOutside"
       @closed="() => modalApi?.onClosed()"
@@ -235,7 +245,7 @@ function handleFocusOutside(e: Event) {
         ref="wrapperRef"
         :class="
           cn('relative min-h-40 flex-1 overflow-y-auto p-3', contentClass, {
-            'overflow-hidden': showLoading,
+            'pointer-events-none overflow-hidden': showLoading,
           })
         "
       >
@@ -285,6 +295,7 @@ function handleFocusOutside(e: Event) {
           <component
             :is="components.PrimaryButton || VbenButton"
             v-if="showConfirmButton"
+            :disabled="confirmDisabled"
             :loading="confirmLoading"
             @click="() => modalApi?.onConfirm()"
           >

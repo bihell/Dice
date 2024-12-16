@@ -4,7 +4,14 @@ import type { DrawerApi } from './drawer-api';
 
 import type { Component, Ref } from 'vue';
 
+export type DrawerPlacement = 'bottom' | 'left' | 'right' | 'top';
+
 export interface DrawerProps {
+  /**
+   * 是否挂载到内容区域
+   * @default false
+   */
+  appendToMain?: boolean;
   /**
    * 取消按钮文字
    */
@@ -57,12 +64,12 @@ export interface DrawerProps {
    * 弹窗头部样式
    */
   headerClass?: ClassType;
-
   /**
    * 弹窗是否显示
    * @default false
    */
   loading?: boolean;
+
   /**
    * 是否显示遮罩
    * @default true
@@ -72,6 +79,12 @@ export interface DrawerProps {
    * 是否自动聚焦
    */
   openAutoFocus?: boolean;
+  /**
+   * 抽屉位置
+   * @default right
+   */
+  placement?: DrawerPlacement;
+
   /**
    * 是否显示取消按钮
    * @default true
@@ -90,6 +103,10 @@ export interface DrawerProps {
    * 弹窗标题提示
    */
   titleTooltip?: string;
+  /**
+   * 抽屉层级
+   */
+  zIndex?: number;
 }
 
 export interface DrawerState extends DrawerProps {

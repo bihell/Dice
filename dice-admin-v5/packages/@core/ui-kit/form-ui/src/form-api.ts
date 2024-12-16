@@ -13,12 +13,14 @@ import { toRaw } from 'vue';
 import { Store } from '@vben-core/shared/store';
 import {
   bindMethods,
+  createMerge,
+  isDate,
+  isDayjsObject,
   isFunction,
+  isObject,
   mergeWithArrayOverride,
   StateHandler,
 } from '@vben-core/shared/utils';
-
-import { objectPick } from '@vueuse/core';
 
 function getDefaultState(): VbenFormProps {
   return {
@@ -36,6 +38,7 @@ function getDefaultState(): VbenFormProps {
     showCollapseButton: false,
     showDefaultActions: true,
     submitButtonOptions: {},
+    submitOnChange: false,
     submitOnEnter: false,
     wrapperClass: 'grid-cols-1',
   };
@@ -185,7 +188,7 @@ export class FormApi {
     const fieldSet = new Set(fields);
     const schema = this.state?.schema ?? [];
 
-    const filterSchema = schema.filter((item) => fieldSet.has(item.fieldName));
+    const filterSchema = schema.filter((item) => !fieldSet.has(item.fieldName));
 
     this.setState({
       schema: filterSchema,
@@ -250,8 +253,26 @@ export class FormApi {
       form.setValues(fields, shouldValidate);
       return;
     }
-    const fieldNames = this.state?.schema?.map((item) => item.fieldName) ?? [];
-    const filteredFields = objectPick(fields, fieldNames);
+
+    /**
+     * 合并算法有待改进，目前的算法不支持object类型的值。
+     * antd的日期时间相关组件的值类型为dayjs对象
+     * element-plus的日期时间相关组件的值类型可能为Date对象
+     * 以上两种类型需要排除深度合并
+     */
+    const fieldMergeFn = createMerge((obj, key, value) => {
+      if (key in obj) {
+        obj[key] =
+          !Array.isArray(obj[key]) &&
+          isObject(obj[key]) &&
+          !isDayjsObject(obj[key]) &&
+          !isDate(obj[key])
+            ? fieldMergeFn(obj[key], value)
+            : value;
+      }
+      return true;
+    });
+    const filteredFields = fieldMergeFn(fields, form.values);
     form.setValues(filteredFields, shouldValidate);
   }
 

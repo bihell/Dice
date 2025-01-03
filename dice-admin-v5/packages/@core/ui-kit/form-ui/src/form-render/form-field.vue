@@ -26,6 +26,7 @@ import { isEventObjectLike } from './helper';
 interface Props extends FormSchema {}
 
 const {
+  colon,
   commonComponentProps,
   component,
   componentProps,
@@ -43,9 +44,9 @@ const {
   renderComponentContent,
   rules,
 } = defineProps<
-  {
+  Props & {
     commonComponentProps: MaybeComponentProps;
-  } & Props
+  }
 >();
 
 const { componentBindEventMap, componentMap, isVertical } = useFormContext();
@@ -54,7 +55,7 @@ const values = useFormValues();
 const errors = useFieldError(fieldName);
 const fieldComponentRef = useTemplateRef<HTMLInputElement>('fieldComponentRef');
 const formApi = formRenderProps.form;
-
+const compact = formRenderProps.compact;
 const isInValid = computed(() => errors.value?.length > 0);
 
 const FieldComponent = computed(() => {
@@ -280,8 +281,10 @@ function autofocus() {
         'form-valid-error': isInValid,
         'flex-col': isVertical,
         'flex-row items-center': !isVertical,
+        'pb-6': !compact,
+        'pb-2': compact,
       }"
-      class="flex pb-6"
+      class="flex"
       v-bind="$attrs"
     >
       <FormLabel
@@ -300,7 +303,10 @@ function autofocus() {
         :required="shouldRequired && !hideRequiredMark"
         :style="labelStyle"
       >
-        {{ label }}
+        <template v-if="label">
+          <span>{{ label }}</span>
+          <span v-if="colon" class="ml-[2px]">:</span>
+        </template>
       </FormLabel>
       <div :class="cn('relative flex w-full items-center', wrapperClass)">
         <FormControl :class="cn(controlClass)">

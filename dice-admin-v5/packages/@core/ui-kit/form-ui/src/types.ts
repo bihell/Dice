@@ -1,11 +1,12 @@
-import type { VbenButtonProps } from '@vben-core/shadcn-ui';
-import type { ClassType } from '@vben-core/typings';
 import type { FieldOptions, FormContext, GenericObject } from 'vee-validate';
 import type { ZodTypeAny } from 'zod';
 
-import type { FormApi } from './form-api';
-
 import type { Component, HtmlHTMLAttributes, Ref } from 'vue';
+
+import type { VbenButtonProps } from '@vben-core/shadcn-ui';
+import type { ClassType } from '@vben-core/typings';
+
+import type { FormApi } from './form-api';
 
 export type FormLayout = 'horizontal' | 'vertical';
 
@@ -19,7 +20,7 @@ export type BaseFormComponentType =
   | 'VbenSelect'
   | (Record<never, never> & string);
 
-type Breakpoints = '' | '2xl:' | '3xl:' | 'lg:' | 'md:' | 'sm:' | 'xl:';
+type Breakpoints = '2xl:' | '3xl:' | '' | 'lg:' | 'md:' | 'sm:' | 'xl:';
 
 type GridCols = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
 
@@ -35,12 +36,12 @@ export type FormItemClassType =
   | WrapperClassType;
 
 export type FormFieldOptions = Partial<
-  {
+  FieldOptions & {
     validateOnBlur?: boolean;
     validateOnChange?: boolean;
     validateOnInput?: boolean;
     validateOnModelUpdate?: boolean;
-  } & FieldOptions
+  }
 >;
 
 export interface FormShape {
@@ -136,6 +137,10 @@ type ComponentProps =
   | MaybeComponentProps;
 
 export interface FormCommonConfig {
+  /**
+   * 在Label后显示一个冒号
+   */
+  colon?: boolean;
   /**
    * 所有表单项的props
    */
@@ -270,6 +275,10 @@ export interface FormRenderProps<
    */
   commonConfig?: FormCommonConfig;
   /**
+   * 紧凑模式（移除表单每一项底部为校验信息预留的空间）
+   */
+  compact?: boolean;
+  /**
    * 组件v-model事件绑定
    */
   componentBindEventMap?: Partial<Record<BaseFormComponentType, string>>;
@@ -364,11 +373,11 @@ export interface VbenFormProps<
   submitOnEnter?: boolean;
 }
 
-export type ExtendedFormApi = {
+export type ExtendedFormApi = FormApi & {
   useStore: <T = NoInfer<VbenFormProps>>(
     selector?: (state: NoInfer<VbenFormProps>) => T,
   ) => Readonly<Ref<T>>;
-} & FormApi;
+};
 
 export interface VbenFormAdapterOptions<
   T extends BaseFormComponentType = BaseFormComponentType,

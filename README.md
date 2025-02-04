@@ -212,9 +212,3 @@ pnpm dev
 
 `http://localhost:3100/admin/` 为管理后台首页
 
-## 四、特别感谢
-
-感谢 JetBrains 提供的免费开源 License：
-
-![https://jb.gg/OpenSourceSupport](https://raw.githubusercontent.com/herodotus-cloud/eurynome-cloud/master/./readme/jb_beam.svg)
-
